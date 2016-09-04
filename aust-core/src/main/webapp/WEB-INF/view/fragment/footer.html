@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<footer th:fragment="footer">
+    <div class="row" id="footer">
+        <div class="col-md-4 col-lg-offset-2" th:utext="#{index.footer}">
+            AUST University Of Technology Online Judge<br/>
+            Copyright © 2010-2015 AUST NIU LI <br/>
+            All Copyright Reserved
+        </div>
+        <div class="footer-socials">
+            <div class="text-center">
+                <span>
+                    <i title="<img src='http://oce4brl1p.bkt.clouddn.com/austojwechat.jpg' />" data-html="true" data-placement="top"
+                       data-toggle="tooltip" class="fa fa-wechat fa-3x mrs"></i>
+                </span>
+                <span>
+                    <i title="<img src='http://oce4brl1p.bkt.clouddn.com/austojqq.jpg' />" data-html="true" data-placement="top"
+                       data-toggle="tooltip" class="fa fa-qq fa-3x mrs"></i>
+                </span>
+            </div>
+            <div class="backtop text-center">
+                <a href="javascript:void(0)">BACK TO TOP</a>
+            </div>
+        </div>
+    </div>
+</footer>
+</body>
+</html>
