@@ -10,10 +10,14 @@
 		</encoder>
 	</appender>
 
-	<!-- project default level -->
+	<!-- project level -->
 	<logger name="cn.edu.aust" level="DEBUG" />
+	<logger name="cn.edu.aust.mapper" level="trace" />
+	<logger name="net.sf.ehcache" level="INFO" />
+
 	<!--打开模板日志,便于学习-->
 	<logger name="org.thymeleaf" level="trace" />
+
 
 	<root level="DEBUG" >
 		<appender-ref ref="console" />

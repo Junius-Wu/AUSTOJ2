@@ -58,10 +58,14 @@
         <property name="dataSource" ref="dataSource" />
         <!-- 加载mybatis的全局配置文件 -->
         <property name="configLocation" value="classpath:mybatis/SqlMapConfig.xml" />
-        <!--配置mapper扫描-->
+        <!--配置mapper.xml扫描-->
         <property name="mapperLocations" value="classpath:mybatis/*/*.xml"/>
     </bean>
-
+    <!--配置mapper接口扫描,扫描后会自动注入到spring-->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="cn.edu.aust.mapper"/>
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+    </bean>
     <!--配置事务管理 -->
     <bean name="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource" ref="dataSource"/>

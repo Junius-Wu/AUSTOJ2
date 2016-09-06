@@ -4,7 +4,6 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/AUSTOJ2.iml" filepath="$PROJECT_DIR$/AUSTOJ2.iml" />
       <module fileurl="file://$PROJECT_DIR$/aust-core/aust-core.iml" filepath="$PROJECT_DIR$/aust-core/aust-core.iml" />
-      <module fileurl="file://$PROJECT_DIR$/aust-dao-interface/aust-dao-interface.iml" filepath="$PROJECT_DIR$/aust-dao-interface/aust-dao-interface.iml" />
       <module fileurl="file://$PROJECT_DIR$/aust-service-interface/aust-service-interface.iml" filepath="$PROJECT_DIR$/aust-service-interface/aust-service-interface.iml" />
     </modules>
   </component>

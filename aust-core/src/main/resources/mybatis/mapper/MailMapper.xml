@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.edu.aust.mapper.MailMapper" >
+
+  <resultMap id="BaseResultMap" type="cn.edu.aust.entity.Mail" >
+    <constructor >
+      <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="user" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="friend" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="sender" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="receiver" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="type" jdbcType="TINYINT" javaType="java.lang.Byte" />
+      <arg column="send_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="read_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="status" jdbcType="TINYINT" javaType="java.lang.Byte" />
+    </constructor>
+  </resultMap>
+
+  <resultMap id="ResultMapWithBLOBs" type="cn.edu.aust.entity.Mail" >
+    <constructor >
+      <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="user" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="friend" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="sender" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="receiver" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="type" jdbcType="TINYINT" javaType="java.lang.Byte" />
+      <arg column="send_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="read_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="status" jdbcType="TINYINT" javaType="java.lang.Byte" />
+      <arg column="content" jdbcType="LONGVARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    id, user, friend, sender, receiver, type, send_time, read_time, status
+  </sql>
+
+  <sql id="Blob_Column_List" >
+    content
+  </sql>
+
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from mail
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from mail
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+
+  <insert id="insert" parameterType="cn.edu.aust.entity.Mail" >
+    insert into mail (id, user, friend, 
+      sender, receiver, type, 
+      send_time, read_time, status, 
+      content)
+    values (#{id,jdbcType=INTEGER}, #{user,jdbcType=INTEGER}, #{friend,jdbcType=INTEGER}, 
+      #{sender,jdbcType=INTEGER}, #{receiver,jdbcType=INTEGER}, #{type,jdbcType=TINYINT}, 
+      #{sendTime,jdbcType=TIMESTAMP}, #{readTime,jdbcType=TIMESTAMP}, #{status,jdbcType=TINYINT}, 
+      #{content,jdbcType=LONGVARCHAR})
+  </insert>
+
+  <insert id="insertSelective" parameterType="cn.edu.aust.entity.Mail" >
+    insert into mail
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="user != null" >
+        user,
+      </if>
+      <if test="friend != null" >
+        friend,
+      </if>
+      <if test="sender != null" >
+        sender,
+      </if>
+      <if test="receiver != null" >
+        receiver,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="sendTime != null" >
+        send_time,
+      </if>
+      <if test="readTime != null" >
+        read_time,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="user != null" >
+        #{user,jdbcType=INTEGER},
+      </if>
+      <if test="friend != null" >
+        #{friend,jdbcType=INTEGER},
+      </if>
+      <if test="sender != null" >
+        #{sender,jdbcType=INTEGER},
+      </if>
+      <if test="receiver != null" >
+        #{receiver,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=TINYINT},
+      </if>
+      <if test="sendTime != null" >
+        #{sendTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="readTime != null" >
+        #{readTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="updateByPrimaryKeySelective" parameterType="cn.edu.aust.entity.Mail" >
+    update mail
+    <set >
+      <if test="user != null" >
+        user = #{user,jdbcType=INTEGER},
+      </if>
+      <if test="friend != null" >
+        friend = #{friend,jdbcType=INTEGER},
+      </if>
+      <if test="sender != null" >
+        sender = #{sender,jdbcType=INTEGER},
+      </if>
+      <if test="receiver != null" >
+        receiver = #{receiver,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=TINYINT},
+      </if>
+      <if test="sendTime != null" >
+        send_time = #{sendTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="readTime != null" >
+        read_time = #{readTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="cn.edu.aust.entity.Mail" >
+    update mail
+    set user = #{user,jdbcType=INTEGER},
+      friend = #{friend,jdbcType=INTEGER},
+      sender = #{sender,jdbcType=INTEGER},
+      receiver = #{receiver,jdbcType=INTEGER},
+      type = #{type,jdbcType=TINYINT},
+      send_time = #{sendTime,jdbcType=TIMESTAMP},
+      read_time = #{readTime,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=TINYINT},
+      content = #{content,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateByPrimaryKey" parameterType="cn.edu.aust.entity.Mail" >
+    update mail
+    set user = #{user,jdbcType=INTEGER},
+      friend = #{friend,jdbcType=INTEGER},
+      sender = #{sender,jdbcType=INTEGER},
+      receiver = #{receiver,jdbcType=INTEGER},
+      type = #{type,jdbcType=TINYINT},
+      send_time = #{sendTime,jdbcType=TIMESTAMP},
+      read_time = #{readTime,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=TINYINT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+</mapper>

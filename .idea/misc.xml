@@ -15,6 +15,7 @@
     <option name="ignoredFiles">
       <set>
         <option value="$PROJECT_DIR$/aust-bean/pom.xml" />
+        <option value="$PROJECT_DIR$/aust-dao-interface/pom.xml" />
         <option value="$PROJECT_DIR$/aust-dao/pom.xml" />
         <option value="$PROJECT_DIR$/aust-service/pom.xml" />
         <option value="$PROJECT_DIR$/aust-util/pom.xml" />

@@ -101,6 +101,24 @@
             <artifactId>thymeleaf-spring4</artifactId>
         </dependency>
         <!--thymeleaf end-->
+        <!--shiro start-->
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-ehcache</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-spring</artifactId>
+        </dependency>
+        <!--shiro end-->
         <!--mysql start-->
         <dependency>
             <groupId>mysql</groupId>
