@@ -16,7 +16,7 @@ class CustomErrorController {
 	/**
 	 * Display an error page, as defined in web.xml <code>custom-error</code> element.
 	 */
-	@RequestMapping("generalError")
+	@RequestMapping("error")
 	public String generalError(HttpServletRequest request, HttpServletResponse response, Model model) {
 		Integer statusCode = (Integer) request.getAttribute("javax.servlet.error.status_code");
 		Throwable throwable = (Throwable) request.getAttribute("javax.servlet.error.exception");

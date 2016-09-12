@@ -7,7 +7,7 @@ public class User {
 
     private String avatar;
 
-    private Integer user;
+    private String username;
 
     private String password;
 
@@ -20,6 +20,8 @@ public class User {
     private String stuNo;
 
     private String motto;
+
+    private String honor;
 
     private Integer point;
 
@@ -43,16 +45,17 @@ public class User {
 
     private Byte opensource;
 
-    public User(Integer id, String avatar, Integer user, String password, String nickname, String email, String school, String stuNo, String motto, Integer point, Byte language, Integer submit, Integer solved, Byte show, String blog, String ip, Date createdate, Date modifydate, Byte defunct, Byte opensource) {
+    public User(Integer id, String avatar, String username, String password, String nickname, String email, String school, String stuNo, String motto, String honor, Integer point, Byte language, Integer submit, Integer solved, Byte show, String blog, String ip, Date createdate, Date modifydate, Byte defunct, Byte opensource) {
         this.id = id;
         this.avatar = avatar;
-        this.user = user;
+        this.username = username;
         this.password = password;
         this.nickname = nickname;
         this.email = email;
         this.school = school;
         this.stuNo = stuNo;
         this.motto = motto;
+        this.honor = honor;
         this.point = point;
         this.language = language;
         this.submit = submit;
@@ -86,12 +89,12 @@ public class User {
         this.avatar = avatar;
     }
 
-    public Integer getUser() {
-        return user;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUser(Integer user) {
-        this.user = user;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
@@ -140,6 +143,14 @@ public class User {
 
     public void setMotto(String motto) {
         this.motto = motto;
+    }
+
+    public String getHonor() {
+        return honor;
+    }
+
+    public void setHonor(String honor) {
+        this.honor = honor;
     }
 
     public Integer getPoint() {

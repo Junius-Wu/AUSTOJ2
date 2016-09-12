@@ -73,7 +73,6 @@
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
         <init-param>
             <param-name>contextConfigLocation</param-name>
-            <!--配置文件的路径-->
             <param-value>classpath:spring/dispatcher-servlet.xml</param-value>
         </init-param>
         <load-on-startup>1</load-on-startup>
@@ -86,6 +85,6 @@
     <!--错误页面配置-->
     <error-page>
         <exception-type>java.lang.Exception</exception-type>
-        <location>/generalError</location>
+        <location>/error</location>
     </error-page>
 </web-app>

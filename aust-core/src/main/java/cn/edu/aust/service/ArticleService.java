@@ -8,6 +8,7 @@ import cn.edu.aust.entity.ArticleBLOBs;
  * @date 2016/9/6
  */
 public interface ArticleService {
+
     int deleteByPrimaryKey(Integer id);
 
     int insert(ArticleBLOBs record);

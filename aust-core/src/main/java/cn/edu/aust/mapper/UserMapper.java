@@ -1,5 +1,7 @@
 package cn.edu.aust.mapper;
 
+import java.util.List;
+
 import cn.edu.aust.entity.User;
 
 public interface UserMapper {
@@ -14,4 +16,10 @@ public interface UserMapper {
     int updateByPrimaryKeySelective(User record);
 
     int updateByPrimaryKey(User record);
+
+    List<User> selecttoShow();
+
+    List<User> selectAll();
+
+    User selectByUsername(String username);
 }

@@ -74,13 +74,13 @@
         <tx:attributes>
             <tx:method name="delete*" propagation="REQUIRED" read-only="false" rollback-for="Exception"/>
             <tx:method name="update*" propagation="REQUIRED" read-only="false" rollback-for="Exception" />
-            <tx:method name="save*" propagation="REQUIRED" read-only="false" rollback-for="Exception" />
-            <tx:method name="find*" propagation="SUPPORTS" read-only="true"/>
+            <tx:method name="insert*" propagation="REQUIRED" read-only="false" rollback-for="Exception" />
+            <tx:method name="select*" propagation="SUPPORTS" read-only="true"/>
         </tx:attributes>
     </tx:advice>
     <!-- 事务处理,对service开启事务 -->
     <aop:config>
-        <aop:pointcut id="pc" expression="execution(* cn.edu.aust.service..*(..))" />
+        <aop:pointcut id="pc" expression="execution(public * cn.edu.aust.service.*.*(..))" />
         <aop:advisor pointcut-ref="pc" advice-ref="txAdvice" />
     </aop:config>
 

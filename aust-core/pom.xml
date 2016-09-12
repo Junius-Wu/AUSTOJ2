@@ -13,6 +13,11 @@
     <url>http://maven.apache.org</url>
 
     <dependencies>
+        <dependency>
+            <groupId>cn.edu.aust</groupId>
+            <artifactId>aust-util</artifactId>
+            <version>1.0</version>
+        </dependency>
         <!-- springframe start -->
         <dependency>
             <groupId>org.springframework</groupId>
@@ -155,6 +160,7 @@
             <scope>test</scope>
         </dependency>
         <!--junit end-->
+
         <!--log start-->
         <dependency>
             <groupId>org.slf4j</groupId>
