@@ -2,11 +2,24 @@ package cn.edu.aust.entity;
 
 import java.util.Date;
 
+import javax.validation.constraints.Pattern;
+
 public class User {
+
+    /** "身份信息"属性名称 */
+    public static final String PRINCIPAL_ATTRIBUTE_NAME = "userpri";
+
+    /** "用户名"Cookie名称 */
+    public static final String USERNAME_COOKIE_NAME = "username";
+
+    /** "昵称"Cookie名称 */
+    public static final String NICKNAME_COOKIE_NAME = "nickname";
+
     private Integer id;
 
     private String avatar;
 
+    @Pattern(regexp = "^[a-zA-Z0-9_]{3,16}$",message = "用户名不合法")
     private String username;
 
     private String password;
@@ -25,48 +38,38 @@ public class User {
 
     private Integer point;
 
-    private Byte language;
+    private Integer language;
 
     private Integer submit;
 
     private Integer solved;
 
-    private Byte show;
+    private Boolean isshow;
 
     private String blog;
 
     private String ip;
 
+    private Boolean islock;
+
+    private Integer loginfail;
+
+    private Date lockdate;
+
     private Date createdate;
 
     private Date modifydate;
 
-    private Byte defunct;
+    private Boolean defunct;
 
-    private Byte opensource;
+    private Boolean opensource;
 
-    public User(Integer id, String avatar, String username, String password, String nickname, String email, String school, String stuNo, String motto, String honor, Integer point, Byte language, Integer submit, Integer solved, Byte show, String blog, String ip, Date createdate, Date modifydate, Byte defunct, Byte opensource) {
-        this.id = id;
-        this.avatar = avatar;
-        this.username = username;
-        this.password = password;
-        this.nickname = nickname;
-        this.email = email;
-        this.school = school;
-        this.stuNo = stuNo;
-        this.motto = motto;
-        this.honor = honor;
-        this.point = point;
-        this.language = language;
-        this.submit = submit;
-        this.solved = solved;
-        this.show = show;
-        this.blog = blog;
-        this.ip = ip;
-        this.createdate = createdate;
-        this.modifydate = modifydate;
-        this.defunct = defunct;
-        this.opensource = opensource;
+    public Integer getLoginfail() {
+        return loginfail;
+    }
+
+    public void setLoginfail(Integer loginfail) {
+        this.loginfail = loginfail;
     }
 
     public User() {
@@ -161,11 +164,11 @@ public class User {
         this.point = point;
     }
 
-    public Byte getLanguage() {
+    public Integer getLanguage() {
         return language;
     }
 
-    public void setLanguage(Byte language) {
+    public void setLanguage(Integer language) {
         this.language = language;
     }
 
@@ -185,12 +188,12 @@ public class User {
         this.solved = solved;
     }
 
-    public Byte getShow() {
-        return show;
+    public Boolean getIsshow() {
+        return isshow;
     }
 
-    public void setShow(Byte show) {
-        this.show = show;
+    public void setIsshow(Boolean isshow) {
+        this.isshow = isshow;
     }
 
     public String getBlog() {
@@ -209,6 +212,22 @@ public class User {
         this.ip = ip;
     }
 
+    public Boolean getIslock() {
+        return islock;
+    }
+
+    public void setIslock(Boolean islock) {
+        this.islock = islock;
+    }
+
+    public Date getLockdate() {
+        return lockdate;
+    }
+
+    public void setLockdate(Date lockdate) {
+        this.lockdate = lockdate;
+    }
+
     public Date getCreatedate() {
         return createdate;
     }
@@ -225,19 +244,19 @@ public class User {
         this.modifydate = modifydate;
     }
 
-    public Byte getDefunct() {
+    public Boolean getDefunct() {
         return defunct;
     }
 
-    public void setDefunct(Byte defunct) {
+    public void setDefunct(Boolean defunct) {
         this.defunct = defunct;
     }
 
-    public Byte getOpensource() {
+    public Boolean getOpensource() {
         return opensource;
     }
 
-    public void setOpensource(Byte opensource) {
+    public void setOpensource(Boolean opensource) {
         this.opensource = opensource;
     }
 }

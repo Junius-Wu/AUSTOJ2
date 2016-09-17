@@ -2,11 +2,13 @@
 $(function () {
     $('[data-toggle=tooltip]').tooltip({delay:{show:0,hide:500}});
 });
+
 //返回顶部
 $(".backtop").click(function () {
         $('body,html').animate({scrollTop:0},1000);
         return false;
 });
+
 //菜单链接进入active
 $(function () {
    var index = window.location.href.split("/").length-1;
@@ -101,19 +103,4 @@ function jump(){
 }
 setInterval('jump()',2000);
 
-//toast设置
-toastr.options = {
-    "closeButton": true,
-    "debug": false,
-    "progressBar": false,
-    "positionClass": "toast-top-center",
-    "showDuration": "400",
-    "hideDuration": "1000",
-    "timeOut": "4000",
-    "extendedTimeOut": "1000",
-    "showEasing": "swing",
-    "hideEasing": "linear",
-    "showMethod": "fadeIn",
-    "hideMethod": "fadeOut"
-};
 

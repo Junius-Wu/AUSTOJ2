@@ -1,0 +1,7 @@
+{
+  "isEmailLogin":true,
+  "accountLockCount":5,
+  "accountLockTime":10,
+  "cookiePath":"/",
+  "cookieDomain":""
+}

@@ -23,7 +23,6 @@
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="true" />
         <module name="aust-core" />
-        <module name="aust-util" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>

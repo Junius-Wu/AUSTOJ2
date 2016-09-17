@@ -96,7 +96,6 @@ public final class WEBUtil {
     public static void addCookie(HttpServletRequest request,
                                  HttpServletResponse response, String name, String value,
                                  Integer maxAge, String path, String domain, Boolean secure) {
-
         try {
             name = URLEncoder.encode(name, "UTF-8");
             value = URLEncoder.encode(value, "UTF-8");

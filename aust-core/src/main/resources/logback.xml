@@ -5,22 +5,23 @@
 
 	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
 		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level - %msg%n</pattern>
+			<pattern>%d{HH:mm:ss} [%t] %logger{5} %p - %msg%n</pattern>
 		</encoder>
 	</appender>
 
 	<!-- project level -->
 	<logger name="cn.edu.aust" level="DEBUG" />
 	<logger name="cn.edu.aust.mapper" level="trace" />
+	<logger name="cn.edu.aust.filter.GzipFilter" level="info" />
 	<logger name="net.sf.ehcache" level="INFO" />
 
 	<!--打开模板日志,便于学习-->
-	<logger name="org.thymeleaf" level="trace" />
+	<logger name="org.thymeleaf" level="DEBUG" />
+	<logger name="org.springframework.web" level="DEBUG" />
 
 
 	<root level="DEBUG" >
 		<appender-ref ref="console" />
-		<appender-ref ref="file" />
 	</root>
 
 	

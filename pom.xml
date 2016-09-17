@@ -10,7 +10,6 @@
     <version>1.0</version>
     <modules>
         <module>aust-core</module>
-        <module>aust-util</module>
     </modules>
 
     <properties>

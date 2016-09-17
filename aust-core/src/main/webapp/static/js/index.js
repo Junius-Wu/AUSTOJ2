@@ -13,14 +13,14 @@ $.ajax({
             if (i < 3) {
                 $(".showUser1").append(
                     '<div class="list-view-item">' +
-                    '<img src="..' + item.avatar + '" class="img-circle" width="55px" height="55px" style="max-width: 100%">' +
+                    '<img src="' + item.avatar + '" class="img-circle" width="55px" height="55px" style="max-width: 100%">' +
                     '<h5>' + item.nickname + '</h5>' +
                     '<p>' + item.honor + '</p></div>'
                 );
             } else {
                 $(".showUser2").append(
                     '<div class="list-view-item">' +
-                    '<img src="..' + item.avatar + '" class="img-circle" width="55px" height="55px" style="max-width: 100%">' +
+                    '<img src="' + item.avatar + '" class="img-circle" width="55px" height="55px" style="max-width: 100%">' +
                     '<h5>' + item.nickname + '</h5>' +
                     '<p>' + item.honor + '</p></div>'
                 );

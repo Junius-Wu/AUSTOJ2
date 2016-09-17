@@ -18,13 +18,19 @@ public interface UserService {
 
     User selectByPrimaryKey(Integer id);
 
+    /**
+     * 查询要展示到首页的用户
+     * @return
+     */
     List<User> selecttoShow();
 
     List<User> selectAll();
 
-    User selectByUsername(String  username);
-
     int updateByPrimaryKeySelective(User record);
 
     int updateByPrimaryKey(User record);
+
+    User selectByUsername(String  username);
+
+    User selectByEmail(String email);
 }

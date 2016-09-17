@@ -10,7 +10,6 @@
     <option name="originalFiles">
       <list>
         <option value="$PROJECT_DIR$/pom.xml" />
-        <option value="$PROJECT_DIR$/aust-util/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">
@@ -20,6 +19,7 @@
         <option value="$PROJECT_DIR$/aust-dao/pom.xml" />
         <option value="$PROJECT_DIR$/aust-service-interface/pom.xml" />
         <option value="$PROJECT_DIR$/aust-service/pom.xml" />
+        <option value="$PROJECT_DIR$/aust-util/pom.xml" />
         <option value="$PROJECT_DIR$/aust-web/pom.xml" />
       </set>
     </option>
