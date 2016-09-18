@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>注册</title>
+    <link rel="shortcut icon" href="/static/images/favicon.ico">
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet" th:href="@{//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css}">
+    <link href="/static/css/flat-ui.min.css" rel="stylesheet" th:href="@{//cdn.bootcss.com/flat-ui/2.3.0/css/flat-ui.min.css}">
+    <link href="/static/css/login.css" rel="stylesheet">
+</head>
+<body >
+    <div class="small-home">
+        <a href="/index" class="text-center"><i class="glyphicon glyphicon-home"></i></a>
+    </div>
+    <div class="index-one">
+        <div class="container-fluid text-center animated fadeInDown">
+            <h1 class="login-logo">AUST</h1>
+        </div>
+        <div class="row animated fadeInUp">
+            <div class="login-field">
+                <form role="form" style="margin-top: 20px" method="post" id="registerForm" action="/register">
+                    <div class="input-group form-group">
+                        <span class="input-group-addon glyphicon glyphicon-user"></span>
+                        <input type="text" class="form-control" placeholder="Username" required name="username"
+                               maxlength="20" onblur="checkuser(this)">
+                    </div>
+                    <div class="input-group form-group">
+                        <span class="input-group-addon glyphicon glyphicon-envelope"></span>
+                        <input type="email" class="form-control" placeholder="example@XX.com" required name="email" onblur="checkemail(this)">
+                    </div>
+                    <div class="input-group form-group">
+                        <span class="input-group-addon glyphicon glyphicon-lock"></span>
+                        <input type="password" class="form-control"
+                               placeholder="Password" required name="password" maxlength="30" id="password" onblur="checkpwd(this)">
+                    </div>
+                    <div class="input-group form-group">
+                        <span class="input-group-addon glyphicon glyphicon-lock"></span>
+                        <input type="password" class="form-control"
+                               placeholder="Password" required name="password2" maxlength="30" id="password2" onblur="checkpwd2(this)">
+                    </div>
+                    <div class="code-inline">
+                        <input type="text" class="form-control code-input" required name="codevalidate">
+                        <img id="code-validate"  class="code-img" onclick="changeUrl()" th:src="'/codeValidate?time='+${#dates.createToday().getSeconds()}">
+                    </div>
+                    <div class="input-group">
+                        <a href="/login" class="btn btn-primary">Sign in</a>&nbsp;&nbsp;
+                        <button type="button" class="btn btn-primary sign-in" id="registerBtn">Register</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="/static/js/jquery.min.js" th:src="@{//cdn.bootcss.com/jquery/2.2.4/jquery.min.js}"></script>
+    <script src="/static/js/flat-ui.min.js" th:src="@{//cdn.bootcss.com/flat-ui/2.3.0/js/flat-ui.min.js}"></script>
+    <script src="/static/js/toastr.min.js" th:src="@{//cdn.bootcss.com/toastr.js/latest/js/toastr.min.js}"></script>
+    <script src="/static/js/login.js"></script>
+</body>
+</html>

@@ -26,6 +26,7 @@ import cn.edu.aust.exception.PageException;
 import cn.edu.aust.service.UserService;
 import cn.edu.aust.util.CheckParamUtil;
 import cn.edu.aust.util.DecriptUtil;
+import cn.edu.aust.util.LoggerUtil;
 import cn.edu.aust.util.SystemUtil;
 import cn.edu.aust.util.WEBUtil;
 
@@ -62,14 +63,12 @@ public class LoginController {
         JSONObject result = new JSONObject();
 
         if (StringUtils.isEmpty(username) || StringUtils.isEmpty(password)){
-            CheckParamUtil.packingRes(result, ResultVo.LOGIN_ERROR);
-            return result;
+            return CheckParamUtil.packingRes(result, ResultVo.LOGIN_ERROR);
         }
         //验证码验证
         String code = (String) session.getAttribute("codeValidate");
         if (!StringUtils.equalsIgnoreCase(code, codevalidate)) {
-            CheckParamUtil.packingRes(result, ResultVo.CODE_ERROR);
-            return result;
+            return CheckParamUtil.packingRes(result, ResultVo.CODE_ERROR);
         }
         User user;
         Setting setting = SystemUtil.getSetting();
@@ -80,21 +79,18 @@ public class LoginController {
         }
         //验证不存在
         if (user == null) {
-            CheckParamUtil.packingRes(result, ResultVo.LOGIN_ERROR);
-            return result;
+            return CheckParamUtil.packingRes(result, ResultVo.LOGIN_ERROR);
         }
         //验证是否冻结
         if (user.getDefunct()){
-            CheckParamUtil.packingRes(result,ResultVo.USER_DEFUNCT);
-            return result;
+            return CheckParamUtil.packingRes(result,ResultVo.USER_DEFUNCT);
         }
         //验证锁定状态
         if (user.getIslock()){
             int accountLockTime = setting.getAccountLockTime();
             //锁定时间0,则永久锁定
             if (accountLockTime == 0){
-                CheckParamUtil.packingRes(result,ResultVo.USER_LOCKED);
-                return result;
+                return CheckParamUtil.packingRes(result,ResultVo.USER_LOCKED);
             }
             Date lockdate = user.getLockdate();
             Date unlockdate = DateUtils.addMinutes(lockdate,accountLockTime);
@@ -104,29 +100,28 @@ public class LoginController {
                 user.setLockdate(null);
                 userService.updateByPrimaryKey(user);
             }else {
-                CheckParamUtil.packingRes(result,ResultVo.USER_LOCKED);
-                return result;
+                return CheckParamUtil.packingRes(result,ResultVo.USER_LOCKED);
             }
         }
         //验证密码
         if(!user.getPassword().equals(DecriptUtil.SHA1(password.trim()))){
             int accountLockCount = user.getLoginfail()+1;
-            if (accountLockCount > setting.getAccountLockCount()){
-                user.setLockdate(new Date());
-                user.setIslock(true);
-                logger.info("用户:"+user.getUsername()+"已被锁定");
-            }
+            LoggerUtil.infoIf(logger,
+                    ()->accountLockCount > setting.getAccountLockCount(),
+                    ()->{
+                        user.setLockdate(new Date());
+                        user.setIslock(true);
+                    },
+                    ()->"用户:"+user.getUsername()+" 已被锁定");
             user.setLoginfail(accountLockCount);
             userService.updateByPrimaryKeySelective(user);
             if (user.getIslock()){
-                CheckParamUtil.packingRes(result,ResultVo.USER_LOCKED);
-                return result;
+                return CheckParamUtil.packingRes(result,ResultVo.USER_LOCKED);
             }else if (accountLockCount <= 2){
-                CheckParamUtil.packingRes(result,ResultVo.LOGIN_ERROR);
-                return result;
+                return CheckParamUtil.packingRes(result,ResultVo.LOGIN_ERROR);
             }else {
-                CheckParamUtil.packingRes(result,ResultVo.LOGIN_ERROR,"密码错误,若再错误"+(setting.getAccountLockCount()-accountLockCount+1)+"次,则锁定账户");
-                return result;
+                return CheckParamUtil.packingRes(result,ResultVo.LOGIN_ERROR,
+                        "密码错误,若再错误"+(setting.getAccountLockCount()-accountLockCount+1)+"次,则锁定账户");
             }
         }
         //登录成功
@@ -135,10 +130,9 @@ public class LoginController {
         user.setLoginfail(0);
         userService.updateByPrimaryKeySelective(user);
         //登录成功加入session
-        session.invalidate();
         session = request.getSession();
         session.setAttribute(User.PRINCIPAL_ATTRIBUTE_NAME,new Principal(user));
-        logger.info(user.getUsername() + "已登录");
+        LoggerUtil.info(logger,()->user.getUsername() + "已登录");
 
         WEBUtil.addCookie(request, response, User.USERNAME_COOKIE_NAME, user.getUsername()
                 ,null,setting.getCookiePath(),setting.getCookieDomain(),null);
@@ -155,7 +149,19 @@ public class LoginController {
             result.put("referer","/index");
         }
         session.removeAttribute("referer");
-        CheckParamUtil.packingRes(result,ResultVo.OK);
-        return result;
+        return CheckParamUtil.packingRes(result,ResultVo.OK);
+    }
+
+    /**
+     * 退出方法
+     * @return
+     */
+    @RequestMapping(value = "/loginout",method = RequestMethod.GET)
+    public String loginOut(HttpServletRequest request,HttpServletResponse response){
+        Setting setting = SystemUtil.getSetting();
+        WEBUtil.removeCookie(request, response, User.USERNAME_COOKIE_NAME,setting.getCookiePath(),setting.getCookieDomain());
+        WEBUtil.removeCookie(request, response, User.NICKNAME_COOKIE_NAME,setting.getCookiePath(),setting.getCookieDomain());
+        request.getSession().invalidate();
+        return "redirect:/";
     }
 }

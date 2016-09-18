@@ -3,5 +3,7 @@
   "accountLockCount":5,
   "accountLockTime":10,
   "cookiePath":"/",
-  "cookieDomain":""
+  "cookieDomain":"",
+  "isRegisterEnabled":true,
+  "disabledUsernames":"admin,test,niuli"
 }

@@ -10,7 +10,7 @@ import cn.edu.aust.entity.User;
  */
 public interface UserService {
 
-    public int deleteByPrimaryKey(Integer id);
+    int deleteByPrimaryKey(Integer id);
 
     int insert(User record);
 
@@ -20,7 +20,6 @@ public interface UserService {
 
     /**
      * 查询要展示到首页的用户
-     * @return
      */
     List<User> selecttoShow();
 
@@ -33,4 +32,9 @@ public interface UserService {
     User selectByUsername(String  username);
 
     User selectByEmail(String email);
+
+    /**
+     * 判断用户名是否被禁用
+     */
+    boolean usernameIsDisabled(String username);
 }

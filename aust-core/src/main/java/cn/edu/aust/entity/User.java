@@ -1,5 +1,7 @@
 package cn.edu.aust.entity;
 
+import org.hibernate.validator.constraints.Email;
+
 import java.util.Date;
 
 import javax.validation.constraints.Pattern;
@@ -21,11 +23,11 @@ public class User {
 
     @Pattern(regexp = "^[a-zA-Z0-9_]{3,16}$",message = "用户名不合法")
     private String username;
-
+    @Pattern(regexp = "^[@A-Za-z0-9!#$%^&*.~]{6,22}$",message = "密码格式不匹配")
     private String password;
 
     private String nickname;
-
+    @Email(regexp = "^([a-zA-Z0-9_.-])+@(([a-zA-Z0-9-])+.)+([a-zA-Z0-9]{2,4})+$",message = "email格式不合法")
     private String email;
 
     private String school;

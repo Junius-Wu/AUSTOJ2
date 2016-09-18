@@ -1,14 +1,18 @@
 package cn.edu.aust.service.impl;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import java.util.List;
 
 import javax.annotation.Resource;
 
+import cn.edu.aust.Setting;
 import cn.edu.aust.entity.User;
 import cn.edu.aust.mapper.UserMapper;
 import cn.edu.aust.service.UserService;
+import cn.edu.aust.util.SystemUtil;
 
 /**
  * @author Niu Li
@@ -68,5 +72,18 @@ public class UserServiceImpl implements UserService{
     @Override
     public int updateByPrimaryKey(User record) {
         return userMapper.updateByPrimaryKey(record);
+    }
+
+    @Override
+    public boolean usernameIsDisabled(String username) {
+        Assert.notNull(username);
+        Setting setting = SystemUtil.getSetting();
+        String[] disabledName = setting.getDisabledUsernames().split(",");
+        for (String s : disabledName) {
+            if (StringUtils.equalsIgnoreCase(s,username)){
+                return true;
+            }
+        }
+        return false;
     }
 }

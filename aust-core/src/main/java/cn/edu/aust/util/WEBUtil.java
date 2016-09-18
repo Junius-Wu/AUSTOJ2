@@ -195,13 +195,12 @@ public final class WEBUtil {
         try {
             List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
             if (parameterMap != null) {
-                for (Map.Entry<String, Object> entry : parameterMap.entrySet()) {
-                    String name = entry.getKey();
-                    String value = ConvertUtils.convert(entry.getValue());
-                    if (isNotEmpty(name)) {
-                        nameValuePairs.add(new BasicNameValuePair(name, value));
+                parameterMap.forEach((name,value)->{
+                    String valueStr = ConvertUtils.convert(value);
+                    if (StringUtils.isNotEmpty(name)){
+                        nameValuePairs.add(new BasicNameValuePair(name, valueStr));
                     }
-                }
+                });
             }
             HttpPost httpPost = new HttpPost(url);
             httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
@@ -239,13 +238,12 @@ public final class WEBUtil {
         try {
             List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
             if (parameterMap != null) {
-                for (Map.Entry<String, Object> entry : parameterMap.entrySet()) {
-                    String name = entry.getKey();
-                    String value = ConvertUtils.convert(entry.getValue());
-                    if (isNotEmpty(name)) {
-                        nameValuePairs.add(new BasicNameValuePair(name, value));
+                parameterMap.forEach((name,value)->{
+                    String valueStr = ConvertUtils.convert(value);
+                    if (StringUtils.isNotEmpty(name)){
+                        nameValuePairs.add(new BasicNameValuePair(name, valueStr));
                     }
-                }
+                });
             }
             HttpGet httpGet = new HttpGet(url
                     + (StringUtils.contains(url, "?") ? "&" : "?")
@@ -292,12 +290,10 @@ public final class WEBUtil {
         }
         if (ip != null && "0:0:0:0:0:0:0:1".equals(ip)) {
             InetAddress addr;
-
             try {
                 addr = InetAddress.getLocalHost();
                 ip = addr.getHostAddress();
             } catch (UnknownHostException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
 

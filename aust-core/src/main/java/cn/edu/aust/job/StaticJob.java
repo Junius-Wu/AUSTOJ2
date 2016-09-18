@@ -18,6 +18,7 @@ import javax.annotation.Resource;
 import cn.edu.aust.entity.User;
 import cn.edu.aust.mapper.UserMapper;
 import cn.edu.aust.util.FileUtil;
+import cn.edu.aust.util.LoggerUtil;
 
 /**
  * @author Niu Li
@@ -39,13 +40,13 @@ public class StaticJob implements InitializingBean {
         List<User> users = userMapper.selecttoShow()
                 .stream().limit(6).collect(Collectors.toList());
 
-        String path = System.getProperty("web.root") + File.separator + "static" + File.separator + "json";
-        logger.debug("首页展示用户路径:" + path);
+        String path = String.join(File.separator,System.getProperty("web.root"),"static","json");
+        LoggerUtil.debug(logger,()->"展示用户路径:"+path);
 
         String reslut = JSON.toJSONString(users);
 
         FileUtil.saveToDisk(path, "user.json", reslut);
-        logger.info("写入首页展示用户到指定路径中");
+        LoggerUtil.info(logger,()->"写入首页展示用户到指定路径中");
     }
 
     /**

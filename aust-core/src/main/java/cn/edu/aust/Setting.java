@@ -36,6 +36,14 @@ public class Setting implements Serializable{
      * cookies作用域
      */
     private String cookieDomain;
+    /**
+     * 是否启用注册
+     */
+    private boolean isRegisterEnabled;
+    /**
+     * 禁止注册的用户名
+     */
+    private String disabledUsernames;
 
     public boolean isIsEmailLogin() {
         return isEmailLogin;
@@ -75,5 +83,21 @@ public class Setting implements Serializable{
 
     public void setCookieDomain(String cookieDomain) {
         this.cookieDomain = cookieDomain;
+    }
+
+    public boolean isIsRegisterEnabled() {
+        return isRegisterEnabled;
+    }
+
+    public void setIsRegisterEnabled(boolean isRegisterEnabled) {
+        this.isRegisterEnabled = isRegisterEnabled;
+    }
+
+    public String getDisabledUsernames() {
+        return disabledUsernames;
+    }
+
+    public void setDisabledUsernames(String disabledUsernames) {
+        this.disabledUsernames = disabledUsernames;
     }
 }

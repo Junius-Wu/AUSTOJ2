@@ -19,13 +19,15 @@ import cn.edu.aust.ResultVo;
  */
 public class CheckParamUtil {
 
-    public static void packingRes(JSONObject object, ResultVo resultVo){
+    public static JSONObject packingRes(JSONObject object, ResultVo resultVo){
         object.put("status",resultVo.getStatus());
         object.put("msg",resultVo.getMsg());
+        return object;
     }
-    public static void packingRes(JSONObject object, ResultVo resultVo,String msg){
+    public static JSONObject packingRes(JSONObject object, ResultVo resultVo,String msg){
         object.put("status",resultVo.getStatus());
         object.put("msg",msg);
+        return object;
     }
 
     /**
