@@ -6,7 +6,7 @@
     <constructor >
       <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="name" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="type" jdbcType="TINYINT" javaType="java.lang.Byte" />
+      <arg column="type" jdbcType="TINYINT" javaType="java.lang.Integer" />
     </constructor>
   </resultMap>
 
@@ -78,4 +78,8 @@
       type = #{type,jdbcType=TINYINT}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="selectToShow" parameterType="int" resultType="cn.edu.aust.entity.Catelog">
+    SELECT * FROM catelog WHERE type = ${value} limit 8
+  </select>
 </mapper>

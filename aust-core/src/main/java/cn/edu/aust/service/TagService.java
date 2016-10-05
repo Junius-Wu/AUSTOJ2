@@ -1,5 +1,7 @@
 package cn.edu.aust.service;
 
+import java.util.List;
+
 import cn.edu.aust.entity.Tag;
 
 /**
@@ -19,4 +21,6 @@ public interface TagService {
     int updateByPrimaryKeySelective(Tag record);
 
     int updateByPrimaryKey(Tag record);
+
+    List<Tag> selectList(Integer value);
 }

@@ -1,5 +1,7 @@
 package cn.edu.aust.service;
 
+import java.util.List;
+
 import cn.edu.aust.entity.Article;
 import cn.edu.aust.entity.ArticleBLOBs;
 
@@ -22,4 +24,6 @@ public interface ArticleService {
     int updateByPrimaryKeyWithBLOBs(ArticleBLOBs record);
 
     int updateByPrimaryKey(Article record);
+
+    List<Article> selectList(Integer count);
 }

@@ -7,7 +7,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -44,7 +43,6 @@ public class RegisterController {
     private static Logger logger = LoggerFactory.getLogger(RegisterController.class);
     /**
      * 前往注册页面
-     * @return
      */
     @RequestMapping(value = "/register",method = RequestMethod.GET)
     public String toRegister(HttpServletRequest request){
@@ -58,9 +56,8 @@ public class RegisterController {
 
     /**
      * 注册方法
-     * @return
      */
-    @RequestMapping(value = "/register",method = RequestMethod.POST)
+    @RequestMapping(value = "/register",method = RequestMethod.POST,produces = "application/json; charset=UTF-8")
     public @ResponseBody JSONObject register(@Valid User user, BindingResult br, String codevalidate,
                                              HttpServletRequest request, HttpServletResponse response){
         JSONObject result = new JSONObject();
@@ -76,11 +73,9 @@ public class RegisterController {
         }
         //参数格式验证
         if (br.hasErrors()){
-            for (FieldError fieldError : br.getFieldErrors()) {
-                result.put("status",ResultVo.REGISTER_ERROR.getStatus());
-                result.put("msg",fieldError.getDefaultMessage());
-                return result;
-            }
+            result.put("status",ResultVo.REGISTER_ERROR.getStatus());
+            result.put("msg",br.getFieldErrors().get(0).getDefaultMessage());
+            return result;
         }
         if (userService.usernameIsDisabled(user.getUsername())){
             return CheckParamUtil.packingRes(result,ResultVo.USERNAME_ENABLE);
@@ -101,6 +96,7 @@ public class RegisterController {
         session.setAttribute(User.PRINCIPAL_ATTRIBUTE_NAME,new Principal(user));
         LoggerUtil.info(logger,()->user.getUsername() + "已注册");
 
+        //存储cookies
         WEBUtil.addCookie(request, response, User.USERNAME_COOKIE_NAME, user.getUsername()
                 ,null,setting.getCookiePath(),setting.getCookieDomain(),null);
 
@@ -121,8 +117,7 @@ public class RegisterController {
 
     /**
      * 检查用户名是否存在
-     * @param username
-     * @return
+     * @param username 要检查的用户名
      */
     @RequestMapping(value = "/check/{username}",method = RequestMethod.GET,produces = "application/json; charset=UTF-8")
     public @ResponseBody JSONObject checkUsername(@PathVariable(value = "username") String username){
@@ -138,8 +133,7 @@ public class RegisterController {
     }
     /**
      * 检查邮箱是否已存在
-     * @param email
-     * @return
+     * @param email 要检查的email
      */
     @RequestMapping(value = "/checkemail",method = RequestMethod.GET,produces = "application/json; charset=UTF-8")
     public @ResponseBody JSONObject checkEmail(String email){

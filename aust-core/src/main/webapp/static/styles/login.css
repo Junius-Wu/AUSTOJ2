@@ -1,0 +1,94 @@
+body{
+    ont-family: "Lantinghei SC", "Open Sans", Arial, "Hiragino Sans GB", "Microsoft YaHei", "\5FAE\8F6F\96C5\9ED1", "STHeiti", "WenQuanYi Micro Hei", SimSun, sans-serif;
+    overflow-x: hidden;
+}
+h6{
+    font-size: 2rem;
+}
+.index-one {
+    background: url('../images/login-bg.jpg') no-repeat, repeat fixed, fixed left 0, left top;
+    background-size: cover;
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    overflow-y: hidden;
+    position: relative;
+    overflow-x: hidden;
+}
+.login-logo{
+    font-size: 6rem;
+    margin-top: 9%;
+}
+table{
+    margin: 0 auto;
+}
+.code-input{
+    width: 100px;
+    display: inline;
+}
+.code-img{
+    width: 90px;
+    height: 35px;
+    margin-left: 10px;
+    border: none;
+}
+.code-inline{
+    display: inline-block;
+    padding-bottom: 20px;
+    position: relative;
+}
+.input-group-addon{
+    background-color: rgba(255,255,255,0);
+    color: gray;
+    top: 0;
+}
+.form-control{
+background-color: rgba(255,255,255,0)
+}
+.vertical-center{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.login-field{
+    width: 300px;
+    margin: 0 auto;
+    margin-top: 20px;
+}
+.register-field{
+    width: 400px;
+    margin: 0 auto;
+    margin-top: 20px;
+}
+.btn-primary{
+    background-color: rgba(255,255,255,.12);
+    width: 140px;
+}
+
+a{
+    cursor: pointer;
+}
+.small-home{
+    position: fixed;
+    top: 20px;
+    right: 26px;
+    z-index: 100;
+}
+.small-home a{
+    height: 45px;
+    width: 45px;
+    display: block;
+    background: #6F908E;
+    padding: 9px 8px;
+    text-align: center;
+    color: #fff;
+    border-radius: 50%;
+}
+.small-home a:hover{
+    color: black;
+}
+.small-home a span{
+    padding-bottom: 7px;
+}

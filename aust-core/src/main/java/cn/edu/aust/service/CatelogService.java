@@ -1,5 +1,7 @@
 package cn.edu.aust.service;
 
+import java.util.List;
+
 import cn.edu.aust.entity.Catelog;
 
 /**
@@ -18,4 +20,7 @@ public interface CatelogService {
     int updateByPrimaryKeySelective(Catelog record);
 
     int updateByPrimaryKey(Catelog record);
+
+    List<Catelog> selectList(Integer type);
+
 }

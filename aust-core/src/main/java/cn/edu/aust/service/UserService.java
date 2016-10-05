@@ -21,7 +21,7 @@ public interface UserService {
     /**
      * 查询要展示到首页的用户
      */
-    List<User> selecttoShow();
+    List<User> selectToShow();
 
     List<User> selectAll();
 

@@ -107,12 +107,12 @@ public class LoginController {
         if(!user.getPassword().equals(DecriptUtil.SHA1(password.trim()))){
             int accountLockCount = user.getLoginfail()+1;
             LoggerUtil.infoIf(logger,
-                    ()->accountLockCount > setting.getAccountLockCount(),
-                    ()->{
+                    ()->accountLockCount > setting.getAccountLockCount(),//条件
+                    ()->{//执行
                         user.setLockdate(new Date());
                         user.setIslock(true);
                     },
-                    ()->"用户:"+user.getUsername()+" 已被锁定");
+                    ()->"用户:"+user.getUsername()+" 已被锁定");//日志
             user.setLoginfail(accountLockCount);
             userService.updateByPrimaryKeySelective(user);
             if (user.getIslock()){

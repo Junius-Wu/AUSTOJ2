@@ -44,6 +44,15 @@ public class Setting implements Serializable{
      * 禁止注册的用户名
      */
     private String disabledUsernames;
+    /**
+     * 侧边栏标签数
+     */
+    private int aside_tags;
+    /**
+     * 侧边栏文章数
+     */
+    private int aside_articles;
+
 
     public boolean isIsEmailLogin() {
         return isEmailLogin;
@@ -99,5 +108,21 @@ public class Setting implements Serializable{
 
     public void setDisabledUsernames(String disabledUsernames) {
         this.disabledUsernames = disabledUsernames;
+    }
+
+    public int getAside_tags() {
+        return aside_tags;
+    }
+
+    public void setAside_tags(int aside_tags) {
+        this.aside_tags = aside_tags;
+    }
+
+    public int getAside_articles() {
+        return aside_articles;
+    }
+
+    public void setAside_articles(int aside_articles) {
+        this.aside_articles = aside_articles;
     }
 }

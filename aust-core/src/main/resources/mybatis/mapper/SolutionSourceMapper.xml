@@ -2,19 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="cn.edu.aust.mapper.SolutionSourceMapper" >
 
-  <resultMap id="BaseResultMap" type="cn.edu.aust.entity.SolutionSource" >
-    <constructor >
-      <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="solution_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
-    </constructor>
-  </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="cn.edu.aust.entity.SolutionSource" >
-    <constructor >
-      <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="solution_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="source" jdbcType="LONGVARCHAR" javaType="java.lang.String" />
-    </constructor>
-  </resultMap>
 
   <sql id="Base_Column_List" >
     id, solution_id
@@ -24,7 +11,7 @@
     source
   </sql>
 
-  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+  <select id="selectByPrimaryKey" resultType="cn.edu.aust.entity.SolutionSource" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
     ,

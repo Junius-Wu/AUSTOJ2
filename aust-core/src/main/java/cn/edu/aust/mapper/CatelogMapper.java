@@ -1,5 +1,7 @@
 package cn.edu.aust.mapper;
 
+import java.util.List;
+
 import cn.edu.aust.entity.Catelog;
 
 public interface CatelogMapper {
@@ -14,4 +16,6 @@ public interface CatelogMapper {
     int updateByPrimaryKeySelective(Catelog record);
 
     int updateByPrimaryKey(Catelog record);
+
+    List<Catelog> selectToShow(Integer type);
 }

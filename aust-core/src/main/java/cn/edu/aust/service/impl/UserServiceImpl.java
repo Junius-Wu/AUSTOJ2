@@ -45,7 +45,7 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public List<User> selecttoShow() {
+    public List<User> selectToShow() {
         return userMapper.selecttoShow();
     }
 

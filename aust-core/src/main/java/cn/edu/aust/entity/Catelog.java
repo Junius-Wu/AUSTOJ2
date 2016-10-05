@@ -5,9 +5,9 @@ public class Catelog {
 
     private String name;
 
-    private Byte type;
+    private Integer type;
 
-    public Catelog(Integer id, String name, Byte type) {
+    public Catelog(Integer id, String name, Integer type) {
         this.id = id;
         this.name = name;
         this.type = type;
@@ -33,11 +33,11 @@ public class Catelog {
         this.name = name;
     }
 
-    public Byte getType() {
+    public Integer getType() {
         return type;
     }
 
-    public void setType(Byte type) {
+    public void setType(Integer type) {
         this.type = type;
     }
 }

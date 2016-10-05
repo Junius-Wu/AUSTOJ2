@@ -1,189 +1,184 @@
 <!doctype html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>主页</title>
-    <link rel="shortcut icon" href="/static/images/favicon.ico">
-    <link href="/static/css/bootstrap.min.css" rel="stylesheet" th:href="@{//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css}">
-    <link href="/static/css/flat-ui.min.css" rel="stylesheet" th:href="@{//cdn.bootcss.com/flat-ui/2.3.0/css/flat-ui.min.css}">
-    <link href="/static/css/font-awesome.min.css" rel="stylesheet" th:href="@{//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css}">
-    <link href="/static/css/app.css" rel="stylesheet">
-</head>
-<body>
-<!--头部开始-->
-<header>
+  <head>
+    <meta charset="utf-8">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AUSTOJ WEB</title>
+
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <!-- Place favicon.ico in the root directory -->
+
+    <link rel="stylesheet" href="/static/styles/vendor.css" th:href="@{static/styles/vendor.css}">
+
+    <link rel="stylesheet" href="/static/styles/main.css" th:href="@{static/styles/main.css}">
+
+  </head>
+  <body>
+  <!--头部开始-->
+  <header>
     <!-- Static navbar -->
     <div class="navbar navbar-lg navbar-fixed-top" role="navigation" id="nav">
-        <div class="container" th:include="fragment/header :: header">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                </button>
-                <a class="navbar-brand" href="/">AUST</a>
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li><a href="/start">起步</a></li>
-                    <li><a href="/practice">训练</a></li>
-                    <li><a href="/master">进阶</a></li>
-                    <li><a href="/contest">比赛</a></li>
-                    <li><a href="/rank">排名</a></li>
-                    <li><a href="/articles">干货</a></li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">联系我们<b class="caret"></b></a>
-                        <ul class="dropdown-menu animated fadeIn">
-                            <li><a href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=fBIVCRAVTU08DQ1SHxMR"
-                                   target="_blank"><i class="fa fa-envelope-o fa-fw"></i>&nbsp;&nbsp;文章投稿</a></li>
-                            <li><a href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=fBIVCRAVTU08DQ1SHxMR"
-                                   target="_blank"><i class="fa fa-envelope-o fa-fw"></i>&nbsp;&nbsp;题目投稿</a></li>
-                            <li class="divider"></li>
-                            <li class="dropdown-header">意见反馈</li>
-                            <li><a href="#footer"><i class="fa fa-qq"></i>&nbsp;&nbsp;QQ</a></li>
-                            <li><a href="#footer"><i class="fa fa-wechat"></i>&nbsp;&nbsp;We Chat</a></li>
-                        </ul>
-                    </li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right" th:if="${session.userpri} != null">
-                    <li><a href="/user/" th:text="${session.userpri.nickname}==null?${session.userpri.username}:${session.userpri.nickname}">独孤求败</a></li>
-                    <li><a href="/loginout">退出</a></li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right" th:if="${session.userpri} == null">
-                    <li><a href="/login" >登 录</a></li>
-                    <li><a href="/register">注 册</a></li>
-                </ul>
-            </div><!--/.nav-collapse -->
+      <div class="container" th:include="fragment/header :: header">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          </button>
+          <a class="navbar-brand" href="/">AUST</a>
         </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="start.html">起步</a></li>
+            <li><a href="practice.html">训练</a></li>
+            <li><a href="master.html">进阶</a></li>
+            <li><a href="contest.html">比赛</a></li>
+            <li><a href="rank.html">排名</a></li>
+            <li><a href="articles.html">干货</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">联系我们<b class="caret"></b></a>
+              <ul class="dropdown-menu animated fadeIn">
+                <li><a href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=fBIVCRAVTU08DQ1SHxMR"
+                       target="_blank"><i class="fa fa-envelope-o fa-fw"></i>&nbsp;&nbsp;文章投稿</a></li>
+                <li><a href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=fBIVCRAVTU08DQ1SHxMR"
+                       target="_blank"><i class="fa fa-envelope-o fa-fw"></i>&nbsp;&nbsp;题目投稿</a></li>
+                <li class="divider"></li>
+                <li class="dropdown-header">意见反馈</li>
+                <li><a href="#footer"><i class="fa fa-qq"></i>&nbsp;&nbsp;QQ</a></li>
+                <li><a href="#footer"><i class="fa fa-wechat"></i>&nbsp;&nbsp;We Chat</a></li>
+              </ul>
+            </li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="login.html">登录</a></li>
+            <li><a href="index.html">退出</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
     </div>
-</header>
-<!--头部结束-->
+  </header>
+  <!--头部结束-->
 
-<!--one page start-->
-<div class="bg-base index-one">
-    <div class="page-top text-center">
-        <div class="row animated fadeInDown">
-            <div class="col-md-12">
-                <h2 th:text="#{index.title}">这是一个ACM入门平台</h2>
-                <br/>
-                <h4 class="opacity-title" th:text="#{index.stitle}">这里给你提供入门指导和训练,相信在这个平台下你会找到自己的方向</h4>
-                <br/>
+  <!--one page start-->
+  <div class="index-one text-center">
+      <div class="row animated fadeInDown page-top">
+        <div class="col-md-12">
+          <h2 th:text="#{index.title}">这是一个ACM入门平台</h2>
+          <br/>
+          <h4 class="opacity-title" th:text="#{index.stitle}">这里给你提供入门指导和训练,相信在这个平台下你会找到自己的方向</h4>
+          <br/>
+        </div>
+      </div>
+      <div class="row animated fadeInDown">
+        <div class="col-md-4 col-md-offset-4">
+          <form class="sign-form" action="/register" onsubmit="return checkEmail(this)">
+            <div class="form-group">
+              <div class="input-group">
+                <input type="text" class="form-control" placeholder="Email Address" required name="email">
+                <span class="input-group-btn">
+                  <button class="btn" type="submit" id="signup">Sign Me Up!</button>
+                </span>
+              </div>
             </div>
+          </form>
         </div>
-        <div class="row animated fadeInDown">
-            <div class="col-md-4 col-md-offset-4">
-                <form class="sign-form" action="/register" onsubmit="return checkEmail(this)" th:onsubmit="'return checkEmail(this)'">
-                    <div class="form-group">
-                        <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Email Address" required name="email">
-                            <span class="input-group-btn">
-                                    <button class="btn" type="submit" id="signup">Sign Me Up!</button>
-                                </span>
-                        </div>
-                    </div>
-                </form>
+      </div>
+      <div class="row">
+        <div class="index-one-img">
+          <img src="/static/images/bg-one-img.png" class="animated fadeInUp img-responsive">
+        </div>
+      </div>
+  </div>
+  <!--one page end-->
+  <!--two page start-->
+  <div class="index-two text-center">
+      <div class="row page-top">
+        <div class="col-md-10 col-md-offset-1">
+          <div class="col-sm-6 col-md-3">
+            <div class="thumbnail">
+              <img src="/static/images/bg-two-start.png">
+              <div class="caption">
+                <h3>要从这里开始</h3>
+                <p th:text="#{index.start}">如果你是个初学者,那么就从这里开始,你可以在这里学习到一些基础的算法和技巧,牢固的基础有助于你走的路长久</p>
+                <a role="button" class="btn btn-primary" href="start.html" th:href="@{/start}">Start</a>
+              </div>
             </div>
-        </div>
-        <div style="margin: auto;display: table; text-align: center;margin-bottom: 0">
-            <img th:src="@{http://oce4brl1p.bkt.clouddn.com/austojbg-one-img.png}" src="/static/images/bg-one-img.png" style="max-width:100%" class="animated fadeInUp">
-        </div>
-    </div>
-</div>
-<!--one page end-->
-<!--two page start-->
-<div class="index-two">
-    <div class="page-top text-center">
-        <div class="row">
-            <div class="col-md-10 col-md-offset-1">
-                <div class="col-sm-6 col-md-3">
-                    <div class="thumbnail">
-                        <img src="/static/images/bg-two-start.png" th:src="@{http://oce4brl1p.bkt.clouddn.com/austojbg-two-start.png}">
-                        <div class="caption">
-                            <h3>要从这里开始</h3>
-                            <p th:text="#{index.start}">如果你是个初学者,那么就从这里开始,你可以在这里学习到一些基础的算法和技巧,牢固的基础有助于你走的路长久</p>
-                            <a role="button" class="btn btn-primary" href="/start">Start</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-3">
-                    <div class="thumbnail">
-                        <img src="/static/images/bg-two-practice.png" th:src="@{http://oce4brl1p.bkt.clouddn.com/austojbg-two-practice.png}">
-                        <div class="caption">
-                            <h3>不断接受训练</h3>
-                            <p th:href="#{index.practice}">技巧总需要锤炼,你需要在这里不断地进行练习,直到你熟练掌握这些技巧和方法,从而拿到通往进阶之路的钥匙,开启下一关</p>
-                            <a role="button" class="btn btn-primary" href="/practice">Practice</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-3">
-                    <div class="thumbnail">
-                        <img src="/static/images/bg-two-master.png" th:src="@{http://oce4brl1p.bkt.clouddn.com/austojbg-two-master.png}">
-                        <div class="caption">
-                            <h3>高手必经之路</h3>
-                            <p th:text="#{index.master}">浮躁的人容易问:我到底该学什么;浮躁的人容易问:X技术有钱途吗;什么是浮躁的人?只观望而不学或只学而不坚持的人</p>
-                            <a role="button" class="btn btn-primary" href="/master">Master</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-3">
-                    <div class="thumbnail">
-                        <img src="/static/images/bg-two-read.png" th:src="@{http://oce4brl1p.bkt.clouddn.com/austojbg-two-read.png}">
-                        <div class="caption">
-                            <h3>多读才会进步</h3>
-                            <p th:text="#{index.read}">三人行必有我师焉,则其善者而从之,其不善者而改之<br>乐于汲取和分享才会使你更加进步,且要多读,多问,多练</p>
-                            <a role="button" class="btn btn-primary" href="/articlelist">Read</a>
-                        </div>
-                    </div>
-                </div>
+          </div>
+          <div class="col-sm-6 col-md-3">
+            <div class="thumbnail">
+              <img src="/static/images/bg-two-practice.png">
+              <div class="caption">
+                <h3>不断接受训练</h3>
+                <p th:text="#{index.practice}">技巧总需要锤炼,你需要在这里不断地进行练习,直到你熟练掌握这些技巧和方法,从而拿到通往进阶之路的钥匙,开启下一关</p>
+                <a role="button" class="btn btn-primary" href="practice.html" th:href="@{/practice}">Practice</a>
+              </div>
             </div>
+          </div>
+          <div class="col-sm-6 col-md-3">
+            <div class="thumbnail">
+              <img src="/static/images/bg-two-master.png">
+              <div class="caption">
+                <h3>高手必经之路</h3>
+                <p th:text="#{index.master}">浮躁的人容易问:我到底该学什么;浮躁的人容易问:X技术有钱途吗;什么是浮躁的人?只观望而不学或只学而不坚持的人</p>
+                <a role="button" class="btn btn-primary" href="master.html" th:href="@{/master}">Master</a>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6 col-md-3">
+            <div class="thumbnail">
+              <img src="/static/images/bg-two-read.png">
+              <div class="caption">
+                <h3>多读才会进步</h3>
+                <p th:text="#{index.read}">三人行必有我师焉,则其善者而从之,其不善者而改之<br>乐于汲取和分享才会使你更加进步,且要多读,多问,多练</p>
+                <a role="button" class="btn btn-primary" href="articles.html" th:href="@{/articles}">Read</a>
+              </div>
+            </div>
+          </div>
         </div>
-    </div>
-</div>
-<!--two page end-->
-<!--three page start-->
-<div class="index-three">
+      </div>
+  </div>
+  <!--two page end-->
+  <!--three page start-->
+  <div class="index-three">
     <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="col-md-5 showUser1">
+      <div class="col-md-8 col-md-offset-2">
+        <div class="col-md-5 showUser1">
 
-            </div>
-            <div class="col-md-2"></div>
-            <div class="col-md-5 showUser2">
-
-            </div>
         </div>
-    </div>
-</div>
-<!--three page end-->
+        <div class="col-md-2"></div>
+        <div class="col-md-5 showUser2">
 
-<footer th:include="fragment/footer :: footer">
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--three page end-->
+  <footer th:include="fragment/footer :: footer">
     <div class="row" id="footer">
-        <div class="col-md-4 col-lg-offset-2">
-            AUST University Of Technology Online Judge<br/>
-            Copyright © 2010-2015 AUST NIU LI <br/>
-            All Copyright Reserved
-        </div>
-        <div class="footer-socials">
-            <div class="text-center">
+      <div class="col-md-4 col-lg-offset-2">
+        AUST University Of Technology Online Judge<br/>
+        Copyright © 2010-2015 AUST NIU LI <br/>
+        All Copyright Reserved
+      </div>
+      <div class="footer-socials">
+        <div class="text-center">
                 <span>
-                    <i title="<img src='http://oce4brl1p.bkt.clouddn.com/austojwechat.jpg' />" data-html="true" data-placement="top"
-                        data-toggle="tooltip" class="fa fa-wechat fa-3x mrs"></i>
+                    <i title="<img src='static/images/wechat.jpg' />" data-html="true" data-placement="top"
+                       data-toggle="tooltip" class="fa fa-wechat fa-3x mrs"></i>
                 </span>
-                <span>
-                    <i title="<img src='http://oce4brl1p.bkt.clouddn.com/austojqq.jpg' />" data-html="true" data-placement="top"
-                        data-toggle="tooltip" class="fa fa-qq fa-3x mrs"></i>
+          <span>
+                    <i title="<img src='static/images/qq.jpg' />" data-html="true" data-placement="top"
+                       data-toggle="tooltip" class="fa fa-qq fa-3x mrs"></i>
                 </span>
-            </div>
-            <div class="backtop text-center">
-                <a href="javascript:void(0)">BACK TO TOP</a>
-            </div>
         </div>
+        <div class="backtop text-center">
+          <a href="javascript:void(0)">BACK TO TOP</a>
+        </div>
+      </div>
     </div>
-</footer>
+  </footer>
 
-<!--script引入-->
-<script src="/static/js/jquery.min.js" th:src="@{//cdn.bootcss.com/jquery/2.2.4/jquery.min.js}"></script>
-<script src="/static/js/flat-ui.min.js" th:src="@{//cdn.bootcss.com/flat-ui/2.3.0/js/flat-ui.min.js}"></script>
-<script src="/static/js/toastr.min.js" th:src="@{//cdn.bootcss.com/toastr.js/latest/js/toastr.min.js}"></script>
-<script src="/static/js/common.js"></script>
-<script src="/static/js/index.js"></script>
-</body>
+    <script src="/static/scripts/vendor.js" th:href="@{static/scripts/vendor.js}"></script>
+
+    <script src="/static/scripts/plugins.js" th:href="@{static/scripts/plugins.js}"></script>
+    <script src="/static/scripts/index.js" th:href="@{static/scripts/index.js}"></script>
+  </body>
 </html>

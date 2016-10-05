@@ -9,7 +9,7 @@
       <arg column="firend" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="likecount" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="parent_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="parent_type" jdbcType="TINYINT" javaType="java.lang.Byte" />
+      <arg column="parent_type" jdbcType="TINYINT" javaType="java.lang.Integer" />
       <arg column="createdate" jdbcType="TIMESTAMP" javaType="java.util.Date" />
       <arg column="modifydate" jdbcType="TIMESTAMP" javaType="java.util.Date" />
     </constructor>
@@ -22,7 +22,7 @@
       <arg column="firend" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="likecount" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="parent_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="parent_type" jdbcType="TINYINT" javaType="java.lang.Byte" />
+      <arg column="parent_type" jdbcType="TINYINT" javaType="java.lang.Integer" />
       <arg column="createdate" jdbcType="TIMESTAMP" javaType="java.util.Date" />
       <arg column="modifydate" jdbcType="TIMESTAMP" javaType="java.util.Date" />
       <arg column="content" jdbcType="LONGVARCHAR" javaType="java.lang.String" />

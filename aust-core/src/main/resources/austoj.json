@@ -5,5 +5,7 @@
   "cookiePath":"/",
   "cookieDomain":"",
   "isRegisterEnabled":true,
-  "disabledUsernames":"admin,test,niuli"
+  "disabledUsernames":"admin,test,niuli",
+  "aside_tags":30,
+  "aside_articles":7
 }

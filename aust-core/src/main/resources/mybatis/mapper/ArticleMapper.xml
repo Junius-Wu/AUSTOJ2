@@ -10,8 +10,8 @@
       <arg column="nickname" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="keyword" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="catelog_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="totop" jdbcType="TINYINT" javaType="java.lang.Byte" />
-      <arg column="show" jdbcType="TINYINT" javaType="java.lang.Byte" />
+      <arg column="totop" jdbcType="TINYINT" javaType="java.lang.Integer" />
+      <arg column="isshow" jdbcType="TINYINT" javaType="java.lang.Integer" />
       <arg column="createdate" jdbcType="TIMESTAMP" javaType="java.util.Date" />
       <arg column="modifydate" jdbcType="TIMESTAMP" javaType="java.util.Date" />
     </constructor>
@@ -25,8 +25,8 @@
       <arg column="nickname" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="keyword" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="catelog_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="totop" jdbcType="TINYINT" javaType="java.lang.Byte" />
-      <arg column="show" jdbcType="TINYINT" javaType="java.lang.Byte" />
+      <arg column="totop" jdbcType="TINYINT" javaType="java.lang.Integer" />
+      <arg column="isshow" jdbcType="TINYINT" javaType="java.lang.Integer" />
       <arg column="createdate" jdbcType="TIMESTAMP" javaType="java.util.Date" />
       <arg column="modifydate" jdbcType="TIMESTAMP" javaType="java.util.Date" />
       <arg column="summary" jdbcType="LONGVARCHAR" javaType="java.lang.String" />
@@ -35,7 +35,7 @@
   </resultMap>
 
   <sql id="Base_Column_List" >
-    id, title, user_id, nickname, keyword, catelog_id, totop, show, createdate, modifydate
+    id, title, user_id, nickname, keyword, catelog_id, totop, isshow, createdate, modifydate
   </sql>
 
   <sql id="Blob_Column_List" >
@@ -59,12 +59,12 @@
   <insert id="insert" parameterType="cn.edu.aust.entity.ArticleBLOBs" >
     insert into article (id, title, user_id, 
       nickname, keyword, catelog_id, 
-      totop, show, createdate, 
+      totop, isshow, createdate, 
       modifydate, summary, content
       )
     values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{userId,jdbcType=INTEGER}, 
       #{nickname,jdbcType=VARCHAR}, #{keyword,jdbcType=VARCHAR}, #{catelogId,jdbcType=INTEGER}, 
-      #{totop,jdbcType=TINYINT}, #{show,jdbcType=TINYINT}, #{createdate,jdbcType=TIMESTAMP}, 
+      #{totop,jdbcType=TINYINT}, #{isshow,jdbcType=TINYINT}, #{createdate,jdbcType=TIMESTAMP}, 
       #{modifydate,jdbcType=TIMESTAMP}, #{summary,jdbcType=LONGVARCHAR}, #{content,jdbcType=LONGVARCHAR}
       )
   </insert>
@@ -93,8 +93,8 @@
       <if test="totop != null" >
         totop,
       </if>
-      <if test="show != null" >
-        show,
+      <if test="isshow != null" >
+        isshow,
       </if>
       <if test="createdate != null" >
         createdate,
@@ -131,8 +131,8 @@
       <if test="totop != null" >
         #{totop,jdbcType=TINYINT},
       </if>
-      <if test="show != null" >
-        #{show,jdbcType=TINYINT},
+      <if test="isshow != null" >
+        #{isshow,jdbcType=TINYINT},
       </if>
       <if test="createdate != null" >
         #{createdate,jdbcType=TIMESTAMP},
@@ -170,8 +170,8 @@
       <if test="totop != null" >
         totop = #{totop,jdbcType=TINYINT},
       </if>
-      <if test="show != null" >
-        show = #{show,jdbcType=TINYINT},
+      <if test="isshow != null" >
+        isshow = #{isshow,jdbcType=TINYINT},
       </if>
       <if test="createdate != null" >
         createdate = #{createdate,jdbcType=TIMESTAMP},
@@ -197,7 +197,7 @@
       keyword = #{keyword,jdbcType=VARCHAR},
       catelog_id = #{catelogId,jdbcType=INTEGER},
       totop = #{totop,jdbcType=TINYINT},
-      show = #{show,jdbcType=TINYINT},
+      isshow = #{isshow,jdbcType=TINYINT},
       createdate = #{createdate,jdbcType=TIMESTAMP},
       modifydate = #{modifydate,jdbcType=TIMESTAMP},
       summary = #{summary,jdbcType=LONGVARCHAR},
@@ -213,9 +213,18 @@
       keyword = #{keyword,jdbcType=VARCHAR},
       catelog_id = #{catelogId,jdbcType=INTEGER},
       totop = #{totop,jdbcType=TINYINT},
-      show = #{show,jdbcType=TINYINT},
+      isshow = #{isshow,jdbcType=TINYINT},
       createdate = #{createdate,jdbcType=TIMESTAMP},
       modifydate = #{modifydate,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <!--查找出文章列表-->
+  <select id="selectList" parameterType="int" resultType="cn.edu.aust.entity.Article">
+    SELECT <include refid="Base_Column_List"/>
+    FROM article ORDER by createdate DESC
+    <if test="value > 0">
+      limit ${value}
+    </if>
+  </select>
 </mapper>

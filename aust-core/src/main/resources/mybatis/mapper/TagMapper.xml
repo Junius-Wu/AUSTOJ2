@@ -2,19 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="cn.edu.aust.mapper.TagMapper" >
 
-  <resultMap id="BaseResultMap" type="cn.edu.aust.entity.Tag" >
-    <constructor >
-      <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="tag" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="count" jdbcType="INTEGER" javaType="java.lang.Integer" />
-    </constructor>
-  </resultMap>
-
   <sql id="Base_Column_List" >
     id, tag, count
   </sql>
 
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+  <select id="selectByPrimaryKey" resultType="cn.edu.aust.entity.Tag" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
     from tags
@@ -78,5 +70,13 @@
       count = #{count,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <!--查找出排名前的标签-->
+  <select id="selectList" parameterType="int" resultType="cn.edu.aust.entity.Tag">
+    SELECT * FROM tags ORDER BY count DESC
+    <if test="value > 0">
+      LIMIT #{value}
+    </if>
+  </select>
 
 </mapper>

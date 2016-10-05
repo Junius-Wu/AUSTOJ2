@@ -15,15 +15,15 @@ public class Article {
 
     private Integer catelogId;
 
-    private Byte totop;
+    private Integer totop;
 
-    private Byte show;
+    private Integer isshow;
 
     private Date createdate;
 
     private Date modifydate;
 
-    public Article(Integer id, String title, Integer userId, String nickname, String keyword, Integer catelogId, Byte totop, Byte show, Date createdate, Date modifydate) {
+    public Article(Integer id, String title, Integer userId, String nickname, String keyword, Integer catelogId, Integer totop, Integer isshow, Date createdate, Date modifydate) {
         this.id = id;
         this.title = title;
         this.userId = userId;
@@ -31,7 +31,7 @@ public class Article {
         this.keyword = keyword;
         this.catelogId = catelogId;
         this.totop = totop;
-        this.show = show;
+        this.isshow = isshow;
         this.createdate = createdate;
         this.modifydate = modifydate;
     }
@@ -88,20 +88,20 @@ public class Article {
         this.catelogId = catelogId;
     }
 
-    public Byte getTotop() {
+    public Integer getTotop() {
         return totop;
     }
 
-    public void setTotop(Byte totop) {
+    public void setTotop(Integer totop) {
         this.totop = totop;
     }
 
-    public Byte getShow() {
-        return show;
+    public Integer getisshow() {
+        return isshow;
     }
 
-    public void setShow(Byte show) {
-        this.show = show;
+    public void setisshow(Integer isshow) {
+        this.isshow = isshow;
     }
 
     public Date getCreatedate() {

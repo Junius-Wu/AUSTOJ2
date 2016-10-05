@@ -1,5 +1,7 @@
 package cn.edu.aust.mapper;
 
+import java.util.List;
+
 import cn.edu.aust.entity.Tag;
 
 public interface TagMapper {
@@ -14,4 +16,6 @@ public interface TagMapper {
     int updateByPrimaryKeySelective(Tag record);
 
     int updateByPrimaryKey(Tag record);
+
+    List<Tag> selectList(Integer value);
 }
