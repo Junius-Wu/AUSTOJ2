@@ -1,18 +1,18 @@
 //start表格数据获取
-setTable($('#start-table'),'/problem/findStageProblem/1');
+setTable($('#start-table'),'/problem/findByStage/1',15);
 //practice表格数据获取
-setTable($('#practice-table'),'/problem/findStageProblem/2');
+setTable($('#practice-table'),'/problem/findByStage/1',15);
 //master表格数据获取
-setTable($('#master-table'),'/problem/findStageProblem/3');
+setTable($('#master-table'),'/problem/findByStage/1',15);
 //获取指定目录下的题目
 var cateid = $('#cateid').val();
 setTable($('#cate-table'),'/problem/findCateProblem/'+cateid);
 
 //表格数据获取
-function setTable(obj,url,pageSize,pageList) {
+function setTable(obj,url,pageSize) {
   obj.bootstrapTable({
     url: url,//这里配置请求链接
-    method: 'post',
+    method: 'get',
     cache: true,					   //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
     pagination: true,				   //是否显示分页（*）
     queryParams: queryParams,//传递参数（*）
@@ -22,7 +22,7 @@ function setTable(obj,url,pageSize,pageList) {
     showRefresh: !0,
     pageNumber:1,					   //初始化加载第一页，默认第一页
     pageSize:pageSize,
-    pageList:pageList,
+    pageList:[15, 25, 50, 100],
     showColumns: !0,
     iconSize: 'outline',
     iconsPrefix:'fa',   //图标前缀
@@ -121,7 +121,7 @@ function setContest(value, row, index) {
 function setTitle(value, row, index) {
   return [
     '<div>',
-    '<a href="/problem/'+row.problem_id+'" target="_blank">' + value + '</a>',
+    '<a href="/problem/'+row.id+'" target="_blank">' + value + '</a>',
     '</div>'
   ].join('');
 }
@@ -181,6 +181,16 @@ function setUserBlog(value, row, index) {
     '</div>'
   ].join('');
 }
+//讨论按钮
+function setDiscuss(value, row, index) {
+  return [
+    '<div>',
+    '<a href="#">'+'讨论'+'</a>',
+    '</div>'
+  ].join('');
+}
+
+//<span class="text-primary"><i class="fa fa-thumbs-up"></i>' + value + '</span>',
 
 //功能：将浮点数四舍五入，取小数点后2位
 function toDecimal(x) {

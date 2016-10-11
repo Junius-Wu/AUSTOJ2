@@ -376,4 +376,23 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
 
+  <!--按照条件查询题目,不包含具体内容,分页排序交给插件执行-->
+  <select id="selectWithCriteria" parameterType="cn.edu.aust.PageAble" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List"/>
+    FROM problem p
+    <where>
+      <if test="filters.size() != 0">
+        <foreach collection="filters" item="filter" separator="AND" >
+          ${filter.property} ${filter.operator.operator} #{filter.value}
+        </foreach>
+        <if test="search!= null">
+          and
+        </if>
+      </if>
+      <if test="search!= null">
+        (p.id LIKE #{search} or p.title LIKE #{search} or p.keyword LIKE #{search})
+      </if>
+    </where>
+
+  </select>
 </mapper>

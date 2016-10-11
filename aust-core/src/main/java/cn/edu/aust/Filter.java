@@ -25,37 +25,51 @@ public class Filter implements Serializable {
 	public enum Operator {
 
 		/** 等于 */
-		eq,
+		eq("="),
 
 		/** 不等于 */
-		ne,
+		ne("!="),
 
 		/** 大于 */
-		gt,
+		gt(">"),
 
 		/** 小于 */
-		lt,
+		lt("<"),
 
 		/** 大于等于 */
-		ge,
+		ge(">="),
 
 		/** 小于等于 */
-		le,
+		le("<="),
 
 		/** 包含 */
-		in,
+		in("in"),
 
 		/** 为Null */
-		isNull,
+		isNull("==null"),
 
 		/** 不为Null */
-		isNotNull,
+		isNotNull("!=null"),
 
 		/** 为空 */
-		isEmpty,
+		isEmpty("==''"),
 
 		/** 不为空 */
-		isNotEmpty
+		isNotEmpty("!= ''");
+
+		Operator(String operator) {
+			this.operator = operator;
+		}
+
+		private String operator;
+
+		public String getOperator() {
+			return operator;
+		}
+
+		public void setOperator(String operator) {
+			this.operator = operator;
+		}
 	}
 
 
@@ -294,5 +308,7 @@ public class Filter implements Serializable {
 	public int hashCode() {
 		return new HashCodeBuilder(17, 37).append(getProperty()).append(getOperator()).append(getValue()).toHashCode();
 	}
+
+
 
 }

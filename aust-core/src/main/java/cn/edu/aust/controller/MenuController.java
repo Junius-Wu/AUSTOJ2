@@ -19,5 +19,25 @@ public class MenuController {
         return "start";
     }
 
+    @RequestMapping(value = "/practice")
+    public String practice(){
+        return "practice";
+    }
+
+    @RequestMapping(value = "/master")
+    public String master(){
+        return "master";
+    }
+
+    @RequestMapping(value = "/contest")
+    public String contest(){
+        return "contest";
+    }
+
+    @RequestMapping(value = "/rank")
+    public String rank(){
+        return "rank";
+    }
+
 
 }
