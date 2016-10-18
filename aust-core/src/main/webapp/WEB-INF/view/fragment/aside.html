@@ -10,7 +10,7 @@
     <!--个人中心-->
     <aside class="widget">
         <h5><span>个人中心</span></h5>
-        <!--/*@thymesVar id="user" type="cn.edu.aust.entity.User"*/-->
+        <!--/*@thymesVar id="user" type="cn.edu.aust.common.entity.User"*/-->
         <p class="text-center preson" th:if="${user} == null">
             <a href="../login.html" th:href="@{/login}" class="btn">登录</a>
             <a href="../register.html" th:href="@{/register}" class="btn">注册</a>
@@ -37,14 +37,14 @@
     <aside class="widget" th:if="${tags} == null">
         <h5><span>题目分类</span></h5>
         <ul class="list-unstyled catelog">
-            <!--/*@thymesVar id="catelogs" type="java.util.List<cn.edu.aust.entity.Catelog>"*/-->
+            <!--/*@thymesVar id="catelogs" type="java.util.List<cn.edu.aust.common.entity.Catelog>"*/-->
             <li th:each="catelog : ${catelogs}">
                 <i class="fa fa-bookmark-o">&nbsp;&nbsp;<a href="" th:text="${catelog.name}"></a></i>
             </li>
         </ul>
     </aside>
     <!--标签列表-->
-    <!--/*@thymesVar id="tags" type="java.util.List<cn.edu.aust.entity.Tag>"*/-->
+    <!--/*@thymesVar id="tags" type="java.util.List<cn.edu.aust.common.entity.Tag>"*/-->
     <aside class="widget" th:if="${tags} != null">
         <h5><span>标签</span></h5>
         <div class="tagcloud clearfix tags">
@@ -57,7 +57,7 @@
     <aside class="widget">
         <h5><span>近期文章</span></h5>
         <ul class="list-unstyled article">
-            <!--/*@thymesVar id="articles" type="java.util.List<cn.edu.aust.entity.Article>"*/-->
+            <!--/*@thymesVar id="articles" type="java.util.List<cn.edu.aust.common.entity.Article>"*/-->
             <li th:each="article : ${articles}">
                 <i class="fa fa-file-text-o">
                     <a href="/articles/'+item.id+'" target="_blank" th:text="${article.title}"></a>

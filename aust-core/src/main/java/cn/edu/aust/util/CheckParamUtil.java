@@ -1,5 +1,6 @@
 package cn.edu.aust.util;
 
+
 import com.alibaba.fastjson.JSONObject;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -9,8 +10,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-import cn.edu.aust.Filter;
-import cn.edu.aust.ResultVo;
+import cn.edu.aust.common.Filter;
+import cn.edu.aust.common.ResultVo;
 
 /**
  * 使用apache-commom系列对数据进行检验,需要根据自己的项目来修改

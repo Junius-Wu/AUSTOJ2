@@ -1,6 +1,7 @@
 package cn.edu.aust.exception;
 
-import cn.edu.aust.ResultVo;
+
+import cn.edu.aust.common.ResultVo;
 
 /**
  * @author Niu Li

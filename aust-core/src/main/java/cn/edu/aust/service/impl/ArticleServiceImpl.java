@@ -1,14 +1,15 @@
 package cn.edu.aust.service.impl;
 
+
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 import javax.annotation.Resource;
 
-import cn.edu.aust.entity.Article;
-import cn.edu.aust.entity.ArticleBLOBs;
-import cn.edu.aust.mapper.ArticleMapper;
+import cn.edu.aust.common.entity.Article;
+import cn.edu.aust.common.entity.ArticleBLOBs;
+import cn.edu.aust.common.mapper.ArticleMapper;
 import cn.edu.aust.service.ArticleService;
 
 /**

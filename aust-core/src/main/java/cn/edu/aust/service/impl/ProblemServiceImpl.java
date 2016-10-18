@@ -1,15 +1,16 @@
 package cn.edu.aust.service.impl;
 
+
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 import javax.annotation.Resource;
 
-import cn.edu.aust.PageAble;
-import cn.edu.aust.entity.Problem;
-import cn.edu.aust.entity.ProblemBLOBs;
-import cn.edu.aust.mapper.ProblemMapper;
+import cn.edu.aust.common.PageAble;
+import cn.edu.aust.common.entity.Problem;
+import cn.edu.aust.common.entity.ProblemBLOBs;
+import cn.edu.aust.common.mapper.ProblemMapper;
 import cn.edu.aust.service.ProblemService;
 
 /**
@@ -17,7 +18,7 @@ import cn.edu.aust.service.ProblemService;
  * @date 2016/10/5
  */
 @Service("problemServiceImpl")
-public class ProblemServiceImpl implements ProblemService{
+public class ProblemServiceImpl implements ProblemService {
     @Resource
     private ProblemMapper problemMapper;
 

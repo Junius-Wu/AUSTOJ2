@@ -1,6 +1,7 @@
 package cn.edu.aust.service;
 
-import cn.edu.aust.entity.Comment;
+
+import cn.edu.aust.common.entity.Comment;
 
 /**
  * @author Niu Li

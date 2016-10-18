@@ -1,5 +1,6 @@
 package cn.edu.aust.service.impl;
 
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
@@ -9,8 +10,8 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import cn.edu.aust.Setting;
-import cn.edu.aust.entity.User;
-import cn.edu.aust.mapper.UserMapper;
+import cn.edu.aust.common.entity.User;
+import cn.edu.aust.common.mapper.UserMapper;
 import cn.edu.aust.service.UserService;
 import cn.edu.aust.util.SystemUtil;
 
@@ -19,7 +20,7 @@ import cn.edu.aust.util.SystemUtil;
  * @date 2016/9/11
  */
 @Service("userServiceImpl")
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
 
     @Resource
     private UserMapper userMapper;

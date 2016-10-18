@@ -1,6 +1,7 @@
 package cn.edu.aust.service;
 
-import cn.edu.aust.entity.Notify;
+
+import cn.edu.aust.common.entity.Notify;
 
 /**
  * @author Niu Li

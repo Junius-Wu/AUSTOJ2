@@ -1,5 +1,6 @@
 package cn.edu.aust.controller;
 
+
 import com.alibaba.fastjson.JSONObject;
 
 import org.apache.commons.lang3.StringUtils;
@@ -12,16 +13,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.Date;
+import java.util.Optional;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import cn.edu.aust.Principal;
-import cn.edu.aust.ResultVo;
 import cn.edu.aust.Setting;
-import cn.edu.aust.entity.User;
+import cn.edu.aust.common.Principal;
+import cn.edu.aust.common.ResultVo;
+import cn.edu.aust.common.entity.User;
 import cn.edu.aust.exception.PageException;
 import cn.edu.aust.service.UserService;
 import cn.edu.aust.util.CheckParamUtil;
@@ -47,10 +49,8 @@ public class LoginController {
     @RequestMapping(value = "login", method = RequestMethod.GET)
     public String login(HttpServletRequest request) {
         //获取进入前的链接
-        String referer = request.getHeader("referer");
-        if (!StringUtils.isEmpty(referer)) {
-            request.getSession().setAttribute("referer", referer);
-        }
+        Optional.ofNullable(request.getHeader("referer"))
+                .ifPresent(s -> request.getSession().setAttribute("referer", s));
         return "login";
     }
 
@@ -58,7 +58,8 @@ public class LoginController {
      * 用户登录控制
      */
     @RequestMapping(value = "/login", method = RequestMethod.POST,produces = "application/json; charset=UTF-8")
-    public @ResponseBody JSONObject login(String username, String password, String codevalidate, String rmb_me,
+    public @ResponseBody
+    JSONObject login(String username, String password, String codevalidate, String rmb_me,
                      HttpSession session, HttpServletRequest request, HttpServletResponse response) throws PageException {
         JSONObject result = new JSONObject();
 
@@ -106,6 +107,7 @@ public class LoginController {
         //验证密码
         if(!user.getPassword().equals(DecriptUtil.SHA1(password.trim()))){
             int accountLockCount = user.getLoginfail()+1;
+
             LoggerUtil.infoIf(logger,
                     ()->accountLockCount > setting.getAccountLockCount(),//条件
                     ()->{//执行
@@ -113,6 +115,7 @@ public class LoginController {
                         user.setIslock(true);
                     },
                     ()->"用户:"+user.getUsername()+" 已被锁定");//日志
+
             user.setLoginfail(accountLockCount);
             userService.updateByPrimaryKeySelective(user);
             if (user.getIslock()){
@@ -142,12 +145,9 @@ public class LoginController {
                     ,null,setting.getCookiePath(),setting.getCookieDomain(),null);
         }
         //跳转到之前的页面
-        String redirect = (String) session.getAttribute("referer");
-        if (!StringUtils.isEmpty(redirect)) {
-            result.put("referer",redirect);
-        }else {
-            result.put("referer","/index");
-        }
+        Optional<String> redirect = Optional.ofNullable((String) session.getAttribute("referer"));
+        result.put("referer",redirect.orElse("/index"));
+
         session.removeAttribute("referer");
         return CheckParamUtil.packingRes(result,ResultVo.OK);
     }

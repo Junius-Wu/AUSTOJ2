@@ -1,5 +1,6 @@
 package cn.edu.aust.controller;
 
+
 import com.alibaba.fastjson.JSONObject;
 
 import org.apache.commons.lang3.StringUtils;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.Date;
+import java.util.Optional;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -20,10 +22,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
-import cn.edu.aust.Principal;
-import cn.edu.aust.ResultVo;
 import cn.edu.aust.Setting;
-import cn.edu.aust.entity.User;
+import cn.edu.aust.common.Principal;
+import cn.edu.aust.common.ResultVo;
+import cn.edu.aust.common.entity.User;
 import cn.edu.aust.service.UserService;
 import cn.edu.aust.util.CheckParamUtil;
 import cn.edu.aust.util.DecriptUtil;
@@ -47,10 +49,8 @@ public class RegisterController {
     @RequestMapping(value = "/register",method = RequestMethod.GET)
     public String toRegister(HttpServletRequest request){
         //获取进入前的链接
-        String referer = request.getHeader("referer");
-        if (!StringUtils.isEmpty(referer)) {
-            request.getSession().setAttribute("referer", referer);
-        }
+        Optional.ofNullable(request.getHeader("referer"))
+                .ifPresent(s -> request.getSession().setAttribute("referer", s));
         return "register";
     }
 
@@ -58,14 +58,15 @@ public class RegisterController {
      * 注册方法
      */
     @RequestMapping(value = "/register",method = RequestMethod.POST,produces = "application/json; charset=UTF-8")
-    public @ResponseBody JSONObject register(@Valid User user, BindingResult br, String codevalidate,
-                                             HttpServletRequest request, HttpServletResponse response){
+    public @ResponseBody
+    JSONObject register(@Valid User user, BindingResult br, String codevalidate,
+                        HttpServletRequest request, HttpServletResponse response){
         JSONObject result = new JSONObject();
         HttpSession session = request.getSession();
         //验证码验证
         String code = (String) session.getAttribute("codeValidate");
         if (!StringUtils.equalsIgnoreCase(code, codevalidate)) {
-            return CheckParamUtil.packingRes(result,ResultVo.CODE_ERROR);
+            return CheckParamUtil.packingRes(result, ResultVo.CODE_ERROR);
         }
         Setting setting = SystemUtil.getSetting();
         if (!setting.isIsRegisterEnabled()){
@@ -105,12 +106,9 @@ public class RegisterController {
                     ,null,setting.getCookiePath(),setting.getCookieDomain(),null);
         }
         //跳转到之前的页面
-        String redirect = (String) session.getAttribute("referer");
-        if (!StringUtils.isEmpty(redirect)) {
-            result.put("referer",redirect);
-        }else {
-            result.put("referer","/index");
-        }
+        Optional<String> redirect = Optional.ofNullable((String) session.getAttribute("referer"));
+        result.put("referer",redirect.orElse("/index"));
+
         session.removeAttribute("referer");
         return CheckParamUtil.packingRes(result,ResultVo.OK);
     }

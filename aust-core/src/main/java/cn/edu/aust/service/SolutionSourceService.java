@@ -1,6 +1,7 @@
 package cn.edu.aust.service;
 
-import cn.edu.aust.entity.SolutionSource;
+
+import cn.edu.aust.common.entity.SolutionSource;
 
 /**
  * @author Niu Li

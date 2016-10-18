@@ -1,5 +1,6 @@
 package cn.edu.aust.controller;
 
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,12 +12,12 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
-import cn.edu.aust.Principal;
 import cn.edu.aust.Setting;
-import cn.edu.aust.entity.Article;
-import cn.edu.aust.entity.Catelog;
-import cn.edu.aust.entity.Tag;
-import cn.edu.aust.entity.User;
+import cn.edu.aust.common.Principal;
+import cn.edu.aust.common.entity.Article;
+import cn.edu.aust.common.entity.Catelog;
+import cn.edu.aust.common.entity.Tag;
+import cn.edu.aust.common.entity.User;
 import cn.edu.aust.service.ArticleService;
 import cn.edu.aust.service.CatelogService;
 import cn.edu.aust.service.TagService;

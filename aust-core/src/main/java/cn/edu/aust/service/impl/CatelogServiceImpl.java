@@ -1,13 +1,14 @@
 package cn.edu.aust.service.impl;
 
+
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 import javax.annotation.Resource;
 
-import cn.edu.aust.entity.Catelog;
-import cn.edu.aust.mapper.CatelogMapper;
+import cn.edu.aust.common.entity.Catelog;
+import cn.edu.aust.common.mapper.CatelogMapper;
 import cn.edu.aust.service.CatelogService;
 
 /**

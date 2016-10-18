@@ -15,8 +15,8 @@ import java.util.stream.Collectors;
 
 import javax.annotation.Resource;
 
-import cn.edu.aust.entity.User;
-import cn.edu.aust.mapper.UserMapper;
+import cn.edu.aust.common.entity.User;
+import cn.edu.aust.common.mapper.UserMapper;
 import cn.edu.aust.util.FileUtil;
 import cn.edu.aust.util.LoggerUtil;
 

@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.edu.aust.common.mapper.ContestMapper" >
+
+  <resultMap id="BaseResultMap" type="cn.edu.aust.common.entity.Contest" >
+    <constructor >
+      <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="title" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="start_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="end_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="type" jdbcType="TINYINT" javaType="java.lang.Byte" />
+      <arg column="password" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="create_user" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="defunct" jdbcType="TINYINT" javaType="java.lang.Byte" />
+      <arg column="createdate" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="modifydate" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+    </constructor>
+  </resultMap>
+
+  <resultMap id="ResultMapWithBLOBs" type="cn.edu.aust.common.entity.Contest" >
+    <constructor >
+      <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="title" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="start_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="end_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="type" jdbcType="TINYINT" javaType="java.lang.Byte" />
+      <arg column="password" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="create_user" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="defunct" jdbcType="TINYINT" javaType="java.lang.Byte" />
+      <arg column="createdate" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="modifydate" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="description" jdbcType="LONGVARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    id, title, start_time, end_time, type, password, create_user, defunct, createdate, 
+    modifydate
+  </sql>
+
+  <sql id="Blob_Column_List" >
+    description
+  </sql>
+
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from contest
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from contest
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+
+  <insert id="insert" parameterType="Contest" >
+    insert into contest (id, title, start_time, 
+      end_time, type, password, 
+      create_user, defunct, createdate, 
+      modifydate, description)
+    values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{startTime,jdbcType=TIMESTAMP}, 
+      #{endTime,jdbcType=TIMESTAMP}, #{type,jdbcType=TINYINT}, #{password,jdbcType=VARCHAR}, 
+      #{createUser,jdbcType=VARCHAR}, #{defunct,jdbcType=TINYINT}, #{createdate,jdbcType=TIMESTAMP}, 
+      #{modifydate,jdbcType=TIMESTAMP}, #{description,jdbcType=LONGVARCHAR})
+  </insert>
+
+  <insert id="insertSelective" parameterType="Contest" >
+    insert into contest
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="startTime != null" >
+        start_time,
+      </if>
+      <if test="endTime != null" >
+        end_time,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="password != null" >
+        password,
+      </if>
+      <if test="createUser != null" >
+        create_user,
+      </if>
+      <if test="defunct != null" >
+        defunct,
+      </if>
+      <if test="createdate != null" >
+        createdate,
+      </if>
+      <if test="modifydate != null" >
+        modifydate,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null" >
+        #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null" >
+        #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=TINYINT},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="createUser != null" >
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="defunct != null" >
+        #{defunct,jdbcType=TINYINT},
+      </if>
+      <if test="createdate != null" >
+        #{createdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifydate != null" >
+        #{modifydate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="updateByPrimaryKeySelective" parameterType="Contest" >
+    update contest
+    <set >
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null" >
+        start_time = #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null" >
+        end_time = #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=TINYINT},
+      </if>
+      <if test="password != null" >
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="createUser != null" >
+        create_user = #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="defunct != null" >
+        defunct = #{defunct,jdbcType=TINYINT},
+      </if>
+      <if test="createdate != null" >
+        createdate = #{createdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifydate != null" >
+        modifydate = #{modifydate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="Contest" >
+    update contest
+    set title = #{title,jdbcType=VARCHAR},
+      start_time = #{startTime,jdbcType=TIMESTAMP},
+      end_time = #{endTime,jdbcType=TIMESTAMP},
+      type = #{type,jdbcType=TINYINT},
+      password = #{password,jdbcType=VARCHAR},
+      create_user = #{createUser,jdbcType=VARCHAR},
+      defunct = #{defunct,jdbcType=TINYINT},
+      createdate = #{createdate,jdbcType=TIMESTAMP},
+      modifydate = #{modifydate,jdbcType=TIMESTAMP},
+      description = #{description,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateByPrimaryKey" parameterType="Contest" >
+    update contest
+    set title = #{title,jdbcType=VARCHAR},
+      start_time = #{startTime,jdbcType=TIMESTAMP},
+      end_time = #{endTime,jdbcType=TIMESTAMP},
+      type = #{type,jdbcType=TINYINT},
+      password = #{password,jdbcType=VARCHAR},
+      create_user = #{createUser,jdbcType=VARCHAR},
+      defunct = #{defunct,jdbcType=TINYINT},
+      createdate = #{createdate,jdbcType=TIMESTAMP},
+      modifydate = #{modifydate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+</mapper>

@@ -1,8 +1,9 @@
 package cn.edu.aust.service;
 
+
 import java.util.List;
 
-import cn.edu.aust.entity.Tag;
+import cn.edu.aust.common.entity.Tag;
 
 /**
  * @author Niu Li

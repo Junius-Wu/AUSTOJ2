@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.edu.aust.common.mapper.SolutionMapper" >
+
+  <resultMap id="BaseResultMap" type="cn.edu.aust.common.entity.Solution" >
+    <constructor >
+      <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="problem_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="username" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="memory" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="time" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="code_length" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="language" jdbcType="TINYINT" javaType="java.lang.Byte" />
+      <arg column="contest_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="testcase" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="createdate" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="modifydate" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+    </constructor>
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    id, problem_id, username, memory, time, code_length, language, contest_id, testcase, 
+    createdate, modifydate
+  </sql>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from solution
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from solution
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+
+  <insert id="insert" parameterType="Solution" >
+    insert into solution (id, problem_id, username, 
+      memory, time, code_length, 
+      language, contest_id, testcase, 
+      createdate, modifydate)
+    values (#{id,jdbcType=INTEGER}, #{problemId,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, 
+      #{memory,jdbcType=INTEGER}, #{time,jdbcType=INTEGER}, #{codeLength,jdbcType=INTEGER}, 
+      #{language,jdbcType=TINYINT}, #{contestId,jdbcType=INTEGER}, #{testcase,jdbcType=INTEGER}, 
+      #{createdate,jdbcType=TIMESTAMP}, #{modifydate,jdbcType=TIMESTAMP})
+  </insert>
+
+  <insert id="insertSelective" parameterType="Solution" >
+    insert into solution
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="problemId != null" >
+        problem_id,
+      </if>
+      <if test="username != null" >
+        username,
+      </if>
+      <if test="memory != null" >
+        memory,
+      </if>
+      <if test="time != null" >
+        time,
+      </if>
+      <if test="codeLength != null" >
+        code_length,
+      </if>
+      <if test="language != null" >
+        language,
+      </if>
+      <if test="contestId != null" >
+        contest_id,
+      </if>
+      <if test="testcase != null" >
+        testcase,
+      </if>
+      <if test="createdate != null" >
+        createdate,
+      </if>
+      <if test="modifydate != null" >
+        modifydate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="problemId != null" >
+        #{problemId,jdbcType=INTEGER},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="memory != null" >
+        #{memory,jdbcType=INTEGER},
+      </if>
+      <if test="time != null" >
+        #{time,jdbcType=INTEGER},
+      </if>
+      <if test="codeLength != null" >
+        #{codeLength,jdbcType=INTEGER},
+      </if>
+      <if test="language != null" >
+        #{language,jdbcType=TINYINT},
+      </if>
+      <if test="contestId != null" >
+        #{contestId,jdbcType=INTEGER},
+      </if>
+      <if test="testcase != null" >
+        #{testcase,jdbcType=INTEGER},
+      </if>
+      <if test="createdate != null" >
+        #{createdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifydate != null" >
+        #{modifydate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="updateByPrimaryKeySelective" parameterType="Solution" >
+    update solution
+    <set >
+      <if test="problemId != null" >
+        problem_id = #{problemId,jdbcType=INTEGER},
+      </if>
+      <if test="username != null" >
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="memory != null" >
+        memory = #{memory,jdbcType=INTEGER},
+      </if>
+      <if test="time != null" >
+        time = #{time,jdbcType=INTEGER},
+      </if>
+      <if test="codeLength != null" >
+        code_length = #{codeLength,jdbcType=INTEGER},
+      </if>
+      <if test="language != null" >
+        language = #{language,jdbcType=TINYINT},
+      </if>
+      <if test="contestId != null" >
+        contest_id = #{contestId,jdbcType=INTEGER},
+      </if>
+      <if test="testcase != null" >
+        testcase = #{testcase,jdbcType=INTEGER},
+      </if>
+      <if test="createdate != null" >
+        createdate = #{createdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifydate != null" >
+        modifydate = #{modifydate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateByPrimaryKey" parameterType="Solution" >
+    update solution
+    set problem_id = #{problemId,jdbcType=INTEGER},
+      username = #{username,jdbcType=VARCHAR},
+      memory = #{memory,jdbcType=INTEGER},
+      time = #{time,jdbcType=INTEGER},
+      code_length = #{codeLength,jdbcType=INTEGER},
+      language = #{language,jdbcType=TINYINT},
+      contest_id = #{contestId,jdbcType=INTEGER},
+      testcase = #{testcase,jdbcType=INTEGER},
+      createdate = #{createdate,jdbcType=TIMESTAMP},
+      modifydate = #{modifydate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+</mapper>

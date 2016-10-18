@@ -22,11 +22,13 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="true" />
+        <module name="aust-common" />
         <module name="aust-core" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="aust-bean" target="1.8" />
+      <module name="aust-common" target="1.8" />
       <module name="aust-core" target="1.8" />
       <module name="aust-dao" target="1.8" />
       <module name="aust-dao-interface" target="1.8" />

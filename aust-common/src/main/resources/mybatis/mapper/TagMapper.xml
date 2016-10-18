@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.edu.aust.common.mapper.TagMapper" >
+
+  <sql id="Base_Column_List" >
+    id, tag, count
+  </sql>
+
+  <select id="selectByPrimaryKey" resultType="cn.edu.aust.common.entity.Tag" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tags
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tags
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+
+  <insert id="insert" parameterType="cn.edu.aust.common.entity.Tag" >
+    insert into tags (id, tag, count
+      )
+    values (#{id,jdbcType=INTEGER}, #{tag,jdbcType=VARCHAR}, #{count,jdbcType=INTEGER}
+      )
+  </insert>
+
+  <insert id="insertSelective" parameterType="cn.edu.aust.common.entity.Tag" >
+    insert into tags
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="tag != null" >
+        tag,
+      </if>
+      <if test="count != null" >
+        count,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="tag != null" >
+        #{tag,jdbcType=VARCHAR},
+      </if>
+      <if test="count != null" >
+        #{count,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="updateByPrimaryKeySelective" parameterType="cn.edu.aust.common.entity.Tag" >
+    update tags
+    <set >
+      <if test="tag != null" >
+        tag = #{tag,jdbcType=VARCHAR},
+      </if>
+      <if test="count != null" >
+        count = #{count,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateByPrimaryKey" parameterType="cn.edu.aust.common.entity.Tag" >
+    update tags
+    set tag = #{tag,jdbcType=VARCHAR},
+      count = #{count,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <!--查找出排名前的标签-->
+  <select id="selectList" parameterType="int" resultType="cn.edu.aust.common.entity.Tag">
+    SELECT * FROM tags ORDER BY count DESC
+    <if test="value > 0">
+      LIMIT #{value}
+    </if>
+  </select>
+
+</mapper>

@@ -1,6 +1,7 @@
 package cn.edu.aust.service;
 
-import cn.edu.aust.entity.Contest;
+
+import cn.edu.aust.common.entity.Contest;
 
 /**
  * @author Niu Li

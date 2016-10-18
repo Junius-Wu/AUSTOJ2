@@ -1,8 +1,9 @@
 package cn.edu.aust.service;
 
+
 import java.util.List;
 
-import cn.edu.aust.entity.Catelog;
+import cn.edu.aust.common.entity.Catelog;
 
 /**
  * @author Niu Li

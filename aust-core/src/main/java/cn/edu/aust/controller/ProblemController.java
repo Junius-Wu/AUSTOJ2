@@ -1,5 +1,6 @@
 package cn.edu.aust.controller;
 
+
 import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
@@ -12,17 +13,18 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.annotation.Resource;
 
-import cn.edu.aust.Filter;
-import cn.edu.aust.PageAble;
-import cn.edu.aust.entity.Problem;
-import cn.edu.aust.entity.ProblemBLOBs;
+import cn.edu.aust.common.Filter;
+import cn.edu.aust.common.PageAble;
+import cn.edu.aust.common.entity.Problem;
+import cn.edu.aust.common.entity.ProblemBLOBs;
 import cn.edu.aust.exception.PageException;
 import cn.edu.aust.service.ProblemService;
 
-import static cn.edu.aust.ResultVo.PROBLEM_NOT_EXIST;
+import static cn.edu.aust.common.ResultVo.PROBLEM_NOT_EXIST;
 
 /**
  * @author Niu Li
@@ -41,7 +43,8 @@ public class ProblemController {
      * @return
      */
     @RequestMapping(value = "/findByStage/{stage}",method = RequestMethod.GET)
-    public @ResponseBody JSONObject findByStage(@PathVariable(value = "stage") Integer stage, PageAble pageAble){
+    public @ResponseBody
+    JSONObject findByStage(@PathVariable(value = "stage") Integer stage, PageAble pageAble){
         JSONObject result = new JSONObject();
         pageAble.getFilters().add(Filter.eq("stage",stage));
         pageAble.getFilters().add(Filter.eq("contest_id",0));
@@ -61,11 +64,8 @@ public class ProblemController {
      */
     @RequestMapping(value = "/{id}",method = RequestMethod.GET)
     public String findProblem(@PathVariable(value = "id") Integer id, Model model) throws PageException {
-        ProblemBLOBs problem = problemService.selectByPrimaryKey(id);
-        if (problem == null){
-            throw new PageException(PROBLEM_NOT_EXIST);
-        }
-        model.addAttribute("problem",problem);
+        Optional<ProblemBLOBs> problem = Optional.ofNullable(problemService.selectByPrimaryKey(id));
+        model.addAttribute("problem", problem.orElseThrow(() -> new PageException(PROBLEM_NOT_EXIST)));
         return "problem";
     }
 }

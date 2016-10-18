@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="cn.edu.aust.common.mapper.UserMapper" >
+  <sql id="Base_Column_List" >
+    id, avatar, username, password, nickname, email, school, stu_no, motto, honor, point, 
+    language, submit, solved, isshow, blog, ip, islock,loginfail,lockdate, createdate, modifydate,
+    defunct, opensource
+  </sql>
+
+  <select id="selectByPrimaryKey" resultType="cn.edu.aust.common.entity.User" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from user
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+
+  <insert id="insert" parameterType="cn.edu.aust.common.entity.User" >
+    insert into user (id, avatar, username, 
+      password, nickname, email, 
+      school, stu_no, motto, 
+      honor, point, language, 
+      submit, solved, isshow, 
+      blog, ip, islock, lockdate, 
+      createdate, modifydate, defunct, 
+      opensource)
+    values (#{id,jdbcType=INTEGER}, #{avatar,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, 
+      #{password,jdbcType=VARCHAR}, #{nickname,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
+      #{school,jdbcType=VARCHAR}, #{stuNo,jdbcType=VARCHAR}, #{motto,jdbcType=VARCHAR}, 
+      #{honor,jdbcType=VARCHAR}, #{point,jdbcType=INTEGER}, #{language,jdbcType=TINYINT}, 
+      #{submit,jdbcType=INTEGER}, #{solved,jdbcType=INTEGER}, #{isshow,jdbcType=TINYINT}, 
+      #{blog,jdbcType=VARCHAR}, #{ip,jdbcType=VARCHAR}, #{islock,jdbcType=TINYINT}, #{lockdate,jdbcType=TIMESTAMP}, 
+      #{createdate,jdbcType=TIMESTAMP}, #{modifydate,jdbcType=TIMESTAMP}, #{defunct,jdbcType=TINYINT}, 
+      #{opensource,jdbcType=TINYINT})
+  </insert>
+
+  <insert id="insertSelective" parameterType="cn.edu.aust.common.entity.User" >
+    insert into user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="avatar != null" >
+        avatar,
+      </if>
+      <if test="username != null" >
+        username,
+      </if>
+      <if test="password != null" >
+        password,
+      </if>
+      <if test="nickname != null" >
+        nickname,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="school != null" >
+        school,
+      </if>
+      <if test="stuNo != null" >
+        stu_no,
+      </if>
+      <if test="motto != null" >
+        motto,
+      </if>
+      <if test="honor != null" >
+        honor,
+      </if>
+      <if test="point != null" >
+        point,
+      </if>
+      <if test="language != null" >
+        language,
+      </if>
+      <if test="submit != null" >
+        submit,
+      </if>
+      <if test="solved != null" >
+        solved,
+      </if>
+      <if test="isshow != null" >
+        isshow,
+      </if>
+      <if test="blog != null" >
+        blog,
+      </if>
+      <if test="ip != null" >
+        ip,
+      </if>
+      <if test="islock != null" >
+        islock,
+      </if>
+      <if test="lockdate != null" >
+        lockdate,
+      </if>
+      <if test="createdate != null" >
+        createdate,
+      </if>
+      <if test="modifydate != null" >
+        modifydate,
+      </if>
+      <if test="defunct != null" >
+        defunct,
+      </if>
+      <if test="opensource != null" >
+        opensource,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="avatar != null" >
+        #{avatar,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="nickname != null" >
+        #{nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="school != null" >
+        #{school,jdbcType=VARCHAR},
+      </if>
+      <if test="stuNo != null" >
+        #{stuNo,jdbcType=VARCHAR},
+      </if>
+      <if test="motto != null" >
+        #{motto,jdbcType=VARCHAR},
+      </if>
+      <if test="honor != null" >
+        #{honor,jdbcType=VARCHAR},
+      </if>
+      <if test="point != null" >
+        #{point,jdbcType=INTEGER},
+      </if>
+      <if test="language != null" >
+        #{language,jdbcType=TINYINT},
+      </if>
+      <if test="submit != null" >
+        #{submit,jdbcType=INTEGER},
+      </if>
+      <if test="solved != null" >
+        #{solved,jdbcType=INTEGER},
+      </if>
+      <if test="isshow != null" >
+        #{isshow,jdbcType=TINYINT},
+      </if>
+      <if test="blog != null" >
+        #{blog,jdbcType=VARCHAR},
+      </if>
+      <if test="ip != null" >
+        #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="islock != null" >
+        #{islock,jdbcType=TINYINT},
+      </if>
+      <if test="lockdate != null" >
+        #{lockdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdate != null" >
+        #{createdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifydate != null" >
+        #{modifydate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="defunct != null" >
+        #{defunct,jdbcType=TINYINT},
+      </if>
+      <if test="opensource != null" >
+        #{opensource,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="updateByPrimaryKeySelective" parameterType="cn.edu.aust.common.entity.User" >
+    update user
+    <set >
+      <if test="avatar != null" >
+        avatar = #{avatar,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null" >
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="nickname != null" >
+        nickname = #{nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="school != null" >
+        school = #{school,jdbcType=VARCHAR},
+      </if>
+      <if test="stuNo != null" >
+        stu_no = #{stuNo,jdbcType=VARCHAR},
+      </if>
+      <if test="motto != null" >
+        motto = #{motto,jdbcType=VARCHAR},
+      </if>
+      <if test="honor != null" >
+        honor = #{honor,jdbcType=VARCHAR},
+      </if>
+      <if test="point != null" >
+        point = #{point,jdbcType=INTEGER},
+      </if>
+      <if test="language != null" >
+        language = #{language,jdbcType=TINYINT},
+      </if>
+      <if test="submit != null" >
+        submit = #{submit,jdbcType=INTEGER},
+      </if>
+      <if test="solved != null" >
+        solved = #{solved,jdbcType=INTEGER},
+      </if>
+      <if test="isshow != null" >
+        isshow = #{isshow,jdbcType=TINYINT},
+      </if>
+      <if test="blog != null" >
+        blog = #{blog,jdbcType=VARCHAR},
+      </if>
+      <if test="ip != null" >
+        ip = #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="islock != null" >
+        islock = #{islock,jdbcType=TINYINT},
+      </if>
+      <if test="lockdate != null" >
+        lockdate = #{lockdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="loginfail != null" >
+        loginfail = #{loginfail,jdbcType=INTEGER},
+      </if>
+      <if test="createdate != null" >
+        createdate = #{createdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifydate != null" >
+        modifydate = #{modifydate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="defunct != null" >
+        defunct = #{defunct,jdbcType=TINYINT},
+      </if>
+      <if test="opensource != null" >
+        opensource = #{opensource,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateByPrimaryKey" parameterType="cn.edu.aust.common.entity.User" >
+    update user
+    set avatar = #{avatar,jdbcType=VARCHAR},
+      username = #{username,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      nickname = #{nickname,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      school = #{school,jdbcType=VARCHAR},
+      stu_no = #{stuNo,jdbcType=VARCHAR},
+      motto = #{motto,jdbcType=VARCHAR},
+      honor = #{honor,jdbcType=VARCHAR},
+      point = #{point,jdbcType=INTEGER},
+      language = #{language,jdbcType=TINYINT},
+      submit = #{submit,jdbcType=INTEGER},
+      solved = #{solved,jdbcType=INTEGER},
+      isshow = #{isshow,jdbcType=TINYINT},
+      blog = #{blog,jdbcType=VARCHAR},
+      ip = #{ip,jdbcType=VARCHAR},
+      islock = #{islock,jdbcType=TINYINT},
+      loginfail = #{loginfail,jdbcType=INTEGER},
+      lockdate = #{lockdate,jdbcType=TIMESTAMP},
+      createdate = #{createdate,jdbcType=TIMESTAMP},
+      modifydate = #{modifydate,jdbcType=TIMESTAMP},
+      defunct = #{defunct,jdbcType=TINYINT},
+      opensource = #{opensource,jdbcType=TINYINT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <!--查找需要展示出来的用户-->
+  <select id="selecttoShow" resultType="cn.edu.aust.common.entity.User">
+    SELECT u.id,u.nickname,u.avatar,u.honor FROM user u
+    WHERE u.defunct = 0 and u.isshow = 1
+    order BY modifydate ASC
+    limit 6
+  </select>
+
+  <!--查找全部用户-->
+  <select id="selectAll" resultType="cn.edu.aust.common.entity.User">
+    SELECT <include refid="Base_Column_List"/>
+    FROM user
+  </select>
+<!--根据用户名查找用户-->
+  <select id="selectByUsername" parameterType="string" resultType="cn.edu.aust.common.entity.User">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM user WHERE user.username = #{username}
+  </select>
+<!--根据用户名查找用户-->
+  <select id="selectByEmail" parameterType="string" resultType="cn.edu.aust.common.entity.User">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM user WHERE user.email = #{email}
+  </select>
+
+</mapper>

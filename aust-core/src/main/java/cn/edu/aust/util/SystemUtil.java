@@ -40,6 +40,7 @@ public class SystemUtil {
     public static Setting getSetting(){
         Cache cache = CACHE_MANAGER.getCache(Setting.CACHE_NAME);
         Element elementCache = cache.get(Setting.CACHE_NAME);
+
         if (elementCache == null){
             Setting setting = null;
             try {

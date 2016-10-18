@@ -1,9 +1,10 @@
 package cn.edu.aust.service;
 
+
 import java.util.List;
 
-import cn.edu.aust.entity.Article;
-import cn.edu.aust.entity.ArticleBLOBs;
+import cn.edu.aust.common.entity.Article;
+import cn.edu.aust.common.entity.ArticleBLOBs;
 
 /**
  * @author Niu Li

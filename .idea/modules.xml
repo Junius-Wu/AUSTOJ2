@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/AUSTOJ2.iml" filepath="$PROJECT_DIR$/AUSTOJ2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/aust-common/aust-common.iml" filepath="$PROJECT_DIR$/aust-common/aust-common.iml" />
       <module fileurl="file://$PROJECT_DIR$/aust-core/aust-core.iml" filepath="$PROJECT_DIR$/aust-core/aust-core.iml" />
     </modules>
   </component>
