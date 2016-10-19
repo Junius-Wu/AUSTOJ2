@@ -3,7 +3,7 @@
  * Support: http://www.shopxx.net
  * License: http://www.shopxx.net/license
  */
-package cn.edu.aust.common;
+package cn.edu.aust.common.util;
 
 
 import org.apache.commons.lang3.builder.EqualsBuilder;

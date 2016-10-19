@@ -8,12 +8,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
+import cn.edu.aust.Principal;
 import cn.edu.aust.Setting;
-import cn.edu.aust.common.Principal;
 import cn.edu.aust.common.entity.Article;
 import cn.edu.aust.common.entity.Catelog;
 import cn.edu.aust.common.entity.Tag;
@@ -49,12 +50,12 @@ public class FragmentController {
     public String asideFragment(@RequestParam(required = false,defaultValue = "0") int isTags,
                                 HttpSession session, Model model){
         Setting setting = SystemUtil.getSetting();
-        Principal principal = (Principal) session.getAttribute("userpri");
-        if (principal != null){
-            User user = userService.selectByPrimaryKey(principal.getId());
+        Optional<Principal> principal = Optional.ofNullable((Principal) session.getAttribute("userpri"));
+        principal.ifPresent(principal1 -> {
+            User user = userService.selectByPrimaryKey(principal1.getId());
             model.addAttribute("user",user);
+        });
 
-        }
         List<Catelog> catelogs = catelogService.selectList(0);
         if (isTags !=0){
             List<Tag> tags = tagService.selectList(setting.getAside_tags());

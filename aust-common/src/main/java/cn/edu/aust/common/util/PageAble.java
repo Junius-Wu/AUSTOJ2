@@ -1,4 +1,4 @@
-package cn.edu.aust.common;
+package cn.edu.aust.common.util;
 
 import java.io.Serializable;
 import java.util.ArrayList;

@@ -218,12 +218,11 @@ $(function () {
       type:'GET',
       url:'/frg/aside',
       dataType:'html',
-      cache:true,
       success:function (data) {
-        $('#aside').html(data);
-        $('[data-toggle=tooltip]').tooltip();
+        $aside.html(data);
       }
     });
+
   }
 
   //写入到通知
@@ -234,7 +233,6 @@ $(function () {
     url:'../static/json/notify.json',
     //返回数据格式为json
     dataType: 'json',
-    cache:true,
     //请求成功完成后要执行的方法
     success: function(data){
       //使用$.each方法遍历返回的数据date,插入到id为#result中

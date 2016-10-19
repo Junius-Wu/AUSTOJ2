@@ -38,4 +38,9 @@ public interface UserService {
      * 判断用户名是否被禁用
      */
     boolean usernameIsDisabled(String username);
+
+    /**
+     * 查找用户排名数据
+     */
+    List<User> selectRanks();
 }

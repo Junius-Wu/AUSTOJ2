@@ -4,9 +4,13 @@ setTable($('#start-table'),'/problem/findByStage/1',15);
 setTable($('#practice-table'),'/problem/findByStage/1',15);
 //master表格数据获取
 setTable($('#master-table'),'/problem/findByStage/1',15);
+//获取用户排名
+setTableClient($("#rank-table"),"/static/json/rank.json",20);
+
 //获取指定目录下的题目
-var cateid = $('#cateid').val();
-setTable($('#cate-table'),'/problem/findCateProblem/'+cateid);
+// var cateid = $('#cateid').val();
+// setTable($('#cate-table'),'/problem/findCateProblem/'+cateid);
+
 
 //表格数据获取
 function setTable(obj,url,pageSize) {
@@ -23,6 +27,29 @@ function setTable(obj,url,pageSize) {
     pageNumber:1,					   //初始化加载第一页，默认第一页
     pageSize:pageSize,
     pageList:[15, 25, 50, 100],
+    showColumns: !0,
+    iconSize: 'outline',
+    iconsPrefix:'fa',   //图标前缀
+    icons: {refresh: 'fa-refresh', columns: 'fa-th-list'},
+    undefinedText:'-_-',
+    uniqueId: 'id'
+  });
+}
+//表格数据获取,获取本地json
+function setTableClient(obj,url,pageSize) {
+  obj.bootstrapTable({
+    url: url,//这里配置请求链接
+    method: 'get',
+    cache: true,					   //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+    pagination: true,				   //是否显示分页（*）
+    queryParams: queryParams,//传递参数（*）
+    sidePagination: 'client',		   //分页方式：client客户端分页，server服务端分页（*）
+    search: !0,
+    striped: true,
+    showRefresh: !0,
+    pageNumber:1,					   //初始化加载第一页，默认第一页
+    pageSize:pageSize,
+    pageList:[20, 30, 50, 100],
     showColumns: !0,
     iconSize: 'outline',
     iconsPrefix:'fa',   //图标前缀
@@ -125,19 +152,18 @@ function setTitle(value, row, index) {
     '</div>'
   ].join('');
 }
-//更改题目Ratio
-function setProRadio(value, row, index) {
-  return [
-    '<div>',
-    '<span>' + toDecimal(row.accepted/row.submit)*100 + '%</span>',
-    '</div>'
-  ].join('');
-}
+
 //更改题目acsubmit
 function setAcSubmit(value, row, index) {
+  var submit = 0;
+  if (row.submit <=0){
+    submit =  1;
+  }else {
+    submit =  row.submit;
+  }
   return [
     '<div>',
-    '<span>('+row.accepted+'/'+row.submit+ ')</span>',
+    '<span>('+row.solved+'/'+row.submit+ ')'+toDecimal(row.solved/submit)*100+'%</span>',
     '</div>'
   ].join('');
 }
@@ -164,7 +190,7 @@ function setId(value, row, index) {
 //用户名点击功能
 function setUsername(value, row, index) {
 
-  if(value == '佚名'){
+  if(value == null){
     value = row.username;
   }
   return [
@@ -175,11 +201,20 @@ function setUsername(value, row, index) {
 }
 //用户博客点击功能
 function setUserBlog(value, row, index) {
-  return [
-    '<div>',
-    '<a href="'+row.blog+'" target="_blank" title="'+value+'">' + value.substring(0,14) + '</a>',
-    '</div>'
-  ].join('');
+  if(value == null){
+    return [
+      '<div>',
+      '<a target="_blank" style="color: gray" title="无博客">无</a>',
+      '</div>'
+    ].join('');
+  }else {
+    return [
+      '<div>',
+      '<a href="'+row.blog+'" target="_blank" title="'+value+'">博客</a>',
+      '</div>'
+    ].join('');
+  }
+
 }
 //讨论按钮
 function setDiscuss(value, row, index) {

@@ -7,7 +7,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import cn.edu.aust.common.PageAble;
+import cn.edu.aust.common.util.PageAble;
 import cn.edu.aust.common.entity.Problem;
 import cn.edu.aust.common.entity.ProblemBLOBs;
 import cn.edu.aust.common.mapper.ProblemMapper;

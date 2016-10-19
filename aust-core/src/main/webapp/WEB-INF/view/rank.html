@@ -74,19 +74,19 @@
                <!--主面板-->
                <section class="animated fadeInLeft">
                    <strong>&nbsp;&nbsp;须知:</strong><br/>
-                   <p class="page-text" style="text-indent: 2em;">
+                   <p class="page-text" style="text-indent: 2em;" th:text="#{rank.title}">
                        为了减轻服务器压力,排名设置每两小时刷新一次
                    </p>
                    <h4 class="text-center">排名列表</h4>
                 <table class="table-bordered text-center" width="80%" data-toggle="table" id="rank-table">
                     <thead>
                         <tr>
-                            <th class="col-xs-2" data-formatter="setId">RankID</th>
-                            <th class="col-xs-3" data-field="nickname">昵称</th>
-                            <th class="col-xs-2" data-field="solved">AC</th>
+                            <th class="col-xs-1" data-formatter="setId">RankID</th>
+                            <th class="col-xs-3" data-field="nickname" data-formatter="setUsername">昵称</th>
+                            <th class="col-xs-1" data-field="solved">AC</th>
                             <th class="col-xs-1" data-field="submit">Submit</th>
-                            <th class="col-xs-1" data-formatter="tableuserradio">Ratio</th>
-                            <th class="col-xs-3" data-formatter="tableuserblog" data-field="blogname">博客</th>
+                            <th class="col-xs-1" data-formatter="setUserRadio">Ratio</th>
+                            <th class="col-xs-1" data-formatter="setUserBlog" data-field="blog">博客</th>
                         </tr>
                     </thead>
                     <tbody>

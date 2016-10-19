@@ -87,4 +87,9 @@ public class UserServiceImpl implements UserService {
         }
         return false;
     }
+
+    @Override
+    public List<User> selectRanks() {
+        return userMapper.selectRanks();
+    }
 }

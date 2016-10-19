@@ -10,8 +10,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-import cn.edu.aust.common.Filter;
-import cn.edu.aust.common.ResultVo;
+import cn.edu.aust.common.util.Filter;
 
 /**
  * 使用apache-commom系列对数据进行检验,需要根据自己的项目来修改
@@ -19,17 +18,6 @@ import cn.edu.aust.common.ResultVo;
  * @date 2016/9/15
  */
 public class CheckParamUtil {
-
-    public static JSONObject packingRes(JSONObject object, ResultVo resultVo){
-        object.put("status",resultVo.getStatus());
-        object.put("msg",resultVo.getMsg());
-        return object;
-    }
-    public static JSONObject packingRes(JSONObject object, ResultVo resultVo,String msg){
-        object.put("status",resultVo.getStatus());
-        object.put("msg",msg);
-        return object;
-    }
 
     /**
      * 检验map中的参数值

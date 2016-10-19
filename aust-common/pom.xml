@@ -44,5 +44,11 @@
             <artifactId>hibernate-validator</artifactId>
         </dependency>
         <!--hibervate validate end-->
+        <!--fastjson start-->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+        </dependency>
+        <!--fastjson end-->
     </dependencies>
 </project>

@@ -314,5 +314,11 @@
     <include refid="Base_Column_List"/>
     FROM user WHERE user.email = #{email}
   </select>
+  <!--查找出用户排名-->
+    <select id="selectRanks" resultType="cn.edu.aust.common.entity.User">
+      SELECT u.id,u.username,u.nickname,u.submit,u.solved,u.blog
+      FROM user u WHERE u.defunct = 0
+      ORDER BY u.solved DESC ,u.submit DESC LIMIT 10000
+    </select>
 
 </mapper>

@@ -3,7 +3,7 @@ package cn.edu.aust.service;
 
 import java.util.List;
 
-import cn.edu.aust.common.PageAble;
+import cn.edu.aust.common.util.PageAble;
 import cn.edu.aust.common.entity.Problem;
 import cn.edu.aust.common.entity.ProblemBLOBs;
 

@@ -20,13 +20,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import cn.edu.aust.Principal;
 import cn.edu.aust.Setting;
-import cn.edu.aust.common.Principal;
 import cn.edu.aust.common.ResultVo;
 import cn.edu.aust.common.entity.User;
+import cn.edu.aust.common.util.ReturnUtil;
 import cn.edu.aust.exception.PageException;
 import cn.edu.aust.service.UserService;
-import cn.edu.aust.util.CheckParamUtil;
 import cn.edu.aust.util.DecriptUtil;
 import cn.edu.aust.util.LoggerUtil;
 import cn.edu.aust.util.SystemUtil;
@@ -64,12 +64,12 @@ public class LoginController {
         JSONObject result = new JSONObject();
 
         if (StringUtils.isEmpty(username) || StringUtils.isEmpty(password)){
-            return CheckParamUtil.packingRes(result, ResultVo.LOGIN_ERROR);
+            return ReturnUtil.packingRes(result, ResultVo.LOGIN_ERROR);
         }
         //验证码验证
         String code = (String) session.getAttribute("codeValidate");
         if (!StringUtils.equalsIgnoreCase(code, codevalidate)) {
-            return CheckParamUtil.packingRes(result, ResultVo.CODE_ERROR);
+            return ReturnUtil.packingRes(result, ResultVo.CODE_ERROR);
         }
         User user;
         Setting setting = SystemUtil.getSetting();
@@ -80,18 +80,18 @@ public class LoginController {
         }
         //验证不存在
         if (user == null) {
-            return CheckParamUtil.packingRes(result, ResultVo.LOGIN_ERROR);
+            return ReturnUtil.packingRes(result, ResultVo.LOGIN_ERROR);
         }
         //验证是否冻结
         if (user.getDefunct()){
-            return CheckParamUtil.packingRes(result,ResultVo.USER_DEFUNCT);
+            return ReturnUtil.packingRes(result,ResultVo.USER_DEFUNCT);
         }
         //验证锁定状态
         if (user.getIslock()){
             int accountLockTime = setting.getAccountLockTime();
             //锁定时间0,则永久锁定
             if (accountLockTime == 0){
-                return CheckParamUtil.packingRes(result,ResultVo.USER_LOCKED);
+                return ReturnUtil.packingRes(result,ResultVo.USER_LOCKED);
             }
             Date lockdate = user.getLockdate();
             Date unlockdate = DateUtils.addMinutes(lockdate,accountLockTime);
@@ -101,7 +101,7 @@ public class LoginController {
                 user.setLockdate(null);
                 userService.updateByPrimaryKey(user);
             }else {
-                return CheckParamUtil.packingRes(result,ResultVo.USER_LOCKED);
+                return ReturnUtil.packingRes(result,ResultVo.USER_LOCKED);
             }
         }
         //验证密码
@@ -119,11 +119,11 @@ public class LoginController {
             user.setLoginfail(accountLockCount);
             userService.updateByPrimaryKeySelective(user);
             if (user.getIslock()){
-                return CheckParamUtil.packingRes(result,ResultVo.USER_LOCKED);
+                return ReturnUtil.packingRes(result,ResultVo.USER_LOCKED);
             }else if (accountLockCount <= 2){
-                return CheckParamUtil.packingRes(result,ResultVo.LOGIN_ERROR);
+                return ReturnUtil.packingRes(result,ResultVo.LOGIN_ERROR);
             }else {
-                return CheckParamUtil.packingRes(result,ResultVo.LOGIN_ERROR,
+                return ReturnUtil.packingRes(result,ResultVo.LOGIN_ERROR,
                         "密码错误,若再错误"+(setting.getAccountLockCount()-accountLockCount+1)+"次,则锁定账户");
             }
         }
@@ -149,7 +149,7 @@ public class LoginController {
         result.put("referer",redirect.orElse("/index"));
 
         session.removeAttribute("referer");
-        return CheckParamUtil.packingRes(result,ResultVo.OK);
+        return ReturnUtil.packingRes(result,ResultVo.OK);
     }
 
     /**

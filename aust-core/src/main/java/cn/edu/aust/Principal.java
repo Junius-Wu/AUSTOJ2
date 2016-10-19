@@ -1,4 +1,4 @@
-package cn.edu.aust.common;
+package cn.edu.aust;
 
 
 import java.io.Serializable;

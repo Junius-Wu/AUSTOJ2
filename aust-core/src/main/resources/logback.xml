@@ -11,7 +11,7 @@
 
 	<!-- project level -->
 	<logger name="cn.edu.aust" level="DEBUG" />
-	<logger name="cn.edu.aust.mapper" level="trace" />
+	<logger name="cn.edu.aust.common.mapper" level="trace" />
 	<logger name="cn.edu.aust.filter.GzipFilter" level="info" />
 	<logger name="net.sf.ehcache" level="INFO" />
 

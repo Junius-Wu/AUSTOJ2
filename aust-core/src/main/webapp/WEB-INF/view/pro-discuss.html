@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>讨论</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="static/styles/vendor.css">
+
+  <link rel="stylesheet" href="static/styles/main.css">
+</head>
+<body>
+<!--头部开始-->
+<header>
+    <!-- Static navbar -->
+    <div class="navbar navbar-lg navbar-default" role="navigation" id="nav">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                </button>
+                <a class="navbar-brand" href="/">AUST</a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="/start">起步</a></li>
+                    <li><a href="/practice">训练</a></li>
+                    <li><a href="/master">进阶</a></li>
+                    <li><a href="/contest">比赛</a></li>
+                    <li><a href="/rank">排名</a></li>
+                    <li><a href="/articles">干货</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">联系我们<b class="caret"></b></a>
+                        <ul class="dropdown-menu animated fadeIn">
+                            <li><a href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=fBIVCRAVTU08DQ1SHxMR"
+                                   target="_blank"><i class="fa fa-envelope-o fa-fw"></i>&nbsp;&nbsp;文章投稿</a></li>
+                            <li><a href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=fBIVCRAVTU08DQ1SHxMR"
+                                   target="_blank"><i class="fa fa-envelope-o fa-fw"></i>&nbsp;&nbsp;题目投稿</a></li>
+                            <li class="divider"></li>
+                            <li class="dropdown-header">意见反馈</li>
+                            <li><a href="#footer"><i class="fa fa-qq"></i>&nbsp;&nbsp;QQ</a></li>
+                            <li><a href="#footer"><i class="fa fa-wechat"></i>&nbsp;&nbsp;We Chat</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="/user/">nickname</a></li>
+                    <li><a href="/loginout">退出</a></li>
+                </ul>
+            </div><!--/.nav-collapse -->
+        </div>
+    </div>
+</header>
+<!--头部结束-->
+<!--通知栏开始,主要用户发布一些通知-->
+<div class="tips">
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2 tips-bg">
+            <i class="glyphicon glyphicon-bell"></i>
+            <div class="tips-bulls">
+                <ul class="list-unstyled notify">
+
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!--通知栏结束-->
+<!--主体开始-->
+<div class="base-page">
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+           <div class="col-md-9">
+               <!--主面板-->
+                       <section class="discuss-section animated fadeInUp">
+                         <div class="title">
+                           <button href="#" class="btn btn-inverse" data-toggle="modal" data-target="#myModal">分享思路</button>
+                           <h3 class="text-center text-primary"><a href="#">A+B问题</a></h3>
+                           <p class="text-center text-danger"><span>时间:1000ms&nbsp;&nbsp;</span><span>&nbsp;&nbsp;内存:32M</span></p>
+                           <hr>
+                         </div>
+                         <div class="discuss-block row">
+                             <div class="discuss-vote col-md-1">
+                               <button class="like" data-placement="top" data-container="body" data-toggle="tooltip" title="留言对人有帮助，有参考价值"><i class="fa fa-caret-up"></i></button>
+                               <span>0</span>
+                               <button class="hate" data-placement="bottom" data-container="body" data-toggle="tooltip" title="留言没帮助，是错误的答案，答非所问"><i class="fa fa-caret-down"></i></button>
+                             </div>
+                             <div class="discuss-detail col-md-11">
+                               <div class="discuss-content">
+                                  <p>应该是插件生成的，用隐私模式就好了<br>
+                                    应该是插件生成的，用隐私模式就好了</p>
+                               </div>
+                               <div class="discuss-tools">
+                                 <div class="row">
+                                   <div class="col-md-8">
+                                     <ul class="list-inline">
+                                       <li><a href="javascript:;">编辑</a></li>
+                                       <li><a href="javascript:void(0);">评论</a></li>
+                                       <li><a href="javascript:void(0);">删除</a></li>
+                                       <li><a href="javascript:void(0);">举报</a></li>
+                                       <li><span class="time">2016-10-17 23:00:00</span></li>
+                                     </ul>
+                                   </div>
+                                   <div class="col-md-4 discuss-user">
+                                     <a href="#">
+                                       <img src="apple-touch-icon.png" class="img-circle" width="32" height="32" style="padding-bottom: 3px">
+                                       <span style="margin-left: 5px">牛李</span>
+                                     </a>
+                                   </div>
+                                 </div>
+                                 <div class="discuss-commont row">
+                                   <div class="commont-list">
+                                     <ul class="list-unstyled">
+                                       <li>
+                                         <div class="reply-main row">
+                                           <div class="col-md-12">
+                                             <a href="#">牛李</a>:原来如此
+                                           </div>
+                                         </div>
+                                         <div class="reply-info row">
+                                           <span class="col-md-4 time">2016-10-17 23:00:00</span>
+                                           <div class="reply-button">
+                                             <a href="#">回复</a>
+                                           </div>
+                                         </div>
+                                       </li>
+                                       <li>
+                                         <div class="reply-main row">
+                                           <div class="col-md-12">
+                                             <a href="#">牛李</a>回复
+                                             <a href="#">笑笑</a>:hahahhahahah
+                                           </div>
+                                         </div>
+                                         <div class="reply-info row">
+                                           <span class="col-md-4 time">2016-10-17 23:00:00</span>
+                                           <div class="reply-button">
+                                             <a href="#">回复</a>
+                                           </div>
+                                         </div>
+                                       </li>
+                                     </ul>
+                                   </div>
+                                   <div style="margin-left: 35px;margin-right: 50px">
+                                     <form action="#" method="post">
+                                       <div class="col-md-9">
+                                         <textarea class="form-control"></textarea>
+                                       </div>
+                                       <div class="col-md-2 col-md-offset-1">
+                                         <button class="btn btn-lg btn-inverse" type="button">提交评论</button>
+                                       </div>
+                                     </form>
+                                   </div>
+                                 </div>
+                               </div>
+
+                             </div>
+                         </div>
+                       </section>
+           </div>
+            <div class="col-md-3 widget animated fadeInRight">
+                <!--侧边栏,这样便于调整顺序-->
+                <!--个人中心-->
+              <aside class="widget">
+                <h5><span>个人中心</span></h5>
+                <div class="text-center person">
+                  <a href="/user/1">
+                    <img src="static/images/default-avatar.jpg" title="change your avatar" data-placement="bottom" data-toggle="tooltip" >
+                  </a>
+                  <a href="/user/1" class="center-block">nl101531</a>
+                </div>
+                <p>格言:<br><span>书山有路勤无用,学海无涯钱做主</span></p>
+                <p class="tagcloud">近期AC:<br>
+                  <a href="#" style="font-size: 12px;">1000</a>
+                  <a href="#" style="font-size: 12px;">1000</a>
+                  <a href="#" style="font-size: 12px;">1000</a>
+                  <a href="#" style="font-size: 12px;">1000</a>
+                  <a href="#" style="font-size: 12px;">1000</a>
+                </p>
+              </aside>
+                <!--题目分类-->
+              <aside class="widget">
+                <h5><span>题目分类</span></h5>
+                <ul class="list-unstyled catelog">
+
+                  <li><i class="fa fa-bookmark-o">&nbsp;&nbsp;<a href="/problem/catepro/1/语言入门">语言入门</a></i></li><li><i class="fa fa-bookmark-o">&nbsp;&nbsp;<a href="/problem/catepro/2/数据结构">数据结构</a></i></li><li><i class="fa fa-bookmark-o">&nbsp;&nbsp;<a href="/problem/catepro/3/贪心算法">贪心算法</a></i></li><li><i class="fa fa-bookmark-o">&nbsp;&nbsp;<a href="/problem/catepro/4/搜索">搜索</a></i></li><li><i class="fa fa-bookmark-o">&nbsp;&nbsp;<a href="/problem/catepro/5/数学基础">数学基础</a></i></li><li><i class="fa fa-bookmark-o">&nbsp;&nbsp;<a href="/problem/catepro/6/图论">图论</a></i></li><li><i class="fa fa-bookmark-o">&nbsp;&nbsp;<a href="/problem/catepro/7/矩阵计算">矩阵计算</a></i></li><li><i class="fa fa-bookmark-o">&nbsp;&nbsp;<a href="/problem/catepro/8/动态规划">动态规划</a></i></li></ul>
+              </aside>
+                <!--标签列表-->
+              <aside class="widget">
+                <h5><span>标签</span></h5>
+                <div class="tagcloud clearfix">
+
+                  <a href="/articles?search=AUST" style="font-size: 12px;">AUST</a><a href="/articles?search=并查集" style="font-size: 12px;">并查集</a><a href="/articles?search=C  " style="font-size: 12px;">C  </a><a href="/articles?search=java" style="font-size: 12px;">java</a><a href="/articles?search=mybatis" style="font-size: 12px;">mybatis</a><a href="/articles?search=python" style="font-size: 12px;">python</a><a href="/articles?search=面试" style="font-size: 12px;">面试</a><a href="/articles?search=搜索" style="font-size: 12px;">搜索</a><a href="/articles?search=数组" style="font-size: 12px;">数组</a><a href="/articles?search=spring" style="font-size: 12px;">spring</a><a href="/articles?search=javaEE" style="font-size: 12px;">javaEE</a><a href="/articles?search=多段波" style="font-size: 12px;">多段波</a><a href="/articles?search=eclipse" style="font-size: 12px;">eclipse</a><a href="/articles?search=maven" style="font-size: 12px;">maven</a><a href="/articles?search=二分查找" style="font-size: 12px;">二分查找</a><a href="/articles?search=线段树" style="font-size: 12px;">线段树</a><a href="/articles?search=poj" style="font-size: 12px;">poj</a><a href="/articles?search=C++" style="font-size: 12px;">C++</a><a href="/articles?search=DFS" style="font-size: 12px;">DFS</a><a href="/articles?search=go语言" style="font-size: 12px;">go语言</a><a href="/articles?search=IDEA" style="font-size: 12px;">IDEA</a><a href="/articles?search=acm" style="font-size: 12px;">acm</a><a href="/articles?search=be" style="font-size: 12px;">be</a><a href="/articles?search=" style="font-size: 12px;"></a></div>
+              </aside>
+                <!--文章列表-->
+              <aside class="widget">
+                <h5><span>近期文章</span></h5>
+                <ul class="list-unstyled article">
+                  <li><i class="fa fa-file-text-o"><a href="/articles/1" target="_blank">&nbsp;&nbsp;剑指offer面试题3--二维数组中查找</a></i></li><li><i class="fa fa-file-text-o"><a href="/articles/2" target="_blank">&nbsp;&nbsp;剑指offer面试题2--实现singleton模式</a></i></li><li><i class="fa fa-file-text-o"><a href="/articles/3" target="_blank">&nbsp;&nbsp;Maven学习记录(四)--多模块开发配置</a></i></li><li><i class="fa fa-file-text-o"><a href="/articles/4" target="_blank">&nbsp;&nbsp;Maven学习记录(三)--实战引入Spring支持</a></i></li><li><i class="fa fa-file-text-o"><a href="/articles/5" target="_blank">&nbsp;&nbsp;POJ1416--DFS入门</a></i></li></ul>
+              </aside>
+            </div>
+        </div>
+    </div>
+</div>
+<!--主体结束-->
+<footer>
+    <div class="row" id="footer">
+        <div class="col-md-4 col-lg-offset-2">
+            AUST University Of Technology Online Judge<br/>
+            Copyright © 2010-2015 AUST NIU LI <br/>
+            All Copyright Reserved
+        </div>
+        <div class="footer-socials">
+            <div class="text-center">
+                <span>
+                    <i title="<img src='../static/images/wechat.jpg' />" data-html="true" data-placement="top"
+                       data-toggle="tooltip" class="fa fa-wechat fa-3x mrs"></i>
+                </span>
+                <span>
+                    <i title="<img src='../static/images/qq.jpg' />" data-html="true" data-placement="top"
+                       data-toggle="tooltip" class="fa fa-qq fa-3x mrs"></i>
+                </span>
+            </div>
+            <div class="backtop text-center">
+                <a href="javascript:void(0)">BACK TO TOP</a>
+            </div>
+        </div>
+    </div>
+</footer>
+<!--模态框-->
+    <!--具体提交的模态框-->
+    <div class="modal fade" id="myModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">提交思路</h4>
+                </div>
+                <form id="pro_form" action="/problem/judge" method="post">
+                <div class="modal-body">
+                        <div class="form-group">
+                            <textarea class="form-control" rows="10" cols="10" required name="source"></textarea>
+                        </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Commit</button>
+                </div>
+                </form>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+<script src="static/scripts/vendor.js"></script>
+
+<script src="static/scripts/plugins.js"></script>
+</body>
+</html>

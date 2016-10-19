@@ -22,12 +22,12 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import cn.edu.aust.Principal;
 import cn.edu.aust.Setting;
-import cn.edu.aust.common.Principal;
 import cn.edu.aust.common.ResultVo;
 import cn.edu.aust.common.entity.User;
+import cn.edu.aust.common.util.ReturnUtil;
 import cn.edu.aust.service.UserService;
-import cn.edu.aust.util.CheckParamUtil;
 import cn.edu.aust.util.DecriptUtil;
 import cn.edu.aust.util.LoggerUtil;
 import cn.edu.aust.util.SystemUtil;
@@ -66,11 +66,11 @@ public class RegisterController {
         //验证码验证
         String code = (String) session.getAttribute("codeValidate");
         if (!StringUtils.equalsIgnoreCase(code, codevalidate)) {
-            return CheckParamUtil.packingRes(result, ResultVo.CODE_ERROR);
+            return ReturnUtil.packingRes(result, ResultVo.CODE_ERROR);
         }
         Setting setting = SystemUtil.getSetting();
         if (!setting.isIsRegisterEnabled()){
-            return CheckParamUtil.packingRes(result,ResultVo.REGISTER_ENABLE);
+            return ReturnUtil.packingRes(result,ResultVo.REGISTER_ENABLE);
         }
         //参数格式验证
         if (br.hasErrors()){
@@ -79,12 +79,12 @@ public class RegisterController {
             return result;
         }
         if (userService.usernameIsDisabled(user.getUsername())){
-            return CheckParamUtil.packingRes(result,ResultVo.USERNAME_ENABLE);
+            return ReturnUtil.packingRes(result,ResultVo.USERNAME_ENABLE);
         }
         //用户存在验证
         if (userService.selectByUsername(user.getUsername()) != null
                 || userService.selectByEmail(user.getEmail()) != null){
-            return CheckParamUtil.packingRes(result,ResultVo.USERNAME_EXIST);
+            return ReturnUtil.packingRes(result,ResultVo.USERNAME_EXIST);
         }
         //注册用户
         user.setPassword(DecriptUtil.SHA1(user.getPassword()));
@@ -110,7 +110,7 @@ public class RegisterController {
         result.put("referer",redirect.orElse("/index"));
 
         session.removeAttribute("referer");
-        return CheckParamUtil.packingRes(result,ResultVo.OK);
+        return ReturnUtil.packingRes(result,ResultVo.OK);
     }
 
     /**
@@ -122,12 +122,12 @@ public class RegisterController {
         JSONObject result = new JSONObject();
         User user = userService.selectByUsername(username);
         if (user != null){
-            return CheckParamUtil.packingRes(result, ResultVo.USERNAME_EXIST);
+            return ReturnUtil.packingRes(result, ResultVo.USERNAME_EXIST);
         }
         if (!username.matches("^[a-zA-Z0-9_]{3,16}$")){
-            return CheckParamUtil.packingRes(result,ResultVo.USERNAME_NOALLOW);
+            return ReturnUtil.packingRes(result,ResultVo.USERNAME_NOALLOW);
         }
-        return CheckParamUtil.packingRes(result,ResultVo.OK);
+        return ReturnUtil.packingRes(result,ResultVo.OK);
     }
     /**
      * 检查邮箱是否已存在
@@ -138,8 +138,8 @@ public class RegisterController {
         JSONObject result = new JSONObject();
         User user = userService.selectByEmail(email);
         if (user != null){
-            return CheckParamUtil.packingRes(result, ResultVo.EMAIL_EXIST);
+            return ReturnUtil.packingRes(result, ResultVo.EMAIL_EXIST);
         }
-        return CheckParamUtil.packingRes(result,ResultVo.OK);
+        return ReturnUtil.packingRes(result,ResultVo.OK);
     }
 }

@@ -377,7 +377,7 @@
   </update>
 
   <!--按照条件查询题目,不包含具体内容,分页排序交给插件执行-->
-  <select id="selectWithCriteria" parameterType="cn.edu.aust.common.PageAble" resultMap="BaseResultMap">
+  <select id="selectWithCriteria" parameterType="cn.edu.aust.common.util.PageAble" resultMap="BaseResultMap">
     SELECT <include refid="Base_Column_List"/>
     FROM problem p
     <where>
