@@ -42,9 +42,8 @@ public class ProblemController {
      * @param stage
      * @return
      */
-    @RequestMapping(value = "/findByStage/{stage}",method = RequestMethod.GET)
-    public @ResponseBody
-    JSONObject findByStage(@PathVariable(value = "stage") Integer stage, PageAble pageAble){
+    @RequestMapping(value = "/findByStage/{stage}",method = RequestMethod.GET,produces = "application/json; charset=UTF-8")
+    public @ResponseBody JSONObject findByStage(@PathVariable(value = "stage") Integer stage, PageAble pageAble){
         JSONObject result = new JSONObject();
         pageAble.getFilters().add(Filter.eq("stage",stage));
         pageAble.getFilters().add(Filter.eq("contest_id",0));
@@ -62,7 +61,7 @@ public class ProblemController {
      * 查找一个具体的题目,并前往题目页面
      * @return
      */
-    @RequestMapping(value = "/{id}",method = RequestMethod.GET)
+    @RequestMapping(value = "/{id}",method = RequestMethod.GET,produces = "text/html;charset=UTF-8")
     public String findProblem(@PathVariable(value = "id") Integer id, Model model) throws PageException {
         Optional<ProblemBLOBs> problem = Optional.ofNullable(problemService.selectByPrimaryKey(id));
         model.addAttribute("problem", problem.orElseThrow(() -> new PageException(PROBLEM_NOT_EXIST)));

@@ -5,6 +5,8 @@ import org.hibernate.validator.constraints.Email;
 
 import java.util.Date;
 
+import javax.validation.constraints.Pattern;
+
 public class User {
 
     /** "身份信息"属性名称 */
@@ -18,9 +20,9 @@ public class User {
 
     private Integer id;
     private String avatar;
-//    @Pattern(regexp = "^[a-zA-Z0-9_]{3,16}$",message = "用户名不合法")
+    @Pattern(regexp = "^[a-zA-Z0-9_]{3,16}$",message = "用户名不合法")
     private String username;
-//    @Pattern(regexp = "^[@A-Za-z0-9!#$%^&*.~]{6,22}$",message = "密码格式不匹配")
+    @Pattern(regexp = "^[@A-Za-z0-9!#$%^&*.~]{6,22}$",message = "密码格式不匹配")
     private String password;
 
     private String nickname;
@@ -257,5 +259,36 @@ public class User {
 
     public void setOpensource(Boolean opensource) {
         this.opensource = opensource;
+    }
+
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", avatar='" + avatar + '\'' +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", nickname='" + nickname + '\'' +
+                ", email='" + email + '\'' +
+                ", school='" + school + '\'' +
+                ", stuNo='" + stuNo + '\'' +
+                ", motto='" + motto + '\'' +
+                ", honor='" + honor + '\'' +
+                ", point=" + point +
+                ", language=" + language +
+                ", submit=" + submit +
+                ", solved=" + solved +
+                ", isshow=" + isshow +
+                ", blog='" + blog + '\'' +
+                ", ip='" + ip + '\'' +
+                ", islock=" + islock +
+                ", loginfail=" + loginfail +
+                ", lockdate=" + lockdate +
+                ", createdate=" + createdate +
+                ", modifydate=" + modifydate +
+                ", defunct=" + defunct +
+                ", opensource=" + opensource +
+                '}';
     }
 }

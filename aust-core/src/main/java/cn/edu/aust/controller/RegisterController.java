@@ -46,7 +46,7 @@ public class RegisterController {
     /**
      * 前往注册页面
      */
-    @RequestMapping(value = "/register",method = RequestMethod.GET)
+    @RequestMapping(value = "/register",method = RequestMethod.GET,produces = "text/html;charset=UTF-8")
     public String toRegister(HttpServletRequest request){
         //获取进入前的链接
         Optional.ofNullable(request.getHeader("referer"))

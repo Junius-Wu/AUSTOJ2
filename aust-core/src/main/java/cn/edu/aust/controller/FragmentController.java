@@ -46,7 +46,7 @@ public class FragmentController {
      * @param isTags 为0,则不反回标签
      * @return
      */
-    @RequestMapping(value = "/aside",method = RequestMethod.GET)
+    @RequestMapping(value = "/aside",method = RequestMethod.GET,produces = "text/html;charset=UTF-8")
     public String asideFragment(@RequestParam(required = false,defaultValue = "0") int isTags,
                                 HttpSession session, Model model){
         Setting setting = SystemUtil.getSetting();

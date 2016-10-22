@@ -1,6 +1,10 @@
 package cn.mrdear;
 
+import org.junit.Test;
+
 import java.util.Optional;
+
+import cn.edu.aust.common.entity.User;
 
 /**
  * @author Niu Li
@@ -8,8 +12,24 @@ import java.util.Optional;
  */
 public class OptionalTest {
 
-    public void testOptionalTest(Optional<String> str){
-        str.orElse("no str");
+    @Test
+    public void testOptionalTest() {
+
+        User user = new User();
+//        user.setNickname("hahaha");
+        user.setPassword("1234");
+        Optional.ofNullable(user)
+                .filter(user1 -> {
+                    return user1.getNickname() != null;
+                })
+                .map(user1 -> {
+                    user1.setPassword(null);
+                    return user1;
+                })
+                .orElse(new User());
+
+        System.out.println(user.toString());
+
     }
 
 }

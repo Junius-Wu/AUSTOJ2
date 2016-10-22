@@ -46,7 +46,7 @@ public class LoginController {
     /**
      * 前往登录页面
      */
-    @RequestMapping(value = "login", method = RequestMethod.GET)
+    @RequestMapping(value = "login", method = RequestMethod.GET,produces = "text/html;charset=UTF-8")
     public String login(HttpServletRequest request) {
         //获取进入前的链接
         Optional.ofNullable(request.getHeader("referer"))
@@ -156,7 +156,7 @@ public class LoginController {
      * 退出方法
      * @return
      */
-    @RequestMapping(value = "/loginout",method = RequestMethod.GET)
+    @RequestMapping(value = "/loginout",method = RequestMethod.GET,produces = "text/html;charset=UTF-8")
     public String loginOut(HttpServletRequest request,HttpServletResponse response){
         Setting setting = SystemUtil.getSetting();
         WEBUtil.removeCookie(request, response, User.USERNAME_COOKIE_NAME,setting.getCookiePath(),setting.getCookieDomain());
