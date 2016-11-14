@@ -142,7 +142,7 @@ return b},enableInterface:function(){this.parent.enableInterface.apply(this,argu
 
 //底部二维码展示
 $(function () {
-  $('[data-toggle=tooltip]').tooltip();
+  setTimeout("$('[data-toggle=tooltip]').tooltip();",2000);
 });
 
 //通知栏轮播
@@ -168,7 +168,7 @@ $(function () {
   var href = window.location.href.split('/')[index].substr(0,4);
   if(href.length>0){
     //如果匹配开头成功则更改样式
-    $('.navbar-nav li a[href^=\'/'+href+'\']').parent().addClass('active')
+    $('.navbar-nav li a[href^=\'/austoj/'+href+'\']').parent().addClass('active');
     //[attribute^=value]：匹配给定的属性是以某些值开始的元素。
   }
 });
@@ -211,35 +211,36 @@ function removeCookie(name, options) {
 }
 
 $(function () {
+  //获取项目路径
+  var pathName = window.document.location.pathname;
+  var projectName = pathName.substring(0, pathName.substr(1).indexOf('/') + 1);
   var $aside = $('#aside');
-  if ($aside.length > 0){
+  if ($aside.length > 0) {
     //写入侧边栏
     $.ajax({
-      type:'GET',
-      url:'/frg/aside',
-      dataType:'html',
-      success:function (data) {
+      type: 'GET',
+      url: projectName + '/frg/aside',
+      dataType: 'html',
+      success: function (data) {
         $aside.html(data);
       }
     });
-
   }
-
   //写入到通知
   $.ajax({
     //请求方式为get
-    type:'GET',
+    type: 'GET',
     //json文件位置
-    url:'../static/json/notify.json',
+    url: projectName + '/static/json/notify.json',
     //返回数据格式为json
     dataType: 'json',
     //请求成功完成后要执行的方法
-    success: function(data){
+    success: function (data) {
       //使用$.each方法遍历返回的数据date,插入到id为#result中
-      $.each(data,function(i,item){
-        var content=item.notify_name;
-        $('.tips .notify').append('<li><a href="#">'+content+'</a></li>');
+      $.each(data, function (i, item) {
+        var content = item.notify_name;
+        $('.tips .notify').append('<li><a href="#">' + content + '</a></li>');
       })
     }
-  });
-});
+  })
+})

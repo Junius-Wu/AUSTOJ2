@@ -18,7 +18,7 @@ import javax.annotation.Resource;
 import cn.edu.aust.common.entity.User;
 import cn.edu.aust.service.UserService;
 import cn.edu.aust.util.FileUtil;
-import cn.edu.aust.util.LoggerUtil;
+import cn.edu.aust.util.LogUtil;
 
 /**
  * @author Niu Li
@@ -45,7 +45,7 @@ public class StaticJob implements InitializingBean {
         String reslut = JSON.toJSONString(users);
 
         FileUtil.saveToDisk(path, "user.json", reslut);
-        LoggerUtil.info(logger,()->"写入首页展示用户到指定路径中");
+        LogUtil.info(logger,()->"写入首页展示用户到指定路径中");
     }
 
     /**
@@ -54,16 +54,13 @@ public class StaticJob implements InitializingBean {
     @Scheduled(cron = "0 0 0/2 * * ?")
     public void generateUserRank() throws IOException {
         List<User> users = userService.selectRanks();
-//        JSONObject userObj = new JSONObject();
-//        userObj.put("total",users.size());
-//        userObj.put("rows",users);
 
         String path = String.join(File.separator,System.getProperty("web.root"),"static","json");
 
         String reslut = JSON.toJSONString(users);
 
         FileUtil.saveToDisk(path, "rank.json", reslut);
-        LoggerUtil.info(logger,()->"写入排名到指定路径中");
+        LogUtil.info(logger,()->"写入排名到指定路径中");
     }
 
     /**

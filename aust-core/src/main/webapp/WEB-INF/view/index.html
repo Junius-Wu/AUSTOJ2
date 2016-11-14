@@ -83,7 +83,7 @@
       </div>
       <div class="row">
         <div class="index-one-img">
-          <img src="/static/images/bg-one-img.png" class="animated fadeInUp img-responsive">
+          <img src="/static/images/bg-one-img.png" th:src="@{static/images/bg-one-img.png}" class="animated fadeInUp img-responsive">
         </div>
       </div>
   </div>
@@ -94,7 +94,7 @@
         <div class="col-md-10 col-md-offset-1">
           <div class="col-sm-6 col-md-3">
             <div class="thumbnail">
-              <img src="/static/images/bg-two-start.png">
+              <img src="/static/images/bg-two-start.png" th:src="@{static/images/bg-two-start.png}">
               <div class="caption">
                 <h3>要从这里开始</h3>
                 <p th:text="#{index.start}">如果你是个初学者,那么就从这里开始,你可以在这里学习到一些基础的算法和技巧,牢固的基础有助于你走的路长久</p>
@@ -104,7 +104,7 @@
           </div>
           <div class="col-sm-6 col-md-3">
             <div class="thumbnail">
-              <img src="/static/images/bg-two-practice.png">
+              <img src="/static/images/bg-two-practice.png" th:src="@{static/images/bg-two-practice.png}">
               <div class="caption">
                 <h3>不断接受训练</h3>
                 <p th:text="#{index.practice}">技巧总需要锤炼,你需要在这里不断地进行练习,直到你熟练掌握这些技巧和方法,从而拿到通往进阶之路的钥匙,开启下一关</p>
@@ -114,7 +114,7 @@
           </div>
           <div class="col-sm-6 col-md-3">
             <div class="thumbnail">
-              <img src="/static/images/bg-two-master.png">
+              <img src="/static/images/bg-two-master.png" th:src="@{static/images/bg-two-master.png}">
               <div class="caption">
                 <h3>高手必经之路</h3>
                 <p th:text="#{index.master}">浮躁的人容易问:我到底该学什么;浮躁的人容易问:X技术有钱途吗;什么是浮躁的人?只观望而不学或只学而不坚持的人</p>
@@ -124,7 +124,7 @@
           </div>
           <div class="col-sm-6 col-md-3">
             <div class="thumbnail">
-              <img src="/static/images/bg-two-read.png">
+              <img src="/static/images/bg-two-read.png" th:src="@{static/images/bg-two-read.png}">
               <div class="caption">
                 <h3>多读才会进步</h3>
                 <p th:text="#{index.read}">三人行必有我师焉,则其善者而从之,其不善者而改之<br>乐于汲取和分享才会使你更加进步,且要多读,多问,多练</p>
@@ -176,9 +176,9 @@
     </div>
   </footer>
 
-    <script src="/static/scripts/vendor.js" th:href="@{static/scripts/vendor.js}"></script>
+    <script src="/static/scripts/vendor.js" th:src="@{static/scripts/vendor.js}"></script>
 
-    <script src="/static/scripts/plugins.js" th:href="@{static/scripts/plugins.js}"></script>
-    <script src="/static/scripts/index.js" th:href="@{static/scripts/index.js}"></script>
+    <script src="/static/scripts/plugins.js" th:src="@{static/scripts/plugins.js}"></script>
+    <script src="/static/scripts/index.js" th:src="@{static/scripts/index.js}"></script>
   </body>
 </html>

@@ -13,10 +13,10 @@ import java.util.stream.IntStream;
  * @author Niu Li
  * @date 2016/9/18
  */
-public class LoggerUtil {
+public class LogUtil {
 
     public static void main(String[] args) {
-        Logger logger = LoggerFactory.getLogger(LoggerUtil.class);
+        Logger logger = LoggerFactory.getLogger(LogUtil.class);
 
         int[] array = {1, 2, 3, 4, 5, 6, 7, 8, 9};
         int count = 1;

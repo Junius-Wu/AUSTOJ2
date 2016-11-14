@@ -72,7 +72,7 @@
         <div class="col-md-10 col-md-offset-1">
            <div class="col-md-9">
                <!--主面板-->
-                       <section class="pro-section animated fadeInUp">
+                       <section class="pro-section animated fadeInUp" >
                                <div class="title">
                                    <h3 class="text-center"><a th:href="@{/problem/{id}(id=${problem.id})}" th:text="${problem.title}"></a></h3>
                                    <p class="text-center text-danger"><span th:text="'时间:'+${problem.timeLimit}+'ms  '">时间:1000ms  </span><span th:text="'  内存:'+${problem.memoryLimit/1000}+'M'"> 内存:32M</span></p>
@@ -103,7 +103,7 @@
                                </p>
                                <h4 >来源:</h4>
                                <p >
-                                   <a href="#" th:text="${problem.author}==null?'网络':${problem.author}">${problem.author}</a>
+                                   <a href="#" th:text="${problem.user.nickname}==null?${problem.user.username}:${problem.user.nickname}">${problem.author}</a>
                                </p>
                                    <button type="button" class="btn btn-primary btn-lg center-block" data-toggle="modal" data-target="#myModal">提&nbsp;交</button>
                        </section>
@@ -205,8 +205,8 @@
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
 
-<script src="/static/scripts/vendor.js" th:href="@{/static/scripts/vendor.js}"></script>
+<script src="/static/scripts/vendor.js" th:src="@{/static/scripts/vendor.js}"></script>
 
-<script src="/static/scripts/plugins.js" th:href="@{/static/scripts/plugins.js}"></script>
+<script src="/static/scripts/plugins.js" th:src="@{/static/scripts/plugins.js}"></script>
 </body>
 </html>

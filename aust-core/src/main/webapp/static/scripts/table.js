@@ -1,11 +1,11 @@
 //start表格数据获取
-setTable($('#start-table'),'/problem/findByStage/1',15);
+setTable($('#start-table'),'problem/findByStage/1',15);
 //practice表格数据获取
-setTable($('#practice-table'),'/problem/findByStage/1',15);
+setTable($('#practice-table'),'problem/findByStage/1',15);
 //master表格数据获取
-setTable($('#master-table'),'/problem/findByStage/1',15);
+setTable($('#master-table'),'problem/findByStage/1',15);
 //获取用户排名
-setTableClient($("#rank-table"),"/static/json/rank.json",20);
+setTableClient($("#rank-table"),"static/json/rank.json",20);
 
 //获取指定目录下的题目
 // var cateid = $('#cateid').val();
@@ -148,7 +148,7 @@ function setContest(value, row, index) {
 function setTitle(value, row, index) {
   return [
     '<div>',
-    '<a href="/problem/'+row.id+'" target="_blank">' + value + '</a>',
+    '<a href="problem/'+row.id+'" target="_blank">' + value + '</a>',
     '</div>'
   ].join('');
 }
@@ -220,12 +220,11 @@ function setUserBlog(value, row, index) {
 function setDiscuss(value, row, index) {
   return [
     '<div>',
-    '<a href="#">'+'讨论'+'</a>',
+    '<a href="commont/pro/'+row.id+'">'+'讨论'+'</a>',
     '</div>'
   ].join('');
 }
 
-//<span class="text-primary"><i class="fa fa-thumbs-up"></i>' + value + '</span>',
 
 //功能：将浮点数四舍五入，取小数点后2位
 function toDecimal(x) {

@@ -22,7 +22,7 @@
   </div>
   <div class="row animated fadeInUp">
     <div class="login-field">
-      <form role="form"  method="post" action="/login" id="loginForm">
+      <form role="form"  method="post" action="login" id="loginForm">
         <div class="input-group form-group">
           <span class="input-group-addon"><i class="fa fa-user"></i></span>
           <input type="text" class="form-control" placeholder="Username" required name="username" maxlength="30" id="username">
@@ -33,23 +33,23 @@
         </div>
         <div class="msg-inline">
           <input type="text" class="form-control code-input" required name="codevalidate">
-          <img id="code-validate"  class="code-img" onclick="changeUrl()" th:src="'/codeValidate?time='+${#dates.createToday().getSeconds()}">
+          <img id="code-validate"  class="code-img" onclick="changeUrl()" th:src="'codeValidate?time='+${#dates.createToday().getSeconds()}">
         </div>
         <label class="checkbox" for="remmberMe">
           <input type="checkbox" data-toggle="checkbox" id="remmberMe" class="custom-checkbox" name="rmb_me" value="1">
           Remember me
         </label>
         <div class="input-group">
-          <a href="/register.html" th:href="@{/register}" class="btn btn-primary">Register</a>&nbsp;&nbsp;
+          <a href="register.html" th:href="@{register}" class="btn btn-primary">Register</a>&nbsp;&nbsp;
           <button type="button" class="btn btn-primary sign-in" id="loginBtn">Sign in</button>
         </div>
       </form>
     </div>
   </div>
 </div>
-<script src="/static/scripts/vendor.js" th:href="@{static/scripts/vendor.js}"></script>
+<script src="/static/scripts/vendor.js" th:src="@{static/scripts/vendor.js}"></script>
 
-<script src="/static/scripts/plugins.js" th:href="@{static/scripts/plugins.js}"></script>
-<script src="/static/scripts/login.js" th:href="@{static/scripts/login.js}"></script>
+<script src="/static/scripts/plugins.js" th:src="@{static/scripts/plugins.js}"></script>
+<script src="/static/scripts/login.js" th:src="@{static/scripts/login.js}"></script>
 </body>
 </html>

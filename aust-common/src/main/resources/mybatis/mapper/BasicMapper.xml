@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="BasicMapper" >
+
+    <!--动态根据QueryParams拼接参数-->
+    <sql id="buildParam">
+        <if test="andFilters.size() != 0">
+            <foreach collection="andFilters" item="filter" open="(" close=")" separator="AND">
+                ${filter.property} ${filter.operator.operator}
+                <if test="filter.value != null">
+                    #{filter.value}
+                </if>
+            </foreach>
+        </if>
+        <if test="orFilters.size() != 0">
+            <foreach collection="orFilters" item="filter" open="(" close=")" separator="OR">
+                ${filter.property} ${filter.operator.operator}
+                <if test="filter.value != null">
+                    #{filter.value}
+                </if>
+            </foreach>
+        </if>
+        <if test="orders.size() != 0">
+            order by
+            <foreach collection="orders" item="order" separator=",">
+                ${order.orderName} ${order.direction}
+            </foreach>
+        </if>
+    </sql>
+
+    <!--根据分页请求构建参数-->
+    <sql id="buildPageRequest">
+        <if test="filters.size() != 0">
+            <foreach collection="filters" item="filter" separator="AND" >
+                ${filter.property} ${filter.operator.operator} #{filter.value}
+            </foreach>
+        </if>
+    </sql>
+
+</mapper>

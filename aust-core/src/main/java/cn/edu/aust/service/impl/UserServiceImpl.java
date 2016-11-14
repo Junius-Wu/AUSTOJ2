@@ -16,6 +16,7 @@ import cn.edu.aust.service.UserService;
 import cn.edu.aust.util.SystemUtil;
 
 /**
+ * 用户的服务层
  * @author Niu Li
  * @date 2016/9/11
  */
@@ -50,10 +51,6 @@ public class UserServiceImpl implements UserService {
         return userMapper.selecttoShow();
     }
 
-    @Override
-    public List<User> selectAll() {
-        return userMapper.selectAll();
-    }
 
     @Override
     public User selectByUsername(String username) {

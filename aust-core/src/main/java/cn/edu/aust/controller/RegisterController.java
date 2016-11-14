@@ -28,8 +28,8 @@ import cn.edu.aust.common.ResultVo;
 import cn.edu.aust.common.entity.User;
 import cn.edu.aust.common.util.ReturnUtil;
 import cn.edu.aust.service.UserService;
-import cn.edu.aust.util.DecriptUtil;
-import cn.edu.aust.util.LoggerUtil;
+import cn.edu.aust.common.util.DecriptUtil;
+import cn.edu.aust.util.LogUtil;
 import cn.edu.aust.util.SystemUtil;
 import cn.edu.aust.util.WEBUtil;
 
@@ -95,7 +95,7 @@ public class RegisterController {
         //登录成功加入session
         session = request.getSession();
         session.setAttribute(User.PRINCIPAL_ATTRIBUTE_NAME,new Principal(user));
-        LoggerUtil.info(logger,()->user.getUsername() + "已注册");
+        LogUtil.info(logger,()->user.getUsername() + "已注册");
 
         //存储cookies
         WEBUtil.addCookie(request, response, User.USERNAME_COOKIE_NAME, user.getUsername()

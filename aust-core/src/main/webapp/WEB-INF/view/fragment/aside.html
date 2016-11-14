@@ -18,7 +18,8 @@
         <th:block th:if="${user} != null">
             <div class="text-center person">
                 <a href="/user/1">
-                    <img src="/static/images/default-avatar.jpg" th:src="${user.avatar}" title="change your avatar" data-placement="bottom" data-toggle="tooltip">
+                    <img src="static/images/default-avatar.jpg" th:src="${user.avatar}" title="change your avatar"
+                         data-placement="bottom" data-toggle="tooltip" data-container="body">
                 </a>
                 <a href="/user/1" class="center-block" th:text="${user.nickname}==null?${user.username}:${user.nickname}">nl101531</a>
             </div>
@@ -60,7 +61,7 @@
             <!--/*@thymesVar id="articles" type="java.util.List<cn.edu.aust.common.entity.Article>"*/-->
             <li th:each="article : ${articles}">
                 <i class="fa fa-file-text-o">
-                    <a href="/articles/'+item.id+'" target="_blank" th:text="${article.title}"></a>
+                    <a href="/articles/'+item.id+'" target="_blank" th:text="${article.title}" th:title="${article.title}"></a>
                 </i>
             </li>
         </ul>

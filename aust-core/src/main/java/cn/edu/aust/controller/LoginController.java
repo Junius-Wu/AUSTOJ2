@@ -27,8 +27,8 @@ import cn.edu.aust.common.entity.User;
 import cn.edu.aust.common.util.ReturnUtil;
 import cn.edu.aust.exception.PageException;
 import cn.edu.aust.service.UserService;
-import cn.edu.aust.util.DecriptUtil;
-import cn.edu.aust.util.LoggerUtil;
+import cn.edu.aust.common.util.DecriptUtil;
+import cn.edu.aust.util.LogUtil;
 import cn.edu.aust.util.SystemUtil;
 import cn.edu.aust.util.WEBUtil;
 
@@ -59,7 +59,7 @@ public class LoginController {
      */
     @RequestMapping(value = "/login", method = RequestMethod.POST,produces = "application/json; charset=UTF-8")
     public @ResponseBody
-    JSONObject login(String username, String password, String codevalidate, String rmb_me,
+    JSONObject login(String username, String password, String codevalidate,
                      HttpSession session, HttpServletRequest request, HttpServletResponse response) throws PageException {
         JSONObject result = new JSONObject();
 
@@ -108,7 +108,7 @@ public class LoginController {
         if(!user.getPassword().equals(DecriptUtil.SHA1(password.trim()))){
             int accountLockCount = user.getLoginfail()+1;
 
-            LoggerUtil.infoIf(logger,
+            LogUtil.infoIf(logger,
                     ()->accountLockCount > setting.getAccountLockCount(),//条件
                     ()->{//执行
                         user.setLockdate(new Date());
@@ -135,7 +135,7 @@ public class LoginController {
         //登录成功加入session
         session = request.getSession();
         session.setAttribute(User.PRINCIPAL_ATTRIBUTE_NAME,new Principal(user));
-        LoggerUtil.info(logger,()->user.getUsername() + "已登录");
+        LogUtil.info(logger,()->user.getUsername() + "已登录");
 
         WEBUtil.addCookie(request, response, User.USERNAME_COOKIE_NAME, user.getUsername()
                 ,null,setting.getCookiePath(),setting.getCookieDomain(),null);
@@ -154,7 +154,7 @@ public class LoginController {
 
     /**
      * 退出方法
-     * @return
+     * @return 返回首页
      */
     @RequestMapping(value = "/loginout",method = RequestMethod.GET,produces = "text/html;charset=UTF-8")
     public String loginOut(HttpServletRequest request,HttpServletResponse response){

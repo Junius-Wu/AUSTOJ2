@@ -3,39 +3,33 @@
 <mapper namespace="cn.edu.aust.common.mapper.ArticleMapper" >
 
   <resultMap id="BaseResultMap" type="cn.edu.aust.common.entity.Article" >
-    <constructor >
-      <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="title" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="user_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="nickname" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="keyword" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="catelog_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="totop" jdbcType="TINYINT" javaType="java.lang.Integer" />
-      <arg column="isshow" jdbcType="TINYINT" javaType="java.lang.Integer" />
-      <arg column="createdate" jdbcType="TIMESTAMP" javaType="java.util.Date" />
-      <arg column="modifydate" jdbcType="TIMESTAMP" javaType="java.util.Date" />
-    </constructor>
+      <id property="id" column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <result property="title" column="title" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <result property="userId" column="user_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <result property="keyword" column="keyword" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <result property="catelogId" column="catelog_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <result property="totop" column="totop" jdbcType="TINYINT" javaType="java.lang.Integer" />
+      <result property="isshow" column="isshow" jdbcType="TINYINT" javaType="java.lang.Integer" />
+      <result property="createdate" column="createdate" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <result property="modifydate" column="modifydate" jdbcType="TIMESTAMP" javaType="java.util.Date" />
   </resultMap>
 
   <resultMap id="ResultMapWithBLOBs" type="cn.edu.aust.common.entity.ArticleBLOBs" >
-    <constructor >
-      <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="title" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="user_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="nickname" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="keyword" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="catelog_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="totop" jdbcType="TINYINT" javaType="java.lang.Integer" />
-      <arg column="isshow" jdbcType="TINYINT" javaType="java.lang.Integer" />
-      <arg column="createdate" jdbcType="TIMESTAMP" javaType="java.util.Date" />
-      <arg column="modifydate" jdbcType="TIMESTAMP" javaType="java.util.Date" />
-      <arg column="summary" jdbcType="LONGVARCHAR" javaType="java.lang.String" />
-      <arg column="content" jdbcType="LONGVARCHAR" javaType="java.lang.String" />
-    </constructor>
+    <id property="id" column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+    <result property="title" column="title" jdbcType="VARCHAR" javaType="java.lang.String" />
+    <result property="userId" column="user_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+    <result property="keyword" column="keyword" jdbcType="VARCHAR" javaType="java.lang.String" />
+    <result property="catelogId" column="catelog_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+    <result property="totop" column="totop" jdbcType="TINYINT" javaType="java.lang.Integer" />
+    <result property="isshow" column="isshow" jdbcType="TINYINT" javaType="java.lang.Integer" />
+    <result property="createdate" column="createdate" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+    <result property="modifydate" column="modifydate" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+    <result property="summary" column="summary" jdbcType="LONGVARCHAR" javaType="java.lang.String" />
+    <result property="content" column="content" jdbcType="LONGVARCHAR" javaType="java.lang.String" />
   </resultMap>
 
   <sql id="Base_Column_List" >
-    id, title, user_id, nickname, keyword, catelog_id, totop, isshow, createdate, modifydate
+    id, title, user_id, keyword, catelog_id, totop, isshow, createdate, modifydate
   </sql>
 
   <sql id="Blob_Column_List" >
@@ -57,13 +51,12 @@
   </delete>
 
   <insert id="insert" parameterType="cn.edu.aust.common.entity.ArticleBLOBs" >
-    insert into article (id, title, user_id, 
-      nickname, keyword, catelog_id, 
+    insert into article (id, title, user_id, keyword, catelog_id,
       totop, isshow, createdate, 
       modifydate, summary, content
       )
-    values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{userId,jdbcType=INTEGER}, 
-      #{nickname,jdbcType=VARCHAR}, #{keyword,jdbcType=VARCHAR}, #{catelogId,jdbcType=INTEGER}, 
+    values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{userId,jdbcType=INTEGER}
+      , #{keyword,jdbcType=VARCHAR}, #{catelogId,jdbcType=INTEGER},
       #{totop,jdbcType=TINYINT}, #{isshow,jdbcType=TINYINT}, #{createdate,jdbcType=TIMESTAMP}, 
       #{modifydate,jdbcType=TIMESTAMP}, #{summary,jdbcType=LONGVARCHAR}, #{content,jdbcType=LONGVARCHAR}
       )
@@ -80,9 +73,6 @@
       </if>
       <if test="userId != null" >
         user_id,
-      </if>
-      <if test="nickname != null" >
-        nickname,
       </if>
       <if test="keyword != null" >
         keyword,
@@ -118,9 +108,6 @@
       </if>
       <if test="userId != null" >
         #{userId,jdbcType=INTEGER},
-      </if>
-      <if test="nickname != null" >
-        #{nickname,jdbcType=VARCHAR},
       </if>
       <if test="keyword != null" >
         #{keyword,jdbcType=VARCHAR},
@@ -158,9 +145,6 @@
       <if test="userId != null" >
         user_id = #{userId,jdbcType=INTEGER},
       </if>
-      <if test="nickname != null" >
-        nickname = #{nickname,jdbcType=VARCHAR},
-      </if>
       <if test="keyword != null" >
         keyword = #{keyword,jdbcType=VARCHAR},
       </if>
@@ -193,7 +177,6 @@
     update article
     set title = #{title,jdbcType=VARCHAR},
       user_id = #{userId,jdbcType=INTEGER},
-      nickname = #{nickname,jdbcType=VARCHAR},
       keyword = #{keyword,jdbcType=VARCHAR},
       catelog_id = #{catelogId,jdbcType=INTEGER},
       totop = #{totop,jdbcType=TINYINT},
@@ -209,7 +192,6 @@
     update article
     set title = #{title,jdbcType=VARCHAR},
       user_id = #{userId,jdbcType=INTEGER},
-      nickname = #{nickname,jdbcType=VARCHAR},
       keyword = #{keyword,jdbcType=VARCHAR},
       catelog_id = #{catelogId,jdbcType=INTEGER},
       totop = #{totop,jdbcType=TINYINT},

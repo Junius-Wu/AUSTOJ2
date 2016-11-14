@@ -21,7 +21,7 @@
   </div>
   <div class="row animated fadeInUp">
     <div class="login-field">
-      <form role="form" style="margin-top: 20px" method="post" id="registerForm" action="/register">
+      <form role="form" style="margin-top: 20px" method="post" id="registerForm" action="register">
         <div class="input-group form-group">
           <span class="input-group-addon"><i class="fa fa-user"></i></span>
           <input type="text" class="form-control" placeholder="Username" required name="username"
@@ -53,9 +53,9 @@
     </div>
   </div>
 </div>
-<script src="/static/scripts/vendor.js" th:href="@{static/scripts/vendor.js}"></script>
+<script src="/static/scripts/vendor.js" th:src="@{static/scripts/vendor.js}"></script>
 
-<script src="/static/scripts/plugins.js" th:href="@{static/scripts/plugins.js}"></script>
-<script src="/static/scripts/login.js" th:href="@{static/scripts/login.js}"></script>
+<script src="/static/scripts/plugins.js" th:src="@{static/scripts/plugins.js}"></script>
+<script src="/static/scripts/login.js" th:src="@{static/scripts/login.js}"></script>
 </body>
 </html>

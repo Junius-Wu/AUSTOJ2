@@ -289,6 +289,14 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
 
+  <!--查找用户基础字段,用于关联查询-->
+  <select id="selectBaseByPk" resultType="cn.edu.aust.common.entity.User" parameterType="java.lang.Integer" >
+    select u.id,u.username,u.nickname,u.avatar,u.honor
+    from user u
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+
   <!--查找需要展示出来的用户-->
   <select id="selecttoShow" resultType="cn.edu.aust.common.entity.User">
     SELECT u.id,u.nickname,u.avatar,u.honor FROM user u
@@ -297,24 +305,30 @@
     limit 6
   </select>
 
-  <!--查找全部用户-->
-  <select id="selectAll" resultType="cn.edu.aust.common.entity.User">
+  <!--根据参数动态拼接sql-->
+  <select id="selectParam" resultType="cn.edu.aust.common.entity.User" parameterType="cn.edu.aust.common.mybatis.QueryParams">
     SELECT <include refid="Base_Column_List"/>
     FROM user
+    <where>
+      <include refid="BasicMapper.buildParam"/>
+    </where>
   </select>
+
 <!--根据用户名查找用户-->
   <select id="selectByUsername" parameterType="string" resultType="cn.edu.aust.common.entity.User">
     SELECT
     <include refid="Base_Column_List"/>
     FROM user WHERE user.username = #{username}
   </select>
-<!--根据用户名查找用户-->
+
+<!--根据邮箱查找用户-->
   <select id="selectByEmail" parameterType="string" resultType="cn.edu.aust.common.entity.User">
     SELECT
     <include refid="Base_Column_List"/>
-    FROM user WHERE user.email = #{email}
+    FROM user u WHERE u.email = #{email}
   </select>
-  <!--查找出用户排名-->
+
+  <!--查找出用户排名,必须是有效用户才能参与排名-->
     <select id="selectRanks" resultType="cn.edu.aust.common.entity.User">
       SELECT u.id,u.username,u.nickname,u.submit,u.solved,u.blog
       FROM user u WHERE u.defunct = 0

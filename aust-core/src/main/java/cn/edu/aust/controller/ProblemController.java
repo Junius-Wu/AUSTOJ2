@@ -17,16 +17,17 @@ import java.util.Optional;
 
 import javax.annotation.Resource;
 
-import cn.edu.aust.common.util.Filter;
-import cn.edu.aust.common.util.PageAble;
 import cn.edu.aust.common.entity.Problem;
-import cn.edu.aust.common.entity.ProblemBLOBs;
+import cn.edu.aust.common.entity.pojo.ProblemUser;
+import cn.edu.aust.common.mybatis.Filter;
+import cn.edu.aust.common.util.PageRequest;
 import cn.edu.aust.exception.PageException;
 import cn.edu.aust.service.ProblemService;
 
 import static cn.edu.aust.common.ResultVo.PROBLEM_NOT_EXIST;
 
 /**
+ * 题目的控制器
  * @author Niu Li
  * @date 2016/10/5
  */
@@ -39,18 +40,21 @@ public class ProblemController {
 
     /**
      * 查找相应阶段的题目
-     * @param stage
-     * @return
+     * @param stage 对应的阶段 1 start 2 practice 3 master
+     * @return 分页所需要的信息 total: rows:[]
      */
     @RequestMapping(value = "/findByStage/{stage}",method = RequestMethod.GET,produces = "application/json; charset=UTF-8")
-    public @ResponseBody JSONObject findByStage(@PathVariable(value = "stage") Integer stage, PageAble pageAble){
+    public @ResponseBody JSONObject findByStage(@PathVariable(value = "stage") Integer stage, PageRequest pageRequest){
         JSONObject result = new JSONObject();
-        pageAble.getFilters().add(Filter.eq("stage",stage));
-        pageAble.getFilters().add(Filter.eq("contest_id",0));
+        pageRequest.getFilters().add(Filter.eq("stage",stage));
+        pageRequest.getFilters().add(Filter.eq("contest_id",0));//非竞赛题
 
-        PageHelper.startPage((pageAble.getOffset()/pageAble.getLimit())+1,pageAble.getLimit());
-        PageHelper.orderBy(pageAble.getOrdername()+" "+pageAble.getOrder());
-        List<Problem> problems = problemService.selectWithCriteria(pageAble);
+        List<Problem> problems = PageHelper.startPage(
+                (pageRequest.getOffset()/ pageRequest.getLimit())+1, pageRequest.getLimit())
+                .setOrderBy(pageRequest.getOrdername()+" "+ pageRequest.getOrder())
+                .doSelectPage(
+                        ()->problemService.selectWithPageRequest(pageRequest)
+                );
 
         result.put("rows",problems);
         result.put("total",((Page)problems).getTotal());
@@ -59,12 +63,17 @@ public class ProblemController {
 
     /**
      * 查找一个具体的题目,并前往题目页面
-     * @return
+     * @param id 对应题目的id
+     * @return 题目页面视图
+     * @throws PageException 未找到该题目,则抛出异常
      */
     @RequestMapping(value = "/{id}",method = RequestMethod.GET,produces = "text/html;charset=UTF-8")
     public String findProblem(@PathVariable(value = "id") Integer id, Model model) throws PageException {
-        Optional<ProblemBLOBs> problem = Optional.ofNullable(problemService.selectByPrimaryKey(id));
-        model.addAttribute("problem", problem.orElseThrow(() -> new PageException(PROBLEM_NOT_EXIST)));
+        Optional<ProblemUser> problem = Optional
+                .ofNullable(problemService.selectProblemBlobUserByPk(id));
+
+        model.addAttribute("problem", problem.orElseThrow(
+                () -> new PageException(PROBLEM_NOT_EXIST)));
         return "problem";
     }
 

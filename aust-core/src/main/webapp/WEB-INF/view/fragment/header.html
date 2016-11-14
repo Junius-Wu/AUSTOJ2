@@ -9,7 +9,7 @@
     <div class="navbar-header">
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
         </button>
-        <a class="navbar-brand" href="/">AUST</a>
+        <a class="navbar-brand" href="index" th:href="@{/index}">AUST</a>
     </div>
     <div class="navbar-collapse collapse">
         <ul class="nav navbar-nav">
@@ -34,12 +34,12 @@
             </li>
         </ul>
         <ul class="nav navbar-nav navbar-right" th:if="${session.userpri} != null">
-            <li><a href="/user/" th:text="${session.userpri.nickname}==null?${session.userpri.username}:${session.userpri.nickname}">独孤求败</a></li>
-            <li><a href="/loginout">退出</a></li>
+            <li><a href="user/" th:text="${session.userpri.nickname}==null?${session.userpri.username}:${session.userpri.nickname}">独孤求败</a></li>
+            <li><a href="loginout">退出</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right" th:if="${session.userpri} == null">
-            <li><a href="/login" >登 录</a></li>
-            <li><a href="/register">注 册</a></li>
+            <li><a href="login" >登 录</a></li>
+            <li><a href="register">注 册</a></li>
         </ul>
     </div><!--/.nav-collapse -->
 </div>

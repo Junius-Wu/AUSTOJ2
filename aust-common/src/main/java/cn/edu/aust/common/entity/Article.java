@@ -9,8 +9,6 @@ public class Article {
 
     private Integer userId;
 
-    private String nickname;
-
     private String keyword;
 
     private Integer catelogId;
@@ -23,11 +21,10 @@ public class Article {
 
     private Date modifydate;
 
-    public Article(Integer id, String title, Integer userId, String nickname, String keyword, Integer catelogId, Integer totop, Integer isshow, Date createdate, Date modifydate) {
+    public Article(Integer id, String title, Integer userId, String keyword, Integer catelogId, Integer totop, Integer isshow, Date createdate, Date modifydate) {
         this.id = id;
         this.title = title;
         this.userId = userId;
-        this.nickname = nickname;
         this.keyword = keyword;
         this.catelogId = catelogId;
         this.totop = totop;
@@ -62,14 +59,6 @@ public class Article {
 
     public void setUserId(Integer userId) {
         this.userId = userId;
-    }
-
-    public String getNickname() {
-        return nickname;
-    }
-
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
     }
 
     public String getKeyword() {

@@ -31,15 +31,13 @@ public class Problem {
 
     private Integer authorId;
 
-    private String author;
-
     private Integer contestId;
 
     private Date createdate;
 
     private Date modifydate;
 
-    public Problem(Integer id, String title, String keyword, Byte catelog, Byte stage, Byte spj, Integer timeLimit, Integer memoryLimit, Byte difficulty, Integer accepted, Integer solved, Integer submit, Integer submitUser, Integer authorId, String author, Integer contestId, Date createdate, Date modifydate) {
+    public Problem(Integer id, String title, String keyword, Byte catelog, Byte stage, Byte spj, Integer timeLimit, Integer memoryLimit, Byte difficulty, Integer accepted, Integer solved, Integer submit, Integer submitUser, Integer authorId, Integer contestId, Date createdate, Date modifydate) {
         this.id = id;
         this.title = title;
         this.keyword = keyword;
@@ -54,7 +52,6 @@ public class Problem {
         this.submit = submit;
         this.submitUser = submitUser;
         this.authorId = authorId;
-        this.author = author;
         this.contestId = contestId;
         this.createdate = createdate;
         this.modifydate = modifydate;
@@ -174,14 +171,6 @@ public class Problem {
 
     public void setAuthorId(Integer authorId) {
         this.authorId = authorId;
-    }
-
-    public String getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(String author) {
-        this.author = author;
     }
 
     public Integer getContestId() {

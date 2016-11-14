@@ -7,13 +7,15 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import cn.edu.aust.common.util.PageAble;
 import cn.edu.aust.common.entity.Problem;
-import cn.edu.aust.common.entity.ProblemBLOBs;
+import cn.edu.aust.common.entity.ProblemWithBLOBs;
+import cn.edu.aust.common.entity.pojo.ProblemUser;
 import cn.edu.aust.common.mapper.ProblemMapper;
+import cn.edu.aust.common.util.PageRequest;
 import cn.edu.aust.service.ProblemService;
 
 /**
+ * 题目的服务层,操作Mapper层
  * @author Niu Li
  * @date 2016/10/5
  */
@@ -28,27 +30,27 @@ public class ProblemServiceImpl implements ProblemService {
     }
 
     @Override
-    public int insert(ProblemBLOBs record) {
+    public int insert(ProblemWithBLOBs record) {
         return problemMapper.insert(record);
     }
 
     @Override
-    public int insertSelective(ProblemBLOBs record) {
+    public int insertSelective(ProblemWithBLOBs record) {
         return problemMapper.insertSelective(record);
     }
 
     @Override
-    public ProblemBLOBs selectByPrimaryKey(Integer id) {
+    public ProblemWithBLOBs selectByPrimaryKey(Integer id) {
         return problemMapper.selectByPrimaryKey(id);
     }
 
     @Override
-    public int updateByPrimaryKeySelective(ProblemBLOBs record) {
+    public int updateByPrimaryKeySelective(ProblemWithBLOBs record) {
         return problemMapper.updateByPrimaryKeySelective(record);
     }
 
     @Override
-    public int updateByPrimaryKeyWithBLOBs(ProblemBLOBs record) {
+    public int updateByPrimaryKeyWithBLOBs(ProblemWithBLOBs record) {
         return problemMapper.updateByPrimaryKeyWithBLOBs(record);
     }
 
@@ -58,7 +60,16 @@ public class ProblemServiceImpl implements ProblemService {
     }
 
     @Override
-    public List<Problem> selectWithCriteria(PageAble pageAble) {
-        return problemMapper.selectWithCriteria(pageAble);
+    public List<Problem> selectWithPageRequest(PageRequest pageRequest) {
+        return problemMapper.selectWithPageRequest(pageRequest);
+    }
+
+    @Override
+    public ProblemUser selectProblemBlobUserByPk(Integer id) {
+        return problemMapper.selectProblemBlobUserByPk(id);
+    }
+    @Override
+    public Problem selectBaseByPk(Integer id){
+        return problemMapper.selectBaseByPk(id);
     }
 }

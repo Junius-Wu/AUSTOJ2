@@ -60,7 +60,7 @@ function checkemail(obj) {
     if (obj.value != ''){
         $.ajax({
                    type: 'GET',
-                   url: '/checkemail',
+                   url: 'checkemail',
                    dataType:'json',
                    data:{email:obj.value},
                    success: function(data){
@@ -91,7 +91,7 @@ function checkuser(obj){
     if (obj.value != ''){
         $.ajax({
                    type: 'GET',
-                   url: '/check/'+obj.value,
+                   url: 'check/'+obj.value,
                    dataType:'json',
                    success: function(data){
                        if (data.status == 0){

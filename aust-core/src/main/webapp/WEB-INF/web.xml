@@ -52,6 +52,7 @@
         <url-pattern>*.svg</url-pattern>
         <url-pattern>*.ttf</url-pattern>
         <url-pattern>*.woff2</url-pattern>
+        <url-pattern>*.woff</url-pattern>
     </filter-mapping>
 
     <!--listener start-->

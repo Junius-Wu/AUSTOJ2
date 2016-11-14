@@ -2,13 +2,17 @@ package cn.edu.aust.common.util;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
+import cn.edu.aust.common.mybatis.Filter;
+
 /**
+ * 接收分页请求的类
  * @author Niu Li
  * @date 2016/10/5
  */
-public class PageAble implements Serializable {
+public class PageRequest implements Serializable {
 
     private static final long serialVersionUID = -3930180379790344299L;
 
@@ -26,6 +30,15 @@ public class PageAble implements Serializable {
     /** 筛选 */
     private List<Filter> filters = new ArrayList<Filter>();
 
+    /**
+     * 添加查询条件
+     * @param filters 查询条件,多个或者单个
+     * @return 该实例对象
+     */
+    public PageRequest addFilter(Filter ...filters){
+        this.filters.addAll(Arrays.asList(filters));
+        return this;
+    }
 
     public List<Filter> getFilters() {
         return filters;

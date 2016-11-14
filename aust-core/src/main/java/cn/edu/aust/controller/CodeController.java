@@ -22,10 +22,10 @@ import javax.servlet.http.HttpSession;
  */
 @Controller
 public class CodeController {
-    private int width = 90;//验证码宽度
-    private int height = 40;//验证码高度
-    private int codeCount = 4;//验证码个数
-    private int lineCount = 19;//混淆线个数
+    private final static int width = 90;//验证码宽度
+    private final static int height = 40;//验证码高度
+    private final static int codeCount = 4;//验证码个数
+    private final static int lineCount = 19;//混淆线个数
 
     private char[] codeSequence = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J',
             'K', 'L', 'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W',
@@ -33,7 +33,7 @@ public class CodeController {
 
     /**
      * 具体获取验证码的方法
-     * @throws IOException
+     * @throws IOException 抛出异常
      */
     @RequestMapping(value = "/codeValidate",method = RequestMethod.GET)
     public void getCode(HttpServletRequest request,

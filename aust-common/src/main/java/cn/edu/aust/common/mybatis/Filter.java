@@ -1,9 +1,4 @@
-/*
- * Copyright 2005-2015 shopxx.net. All rights reserved.
- * Support: http://www.shopxx.net
- * License: http://www.shopxx.net/license
- */
-package cn.edu.aust.common.util;
+package cn.edu.aust.common.mybatis;
 
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -12,66 +7,11 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import java.io.Serializable;
 
 /**
- * 筛选
- * 
- * @version 4.0
+ * 数据库筛选属性
  */
 public class Filter implements Serializable {
 
 	private static final long serialVersionUID = -8712382358441065075L;
-
-	/**
-	 * 运算符
-	 */
-	public enum Operator {
-
-		/** 等于 */
-		eq("="),
-
-		/** 不等于 */
-		ne("!="),
-
-		/** 大于 */
-		gt(">"),
-
-		/** 小于 */
-		lt("<"),
-
-		/** 大于等于 */
-		ge(">="),
-
-		/** 小于等于 */
-		le("<="),
-
-		/** 包含 */
-		in("in"),
-
-		/** 为Null */
-		isNull("==null"),
-
-		/** 不为Null */
-		isNotNull("!=null"),
-
-		/** 为空 */
-		isEmpty("==''"),
-
-		/** 不为空 */
-		isNotEmpty("!= ''");
-
-		Operator(String operator) {
-			this.operator = operator;
-		}
-
-		private String operator;
-
-		public String getOperator() {
-			return operator;
-		}
-
-		public void setOperator(String operator) {
-			this.operator = operator;
-		}
-	}
 
 
 	/** 属性 */
@@ -88,7 +28,6 @@ public class Filter implements Serializable {
 	 */
 	public Filter() {
 	}
-
 	/**
 	 * 构造方法
 	 *

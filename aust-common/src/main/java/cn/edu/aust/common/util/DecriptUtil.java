@@ -1,4 +1,4 @@
-package cn.edu.aust.util;
+package cn.edu.aust.common.util;
 
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
