@@ -210,10 +210,11 @@ function removeCookie(name, options) {
   addCookie(name, null, options);
 }
 
+//获取项目路径
+var pathName = window.document.location.pathname;
+var projectName = pathName.substring(0, pathName.substr(1).indexOf('/') + 1);
+
 $(function () {
-  //获取项目路径
-  var pathName = window.document.location.pathname;
-  var projectName = pathName.substring(0, pathName.substr(1).indexOf('/') + 1);
   var $aside = $('#aside');
   if ($aside.length > 0) {
     //写入侧边栏
@@ -243,4 +244,37 @@ $(function () {
       })
     }
   })
-})
+});
+
+//toastr设置
+toastr.options = {
+  'closeButton': true,
+  'debug': false,
+  'progressBar': false,
+  'positionClass': 'toast-top-center',
+  'showDuration': '400',
+  'hideDuration': '1000',
+  'timeOut': '4000',
+  'extendedTimeOut': '1000',
+  'showEasing': 'swing',
+  'hideEasing': 'linear',
+  'showMethod': 'fadeIn',
+  'hideMethod': 'fadeOut'
+};
+
+//全局处理ajax函数,返回true则可以继续
+function consumeStatus(data) {
+  if (data.status==12){
+    toastr.error("用户未登录,5秒后跳转登录页面","FAIL",{
+      progressBar:true,
+      onHidden:function () {
+        window.location.href = projectName+'/login'
+      },
+      onCloseClick:function () {
+        this.onHidden=null;
+      }
+    })
+    return false;
+  }
+  return true;
+}

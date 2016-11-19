@@ -79,22 +79,22 @@
                          </div>
                          <div class="discuss-block row" th:each="commont : ${pageinfo.getList()}">
                              <div class="discuss-vote col-md-1">
-                               <button class="like" data-placement="top" data-container="body" data-toggle="tooltip" title="留言对人有帮助，有参考价值"><i class="fa fa-caret-up"></i></button>
-                               <span th:text="${commont.likecount}">0</span>
-                               <button class="hate" data-placement="bottom" data-container="body" data-toggle="tooltip" title="留言没帮助，是错误的答案，答非所问"><i class="fa fa-caret-down"></i></button>
+                               <button class="like" th:onclick="'voteComment('+${commont.getId()}+',1)'" data-placement="top" data-container="body" data-toggle="tooltip" th:title="#{like.content}" title="留言对人有帮助，有参考价值"><i class="fa fa-caret-up"></i></button>
+                               <span th:text="${commont.likecount}" th:class="${commont.getId()}">0</span>
+                               <button class="hate" th:onclick="'voteComment('+${commont.getId()}+',0)'" data-placement="bottom" data-container="body" data-toggle="tooltip" th:title="#{hate.content}" title="留言没帮助，是错误的答案，答非所问"><i class="fa fa-caret-down"></i></button>
                              </div>
                              <div class="discuss-detail col-md-11">
                                <div class="discuss-content">
                                   <p th:text="${commont.content}">测试留言内容</p>
                                </div>
-                               <div class="discuss-tools">
+                               <div class="discuss-tools" th:id="${commont.getId()}">
                                  <div class="row">
                                    <div class="col-md-8">
                                      <ul class="list-inline">
                                        <li th:if="${session.userpri} !=null and ${commont.getUserId()} == ${session.userpri.id}"><a href="javascript:void(0);">编辑</a></li>
-                                       <li><a href="javascript:void(0);">评论</a></li>
+                                       <li><a href="javascript:void(0);" th:onclick="'getCommentDetail('+${commont.getId()}+')'">评论</a></li>
                                        <li th:if="${session.userpri} !=null and ${commont.getUserId()} == ${session.userpri.id}"><a href="javascript:void(0);">删除</a></li>
-                                       <li><a href="javascript:void(0);">举报</a></li>
+                                       <li><a href="javascript:void(0);" th:onclick="'reportComment('+${commont.getId()}+')'">举报</a></li>
                                        <li><span class="time" th:text="${#dates.format(commont.createdate,'dd/MMM/yyyy HH:mm')}">2016-10-17 23:00:00</span></li>
                                      </ul>
                                    </div>
@@ -105,49 +105,8 @@
                                      </a>
                                    </div>
                                  </div>
-                                 <div class="discuss-commont row">
-                                   <div class="commont-list">
-                                     <ul class="list-unstyled">
-                                       <li>
-                                         <div class="reply-main row">
-                                           <div class="col-md-12">
-                                             <a href="#">牛李</a>:原来如此
-                                           </div>
-                                         </div>
-                                         <div class="reply-info row">
-                                           <span class="col-md-4 time">2016-10-17 23:00:00</span>
-                                           <div class="reply-button">
-                                             <a href="#">回复</a>
-                                           </div>
-                                         </div>
-                                       </li>
-                                       <li>
-                                         <div class="reply-main row">
-                                           <div class="col-md-12">
-                                             <a href="#">牛李</a>回复
-                                             <a href="#">笑笑</a>:hahahhahahah
-                                           </div>
-                                         </div>
-                                         <div class="reply-info row">
-                                           <span class="col-md-4 time">2016-10-17 23:00:00</span>
-                                           <div class="reply-button">
-                                             <a href="#">回复</a>
-                                           </div>
-                                         </div>
-                                       </li>
-                                     </ul>
-                                   </div>
-                                   <div style="margin-left: 35px;margin-right: 50px">
-                                     <form action="#" method="post">
-                                       <div class="col-md-9">
-                                         <textarea class="form-control"></textarea>
-                                       </div>
-                                       <div class="col-md-2 col-md-offset-1">
-                                         <button class="btn btn-lg btn-inverse" type="button">提交评论</button>
-                                       </div>
-                                     </form>
-                                   </div>
-                                 </div>
+                                 <!--具体内容-->
+
                                </div>
 
                              </div>
@@ -250,5 +209,50 @@
 <script src="/static/scripts/vendor.js" th:src="@{/static/scripts/vendor.js}"></script>
 
 <script src="/static/scripts/plugins.js" th:src="@{/static/scripts/plugins.js}"></script>
+<script>
+    //得到详细评论
+   function getCommentDetail(rootId) {
+       $.ajax({
+           type: 'GET',
+           url: projectName+'/commont/pro/detail/'+rootId,
+           dataType:'html',
+           success: function(data){
+               $(".discuss-commont").addClass('hidden');
+               $("#"+rootId).append(data);
+           }
+       });
+   }
+//   点赞
+   function voteComment(rootId,status) {
+       $.ajax({
+           type: 'POST',
+           url: projectName+'/commont/pro/vote/'+rootId,
+           data:{status:status},
+           dataType:'json',
+           success: function(data){
+               if (consumeStatus(data)){
+                   $("span[class="+rootId+"]").text(data.count);
+               }
+           }
+       });
+   }
+   //举报
+    function reportComment(rootId) {
+        $.ajax({
+            type: 'POST',
+            url: projectName+'/commont/pro/report/'+rootId,
+            data:{status:status},
+            dataType:'json',
+            success: function(data){
+                if (consumeStatus(data)){
+                    toastr.success("举报成功,管理员审核后会处理该评论","SUCCESS",{
+                        progressBar:true,
+                        positionClass: 'toast-top-right'
+                    })
+                }
+            }
+        });
+    }
+</script>
 </body>
 </html>

@@ -33,4 +33,11 @@ public interface ProblemCommentService {
      * @return 查询集合
      */
     List<ProblemCommentUser> selectToShow(Integer problem_id, Integer belowStatus);
+
+    /**
+     * 根据根节点id查找出旗下评论
+     * @param rootId 根节点id
+     * @return 评论集合
+     */
+    List<ProblemCommentUser> selectByRootId(Integer rootId,Integer belowStatus);
 }

@@ -41,4 +41,11 @@ public interface ProblemService {
      * @return 题目用户包装类
      */
     ProblemUser selectProblemBlobUserByPk(Integer id);
+
+    /**
+     * 查询基础字段
+     * @param id 题目id
+     * @return 查询内容
+     */
+    Problem selectBaseByPk(Integer id);
 }

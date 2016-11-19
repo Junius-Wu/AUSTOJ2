@@ -4,11 +4,14 @@ package cn.edu.aust.service.impl;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
+import org.springframework.web.context.request.RequestAttributes;
+import org.springframework.web.context.request.RequestContextHolder;
 
 import java.util.List;
 
 import javax.annotation.Resource;
 
+import cn.edu.aust.Principal;
 import cn.edu.aust.Setting;
 import cn.edu.aust.common.entity.User;
 import cn.edu.aust.common.mapper.UserMapper;
@@ -88,5 +91,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> selectRanks() {
         return userMapper.selectRanks();
+    }
+
+    @Override
+    public User getCurrent() {
+        RequestAttributes requestAttributes = RequestContextHolder.currentRequestAttributes();
+        Principal principal = requestAttributes != null ? (Principal) requestAttributes.getAttribute(User.PRINCIPAL_ATTRIBUTE_NAME, RequestAttributes.SCOPE_SESSION) : null;
+        Integer id = principal != null ? principal.getId() : null;
+        return id == null?null:userMapper.selectByPrimaryKey(id);
     }
 }

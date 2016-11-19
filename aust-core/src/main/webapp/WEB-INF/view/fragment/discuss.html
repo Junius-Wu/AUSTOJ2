@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+        <div class="discuss-commont row animated fadeInUp" id="discusscontent">
+            <div class="commont-list">
+                <ul class="list-unstyled">
+                    <!--/*@thymesVar id="comments" type="com.github.pagehelper.PageInfo"*/-->
+                    <li th:each="comment : ${comments.getList()}">
+                        <div class="reply-main row">
+                            <div class="col-md-12">
+                                <!--/*@thymesVar id="comment" type="cn.edu.aust.common.entity.pojo.ProblemCommentUser"*/-->
+                                <!--/*@thymesVar id="user" type="cn.edu.aust.common.entity.User"*/-->
+                                <a href="#"
+                                   th:text="${comment.user.nickname}==null?${comment.user.username}:${comment.user.nickname}">牛李</a>
+                                <th:block th:if="${comment.friend} != null">回复:
+                                    <a href="#" th:text="${comment.friend.nickname}==null?${comment.friend.username}:${comment.friend.nickname}">笑笑</a>
+                                </th:block>
+                                <th:block th:text="':'+${comment.content}">原来如此</th:block>
+                            </div>
+                        </div>
+                        <div class="reply-info row">
+                            <span class="col-md-4 time" th:text="${#dates.format(comment.getCreatedate(),'dd/MMM/yyyy HH:mm')}">2016-10-17 23:00:00</span>
+                            <div class="reply-button">
+                                <a href="#">回复</a>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <!--评论框最后动态显示-->
+            <div style="margin-left: 35px;margin-right: 50px">
+                <form action="#" method="post">
+                    <div class="col-md-9">
+                        <textarea class="form-control"></textarea>
+                    </div>
+                    <div class="col-md-2 col-md-offset-1">
+                        <button class="btn btn-lg btn-inverse" type="button">提交评论</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+</body>
+</html>

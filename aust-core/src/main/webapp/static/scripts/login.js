@@ -13,7 +13,6 @@ toastr.options = {
     'showMethod': 'fadeIn',
     'hideMethod': 'fadeOut'
 };
-
 //启动复选框
 $(':checkbox').radiocheck();
 

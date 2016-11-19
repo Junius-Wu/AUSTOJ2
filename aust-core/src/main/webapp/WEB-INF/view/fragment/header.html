@@ -34,12 +34,12 @@
             </li>
         </ul>
         <ul class="nav navbar-nav navbar-right" th:if="${session.userpri} != null">
-            <li><a href="user/" th:text="${session.userpri.nickname}==null?${session.userpri.username}:${session.userpri.nickname}">独孤求败</a></li>
-            <li><a href="loginout">退出</a></li>
+            <li><a href="user/" th:href="@{/login}" th:text="${session.userpri.nickname}==null?${session.userpri.username}:${session.userpri.nickname}">独孤求败</a></li>
+            <li><a href="loginout" th:href="@{/loginout}">退出</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right" th:if="${session.userpri} == null">
-            <li><a href="login" >登 录</a></li>
-            <li><a href="register">注 册</a></li>
+            <li><a href="login" th:href="@{/login}">登 录</a></li>
+            <li><a href="register" th:href="@{/register}">注 册</a></li>
         </ul>
     </div><!--/.nav-collapse -->
 </div>

@@ -56,4 +56,10 @@ public interface UserService {
      */
     List<User> selectRanks();
 
+    /**
+     * 得到当前登录用户
+     * @return 该用户
+     */
+    User getCurrent();
+
 }

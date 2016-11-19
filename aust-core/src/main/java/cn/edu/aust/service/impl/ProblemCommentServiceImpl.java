@@ -68,4 +68,13 @@ public class ProblemCommentServiceImpl implements ProblemCommentService {
         return problemCommentMapper.selectParamsWithUser(queryParams);
     }
 
+    @Override
+    public List<ProblemCommentUser> selectByRootId(Integer rootId,Integer belowStatus) {
+        QueryParams queryParams = new QueryParams();
+        queryParams.and(Filter.eq("root_id", rootId)); //题目id
+        queryParams.and(Filter.lt("status",belowStatus)); //状态小于此值
+        queryParams.order(Order.descOrder("likecount"));//按点赞排序
+        return problemCommentMapper.selectParamsWithUser(queryParams);
+    }
+
 }

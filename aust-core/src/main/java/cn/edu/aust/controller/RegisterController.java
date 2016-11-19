@@ -78,6 +78,7 @@ public class RegisterController {
             result.put("msg",br.getFieldErrors().get(0).getDefaultMessage());
             return result;
         }
+        //禁用的用户名
         if (userService.usernameIsDisabled(user.getUsername())){
             return ReturnUtil.packingRes(result,ResultVo.USERNAME_ENABLE);
         }

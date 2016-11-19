@@ -35,7 +35,7 @@ public class SystemUtil {
 
     /**
      * 得到系统设置
-     * @return
+     * @return 该设置实例
      */
     public static Setting getSetting(){
         Cache cache = CACHE_MANAGER.getCache(Setting.CACHE_NAME);
