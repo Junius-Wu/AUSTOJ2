@@ -59,14 +59,17 @@ public class ReportLogServiceImpl implements ReportLogService{
         if (reportLog == null){
             reportLog = new ReportLog();
             reportLog.setType(ReportLogConstant.TYPE_PRO_COMMENT);
-            reportLog.setStatus((byte)0);
+            reportLog.setStatus((byte)1);
             reportLog.setOtherId(comment_id);
             reportLog.setUserId(user_id);
             reportLog.setCreatedate(new Date());
             reportLogMapper.insertSelective(reportLog);
         }
-        reportLog.setStatus((byte)(reportLog.getStatus()^1));
         result.put("reportstatus",0);
+        if (reportLog.getStatus() == 1){
+            return result;
+        }
+        reportLog.setStatus((byte)(1));
         reportLogMapper.updateByPrimaryKey(reportLog);
         return result;
     }

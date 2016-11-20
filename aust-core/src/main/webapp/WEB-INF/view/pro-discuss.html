@@ -72,36 +72,41 @@
                <!--主面板-->
                        <section class="discuss-section animated fadeInUp">
                          <div class="title">
-                           <button href="#" class="btn btn-inverse" data-toggle="modal" data-target="#myModal">分享思路</button>
+                           <button class="btn btn-inverse" id="share_btn" th:title="${problem.id}">分享思路</button>
                            <h3 class="text-center text-primary"><a href="#" th:href="@{/problem/{id}(id=${problem.id})}"  th:text="${problem.title}">A+B问题</a></h3>
                            <p class="text-center text-danger"><span th:text="'时间:'+${problem.timeLimit}+'ms  '">时间:1000ms  </span><span th:text="'  内存:'+${problem.memoryLimit/1000}+'M'"> 内存:32M</span></p>
                              <hr>
                          </div>
-                         <div class="discuss-block row" th:each="commont : ${pageinfo.getList()}">
-                             <div class="discuss-vote col-md-1">
-                               <button class="like" th:onclick="'voteComment('+${commont.getId()}+',1)'" data-placement="top" data-container="body" data-toggle="tooltip" th:title="#{like.content}" title="留言对人有帮助，有参考价值"><i class="fa fa-caret-up"></i></button>
-                               <span th:text="${commont.likecount}" th:class="${commont.getId()}">0</span>
-                               <button class="hate" th:onclick="'voteComment('+${commont.getId()}+',0)'" data-placement="bottom" data-container="body" data-toggle="tooltip" th:title="#{hate.content}" title="留言没帮助，是错误的答案，答非所问"><i class="fa fa-caret-down"></i></button>
+                         <div class="discuss-block row" th:each="comment : ${pageinfo.getList()}" th:id="${comment.getId()}+'del'">
+                             <div class="discuss-vote col-md-1" >
+                               <button class="like" th:onclick="'voteComment('+${comment.getId()}+',1)'" data-placement="top" data-container="body" data-toggle="tooltip" th:title="#{like.content}" title="留言对人有帮助，有参考价值"><i class="fa fa-caret-up"></i></button>
+                               <span th:text="${comment.likecount}" th:class="${comment.getId()}">0</span>
+                               <button class="hate" th:onclick="'voteComment('+${comment.getId()}+',0)'" data-placement="bottom" data-container="body" data-toggle="tooltip" th:title="#{hate.content}" title="留言没帮助，是错误的答案，答非所问"><i class="fa fa-caret-down"></i></button>
                              </div>
                              <div class="discuss-detail col-md-11">
-                               <div class="discuss-content">
-                                  <p th:text="${commont.content}">测试留言内容</p>
+                               <div class="discuss-content" >
+                                  <p th:id="${comment.getId()}+'content'" th:text="${comment.content}" >
+                               </p>
                                </div>
-                               <div class="discuss-tools" th:id="${commont.getId()}">
+                               <div class="discuss-tools" th:id="${comment.getId()}">
                                  <div class="row">
                                    <div class="col-md-8">
                                      <ul class="list-inline">
-                                       <li th:if="${session.userpri} !=null and ${commont.getUserId()} == ${session.userpri.id}"><a href="javascript:void(0);">编辑</a></li>
-                                       <li><a href="javascript:void(0);" th:onclick="'getCommentDetail('+${commont.getId()}+')'">评论</a></li>
-                                       <li th:if="${session.userpri} !=null and ${commont.getUserId()} == ${session.userpri.id}"><a href="javascript:void(0);">删除</a></li>
-                                       <li><a href="javascript:void(0);" th:onclick="'reportComment('+${commont.getId()}+')'">举报</a></li>
-                                       <li><span class="time" th:text="${#dates.format(commont.createdate,'dd/MMM/yyyy HH:mm')}">2016-10-17 23:00:00</span></li>
+                                       <li th:if="${session.userpri} !=null and ${comment.getUserId()} == ${session.userpri.id}">
+                                           <a href="javascript:void(0);" th:onclick="'modifyComment('+${comment.getId()}+')'">编辑</a>
+                                       </li>
+                                       <li><a href="javascript:void(0);" th:onclick="'getCommentDetail('+${comment.getId()}+')'">评论</a></li>
+                                       <li th:if="${session.userpri} !=null and ${comment.getUserId()} == ${session.userpri.id}">
+                                           <a href="javascript:void(0);" th:onclick="'deleteComment('+${comment.id}+')'">删除</a>
+                                       </li>
+                                       <li><a href="javascript:void(0);" th:onclick="'reportComment('+${comment.getId()}+')'">举报</a></li>
+                                       <li><span class="time" th:text="${#dates.format(comment.createdate,'dd/MMM/yyyy HH:mm')}">2016-10-17 23:00:00</span></li>
                                      </ul>
                                    </div>
                                    <div class="col-md-4 discuss-user">
                                      <a href="#">
-                                       <img src="apple-touch-icon.png" th:src="@{${commont.user.avatar}}" class="img-circle" width="32" height="32" style="padding-bottom: 3px">
-                                       <span style="margin-left: 5px" th:text="${commont.user.nickname} == null ? ${commont.user.username} : ${commont.user.nickname}">牛李</span>
+                                       <img src="apple-touch-icon.png" th:src="@{${comment.user.avatar}}" class="img-circle" width="32" height="32" style="padding-bottom: 3px">
+                                       <span style="margin-left: 5px" th:text="${comment.user.nickname} == null ? ${comment.user.username} : ${comment.user.nickname}">牛李</span>
                                      </a>
                                    </div>
                                  </div>
@@ -190,16 +195,16 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title">提交思路</h4>
                 </div>
-                <form id="pro_form" action="/problem/judge" method="post">
+                <form id="comment_form" th:action="@{/commont/pro/add/{id}(id=${problem.id})}" method="post">
+                    <input type="hidden" name="isReply" th:value="false">
                 <div class="modal-body">
                         <div class="form-group">
-                            <textarea class="form-control" rows="10" cols="10" required name="source"></textarea>
+                            <textarea class="form-control" rows="10" cols="10" required name="content"></textarea>
                         </div>
-
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Commit</button>
+                    <button type="button" class="btn btn-primary" id="comment-btn">Commit</button>
                 </div>
                 </form>
             </div><!-- /.modal-content -->
@@ -207,52 +212,7 @@
     </div><!-- /.modal -->
 
 <script src="/static/scripts/vendor.js" th:src="@{/static/scripts/vendor.js}"></script>
-
 <script src="/static/scripts/plugins.js" th:src="@{/static/scripts/plugins.js}"></script>
-<script>
-    //得到详细评论
-   function getCommentDetail(rootId) {
-       $.ajax({
-           type: 'GET',
-           url: projectName+'/commont/pro/detail/'+rootId,
-           dataType:'html',
-           success: function(data){
-               $(".discuss-commont").addClass('hidden');
-               $("#"+rootId).append(data);
-           }
-       });
-   }
-//   点赞
-   function voteComment(rootId,status) {
-       $.ajax({
-           type: 'POST',
-           url: projectName+'/commont/pro/vote/'+rootId,
-           data:{status:status},
-           dataType:'json',
-           success: function(data){
-               if (consumeStatus(data)){
-                   $("span[class="+rootId+"]").text(data.count);
-               }
-           }
-       });
-   }
-   //举报
-    function reportComment(rootId) {
-        $.ajax({
-            type: 'POST',
-            url: projectName+'/commont/pro/report/'+rootId,
-            data:{status:status},
-            dataType:'json',
-            success: function(data){
-                if (consumeStatus(data)){
-                    toastr.success("举报成功,管理员审核后会处理该评论","SUCCESS",{
-                        progressBar:true,
-                        positionClass: 'toast-top-right'
-                    })
-                }
-            }
-        });
-    }
-</script>
+<script src="/static/scripts/comment.js" th:src="@{/static/scripts/comment.js}"></script>
 </body>
 </html>

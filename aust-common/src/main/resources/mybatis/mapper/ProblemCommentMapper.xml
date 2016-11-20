@@ -207,4 +207,8 @@
       <include refid="BasicMapper.buildParam"/>
     </where>
   </select>
+  <!--根据根节点删除旗下的评论-->
+  <delete id="deleteByRootId" parameterType="integer">
+    DELETE FROM problem_comment WHERE root_id=#{root_id}
+  </delete>
 </mapper>

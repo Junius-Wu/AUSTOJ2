@@ -52,6 +52,18 @@ public class Setting implements Serializable{
      * 侧边栏文章数
      */
     private int aside_articles;
+    /**
+     * isCommentEnabled : true
+     * isCommentChecked : false
+     */
+    /**
+     * 是否开启评论
+     */
+    private boolean isCommentEnabled;
+    /**
+     * 是否开启评论审核
+     */
+    private boolean isCommentChecked;
 
 
     public boolean isIsEmailLogin() {
@@ -124,5 +136,21 @@ public class Setting implements Serializable{
 
     public void setAside_articles(int aside_articles) {
         this.aside_articles = aside_articles;
+    }
+
+    public boolean isIsCommentEnabled() {
+        return isCommentEnabled;
+    }
+
+    public void setIsCommentEnabled(boolean isCommentEnabled) {
+        this.isCommentEnabled = isCommentEnabled;
+    }
+
+    public boolean isIsCommentChecked() {
+        return isCommentChecked;
+    }
+
+    public void setIsCommentChecked(boolean isCommentChecked) {
+        this.isCommentChecked = isCommentChecked;
     }
 }

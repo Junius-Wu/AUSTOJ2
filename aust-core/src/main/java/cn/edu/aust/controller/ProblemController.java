@@ -49,12 +49,11 @@ public class ProblemController {
         pageRequest.getFilters().add(Filter.eq("stage",stage));
         pageRequest.getFilters().add(Filter.eq("contest_id",0));//非竞赛题
 
-        List<Problem> problems = PageHelper.startPage(
-                (pageRequest.getOffset()/ pageRequest.getLimit())+1, pageRequest.getLimit())
-                .setOrderBy(pageRequest.getOrdername()+" "+ pageRequest.getOrder())
-                .doSelectPage(
-                        ()->problemService.selectWithPageRequest(pageRequest)
-                );
+        List<Problem> problems = PageHelper.startPage((pageRequest.getOffset()/ pageRequest.getLimit())+1, pageRequest.getLimit())
+                                           .setOrderBy(pageRequest.getOrdername()+" "+ pageRequest.getOrder())
+                                           .doSelectPage(
+                                                   ()->problemService.selectWithPageRequest(pageRequest)
+                                           );
 
         result.put("rows",problems);
         result.put("total",((Page)problems).getTotal());
@@ -69,11 +68,10 @@ public class ProblemController {
      */
     @RequestMapping(value = "/{id}",method = RequestMethod.GET,produces = "text/html;charset=UTF-8")
     public String findProblem(@PathVariable(value = "id") Integer id, Model model) throws PageException {
-        Optional<ProblemUser> problem = Optional
-                .ofNullable(problemService.selectProblemBlobUserByPk(id));
+        Optional<ProblemUser> problem = Optional.ofNullable(problemService.selectProblemBlobUserByPk(id));
 
-        model.addAttribute("problem", problem.orElseThrow(
-                () -> new PageException(PROBLEM_NOT_EXIST)));
+        model.addAttribute("problem",
+                problem.orElseThrow(() -> new PageException(PROBLEM_NOT_EXIST)));
         return "problem";
     }
 

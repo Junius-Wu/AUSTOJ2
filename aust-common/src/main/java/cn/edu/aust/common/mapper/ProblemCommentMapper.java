@@ -32,4 +32,11 @@ public interface ProblemCommentMapper {
      * @return 查询结果,加关联用户
      */
     List<ProblemCommentUser> selectParamsWithUser(QueryParams queryParams);
+
+    /**
+     * 根据根节点删除旗下的评论
+     * @param root_id 根节点
+     * @return 影响数量
+     */
+    int deleteByRootId(Integer root_id);
 }

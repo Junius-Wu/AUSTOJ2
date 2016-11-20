@@ -3,13 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="/static/styles/vendor.css" th:href="@{/static/styles/vendor.css}">
+    <link rel="stylesheet" href="/static/styles/main.css" th:href="@{/static/styles/main.css}">
 </head>
 <body>
         <div class="discuss-commont row animated fadeInUp" id="discusscontent">
             <div class="commont-list">
                 <ul class="list-unstyled">
                     <!--/*@thymesVar id="comments" type="com.github.pagehelper.PageInfo"*/-->
-                    <li th:each="comment : ${comments.getList()}">
+                    <li th:each="comment : ${comments.getList()}" th:id="${comment.getId()}+'del'">
                         <div class="reply-main row">
                             <div class="col-md-12">
                                 <!--/*@thymesVar id="comment" type="cn.edu.aust.common.entity.pojo.ProblemCommentUser"*/-->
@@ -19,13 +21,14 @@
                                 <th:block th:if="${comment.friend} != null">回复:
                                     <a href="#" th:text="${comment.friend.nickname}==null?${comment.friend.username}:${comment.friend.nickname}">笑笑</a>
                                 </th:block>
-                                <th:block th:text="':'+${comment.content}">原来如此</th:block>
+                                <th:block th:utext="':'+${comment.content}">原来如此</th:block>
                             </div>
                         </div>
                         <div class="reply-info row">
                             <span class="col-md-4 time" th:text="${#dates.format(comment.getCreatedate(),'dd/MMM/yyyy HH:mm')}">2016-10-17 23:00:00</span>
                             <div class="reply-button">
                                 <a href="#">回复</a>
+                                <a href="javascript:void(0)" th:if="${session.userpri} !=null and ${comment.userId} == ${session.userpri.id}" th:onclick="'deleteComment('+${comment.id}+')'">删除</a>
                             </div>
                         </div>
                     </li>
@@ -33,7 +36,9 @@
             </div>
             <!--评论框最后动态显示-->
             <div style="margin-left: 35px;margin-right: 50px">
-                <form action="#" method="post">
+                <span style="margin-left: 19px" class="hidden reply-friend">回复:<a href="#">niuli</a></span>
+                <form th:id="${root_id}+'form'" action="#" method="post">
+                    <input type="hidden" name="root_id" th:value="${root_id}">
                     <div class="col-md-9">
                         <textarea class="form-control"></textarea>
                     </div>
