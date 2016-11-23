@@ -220,7 +220,7 @@ function setUserBlog(value, row, index) {
 function setDiscuss(value, row, index) {
   return [
     '<div>',
-    '<a href="commont/pro/'+row.id+'">'+'讨论'+'</a>',
+    '<a href="comment/pro/'+row.id+'">'+'讨论'+'</a>',
     '</div>'
   ].join('');
 }

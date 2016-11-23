@@ -286,7 +286,10 @@ function consumeStatus(data) {
     })
     return false;
   }else if(data.status!=0){
-    toastr.warn(data.msg,'WARN!',{
+    if(!data.msg){
+      data.msg = '操作失败,请提交bug';
+    }
+    toastr.warning(data.msg,'WARN!',{
       progressBar:true,
     })
     return false;

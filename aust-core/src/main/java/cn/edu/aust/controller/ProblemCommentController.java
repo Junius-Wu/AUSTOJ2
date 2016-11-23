@@ -14,13 +14,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 
 import cn.edu.aust.common.ResultVo;
 import cn.edu.aust.common.entity.Problem;
 import cn.edu.aust.common.entity.User;
 import cn.edu.aust.common.entity.pojo.ProblemCommentUser;
 import cn.edu.aust.common.util.ReturnUtil;
+import cn.edu.aust.common.util.StringUtils;
+import cn.edu.aust.exception.PageException;
 import cn.edu.aust.service.ProblemCommentService;
 import cn.edu.aust.service.ProblemService;
 import cn.edu.aust.service.ReportLogService;
@@ -33,7 +34,7 @@ import cn.edu.aust.service.VoteLogService;
  * @date 2016/11/13
  */
 @Controller
-@RequestMapping("/commont/pro")
+@RequestMapping("/comment/pro")
 public class ProblemCommentController {
 
     @Resource(name = "problemCommentServiceImpl")
@@ -56,7 +57,7 @@ public class ProblemCommentController {
     public String problemComment(@PathVariable(value = "problem_id") Integer problem_id,
                                  @RequestParam(defaultValue = "0") Integer isOrder,
                                 @RequestParam(defaultValue = "1") Integer pageNum,
-                                @RequestParam(defaultValue = "10") Integer pageSize, Model model){
+                                @RequestParam(defaultValue = "6") Integer pageSize, Model model){
         PageInfo<ProblemCommentUser> pageInfo =
                 PageHelper.startPage(pageNum,pageSize)
                           .doSelectPageInfo(
@@ -126,27 +127,46 @@ public class ProblemCommentController {
     }
 
     /**
-     * 添加评论
+     * 添加评论(非回复)
      * @param problem_id 对应题目的id
-     * @param isReply 是否是回复对方
-     * @param friend_id 对方id
      * @return 成功或异常信息
      */
     @RequestMapping(value = "/add/{problem_id}",method = RequestMethod.POST,produces = MediaType.TEXT_HTML_VALUE+";charset=UTF-8")
-    public String addComment(@PathVariable("problem_id") Integer problem_id,String content, Boolean isReply, Integer friend_id,
-                             Model model, HttpServletRequest request){
-        JSONObject result = new JSONObject();
+    public String addComment(@PathVariable("problem_id") Integer problem_id,String content, Model model){
         User user = userService.getCurrent();
         if (user == null){
             model.addAttribute("errorMessage",ResultVo.NOT_LOGIN.getMsg());
             return "error";
         }
-        boolean isSuccess = problemCommentService.insert(problem_id,content,isReply,friend_id,user);
+        boolean isSuccess = problemCommentService.insert(problem_id,content,false,0,user);
         if (!isSuccess){
             model.addAttribute("errorMessage",ResultVo.NO_PRIVILEGE.getMsg());
             return "error";
         }
-        return "redirect:/commont/pro/"+problem_id+"?isOrder=1";
+        return "redirect:/comment/pro/"+problem_id+"?isOrder=1";
+    }
+
+    /**
+     * 回复评论
+     * @param root_id 题目id
+     * @param content 回复内容
+     * @param friendId 对方id,不存在则回复root评论
+     */
+    @ResponseBody
+    @RequestMapping(value = "/reply/{root_id}",method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public JSONObject replyComment(@PathVariable("root_id") Integer root_id,String content,
+                                   @RequestParam(defaultValue = "0") Integer friendId) throws PageException {
+        JSONObject result = new JSONObject();
+        User user = userService.getCurrent();
+        if (user == null){
+            return ReturnUtil.packingRes(result,ResultVo.NOT_LOGIN);
+        }
+        if (StringUtils.isEmpty(content)){
+            return ReturnUtil.packingRes(result,ResultVo.EMPTY_ERROR);
+        }
+        boolean isSuccess = problemCommentService.insertReply(root_id,content,true,friendId,user);
+        result.put("content",content);
+        return ReturnUtil.packingRes(result,isSuccess?ResultVo.OK:ResultVo.COMMENT_ERROR);
     }
     /**
      * 举报某个评论
@@ -161,7 +181,8 @@ public class ProblemCommentController {
         if (user == null){
             return ReturnUtil.packingRes(result,ResultVo.NOT_LOGIN);
         }
-        return reportLogService.reportProblemComment(result,root_id,user.getId());
+        reportLogService.reportProblemComment(result,root_id,user.getId());
+        return ReturnUtil.packingRes(result,ResultVo.OK);
     }
 
     /**
@@ -179,7 +200,8 @@ public class ProblemCommentController {
         if (user == null){
             return ReturnUtil.packingRes(result,ResultVo.NOT_LOGIN);
         }
-        return voteLogService.voteProblemComment(result,root_id,user.getId(),status);
+        voteLogService.voteProblemComment(result,root_id,user.getId(),status);
+        return ReturnUtil.packingRes(result,ResultVo.OK);
     }
 
 }

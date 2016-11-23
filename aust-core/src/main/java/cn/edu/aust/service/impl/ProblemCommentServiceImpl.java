@@ -21,6 +21,7 @@ import cn.edu.aust.common.mybatis.Filter;
 import cn.edu.aust.common.mybatis.Order;
 import cn.edu.aust.common.mybatis.QueryParams;
 import cn.edu.aust.common.util.StringUtils;
+import cn.edu.aust.exception.PageException;
 import cn.edu.aust.service.ProblemCommentService;
 import cn.edu.aust.util.SystemUtil;
 
@@ -65,7 +66,7 @@ public class ProblemCommentServiceImpl implements ProblemCommentService {
         ProblemComment comment = new ProblemComment();
         comment.setProblemId(problem_id);
         comment.setContent(content);
-        if (isReply){
+        if (isReply && friend_id >0 ){
             User friend = userMapper.selectByPrimaryKey(friend_id);
             if (friend == null){
                 return false;
@@ -74,10 +75,40 @@ public class ProblemCommentServiceImpl implements ProblemCommentService {
         comment.setLikecount(0);
         comment.setCreatedate(new Date());
         comment.setModifydate(new Date());
-        comment.setFirendId(friend_id);
+        comment.setFirendId(friend_id==0 ?null:friend_id);
         comment.setUserId(user.getId());
         comment.setStatus((setting.isIsCommentChecked()? CommentConstant.AUDIT:CommentConstant.NORMAL));
         int i = problemCommentMapper.insertSelective(comment);
+        return i>0;
+    }
+
+    @Override
+    public boolean insertReply(Integer rootId, String content, Boolean isReply, Integer friend_id, User user) throws PageException {
+        //检查是否开启评论
+        Setting setting = SystemUtil.getSetting();
+        if (!setting.isIsCommentEnabled()) return false;
+
+        ProblemComment comment = problemCommentMapper.selectByPrimaryKey(rootId);
+        if (comment == null){
+            throw new PageException("非法评论");
+        }
+        ProblemComment newComment = new ProblemComment();
+        newComment.setRootId(rootId);
+        newComment.setProblemId(comment.getProblemId());
+        newComment.setContent(content);
+        if (isReply && friend_id >0 ){
+            User friend = userMapper.selectByPrimaryKey(friend_id);
+            if (friend == null){
+                return false;
+            }
+        }
+        newComment.setLikecount(0);
+        newComment.setCreatedate(new Date());
+        newComment.setModifydate(new Date());
+        newComment.setFirendId(friend_id==0?null:friend_id);
+        newComment.setUserId(user.getId());
+        newComment.setStatus((setting.isIsCommentChecked()? CommentConstant.AUDIT:CommentConstant.NORMAL));
+        int i = problemCommentMapper.insertSelective(newComment);
         return i>0;
     }
 

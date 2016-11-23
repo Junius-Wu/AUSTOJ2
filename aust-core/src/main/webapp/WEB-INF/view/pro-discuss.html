@@ -116,6 +116,14 @@
 
                              </div>
                          </div>
+                           <ul class="pagination-plain">
+                               <li class="previous" th:if="${pageinfo.hasPreviousPage}">
+                                   <a href="#" th:href="@{/comment/pro/{id}(id=${problem.id},pageNum=${pageinfo.prePage})}">Previous</a>
+                               </li>
+                               <li class="next" style="float: right" th:if="${pageinfo.hasNextPage}">
+                                   <a href="#" th:href="@{/comment/pro/{id}(id=${problem.id},pageNum=${pageinfo.nextPage})}">Newer</a>
+                               </li>
+                           </ul>
                        </section>
            </div>
             <div class="col-md-3 widget animated fadeInRight" id="aside">
@@ -195,7 +203,7 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title">提交思路</h4>
                 </div>
-                <form id="comment_form" th:action="@{/commont/pro/add/{id}(id=${problem.id})}" method="post">
+                <form id="comment_form" th:action="@{/comment/pro/add/{id}(id=${problem.id})}" method="post">
                     <input type="hidden" name="isReply" th:value="false">
                 <div class="modal-body">
                         <div class="form-group">

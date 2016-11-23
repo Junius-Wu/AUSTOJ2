@@ -5,6 +5,7 @@ import java.util.List;
 import cn.edu.aust.common.entity.ProblemComment;
 import cn.edu.aust.common.entity.User;
 import cn.edu.aust.common.entity.pojo.ProblemCommentUser;
+import cn.edu.aust.exception.PageException;
 
 /**
  * 题目评论对应的服务
@@ -25,11 +26,23 @@ public interface ProblemCommentService {
      * @param problem_id 对应题目id
      * @param content 内容
      * @param isReply 是否是回复
-     * @param friend_id 对方id
+     * @param friend_id 对方id,0标识null
      * @param user 当前用户
      * @return true成功
      */
     boolean insert(Integer problem_id,String content, Boolean isReply, Integer friend_id,User user);
+
+    /**
+     * 回复评论
+     * @param rootid 根评论
+     * @param content 内容
+     * @param isReply 是否是回复
+     * @param friend_id 对方id,0标识null
+     * @param user 当前用户
+     * @return true成功
+     * @throws PageException 题目不存在,抛出异常
+     */
+    boolean insertReply(Integer rootid,String content, Boolean isReply, Integer friend_id,User user) throws PageException;
 
     int insertSelective(ProblemComment record);
 
