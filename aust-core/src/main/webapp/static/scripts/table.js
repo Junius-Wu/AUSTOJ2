@@ -1,11 +1,12 @@
 //start表格数据获取
-setTable($('#start-table'),'problem/findByStage/1',15);
+setTable($('#start-table'),'/problem/findByStage/1',15);
 //practice表格数据获取
-setTable($('#practice-table'),'problem/findByStage/1',15);
+setTable($('#practice-table'),'/problem/findByStage/1',15);
 //master表格数据获取
-setTable($('#master-table'),'problem/findByStage/1',15);
+setTable($('#master-table'),'/problem/findByStage/1',15);
+setTable($('#cate-table'),'/catelog/table/'+$("#cate-table").attr("data-id"),15);
 //获取用户排名
-setTableClient($("#rank-table"),"static/json/rank.json",20);
+setTableClient($("#rank-table"),"/static/json/rank.json",20);
 
 //获取指定目录下的题目
 // var cateid = $('#cateid').val();
@@ -15,7 +16,7 @@ setTableClient($("#rank-table"),"static/json/rank.json",20);
 //表格数据获取
 function setTable(obj,url,pageSize) {
   obj.bootstrapTable({
-    url: url,//这里配置请求链接
+    url: projectName+url,//这里配置请求链接
     method: 'get',
     cache: true,					   //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
     pagination: true,				   //是否显示分页（*）
@@ -38,7 +39,7 @@ function setTable(obj,url,pageSize) {
 //表格数据获取,获取本地json
 function setTableClient(obj,url,pageSize) {
   obj.bootstrapTable({
-    url: url,//这里配置请求链接
+    url: projectName+url,//这里配置请求链接
     method: 'get',
     cache: true,					   //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
     pagination: true,				   //是否显示分页（*）

@@ -40,7 +40,7 @@
         <ul class="list-unstyled catelog">
             <!--/*@thymesVar id="catelogs" type="java.util.List<cn.edu.aust.common.entity.Catelog>"*/-->
             <li th:each="catelog : ${catelogs}">
-                <i class="fa fa-bookmark-o">&nbsp;&nbsp;<a href="" th:text="${catelog.name}"></a></i>
+                <i class="fa fa-bookmark-o">&nbsp;&nbsp;<a href="#" th:href="@{/catelog/pro/{id}(id=${catelog.id})}" th:text="${catelog.name}"></a></i>
             </li>
         </ul>
     </aside>

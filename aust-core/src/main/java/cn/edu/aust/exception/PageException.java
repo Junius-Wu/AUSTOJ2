@@ -7,7 +7,7 @@ import cn.edu.aust.common.ResultVo;
  * @author Niu Li
  * @date 2016/9/11
  */
-public class PageException extends Exception{
+public class PageException extends Exception {
 
     public PageException(String message) {
         super(message);

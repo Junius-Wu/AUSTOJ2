@@ -35,7 +35,7 @@ class CustomErrorController {
 	}
 
 	private String getExceptionMessage(Throwable throwable, Integer statusCode) {
-		if (throwable != null) {
+		if (throwable != null && throwable.getCause() != null) {
 			return throwable.getCause().getMessage();
 		}
 		HttpStatus httpStatus = HttpStatus.valueOf(statusCode);
