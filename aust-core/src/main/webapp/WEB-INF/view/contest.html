@@ -5,10 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>比赛</title>
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
-  <!-- Place favicon.ico in the root directory -->
-
   <link rel="stylesheet" href="/static/styles/vendor.css" th:href="@{/static/styles/vendor.css}">
-
   <link rel="stylesheet" href="/static/styles/main.css" th:href="@{/static/styles/main.css}">
 </head>
 <body>
@@ -83,24 +80,28 @@
                    <div class="list-view-item">
                         <table class="table table-bordered table-striped text-center" width="90%" style="margin: 0 auto">
                             <caption><h5 class="text-primary">近期的比赛</h5></caption>
-                                <tr>
-                                    <td width="10%">1</td>
-                                    <td width="40%"><a href="" class="contesttitle">计算机学院校赛</a></td>
-                                    <td width="20%">2016-08-20 12:00:00</td>
-                                    <td width="20%">2016-08-20 12:00:00</td>
-                                    <td width="10%">校内</td>
+                                <tr th:each="c1 : ${contests}">
+                                    <td width="10%" th:text="${c1.id}">1</td>
+                                    <td width="40%">
+                                        <a href="javascript:void(0)" th:onclick="'getContestDetail('+${c1.id}+','+${c1.type}+')'" th:text="${c1.title}">计算机学院校赛</a>
+                                    </td>
+                                    <td width="20%" th:text="${#dates.format(c1.startTime,'yyyy-MM-dd HH:mm:ss')}">2016-08-20 12:00:00</td>
+                                    <td width="20%" th:text="${#dates.format(c1.endTime,'yyyy-MM-dd HH:mm:ss')}">2016-08-20 12:00:00</td>
+                                    <td width="10%" th:text="${c1.type}==1?'校内':'公开'">校内</td>
                                 </tr>
                         </table>
                        <hr style="border: 1px dotted gray;margin-top: 35px"/>
                         <table class="table table-bordered table-striped text-center" width="90%" style="margin: 0 auto">
                             <caption><h5 class="text-primary">结束的比赛</h5></caption>
-                                <tr>
-                                    <td width="10%">1</td>
-                                    <td width="40%"><a href="" class="contesttitle">计算机学院校赛</a></td>
-                                    <td width="20%">2016-08-20 12:00:00</td>
-                                    <td width="20%">2016-08-20 12:00:00</td>
-                                    <td width="10%">校内</td>
-                                </tr>
+                            <tr th:each="c2 : ${overContests}">
+                                <td width="10%" th:text="${c2.id}">1</td>
+                                <td width="40%">
+                                    <a href="javascript:void(0)" th:onclick="'getContestDetail('+${c2.id}+','+${c2.type}+')'" th:text="${c2.title}">计算机学院校赛</a>
+                                </td>
+                                <td width="20%" th:text="${#dates.format(c2.startTime,'yyyy-MM-dd HH:mm:ss')}">2016-08-20 12:00:00</td>
+                                <td width="20%" th:text="${#dates.format(c2.endTime,'yyyy-MM-dd HH:mm:ss')}">2016-08-20 12:00:00</td>
+                                <td width="10%" th:text="${c2.type}==1?'校内':'公开'">校内</td>
+                            </tr>
                         </table>
                    </div>
                </section>
@@ -178,15 +179,12 @@
             <form id="contestJudgeForm">
             <div class="modal-body">
               <div class="form-group">
-                <input type="hidden" id="contest_id" name="contest_id"/>
-                <input type="hidden" id="type" name="type"/>
-                <input class="form-control" type="password" name="password"/>
+                <input class="form-control" type="password" name="passwd"/>
               </div>
-
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id="contestComit">Commit</button>
+                <button type="button" class="btn btn-primary" id="contestDetail">Commit</button>
             </div>
             </form>
         </div><!-- /.modal-content -->
@@ -194,8 +192,9 @@
 </div><!-- /.modal -->
 <!--具体提交的模态框结束-->
 
-<script src="static/scripts/vendor.js"></script>
+<script src="/static/scripts/vendor.js" th:src="@{/static/scripts/vendor.js}"></script>
+<script src="/static/scripts/plugins.js" th:src="@{/static/scripts/plugins.js}"></script>
+<script src="/static/scripts/contest.js" th:src="@{/static/scripts/contest.js}"></script>
 
-<script src="static/scripts/plugins.js"></script>
 </body>
 </html>

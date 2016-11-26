@@ -3,6 +3,9 @@ package cn.edu.aust.common.entity;
 import java.util.Date;
 
 public class Contest {
+
+    public final static String SESSION_ACCESS = "con_access";
+
     private Integer id;
 
     private String title;

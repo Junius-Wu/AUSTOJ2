@@ -3,20 +3,18 @@
 <mapper namespace="cn.edu.aust.common.mapper.ContestProblemMapper" >
 
   <resultMap id="BaseResultMap" type="cn.edu.aust.common.entity.ContestProblem" >
-    <constructor >
-      <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="problem_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="contest_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="title" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="num" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="point" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="accepted" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="solved" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="submit" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="submit_user" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="createdate" jdbcType="TIMESTAMP" javaType="java.util.Date" />
-      <arg column="modifydate" jdbcType="TIMESTAMP" javaType="java.util.Date" />
-    </constructor>
+      <id property="id" column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <result property="problemId" column="problem_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <result property="contestId" column="contest_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <result property="title" column="title" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <result property="num" column="num" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <result property="point" column="point" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <result property="accepted" column="accepted" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <result property="solved" column="solved" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <result property="submit" column="submit" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <result property="submitUser" column="submit_user" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <result property="createdate" column="createdate" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <result property="modifydate" column="modifydate" jdbcType="TIMESTAMP" javaType="java.util.Date" />
   </resultMap>
 
   <sql id="Base_Column_List" >
@@ -36,7 +34,7 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
 
-  <insert id="insert" parameterType="ContestProblem" >
+  <insert id="insert" parameterType="cn.edu.aust.common.entity.ContestProblem" >
     insert into contest_problem (id, problem_id, contest_id, 
       title, num, point, 
       accepted, solved, submit, 
@@ -49,7 +47,7 @@
       )
   </insert>
 
-  <insert id="insertSelective" parameterType="ContestProblem" >
+  <insert id="insertSelective" parameterType="cn.edu.aust.common.entity.ContestProblem" >
     insert into contest_problem
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -129,7 +127,7 @@
     </trim>
   </insert>
 
-  <update id="updateByPrimaryKeySelective" parameterType="ContestProblem" >
+  <update id="updateByPrimaryKeySelective" parameterType="cn.edu.aust.common.entity.ContestProblem" >
     update contest_problem
     <set >
       <if test="problemId != null" >
@@ -169,7 +167,7 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
 
-  <update id="updateByPrimaryKey" parameterType="ContestProblem" >
+  <update id="updateByPrimaryKey" parameterType="cn.edu.aust.common.entity.ContestProblem" >
     update contest_problem
     set problem_id = #{problemId,jdbcType=INTEGER},
       contest_id = #{contestId,jdbcType=INTEGER},
@@ -184,5 +182,10 @@
       modifydate = #{modifydate,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <!--查找所属竞赛的题目-->
+  <select id="selectByContestId" parameterType="integer" resultMap="BaseResultMap">
+      SELECT * FROM contest_problem WHERE contest_id = #{id}
+  </select>
 
 </mapper>

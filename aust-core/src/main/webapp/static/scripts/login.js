@@ -162,3 +162,22 @@ $('#loginBtn').click(function () {
         }
     })
 });
+
+
+document.onkeydown = function (e) {
+    var theEvent = window.event || e;
+    var code = theEvent.keyCode || theEvent.which;
+    if (code == 13) {
+        var $Sign = $("#signup");
+        var $Register = $("#registerBtn");
+        if ($Sign.length != 0){
+            $Sign.click();
+            return false;
+        }
+        if ($Register.length != 0){
+            $Register.click();
+            return false;
+        }
+
+    }
+};

@@ -16,13 +16,17 @@ import java.util.List;
 import java.util.Optional;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
+import cn.edu.aust.common.entity.Contest;
 import cn.edu.aust.common.entity.Problem;
+import cn.edu.aust.common.entity.User;
 import cn.edu.aust.common.entity.pojo.ProblemUser;
 import cn.edu.aust.common.mybatis.Filter;
 import cn.edu.aust.common.util.PageRequest;
 import cn.edu.aust.exception.PageException;
 import cn.edu.aust.service.ProblemService;
+import cn.edu.aust.service.UserService;
 
 import static cn.edu.aust.common.ResultVo.PROBLEM_NOT_EXIST;
 
@@ -37,6 +41,8 @@ public class ProblemController {
 
     @Resource(name = "problemServiceImpl")
     private ProblemService problemService;
+    @Resource(name = "userServiceImpl")
+    private UserService userService;
 
     /**
      * 查找相应阶段的题目
@@ -67,8 +73,22 @@ public class ProblemController {
      * @throws PageException 未找到该题目,则抛出异常
      */
     @RequestMapping(value = "/{id}",method = RequestMethod.GET,produces = "text/html;charset=UTF-8")
-    public String findProblem(@PathVariable(value = "id") Integer id, Model model) throws PageException {
-        Optional<ProblemUser> problem = Optional.ofNullable(problemService.selectProblemBlobUserByPk(id));
+    public String findProblem(@PathVariable(value = "id") Integer id, HttpSession session, Model model) throws PageException {
+        Optional<ProblemUser> problem = Optional.ofNullable(problemService.selectProblemBlobUserByPk(id))
+                                                //如果是竞赛题,则需要过滤验证
+                                                .filter(problemUser -> {
+                                                    Integer contestId = problemUser.getContestId();
+                                                    if (contestId != null && contestId != 0){
+                                                        User user = userService.getCurrent();
+                                                        if (user == null){
+                                                            return false;
+                                                        }
+                                                        Integer temp = (Integer) session.getAttribute(Contest.SESSION_ACCESS);
+                                                        if (temp==null) return false;
+                                                        return  temp == (user.getId()+contestId);
+                                                    }
+                                                    return true;
+                                                });
 
         model.addAttribute("problem",
                 problem.orElseThrow(() -> new PageException(PROBLEM_NOT_EXIST)));

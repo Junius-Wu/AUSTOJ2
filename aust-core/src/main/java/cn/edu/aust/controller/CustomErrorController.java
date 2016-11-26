@@ -1,4 +1,4 @@
-package cn.edu.aust.exception;
+package cn.edu.aust.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -26,7 +26,7 @@ class CustomErrorController {
 		Optional<String> requestUri = Optional.ofNullable(
 				(String) request.getAttribute("javax.servlet.error.request_uri"));
 
-		String message = MessageFormat.format("{0} returned for {1} with message {2}",
+		String message = MessageFormat.format("{0} returned for {1} with message <br> {2}",
 			statusCode, requestUri.orElse("UnKnown"), exceptionMessage
 		);
 
@@ -35,8 +35,8 @@ class CustomErrorController {
 	}
 
 	private String getExceptionMessage(Throwable throwable, Integer statusCode) {
-		if (throwable != null && throwable.getCause() != null) {
-			return throwable.getCause().getMessage();
+		if (throwable != null) {
+			return throwable.getMessage();
 		}
 		HttpStatus httpStatus = HttpStatus.valueOf(statusCode);
 		return httpStatus.getReasonPhrase();

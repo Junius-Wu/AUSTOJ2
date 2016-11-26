@@ -29,11 +29,6 @@ public class MenuController {
         return "master";
     }
 
-    @RequestMapping(value = "/contest",produces = "text/html;charset=UTF-8")
-    public String contest(){
-        return "contest";
-    }
-
     @RequestMapping(value = "/rank",produces = "text/html;charset=UTF-8")
     public String rank(){
         return "rank";

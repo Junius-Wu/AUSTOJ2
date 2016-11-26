@@ -383,8 +383,8 @@
       </if>
     </where>
   </select>
-  <!--根据查询参数动态查询-->
-  <select id="selectParam" resultMap="ResultMapWithBLOBs" parameterType="cn.edu.aust.common.mybatis.QueryParams">
+  <!--根据查询参数动态查询,返回全波字段-->
+  <select id="selectParam" resultMap="BaseResultMap" parameterType="cn.edu.aust.common.mybatis.QueryParams">
     select * from problem p
     <where>
       <include refid="BasicMapper.buildParam"/>

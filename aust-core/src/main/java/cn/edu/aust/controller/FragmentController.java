@@ -44,7 +44,7 @@ public class FragmentController {
     /**
      * 返回侧边栏,配合ajax返回html
      * @param isTags 为0,则不反回标签
-     * @return
+     * @return html侧边栏
      */
     @RequestMapping(value = "/aside",method = RequestMethod.GET,produces = "text/html;charset=UTF-8")
     public String asideFragment(@RequestParam(required = false,defaultValue = "0") int isTags,

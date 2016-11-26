@@ -11,7 +11,8 @@ public enum  ResultVo {
     USERNAME_NOALLOW(7,"用户名只能数字,英文,下划线组成3-16字符间"), EMAIL_EXIST(8,"邮箱已存在"),
     REGISTER_ERROR(9,"用户注册信息错误"),REGISTER_ENABLE(10,"网站暂不开放注册"),USERNAME_ENABLE(11,"该用户名已被禁用")
     ,PROBLEM_NOT_EXIST(11,"题目不存在,请问你这是哪找的题目?"),NOT_LOGIN(12,"用户未登录"),NO_PRIVILEGE(14,"用户无权限"),
-    COMMENT_ERROR(15,"评论出错,请稍后再试"),EMPTY_ERROR(16,"内容不能为空");
+    COMMENT_ERROR(15,"评论出错,请稍后再试"),EMPTY_ERROR(16,"内容不能为空"),CONTEST_NOSTART(17,"竞赛未开始,请稍等"),
+    CONTEST_PASSWD(18,"密码错误,请重新输入");
 
     private Integer status;
     private String msg;

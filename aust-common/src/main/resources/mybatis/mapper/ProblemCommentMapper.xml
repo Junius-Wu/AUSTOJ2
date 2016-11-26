@@ -196,7 +196,7 @@
       <include refid="BasicMapper.buildParam"/>
     </where>
   </select>
-  <!--按照参数查找,返回详细加关联用户-->
+  <!--按照参数查找,返回详细加关联用户,返回详细字段-->
   <select id="selectParamsWithUser" parameterType="cn.edu.aust.common.mybatis.QueryParams" resultMap="commentBlobSUser">
     SELECT
     <include refid="Base_Column_List" />

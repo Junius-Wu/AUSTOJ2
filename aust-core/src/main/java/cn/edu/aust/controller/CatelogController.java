@@ -50,6 +50,7 @@ public class CatelogController {
         Optional<Catelog> catelog = Optional.ofNullable(catelogService.selectByPrimaryKey(id));
         catelog.filter(catelog1 -> catelog1.getType()==0)
                .orElseThrow(()->new PageException(NO_PRIVILEGE));
+        //上面的orElseThrow已经检查null了,所以忽略IDEA的警告
         model.addAttribute("catelog",catelog.get().getName());
         model.addAttribute("catelogId",id);
         return "searchpro";
