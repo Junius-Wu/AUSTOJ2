@@ -70,8 +70,10 @@ public class ContestController {
             throw new PageException(ResultVo.NO_PRIVILEGE);
         }
         //得到详细内容
+        Contest contest = contestService.selectByPrimaryKey(id);
         List<ContestProblem> problemList = contestProblemService.selectByContestId(id);
         model.addAttribute("problems",problemList);
+        model.addAttribute("contest",contest);
         return "contestdetail";
     }
 

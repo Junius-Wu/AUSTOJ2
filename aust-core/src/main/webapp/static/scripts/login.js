@@ -98,7 +98,6 @@ function checkuser(obj){
                        }else {
                            toastr.error(data.msg);
                            $submitBtn.addClass('disabled');
-
                        }
                    }
                });
@@ -163,21 +162,18 @@ $('#loginBtn').click(function () {
     })
 });
 
-
-document.onkeydown = function (e) {
-    var theEvent = window.event || e;
-    var code = theEvent.keyCode || theEvent.which;
-    if (code == 13) {
-        var $Sign = $("#signup");
+//键盘监听
+$(document).keyup(function(event){
+    if(event.keyCode ==13){
+        var $Sign = $("#loginBtn");
         var $Register = $("#registerBtn");
         if ($Sign.length != 0){
-            $Sign.click();
+            $Sign.trigger('click');
             return false;
         }
         if ($Register.length != 0){
-            $Register.click();
+            $Register.trigger('click');
             return false;
         }
-
     }
-};
+});

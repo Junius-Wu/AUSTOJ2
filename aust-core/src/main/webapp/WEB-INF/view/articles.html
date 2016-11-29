@@ -1,21 +1,22 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>文章列表</title>
-  <link rel="stylesheet" href="static/styles/vendor.css">
-
-  <link rel="stylesheet" href="static/styles/main.css">
+    <link rel="stylesheet" href="/static/styles/vendor.css" th:href="@{/static/styles/vendor.css}">
+    <link rel="stylesheet" href="/static/styles/main.css" th:href="@{/static/styles/main.css}">
+    <link rel="stylesheet" href="/static/styles/markdown.css" th:href="@{/static/styles/markdown.css}">
 </head>
 <body>
 <!--头部开始-->
 <header>
     <!-- Static navbar -->
     <div class="navbar navbar-lg navbar-default" role="navigation" id="nav">
-        <div class="container">
+        <div class="container" th:include="fragment/header :: header">
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <button type="button" class="navbar-toggle" data-toggle="collapse"
+                        data-target=".navbar-collapse">
                     <!--<i class="fa fa-th-list"></i>-->
                 </button>
                 <a class="navbar-brand" href="/">AUST</a>
@@ -29,16 +30,22 @@
                     <li><a href="/rank">排名</a></li>
                     <li><a href="/articles">干货</a></li>
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">联系我们<b class="caret"></b></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">联系我们<b
+                                class="caret"></b></a>
                         <ul class="dropdown-menu animated fadeIn">
-                            <li><a href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=fBIVCRAVTU08DQ1SHxMR"
-                                   target="_blank"><i class="fa fa-envelope-o fa-fw"></i>&nbsp;&nbsp;文章投稿</a></li>
-                            <li><a href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=fBIVCRAVTU08DQ1SHxMR"
-                                   target="_blank"><i class="fa fa-envelope-o fa-fw"></i>&nbsp;&nbsp;题目投稿</a></li>
+                            <li>
+                                <a href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=fBIVCRAVTU08DQ1SHxMR"
+                                   target="_blank"><i class="fa fa-envelope-o fa-fw"></i>&nbsp;&nbsp;文章投稿</a>
+                            </li>
+                            <li>
+                                <a href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=fBIVCRAVTU08DQ1SHxMR"
+                                   target="_blank"><i class="fa fa-envelope-o fa-fw"></i>&nbsp;&nbsp;题目投稿</a>
+                            </li>
                             <li class="divider"></li>
                             <li class="dropdown-header">意见反馈</li>
                             <li><a href="#footer"><i class="fa fa-qq"></i>&nbsp;&nbsp;QQ</a></li>
-                            <li><a href="#footer"><i class="fa fa-wechat"></i>&nbsp;&nbsp;We Chat</a></li>
+                            <li><a href="#footer"><i class="fa fa-wechat"></i>&nbsp;&nbsp;We
+                                Chat</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -52,7 +59,7 @@
 </header>
 <!--头部结束-->
 <!--通知栏开始,主要用户发布一些通知-->
-<div class="tips">
+<div class="tips" th:include="fragment/tips :: tips">
     <div class="row">
         <div class="col-md-8 col-md-offset-2 tips-bg">
             <i class="glyphicon glyphicon-bell"></i>
@@ -69,30 +76,91 @@
 <div class="base-page">
     <div class="row">
         <div class="col-md-10 col-md-offset-1">
-           <div class="col-md-9">
-               <!--主面板-->
-               <section class="pro-section animated fadeInUp">
-                 <h5 style="border-bottom: 2px dotted gray;padding-bottom: 5px">当前搜索:</h5>
-               </section>
-           </div>
-            <div class="col-md-3 widget animated fadeInRight">
-                <!--侧边栏-->
-                <aside class="widget">
-                    <h5><span>搜索</span></h5>
-                    <p>
-                    <form class="form-inline" action="/articles">
-                        <div class="form-group">
-                            <div class="input-group">
-                                <input type="search" class="form-control" size="100%" value="${search.substring(1,search.length()-1)}" name="search">
-                                <span class="input-group-btn">
-                                    <button class="btn btn-default" type="submit" style="background-color: #fff"><i class="fa fa-search" style="color: #34495E"></i></button>
+            <div class="col-md-9">
+                <!--主面板-->
+                <section class="article-section animated fadeInUp">
+                    <!--顶部公共样式-->
+                    <div class="article-top row">
+                        <div class="col-md-6">
+                            <h5 th:if="${search} != null">当前搜索: <a href="#" th:text="${search}">Spring</a></h5>
+                        </div>
+                        <div class="col-md-3 col-md-offset-3">
+                            <form th:action="@{/article}" method="get">
+                                <div class="search input-group">
+                                    <input type="search" class="form-control" style="float: right" placeholder="Search" name="search">
+                                    <span class="input-group-btn">
+                                    <button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
                                 </span>
-                            </div><!-- /input-group -->
-                        </div><!-- /.form-group -->
-                    </form>
-                    </p>
-                </aside>
-
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <!--文章列表-->
+                    <article th:each="article : ${pageinfo.getList()}">
+                        <!--时间-->
+                        <div class="post-date">
+                            <span class="date-month" th:text="${#dates.month(article.createdate)+'月'}">08月</span>
+                            <span class="date-day" th:text="${#dates.day(article.createdate)}">25</span>
+                            <span class="date-year" th:text="${#dates.year(article.createdate)}">2016</span>
+                        </div>
+                        <div class="post-article">
+                            <header class="post-title">
+                                <span class="text-danger" th:if="${article.totop} == 1 ">[置顶]</span>
+                                <a href="#" th:href="@{/article/{id}(id=${article.id})}" th:text="${article.title}">Spring实战教程</a>
+                            </header>
+                            <div class="post-content">
+                                <p th:text="${article.summary}">
+                                    使用说明：http://zhw-island.com/owl-beta/#content 这是我第四个主题，名为“Pluto”，中文即“冥王星”，
+                                    逼格很高的样子。 一看Pluto就知道不是什么正经主题，并非不喜欢扁平化，而是满大街的扁平化确实审美疲劳，
+                                    所以做的几个主题都是具有纹理的皮肤，至于使用说明和Owl大同小异，后台都差不多所以就不重新叙述一遍了，
+                                    下面主…
+                                </p>
+                                <div class="read_more">
+                                    <a href="#" th:href="@{/article/{id}(id=${article.id})}">阅读更多</a>
+                                </div>
+                            </div>
+                            <ul class="post-meta list-inline">
+                                <li class="mate-cat fl clearfix">
+                                    <i class="fa fa-user"></i>
+                                    <a href="http://zhw-island.com/category/wordpress/" th:text="${article.user.username} ==null?${article.user.nickname}:${article.user.username}">niuli</a>
+                                </li>
+                                <li class="meta-tabs fl clearfix">
+                                    <i class="fa fa-tags"></i>
+                                    <th:block th:each="str : ${#strings.listSplit(article.getKeyword(),',')}">
+                                        <a th:href="@{/article(search=${str})}" rel="tag" th:text="'#'+${str}">Pluto</a>
+                                    </th:block>
+                                </li>
+                                <li class="mate-com fr">
+                                    <i class="fa fa-eye"></i>
+                                    <span th:text="${article.viewcount}">91</span>
+                                </li>
+                                <li class="meta-like fr mr0">
+                                    <a href="javascript:void(0)" th:class="${article.isVote}!=0?'text-danger':'text-success'"
+                                       class="text-danger" title="Like" th:onclick="'voteArticle('+${article.id}+')'">
+                                        <i class="fa fa-heart-o"></i>
+                                        <span th:text="${article.likecount}" th:id="'like'+${article.id}">91</span>
+                                    </a>
+                                </li>
+                                <!--评论数暂时不加-->
+                                <!--<li class="mate-com fr">-->
+                                    <!--<i class="fa fa-comments-o"></i>-->
+                                    <!--<span class="mate-num">91</span>-->
+                                <!--</li>-->
+                            </ul>
+                        </div>
+                    </article>
+                    <ul class="pagination-plain" style="margin-bottom: 60px">
+                        <li class="previous" th:if="${pageinfo.hasPreviousPage}">
+                            <a href="#" th:href="@{/article(search=${search},pageNum=${pageinfo.prePage})}">Previous</a>
+                        </li>
+                        <li class="next" style="float: right" th:if="${pageinfo.hasNextPage}">
+                            <a href="#" th:href="@{/article(search=${search},pageNum=${pageinfo.nextPage})}">Newer</a>
+                        </li>
+                    </ul>
+                </section>
+            </div>
+            <div class="col-md-3 widget animated fadeInRight" id="aside">
+                <!--侧边栏-->
                 <!--个人中心-->
                 <aside class="widget">
                     <h5><span>个人中心</span></h5>
@@ -127,8 +195,8 @@
     </div>
 </div>
 <!--主体结束-->
-<footer>
-    <div class="row" id="footer">
+<footer th:include="fragment/footer :: footer">
+    <div class="row" id="footer" >
         <div class="col-md-4 col-lg-offset-2">
             AUST University Of Technology Online Judge<br/>
             Copyright © 2010-2015 AUST NIU LI <br/>
@@ -137,11 +205,13 @@
         <div class="footer-socials">
             <div class="text-center">
                 <span>
-                    <i title="<img src='../static/images/wechat.jpg' />" data-html="true" data-placement="top"
+                    <i title="<img src='../static/images/wechat.jpg' />" data-html="true"
+                       data-placement="top"
                        data-toggle="tooltip" class="fa fa-wechat fa-3x mrs"></i>
                 </span>
                 <span>
-                    <i title="<img src='../static/images/qq.jpg' />" data-html="true" data-placement="top"
+                    <i title="<img src='../static/images/qq.jpg' />" data-html="true"
+                       data-placement="top"
                        data-toggle="tooltip" class="fa fa-qq fa-3x mrs"></i>
                 </span>
             </div>
@@ -151,8 +221,9 @@
         </div>
     </div>
 </footer>
-<script src="static/scripts/vendor.js"></script>
-
-<script src="static/scripts/plugins.js"></script>
+<script src="/static/scripts/vendor.js" th:src="@{/static/scripts/vendor.js}"></script>
+<script src="/static/scripts/plugins.js" th:src="@{/static/scripts/plugins.js}"></script>
+<script src="/static/scripts/md2html.js" th:src="@{/static/scripts/md2html.js}"></script>
+<script src="/static/scripts/article.js" th:src="@{/static/scripts/article.js}"></script>
 </body>
 </html>

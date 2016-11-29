@@ -225,12 +225,17 @@ var pathName = window.document.location.pathname;
 var projectName = pathName.substring(0, pathName.substr(1).indexOf('/') + 1);
 
 $(function () {
+  var istag = 0;
+  if (pathName.indexOf('article')){
+      istag = 1;
+  }
   var $aside = $('#aside');
   if ($aside.length > 0) {
     //写入侧边栏
     $.ajax({
       type: 'GET',
       url: projectName + '/frg/aside',
+      data:{isTags:istag},
       dataType: 'html',
       success: function (data) {
         $aside.html(data);

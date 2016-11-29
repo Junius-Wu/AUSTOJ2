@@ -3,6 +3,20 @@ package cn.edu.aust.common.entity;
 import java.util.Date;
 
 public class VoteLog {
+
+    /**
+     * 题目评论点赞
+     */
+    public final static Byte PRO_COMMENT = 1;
+    /**
+     * 文章点赞
+     */
+    public final static Byte ARTICLE = 2;
+    /**
+     * 文章评论点赞
+     */
+    public final static Byte TYPE_ART_COMMENT = 3;
+
     private Integer id;
 
     private Integer userId;

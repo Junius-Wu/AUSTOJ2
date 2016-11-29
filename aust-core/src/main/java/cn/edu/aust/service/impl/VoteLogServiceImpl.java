@@ -8,9 +8,11 @@ import java.util.Date;
 
 import javax.annotation.Resource;
 
-import cn.edu.aust.common.constant.ReportLogConstant;
+import cn.edu.aust.common.entity.Article;
+import cn.edu.aust.common.entity.ArticleBLOBs;
 import cn.edu.aust.common.entity.ProblemComment;
 import cn.edu.aust.common.entity.VoteLog;
+import cn.edu.aust.common.mapper.ArticleMapper;
 import cn.edu.aust.common.mapper.ProblemCommentMapper;
 import cn.edu.aust.common.mapper.VoteLogMapper;
 import cn.edu.aust.service.VoteLogService;
@@ -26,6 +28,8 @@ public class VoteLogServiceImpl implements VoteLogService {
     private VoteLogMapper voteLogMapper;
     @Resource
     private ProblemCommentMapper problemCommentMapper;
+    @Resource
+    private ArticleMapper articleMapper;
 
     @Override
     public int deleteByPrimaryKey(Integer id) {
@@ -59,10 +63,10 @@ public class VoteLogServiceImpl implements VoteLogService {
 
     @Override
     public JSONObject voteProblemComment(JSONObject result, Integer comment_id, Integer user_id,Integer status) {
-        VoteLog voteLog = voteLogMapper.selectByType(ReportLogConstant.TYPE_PRO_COMMENT,comment_id, user_id);
+        VoteLog voteLog = voteLogMapper.selectByType(VoteLog.PRO_COMMENT,comment_id, user_id);
         if (voteLog == null){
             voteLog = new VoteLog();
-            voteLog.setType(ReportLogConstant.TYPE_PRO_COMMENT);
+            voteLog.setType(VoteLog.PRO_COMMENT);
             voteLog.setStatus((byte)0);
             voteLog.setOtherId(comment_id);
             voteLog.setUserId(user_id);
@@ -96,5 +100,27 @@ public class VoteLogServiceImpl implements VoteLogService {
         return result;
     }
 
-
+    @Override
+    public JSONObject voteArticleComment(JSONObject result, Article article, Integer user_id) {
+        VoteLog voteLog = voteLogMapper.selectByType(VoteLog.ARTICLE,article.getId(), user_id);
+        if (voteLog == null){
+            voteLog = new VoteLog();
+            voteLog.setType(VoteLog.ARTICLE);
+            voteLog.setStatus((byte)1);
+            voteLog.setOtherId(article.getId());
+            voteLog.setUserId(user_id);
+            voteLog.setCreatetime(new Date());
+            voteLogMapper.insertSelective(voteLog);//这里需要设置插入并返回主键keyProperty="id"
+        }else {
+            voteLog.setStatus((byte)(voteLog.getStatus()^1));
+            voteLogMapper.updateByPrimaryKeySelective(voteLog);
+        }
+        ArticleBLOBs tempArticle = new ArticleBLOBs();
+        tempArticle.setId(article.getId());
+        tempArticle.setLikecount(article.getLikecount()+(voteLog.getStatus()==(byte)0?-1:1));
+        articleMapper.updateByPrimaryKeySelective(tempArticle);
+        result.put("art_status",voteLog.getStatus());
+        result.put("count",tempArticle.getLikecount());
+        return null;
+    }
 }

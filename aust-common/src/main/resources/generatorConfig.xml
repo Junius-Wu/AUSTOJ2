@@ -65,7 +65,7 @@
         </javaClientGenerator>
 
 
-        <table tableName="reportlog" domainObjectName="ReportLog"
+        <table tableName="article" domainObjectName="Article"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">

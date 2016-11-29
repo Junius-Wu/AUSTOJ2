@@ -56,5 +56,19 @@ public class TagServiceImpl implements TagService {
         return tagMapper.selectList(value);
     }
 
-
+    @Override
+    public boolean insertAndFlush(String tagName) {
+        int result = 0;
+        Tag tag = tagMapper.selectByName(tagName);
+        if (tag == null){
+            tag = new Tag();
+            tag.setTag(tagName);
+            tag.setCount(0);
+            result = tagMapper.insertSelective(tag);
+        }else {
+            tag.setCount(tag.getCount() + 1);
+            result = tagMapper.updateByPrimaryKey(tag);
+        }
+        return result > 0;
+    }
 }

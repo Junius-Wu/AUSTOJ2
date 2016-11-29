@@ -78,5 +78,8 @@
       LIMIT #{value}
     </if>
   </select>
-
+  <!--根据标签名查找-->
+  <select id="selectByName" parameterType="string" resultType="cn.edu.aust.common.entity.Tag">
+    select * FROM tags where tag = #{value}
+  </select>
 </mapper>

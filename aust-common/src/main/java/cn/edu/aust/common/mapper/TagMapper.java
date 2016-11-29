@@ -19,4 +19,11 @@ public interface TagMapper {
     int updateByPrimaryKey(Tag record);
 
     List<Tag> selectList(Integer value);
+
+    /**
+     * 根据tag名称查找
+     * @param tagName 标签名称
+     * @return 查找结果
+     */
+    Tag selectByName(String tagName);
 }

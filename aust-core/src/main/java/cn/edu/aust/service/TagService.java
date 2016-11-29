@@ -24,4 +24,11 @@ public interface TagService {
     int updateByPrimaryKey(Tag record);
 
     List<Tag> selectList(Integer value);
+
+    /**
+     * 保存或者更新一个标签
+     * @param tagName 标签名
+     * @return true成功
+     */
+    boolean insertAndFlush(String tagName);
 }

@@ -49,11 +49,11 @@
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.jetbrains</groupId>
-            <artifactId>annotations</artifactId>
-            <version>RELEASE</version>
-        </dependency>
         <!--fastjson end-->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.10</version>
+        </dependency>
     </dependencies>
 </project>

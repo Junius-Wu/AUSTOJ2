@@ -9,8 +9,11 @@ import javax.annotation.Resource;
 
 import cn.edu.aust.common.entity.Article;
 import cn.edu.aust.common.entity.ArticleBLOBs;
+import cn.edu.aust.common.entity.User;
+import cn.edu.aust.common.entity.pojo.ArticleUser;
 import cn.edu.aust.common.mapper.ArticleMapper;
 import cn.edu.aust.service.ArticleService;
+import cn.edu.aust.service.UserService;
 
 /**
  * @author Niu Li
@@ -21,6 +24,18 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Resource
     private ArticleMapper articleMapper;
+    @Resource(name = "userServiceImpl")
+    private UserService userService;
+
+    @Override
+    public List<ArticleUser> selectAll(User user, String search) {
+        return articleMapper.selectAll(user == null?null:user.getId(),search);
+    }
+
+    @Override
+    public ArticleUser selectByPk(User user, Integer articleId) {
+        return articleMapper.selectByPk(user == null?null:user.getId(),articleId);
+    }
 
     @Override
     public int deleteByPrimaryKey(Integer id) {

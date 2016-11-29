@@ -11,30 +11,32 @@ public class Article {
 
     private String keyword;
 
+    private Integer viewcount;
+
+    private Integer likecount;
+
     private Integer catelogId;
 
-    private Integer totop;
+    private String summary;
 
-    private Integer isshow;
+    private Byte totop;
+
+    private Byte isshow;
 
     private Date createdate;
 
     private Date modifydate;
 
-    public Article(Integer id, String title, Integer userId, String keyword, Integer catelogId, Integer totop, Integer isshow, Date createdate, Date modifydate) {
-        this.id = id;
-        this.title = title;
-        this.userId = userId;
-        this.keyword = keyword;
-        this.catelogId = catelogId;
-        this.totop = totop;
-        this.isshow = isshow;
-        this.createdate = createdate;
-        this.modifydate = modifydate;
-    }
-
     public Article() {
         super();
+    }
+
+    public String getSummary() {
+        return summary;
+    }
+
+    public void setSummary(String summary) {
+        this.summary = summary;
     }
 
     public Integer getId() {
@@ -69,6 +71,22 @@ public class Article {
         this.keyword = keyword;
     }
 
+    public Integer getViewcount() {
+        return viewcount;
+    }
+
+    public void setViewcount(Integer viewcount) {
+        this.viewcount = viewcount;
+    }
+
+    public Integer getLikecount() {
+        return likecount;
+    }
+
+    public void setLikecount(Integer likecount) {
+        this.likecount = likecount;
+    }
+
     public Integer getCatelogId() {
         return catelogId;
     }
@@ -77,19 +95,19 @@ public class Article {
         this.catelogId = catelogId;
     }
 
-    public Integer getTotop() {
+    public Byte getTotop() {
         return totop;
     }
 
-    public void setTotop(Integer totop) {
+    public void setTotop(Byte totop) {
         this.totop = totop;
     }
 
-    public Integer getisshow() {
+    public Byte getIsshow() {
         return isshow;
     }
 
-    public void setisshow(Integer isshow) {
+    public void setIsshow(Byte isshow) {
         this.isshow = isshow;
     }
 
