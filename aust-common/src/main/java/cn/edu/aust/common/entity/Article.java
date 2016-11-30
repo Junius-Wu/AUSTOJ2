@@ -3,6 +3,15 @@ package cn.edu.aust.common.entity;
 import java.util.Date;
 
 public class Article {
+    /**
+     * 文章点击缓存
+     */
+    public final static String ARTICLEHIT_CACHE = "articleHits";
+    /**
+     * 文章点击cookies
+     */
+    public final static String ARTICLEHIT_COOKIES = "article";
+
     private Integer id;
 
     private String title;

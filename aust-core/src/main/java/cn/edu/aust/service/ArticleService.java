@@ -3,6 +3,9 @@ package cn.edu.aust.service;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import cn.edu.aust.common.entity.Article;
 import cn.edu.aust.common.entity.ArticleBLOBs;
 import cn.edu.aust.common.entity.User;
@@ -43,4 +46,11 @@ public interface ArticleService {
      * @return 查询实体
      */
     ArticleUser selectByPk(User user,Integer articleId);
+
+    /**
+     * 查看阅读量(初期文章阅读量低,所以直接根据cookies判断是否阅读过并写入库中)
+     * @param article 该文章
+     * @return 加一后的阅读量
+     */
+    int viewHits(HttpServletRequest request, HttpServletResponse response,Article article);
 }

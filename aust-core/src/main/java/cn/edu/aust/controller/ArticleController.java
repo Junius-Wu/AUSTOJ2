@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.Optional;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import cn.edu.aust.common.ResultVo;
 import cn.edu.aust.common.constant.Contants;
@@ -45,6 +47,24 @@ public class ArticleController {
     private UserService userService;
     @Resource(name = "voteLogServiceImpl")
     private VoteLogService voteLogService;
+
+    /**
+     * 查看指定文章
+     * @param id 该文章id
+     * @return 该文章页面
+     */
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
+    public String showArticle(@PathVariable("id") Integer id,
+                              HttpServletRequest request, HttpServletResponse response, Model model) throws PageException {
+        User user = userService.getCurrent();
+        Optional<Article> article = Optional.of(articleService.selectByPk(user,id));
+        article.filter(article1 -> article1.getIsshow() != 0)
+               .orElseThrow(()->new PageException(ResultVo.NO_PRIVILEGE));
+        articleService.viewHits(request,response,article.get());
+        model.addAttribute("article",(ArticleUser)article.get());
+        return "article";
+    }
+
     /**
      * 文章列表主页
      * @param search 搜索内容
@@ -56,24 +76,27 @@ public class ArticleController {
                            @RequestParam(defaultValue = "5") Integer pageSize) {
 
         User user = userService.getCurrent();
-
-        PageInfo<ArticleUser> pageInfo = PageHelper.startPage(pageNum, pageSize)
-                                               .doSelectPageInfo(() -> {
-                                                   String select = null;
-                                                   if (!StringUtils.isEmpty(search)) {
-                                                       //记录搜索热词
-                                                       if (search.length() < Contants.ARTICLE_SEARCH__NUM){
-                                                           tagService.insertAndFlush(search);
-                                                       }
-                                                       select = "%" + search + "%";
-                                                   }
-                                                   articleService.selectAll(user,select);
-                                               });
+        String select = null;
+        if (!StringUtils.isEmpty(search)) {
+            //记录搜索热词
+            if (search.length() < Contants.ARTICLE_SEARCH__NUM){
+                tagService.insertAndFlush(search);
+            }
+            select = "%" + search + "%";
+        }
+        PageHelper.startPage(pageNum, pageSize);
+        PageInfo<ArticleUser> pageInfo = new PageInfo<>(articleService.selectAll(user,select));
         model.addAttribute("pageinfo",pageInfo);
         model.addAttribute("search",search);
         return "articles";
     }
 
+    /**
+     * 点赞文章
+     * @param id 该文章id
+     * @return 对应结果
+     * @throws PageException 文章不存在或不显示抛出异常
+     */
     @ResponseBody
     @RequestMapping(value = "/vote/{id}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public JSONObject articleVote(@PathVariable("id") Integer id) throws PageException {
@@ -90,4 +113,6 @@ public class ArticleController {
         voteLogService.voteArticleComment(result,article.get(),user.getId());
         return ReturnUtil.packingRes(result,ResultVo.OK);
     }
+
+
 }

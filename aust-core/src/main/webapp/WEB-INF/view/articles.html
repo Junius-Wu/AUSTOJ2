@@ -6,7 +6,6 @@
     <title>文章列表</title>
     <link rel="stylesheet" href="/static/styles/vendor.css" th:href="@{/static/styles/vendor.css}">
     <link rel="stylesheet" href="/static/styles/main.css" th:href="@{/static/styles/main.css}">
-    <link rel="stylesheet" href="/static/styles/markdown.css" th:href="@{/static/styles/markdown.css}">
 </head>
 <body>
 <!--头部开始-->
@@ -106,7 +105,7 @@
                         <div class="post-article">
                             <header class="post-title">
                                 <span class="text-danger" th:if="${article.totop} == 1 ">[置顶]</span>
-                                <a href="#" th:href="@{/article/{id}(id=${article.id})}" th:text="${article.title}">Spring实战教程</a>
+                                <a href="#" target="_blank" th:href="@{/article/{id}(id=${article.id})}" th:text="${article.title}">Spring实战教程</a>
                             </header>
                             <div class="post-content">
                                 <p th:text="${article.summary}">
@@ -116,7 +115,7 @@
                                     下面主…
                                 </p>
                                 <div class="read_more">
-                                    <a href="#" th:href="@{/article/{id}(id=${article.id})}">阅读更多</a>
+                                    <a href="#" target="_blank" th:href="@{/article/{id}(id=${article.id})}">阅读更多</a>
                                 </div>
                             </div>
                             <ul class="post-meta list-inline">

@@ -16,3 +16,18 @@ function voteArticle(id) {
         }
     });
 }
+
+$(function () {
+   //转换内容为markdown
+    var $preview = $('.preview-panel');
+    var content = $preview.text();
+    md2Html(content,$preview,function (html) {
+        $preview.prepend('<div class="widget"> <aside class="widget"> <h5><span>正文内容</span></h5> </aside> </div>');
+        $('pre').addClass("hljs-dark");
+        //代码高亮
+        $('pre code').each(function(i, block) {
+            hljs.highlightBlock(block);
+        });
+    });
+
+});

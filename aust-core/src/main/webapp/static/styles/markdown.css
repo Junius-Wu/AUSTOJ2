@@ -8,6 +8,12 @@
     overflow: visible;
     display: block !important;
     min-height: 100%;
+    background-color: #F7F6F1;
+    padding: 10px 20px 10px;
+    margin-bottom: 40px;
+}
+.preview-panel .widget{
+    width: 100%;
 }
 .preview-panel h1,.preview-panel h2,.preview-panel h3,.preview-panel h4,.preview-panel h5,.preview-panel h6 {
     font-family: inherit;
@@ -18,6 +24,7 @@
     text-align: start;
 }
 .preview-panel h1{
+    font-size: 3rem;
     color: #0077bb;
 }
 .preview-panel blockquote {
@@ -54,8 +61,9 @@
     line-height: 1.5rem;
 }
 .preview-panel img{
+    max-width: 602px;
+    height: auto;
     max-height: 800px;
-    max-width: 1000px;
     overflow-x: scroll;
 }
 .preview-panel p{
