@@ -3,9 +3,6 @@ package cn.edu.aust.service;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import cn.edu.aust.common.entity.Article;
 import cn.edu.aust.common.entity.ArticleBLOBs;
 import cn.edu.aust.common.entity.User;
@@ -52,5 +49,5 @@ public interface ArticleService {
      * @param article 该文章
      * @return 加一后的阅读量
      */
-    int viewHits(HttpServletRequest request, HttpServletResponse response,Article article);
+    int viewHits(Article article);
 }

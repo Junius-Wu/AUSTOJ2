@@ -2,6 +2,8 @@ package cn.edu.aust.service.impl;
 
 
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import java.util.List;
 
@@ -81,7 +83,10 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public int viewHits(HttpServletRequest request, HttpServletResponse response,Article article) {
+    public int viewHits(Article article) {
+        ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        HttpServletRequest request = requestAttributes.getRequest();
+        HttpServletResponse response = requestAttributes.getResponse();
         Integer id = article.getId();
         String articles = WEBUtil.getCookie(request,Article.ARTICLEHIT_COOKIES);
         boolean canAdd = false;

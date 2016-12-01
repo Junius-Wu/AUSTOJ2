@@ -16,8 +16,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.Optional;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import cn.edu.aust.common.ResultVo;
 import cn.edu.aust.common.constant.Contants;
@@ -54,13 +52,12 @@ public class ArticleController {
      * @return 该文章页面
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
-    public String showArticle(@PathVariable("id") Integer id,
-                              HttpServletRequest request, HttpServletResponse response, Model model) throws PageException {
+    public String showArticle(@PathVariable("id") Integer id, Model model) throws PageException {
         User user = userService.getCurrent();
         Optional<Article> article = Optional.of(articleService.selectByPk(user,id));
         article.filter(article1 -> article1.getIsshow() != 0)
                .orElseThrow(()->new PageException(ResultVo.NO_PRIVILEGE));
-        articleService.viewHits(request,response,article.get());
+        articleService.viewHits(article.get());
         model.addAttribute("article",(ArticleUser)article.get());
         return "article";
     }
