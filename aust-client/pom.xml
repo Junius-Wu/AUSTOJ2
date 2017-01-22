@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>aust-client</artifactId>
+    <version>1.0</version>
+    <packaging>pom</packaging>
+
+    <parent>
+        <groupId>cn.edu.aust</groupId>
+        <artifactId>aust-parent</artifactId>
+        <version>1.0</version>
+    </parent>
+
+    <modules>
+        <module>aust-front</module>
+        <module>aust-mapper</module>
+        <module>aust-service</module>
+    </modules>
+
+
+    <!--集中管理该项目依赖-->
+    <properties>
+        <austpojo.version>1.0</austpojo.version>
+        <austcommon.version>1.0</austcommon.version>
+        <austmapper.version>1.0</austmapper.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <!--aust依赖  start-->
+            <dependency>
+                <groupId>cn.edu.aust</groupId>
+                <artifactId>aust-common</artifactId>
+                <version>${austcommon.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.edu.aust</groupId>
+                <artifactId>aust-pojo</artifactId>
+                <version>${austpojo.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.edu.aust</groupId>
+                <artifactId>aust-mapper</artifactId>
+                <version>${austmapper.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+
+</project>
