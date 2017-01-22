@@ -3,12 +3,13 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/AUSTOJ2.iml" filepath="$PROJECT_DIR$/.idea/AUSTOJ2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/aust-admin/aust-admin.iml" filepath="$PROJECT_DIR$/aust-admin/aust-admin.iml" />
       <module fileurl="file://$PROJECT_DIR$/aust-common/aust-common.iml" filepath="$PROJECT_DIR$/aust-common/aust-common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/aust-front/aust-web.iml" filepath="$PROJECT_DIR$/aust-front/aust-web.iml" />
       <module fileurl="file://$PROJECT_DIR$/aust-mapper/aust-mapper.iml" filepath="$PROJECT_DIR$/aust-mapper/aust-mapper.iml" />
       <module fileurl="file://$PROJECT_DIR$/aust-parent/aust-parent.iml" filepath="$PROJECT_DIR$/aust-parent/aust-parent.iml" />
       <module fileurl="file://$PROJECT_DIR$/aust-pojo/aust-pojo.iml" filepath="$PROJECT_DIR$/aust-pojo/aust-pojo.iml" />
       <module fileurl="file://$PROJECT_DIR$/aust-service/aust-service.iml" filepath="$PROJECT_DIR$/aust-service/aust-service.iml" />
-      <module fileurl="file://$PROJECT_DIR$/aust-web/aust-web.iml" filepath="$PROJECT_DIR$/aust-web/aust-web.iml" />
     </modules>
   </component>
 </project>

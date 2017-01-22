@@ -12,6 +12,7 @@
         <module name="aust-pojo" />
         <module name="aust-service" />
         <module name="aust-web" />
+        <module name="austa-dmin" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -21,6 +22,7 @@
       <module name="aust-pojo" target="1.8" />
       <module name="aust-service" target="1.8" />
       <module name="aust-web" target="1.8" />
+      <module name="austa-dmin" target="1.5" />
     </bytecodeTargetLevel>
   </component>
 </project>

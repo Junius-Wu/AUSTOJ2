@@ -1,21 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="FrameworkDetectionExcludesConfiguration">
-    <file type="web" url="file://$PROJECT_DIR$/aust-web" />
+    <file type="web" url="file://$PROJECT_DIR$/aust-admin" />
+    <file type="web" url="file://$PROJECT_DIR$/aust-front" />
   </component>
   <component name="MavenProjectsManager">
     <option name="originalFiles">
       <list>
-        <option value="$PROJECT_DIR$/aust-common/pom.xml" />
         <option value="$PROJECT_DIR$/aust-mapper/pom.xml" />
         <option value="$PROJECT_DIR$/aust-pojo/pom.xml" />
         <option value="$PROJECT_DIR$/aust-parent/pom.xml" />
         <option value="$PROJECT_DIR$/aust-service/pom.xml" />
         <option value="$PROJECT_DIR$/aust-web/pom.xml" />
+        <option value="$PROJECT_DIR$/aust-common/pom.xml" />
+        <option value="$PROJECT_DIR$/austa-dmin/pom.xml" />
       </list>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_6" default="true" />
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_6" default="true">
+    <output url="file://$PROJECT_DIR$/out" />
+  </component>
   <component name="SvnConfiguration">
     <configuration>C:\Users\NL\AppData\Roaming\Subversion</configuration>
   </component>

@@ -4,7 +4,7 @@
     <root id="root">
       <element id="directory" name="WEB-INF">
         <element id="directory" name="classes">
-          <element id="module-output" name="aust-web" />
+          <element id="module-output" name="aust-front" />
         </element>
         <element id="directory" name="lib">
           <element id="library" level="project" name="Maven: org.springframework:spring-core:4.3.2.RELEASE" />
@@ -53,9 +53,9 @@
         </element>
       </element>
       <element id="directory" name="META-INF">
-        <element id="file-copy" path="$PROJECT_DIR$/aust-web/target/aust-core/META-INF/MANIFEST.MF" />
+        <element id="file-copy" path="$PROJECT_DIR$/aust-front/target/aust-core/META-INF/MANIFEST.MF" />
       </element>
-      <element id="javaee-facet-resources" facet="aust-web/web/Web" />
+      <element id="javaee-facet-resources" facet="aust-front/web/Web" />
     </root>
   </artifact>
 </component>

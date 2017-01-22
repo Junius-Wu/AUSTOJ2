@@ -8,9 +8,9 @@
         <version>1.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-
     <artifactId>aust-parent</artifactId>
 
+    <!--集中控制版本号-->
     <properties>
         <spring.version>4.3.2.RELEASE</spring.version>
         <mybatis.version>3.4.1</mybatis.version>
@@ -34,6 +34,7 @@
         <commonio.version>2.5</commonio.version>
     </properties>
 
+    <!--集中控制依赖-->
     <dependencyManagement>
         <dependencies>
             <!-- springframe start -->
