@@ -50,7 +50,7 @@
         <h5><span>标签</span></h5>
         <div class="tagcloud clearfix tags">
             <th:block th:each="tag : ${tags}">
-                <a style="font-size: 12px;" th:text="${tag.tag}" th:href="'#'"></a>
+                <a style="font-size: 12px;" th:text="${tag.tag}" th:href="@{/article(search=${tag.tag})}"></a>
             </th:block>
         </div>
     </aside>
@@ -61,7 +61,7 @@
             <!--/*@thymesVar id="articles" type="java.util.List<cn.edu.aust.common.entity.Article>"*/-->
             <li th:each="article : ${articles}">
                 <i class="fa fa-file-text-o">
-                    <a href="/articles/'+item.id+'" target="_blank" th:text="${article.title}" th:title="${article.title}"></a>
+                    <a th:href="@{/article/{id}(id=article.id)}" target="_blank" th:text="${article.title}" th:title="${article.title}"></a>
                 </i>
             </li>
         </ul>

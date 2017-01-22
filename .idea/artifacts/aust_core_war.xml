@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="war" name="aust-core:war">
-    <output-path>$PROJECT_DIR$/aust-core/target</output-path>
-    <root id="archive" name="aust-core.war">
-      <element id="artifact" artifact-name="aust-core:war exploded" />
-    </root>
-  </artifact>
-</component>

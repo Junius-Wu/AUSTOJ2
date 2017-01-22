@@ -1,30 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="EntryPointsManager">
-    <entry_points version="2.0" />
-  </component>
   <component name="FrameworkDetectionExcludesConfiguration">
-    <file type="web" url="file://$PROJECT_DIR$/aust-core" />
+    <file type="web" url="file://$PROJECT_DIR$/aust-web" />
   </component>
   <component name="MavenProjectsManager">
     <option name="originalFiles">
       <list>
-        <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/aust-common/pom.xml" />
+        <option value="$PROJECT_DIR$/aust-mapper/pom.xml" />
+        <option value="$PROJECT_DIR$/aust-pojo/pom.xml" />
+        <option value="$PROJECT_DIR$/aust-parent/pom.xml" />
+        <option value="$PROJECT_DIR$/aust-service/pom.xml" />
+        <option value="$PROJECT_DIR$/aust-web/pom.xml" />
       </list>
     </option>
-    <option name="ignoredFiles">
-      <set>
-        <option value="$PROJECT_DIR$/aust-bean/pom.xml" />
-        <option value="$PROJECT_DIR$/aust-dao-interface/pom.xml" />
-        <option value="$PROJECT_DIR$/aust-dao/pom.xml" />
-        <option value="$PROJECT_DIR$/aust-service-interface/pom.xml" />
-        <option value="$PROJECT_DIR$/aust-service/pom.xml" />
-        <option value="$PROJECT_DIR$/aust-util/pom.xml" />
-        <option value="$PROJECT_DIR$/aust-web/pom.xml" />
-      </set>
-    </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8 " project-jdk-type="JavaSDK">
-    <output url="file://$PROJECT_DIR$/out" />
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_6" default="true" />
+  <component name="SvnConfiguration">
+    <configuration>C:\Users\NL\AppData\Roaming\Subversion</configuration>
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ProjectJDKs.UI">
+        <settings>
+          <last-edited>1.8</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
   </component>
 </project>

@@ -226,7 +226,7 @@ var projectName = pathName.substring(0, pathName.substr(1).indexOf('/') + 1);
 
 $(function () {
   var istag = 0;
-  if (pathName.indexOf('article')){
+  if (pathName.indexOf('article') > 0){
       istag = 1;
   }
   var $aside = $('#aside');

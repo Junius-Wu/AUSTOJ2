@@ -7,13 +7,20 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="aust-common" />
-        <module name="aust-core" />
+        <module name="aust-mapper" />
+        <module name="aust-parent" />
+        <module name="aust-pojo" />
+        <module name="aust-service" />
+        <module name="aust-web" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="aust-common" target="1.8" />
-      <module name="aust-core" target="1.8" />
-      <module name="AUSTOJ2" target="1.5" />
+      <module name="aust-mapper" target="1.8" />
+      <module name="aust-parent" target="1.8" />
+      <module name="aust-pojo" target="1.8" />
+      <module name="aust-service" target="1.8" />
+      <module name="aust-web" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

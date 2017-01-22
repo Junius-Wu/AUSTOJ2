@@ -1,10 +1,10 @@
 <component name="ArtifactManager">
-  <artifact type="exploded-war" name="aust-core:war exploded">
-    <output-path>$PROJECT_DIR$/aust-core/target/aust-core</output-path>
+  <artifact type="exploded-war" name="aust-web:war exploded">
+    <output-path>$PROJECT_DIR$/aust-web/target/aust-core</output-path>
     <root id="root">
       <element id="directory" name="WEB-INF">
         <element id="directory" name="classes">
-          <element id="module-output" name="aust-core" />
+          <element id="module-output" name="aust-web" />
         </element>
         <element id="directory" name="lib">
           <element id="library" level="project" name="Maven: org.springframework:spring-core:4.3.2.RELEASE" />
@@ -50,22 +50,12 @@
           <element id="archive" name="aust-common-1.0.jar">
             <element id="module-output" name="aust-common" />
           </element>
-          <element id="library" level="project" name="Maven: org.mybatis:mybatis:3.4.1" />
-          <element id="library" level="project" name="Maven: org.mybatis:mybatis-spring:1.3.0" />
-          <element id="library" level="project" name="Maven: com.github.pagehelper:pagehelper:4.1.6" />
-          <element id="library" level="project" name="Maven: com.github.jsqlparser:jsqlparser:0.9.5" />
-          <element id="library" level="project" name="Maven: org.mybatis:mybatis-ehcache:1.0.0" />
-          <element id="library" level="project" name="Maven: org.apache.commons:commons-lang3:3.4" />
-          <element id="library" level="project" name="Maven: org.hibernate:hibernate-validator:5.2.4.Final" />
-          <element id="library" level="project" name="Maven: javax.validation:validation-api:1.1.0.Final" />
-          <element id="library" level="project" name="Maven: org.jboss.logging:jboss-logging:3.2.1.Final" />
-          <element id="library" level="project" name="Maven: com.fasterxml:classmate:1.1.0" />
         </element>
       </element>
       <element id="directory" name="META-INF">
-        <element id="file-copy" path="$PROJECT_DIR$/aust-core/target/aust-core/META-INF/MANIFEST.MF" />
+        <element id="file-copy" path="$PROJECT_DIR$/aust-web/target/aust-core/META-INF/MANIFEST.MF" />
       </element>
-      <element id="javaee-facet-resources" facet="aust-core/web/Web" />
+      <element id="javaee-facet-resources" facet="aust-web/web/Web" />
     </root>
   </artifact>
 </component>
