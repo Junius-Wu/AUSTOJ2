@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.edu.aust.pojo.entity.ProblemMapper" >
+  <resultMap id="BaseResultMap" type="cn.edu.aust.pojo.entity.Problem" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="keyword" property="keyword" jdbcType="VARCHAR" />
+    <result column="catelog" property="catelog" jdbcType="TINYINT" />
+    <result column="stage" property="stage" jdbcType="TINYINT" />
+    <result column="spj" property="spj" jdbcType="TINYINT" />
+    <result column="time_limit" property="timeLimit" jdbcType="INTEGER" />
+    <result column="memory_limit" property="memoryLimit" jdbcType="INTEGER" />
+    <result column="difficulty" property="difficulty" jdbcType="TINYINT" />
+    <result column="accepted" property="accepted" jdbcType="INTEGER" />
+    <result column="solved" property="solved" jdbcType="INTEGER" />
+    <result column="submit" property="submit" jdbcType="INTEGER" />
+    <result column="submit_user" property="submitUser" jdbcType="INTEGER" />
+    <result column="author_id" property="authorId" jdbcType="INTEGER" />
+    <result column="contest_id" property="contestId" jdbcType="INTEGER" />
+    <result column="createdate" property="createdate" jdbcType="TIMESTAMP" />
+    <result column="modifydate" property="modifydate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="cn.edu.aust.pojo.entity.ProblemWithBLOBs" extends="BaseResultMap" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <result column="description" property="description" jdbcType="LONGVARCHAR" />
+    <result column="input" property="input" jdbcType="LONGVARCHAR" />
+    <result column="output" property="output" jdbcType="LONGVARCHAR" />
+    <result column="sample_input" property="sampleInput" jdbcType="LONGVARCHAR" />
+    <result column="sample_output" property="sampleOutput" jdbcType="LONGVARCHAR" />
+    <result column="hit" property="hit" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    id, title, keyword, catelog, stage, spj, time_limit, memory_limit, difficulty, accepted, 
+    solved, submit, submit_user, author_id, contest_id, createdate, modifydate
+  </sql>
+  <sql id="Blob_Column_List" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    description, input, output, sample_input, sample_output, hit
+  </sql>
+</mapper>

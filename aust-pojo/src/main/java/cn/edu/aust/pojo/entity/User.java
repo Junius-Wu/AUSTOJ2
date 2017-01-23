@@ -18,7 +18,7 @@ public class User {
     private String avatar;
 
     /**
-     * 用户名,不可修改
+     * 用户名,不可修改,弃用,邮箱+密码登录
      */
     private String username;
 
@@ -127,7 +127,7 @@ public class User {
     private Date modifydate;
 
     /**
-     * 是否冻结,0正常,1冻结
+     * 是否冻结,1正常,0冻结,2待验证
      */
     @Column(name = "is_defunct")
     private Byte isDefunct;
@@ -137,6 +137,12 @@ public class User {
      */
     @Column(name = "is_opensource")
     private Byte isOpensource;
+
+    /**
+     * 是否接收邮件,1是 0否
+     */
+    @Column(name = "is_email")
+    private Byte isEmail;
 
     /**
      * 获取主键,自增
@@ -175,18 +181,18 @@ public class User {
     }
 
     /**
-     * 获取用户名,不可修改
+     * 获取用户名,不可修改,弃用,邮箱+密码登录
      *
-     * @return username - 用户名,不可修改
+     * @return username - 用户名,不可修改,弃用,邮箱+密码登录
      */
     public String getUsername() {
         return username;
     }
 
     /**
-     * 设置用户名,不可修改
+     * 设置用户名,不可修改,弃用,邮箱+密码登录
      *
-     * @param username 用户名,不可修改
+     * @param username 用户名,不可修改,弃用,邮箱+密码登录
      */
     public void setUsername(String username) {
         this.username = username;
@@ -553,18 +559,18 @@ public class User {
     }
 
     /**
-     * 获取是否冻结,0正常,1冻结
+     * 获取是否冻结,1正常,0冻结,2待验证
      *
-     * @return is_defunct - 是否冻结,0正常,1冻结
+     * @return is_defunct - 是否冻结,1正常,0冻结,2待验证
      */
     public Byte getIsDefunct() {
         return isDefunct;
     }
 
     /**
-     * 设置是否冻结,0正常,1冻结
+     * 设置是否冻结,1正常,0冻结,2待验证
      *
-     * @param isDefunct 是否冻结,0正常,1冻结
+     * @param isDefunct 是否冻结,1正常,0冻结,2待验证
      */
     public void setIsDefunct(Byte isDefunct) {
         this.isDefunct = isDefunct;
@@ -586,5 +592,23 @@ public class User {
      */
     public void setIsOpensource(Byte isOpensource) {
         this.isOpensource = isOpensource;
+    }
+
+    /**
+     * 获取是否接收邮件,1是 0否
+     *
+     * @return is_email - 是否接收邮件,1是 0否
+     */
+    public Byte getIsEmail() {
+        return isEmail;
+    }
+
+    /**
+     * 设置是否接收邮件,1是 0否
+     *
+     * @param isEmail 是否接收邮件,1是 0否
+     */
+    public void setIsEmail(Byte isEmail) {
+        this.isEmail = isEmail;
     }
 }

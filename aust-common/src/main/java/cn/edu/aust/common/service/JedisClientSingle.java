@@ -1,6 +1,5 @@
 package cn.edu.aust.common.service;
 
-import cn.edu.aust.common.util.WorkCallBack;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 

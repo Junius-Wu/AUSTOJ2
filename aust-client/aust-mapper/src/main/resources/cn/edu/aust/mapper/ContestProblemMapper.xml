@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.edu.aust.pojo.entity.ContestProblemMapper" >
+  <resultMap id="BaseResultMap" type="cn.edu.aust.pojo.entity.ContestProblem" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="problem_id" property="problemId" jdbcType="INTEGER" />
+    <result column="contest_id" property="contestId" jdbcType="INTEGER" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="num" property="num" jdbcType="VARCHAR" />
+    <result column="point" property="point" jdbcType="INTEGER" />
+    <result column="accepted" property="accepted" jdbcType="INTEGER" />
+    <result column="solved" property="solved" jdbcType="INTEGER" />
+    <result column="submit" property="submit" jdbcType="INTEGER" />
+    <result column="submit_user" property="submitUser" jdbcType="INTEGER" />
+    <result column="createdate" property="createdate" jdbcType="TIMESTAMP" />
+    <result column="modifydate" property="modifydate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    id, problem_id, contest_id, title, num, point, accepted, solved, submit, submit_user, 
+    createdate, modifydate
+  </sql>
+</mapper>

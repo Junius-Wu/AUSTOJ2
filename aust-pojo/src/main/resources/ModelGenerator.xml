@@ -24,13 +24,14 @@
         </jdbcConnection>
 
         <!--只生成Java model-->
-        <javaModelGenerator targetPackage="cn.edu.aust.common.entity" targetProject="F:\Git\AUSTOJ2\aust-common\src\main\java"/>
+        <javaModelGenerator targetPackage="cn.edu.aust.pojo.entity" targetProject="F:\Git\AUSTOJ2\aust-pojo\src\main\java"/>
 
-        <!--<sqlMapGenerator targetPackage="cn.edu.aust.common.entity"  targetProject="F:\Git\AUSTOJ2\aust-common\src\main\resources"/>-->
+        <sqlMapGenerator targetPackage="cn.edu.aust.pojo.entity" targetProject="F:\Git\AUSTOJ2\aust-pojo\src\main\resources"/>
 
-        <!--<javaClientGenerator targetPackage="cn.edu.aust.common.entity" targetProject="F:\Git\AUSTOJ2\aust-common\src\main\java" type="XMLMAPPER" />-->
+        <!--<javaClientGenerator targetPackage="cn.edu.aust.pojo.entity" targetProject="F:\Git\AUSTOJ2\aust-common\src\main\java" type="XMLMAPPER" />-->
 
-        <table tableName="user" >
+        <table tableName="%" enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
+            enableUpdateByExample="false">
             <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
         </table>
 

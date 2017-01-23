@@ -1,4 +1,4 @@
-package cn.edu.aust.common.util;
+package cn.edu.aust.common.service;
 
 /**
  * 执行回调任务接口
