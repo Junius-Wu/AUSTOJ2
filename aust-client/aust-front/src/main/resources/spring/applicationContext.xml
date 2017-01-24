@@ -10,7 +10,7 @@
     <!-- 启用注解 -->
     <context:annotation-config />
     <!--启动定时器-->
-    <task:annotation-driven/>
+    <!--<task:annotation-driven/>-->
     <!-- 启动组件扫描，排除@Controller组件，该组件由SpringMVC配置文件扫描 -->
     <context:component-scan base-package="cn.edu.aust">
         <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller" />
@@ -57,35 +57,35 @@
         <!-- 数据库连接池 -->
         <property name="dataSource" ref="dataSource" />
         <!-- 加载mybatis的全局配置文件 -->
-        <property name="configLocation" value="classpath:mybatis/SqlMapConfig.xml" />
-        <!--配置mapper.xml扫描-->
-        <property name="mapperLocations" value="classpath:mybatis/*/*.xml"/>
+        <property name="configLocation" value="classpath:mybatis/mybatis-config.xml" />
         <!--配置别名,即类名-->
-        <property name="typeAliasesPackage" value="cn.edu.aust.common.entity"/>
+        <property name="typeAliasesPackage" value="cn.edu.aust.pojo.entity"/>
+        <!--配置分页插件-->
+        <property name="plugins">
+            <array>
+                <bean class="com.github.pagehelper.PageInterceptor">
+                    <property name="properties">
+                        <!--使用下面的方式配置参数，一行配置一个 -->
+                        <value>
+                            helperDialect=mysql
+                            reasonable=true
+                        </value>
+                    </property>
+                </bean>
+            </array>
+        </property>
     </bean>
     <!--配置mapper接口扫描,扫描后会自动注入到spring-->
-    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="cn.edu.aust.common.mapper"/>
+    <bean class="tk.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="cn.edu.aust.mapper"/>
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
     </bean>
     <!--配置事务管理 -->
     <bean name="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource" ref="dataSource"/>
     </bean>
-
-    <tx:advice id="txAdvice" transaction-manager="transactionManager">
-        <tx:attributes>
-            <tx:method name="delete*" propagation="REQUIRED" read-only="false" rollback-for="Exception"/>
-            <tx:method name="update*" propagation="REQUIRED" read-only="false" rollback-for="Exception" />
-            <tx:method name="insert*" propagation="REQUIRED" read-only="false" rollback-for="Exception" />
-            <tx:method name="select*" propagation="SUPPORTS" read-only="true"/>
-        </tx:attributes>
-    </tx:advice>
-    <!-- 事务处理,对service开启事务 -->
-    <aop:config>
-        <aop:pointcut id="pc" expression="execution(public * cn.edu.aust.service.*.*(..))" />
-        <aop:advisor pointcut-ref="pc" advice-ref="txAdvice" />
-    </aop:config>
+    <!-- 开启注解事物,使用aspect代理 -->
+    <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true" />
 
     <!--任务执行器,用于执行邮件,判题等耗时任务-->
     <bean id="taskExecutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">

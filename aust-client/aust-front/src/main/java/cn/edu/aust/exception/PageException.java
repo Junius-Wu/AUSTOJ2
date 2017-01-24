@@ -11,7 +11,4 @@ public class PageException extends Exception {
         super(message);
     }
 
-    public PageException(ResultVo res){
-        super(res.getMsg());
-    }
 }

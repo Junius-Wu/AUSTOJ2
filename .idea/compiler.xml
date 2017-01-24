@@ -10,6 +10,7 @@
         <module name="aust-common" />
         <module name="aust-front" />
         <module name="aust-mapper" />
+        <module name="aust-plugin" />
         <module name="aust-pojo" />
         <module name="aust-service" />
         <module name="aust-web" />
@@ -23,6 +24,7 @@
       <module name="aust-front" target="1.8" />
       <module name="aust-mapper" target="1.8" />
       <module name="aust-parent" target="1.5" />
+      <module name="aust-plugin" target="1.8" />
       <module name="aust-pojo" target="1.8" />
       <module name="aust-service" target="1.8" />
       <module name="aust-web" target="1.8" />

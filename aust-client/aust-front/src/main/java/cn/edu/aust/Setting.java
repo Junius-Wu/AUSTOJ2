@@ -3,14 +3,13 @@ package cn.edu.aust;
 import java.io.Serializable;
 
 /**
+ * 该项目后台设置类
  * @author Niu Li
  * @date 2016/9/17
  */
 public class Setting implements Serializable{
 
     public static final String CACHE_NAME = "setting";
-
-
     /**
      * isEmailLogin : true
      * accountLockCount : 5

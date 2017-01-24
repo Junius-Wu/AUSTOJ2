@@ -34,6 +34,7 @@
         <commonlang.version>3.5</commonlang.version>
         <commonbean.version>1.9.2</commonbean.version>
         <commonio.version>2.5</commonio.version>
+        <commonfile.version>1.3.2</commonfile.version>
         <junit.version>4.12</junit.version>
         <jedis.version>2.8.0</jedis.version>
         <servlet.version>3.1.0</servlet.version>
@@ -203,6 +204,11 @@
                 <groupId>commons-io</groupId>
                 <artifactId>commons-io</artifactId>
                 <version>${commonio.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-fileupload</groupId>
+                <artifactId>commons-fileupload</artifactId>
+                <version>${commonfile.version}</version>
             </dependency>
             <!--log start-->
             <dependency>

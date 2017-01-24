@@ -17,6 +17,7 @@
         <option value="$PROJECT_DIR$/aust-front/pom.xml" />
         <option value="$PROJECT_DIR$/aust-client/pom.xml" />
         <option value="$PROJECT_DIR$/aust-admin/pom.xml" />
+        <option value="$PROJECT_DIR$/aust-plugin/pom.xml" />
       </list>
     </option>
   </component>

@@ -9,6 +9,7 @@
       <module fileurl="file://$PROJECT_DIR$/aust-client/aust-front/aust-front.iml" filepath="$PROJECT_DIR$/aust-client/aust-front/aust-front.iml" />
       <module fileurl="file://$PROJECT_DIR$/aust-client/aust-mapper/aust-mapper.iml" filepath="$PROJECT_DIR$/aust-client/aust-mapper/aust-mapper.iml" />
       <module fileurl="file://$PROJECT_DIR$/aust-parent/aust-parent.iml" filepath="$PROJECT_DIR$/aust-parent/aust-parent.iml" />
+      <module fileurl="file://$PROJECT_DIR$/aust-plugin/aust-plugin.iml" filepath="$PROJECT_DIR$/aust-plugin/aust-plugin.iml" />
       <module fileurl="file://$PROJECT_DIR$/aust-pojo/aust-pojo.iml" filepath="$PROJECT_DIR$/aust-pojo/aust-pojo.iml" />
       <module fileurl="file://$PROJECT_DIR$/aust-client/aust-service/aust-service.iml" filepath="$PROJECT_DIR$/aust-client/aust-service/aust-service.iml" />
     </modules>

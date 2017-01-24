@@ -26,6 +26,8 @@
         <austpojo.version>1.0</austpojo.version>
         <austcommon.version>1.0</austcommon.version>
         <austmapper.version>1.0</austmapper.version>
+        <austplugin.version>1.0</austplugin.version>
+        <austservice.version>1.0</austservice.version>
     </properties>
 
     <dependencyManagement>
@@ -45,6 +47,16 @@
                 <groupId>cn.edu.aust</groupId>
                 <artifactId>aust-mapper</artifactId>
                 <version>${austmapper.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.edu.aust</groupId>
+                <artifactId>aust-plugin</artifactId>
+                <version>${austplugin.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.edu.aust</groupId>
+                <artifactId>aust-service</artifactId>
+                <version>${austservice.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

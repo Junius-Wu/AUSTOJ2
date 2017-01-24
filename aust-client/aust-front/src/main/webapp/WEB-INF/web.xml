@@ -16,7 +16,7 @@
     <context-param>
         <param-name>contextConfigLocation</param-name>
         <!--配置文件的路径-->
-        <param-value>classpath:spring/application.xml</param-value>
+        <param-value>classpath:spring/applicationContext.xml</param-value>
     </context-param>
     <!--filter start-->
     <!-- 配置字符编码过滤器，编码格式设为UTF-8，避免中文乱码 -->
@@ -36,24 +36,6 @@
     <filter-mapping>
         <filter-name>encodingFilter</filter-name>
         <url-pattern>/*</url-pattern> <!--设置你想过滤的页面或者是Servlet，根据自己的需要配置-->
-    </filter-mapping>
-
-    <!--gzip start-->
-    <filter>
-        <filter-name>GzipFilter</filter-name>
-        <filter-class>cn.edu.aust.filter.GzipFilter</filter-class>
-    </filter>
-    <filter-mapping>
-        <filter-name>GzipFilter</filter-name>
-        <url-pattern>*.js</url-pattern>
-        <url-pattern>*.css</url-pattern>
-        <url-pattern>*.json</url-pattern>
-        <url-pattern>*.otf</url-pattern>
-        <url-pattern>*.eot</url-pattern>
-        <url-pattern>*.svg</url-pattern>
-        <url-pattern>*.ttf</url-pattern>
-        <url-pattern>*.woff2</url-pattern>
-        <url-pattern>*.woff</url-pattern>
     </filter-mapping>
 
     <!--listener start-->
