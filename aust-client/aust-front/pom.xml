@@ -35,10 +35,7 @@
             <artifactId>aust-service</artifactId>
         </dependency>
         <!--spring start-->
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-jdbc</artifactId>
-        </dependency>
+
         <!--cglib start-->
         <dependency>
             <groupId>cglib</groupId>
@@ -100,16 +97,16 @@
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
         </dependency>
-        <!--<dependency>-->
-            <!--<groupId>org.logback-extensions</groupId>-->
-            <!--<artifactId>logback-ext-spring</artifactId>-->
-            <!--<version>0.1.4</version>-->
-        <!--</dependency>-->
-        <!--<dependency>-->
-            <!--<groupId>org.slf4j</groupId>-->
-            <!--<artifactId>jcl-over-slf4j</artifactId>-->
-            <!--<version>1.7.12</version>-->
-        <!--</dependency>-->
+        <dependency>
+            <groupId>org.logback-extensions</groupId>
+            <artifactId>logback-ext-spring</artifactId>
+            <version>0.1.4</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jcl-over-slf4j</artifactId>
+            <version>1.7.12</version>
+        </dependency>
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>

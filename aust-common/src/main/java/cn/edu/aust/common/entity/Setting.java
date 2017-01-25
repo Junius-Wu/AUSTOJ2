@@ -1,4 +1,4 @@
-package cn.edu.aust;
+package cn.edu.aust.common.entity;
 
 import java.io.Serializable;
 

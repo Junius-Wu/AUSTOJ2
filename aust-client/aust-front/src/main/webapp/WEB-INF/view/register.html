@@ -4,57 +4,63 @@
     <meta charset="UTF-8">
     <title>注册</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <link rel="apple-touch-icon" href="apple-touch-icon.png">
-  <!-- Place favicon.ico in the root directory -->
-
   <link rel="stylesheet" href="/static/styles/vendor.css" th:href="@{static/styles/vendor.css}">
   <link rel="stylesheet" href="/static/styles/login.css" th:href="@{static/styles/login.css}">
 </head>
 <body>
+<!--最上角返回主页-->
 <div class="small-home">
-  <a href="austoj" class="text-center"><i class="fa fa-home"></i></a>
+  <a th:href="@{/}" class="text-center"><i class="fa fa-home"></i></a>
 </div>
+
 <div class="index-one">
+  <!--标题-->
   <div class="container-fluid text-center animated fadeInDown">
     <h1 class="login-logo">AUST</h1>
   </div>
+  <!--input框-->
   <div class="row animated fadeInUp">
     <div class="login-field">
+
       <form role="form" style="margin-top: 20px" method="post" id="registerForm" action="register">
+        <!--昵称-->
         <div class="input-group form-group">
           <span class="input-group-addon"><i class="fa fa-user"></i></span>
-          <input type="text" class="form-control" placeholder="Username" required name="username"
-                 maxlength="20" onblur="checkuser(this)">
+          <input type="text" class="form-control" placeholder="昵称" required name="nickname" maxlength="20">
         </div>
+        <!--邮箱-->
         <div class="input-group form-group">
           <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
           <input type="email" class="form-control" placeholder="example@XX.com" required name="email" onblur="checkemail(this)">
         </div>
+        <!--密码-->
         <div class="input-group form-group">
           <span class="input-group-addon"><i class="fa fa-key"></i></span>
           <input type="password" class="form-control"
                  placeholder="Password" required name="password" maxlength="30" id="password" onblur="checkpwd(this)">
         </div>
+        <!--确认密码-->
         <div class="input-group form-group">
           <span class="input-group-addon"><i class="fa fa-key"></i></span>
           <input type="password" class="form-control"
                  placeholder="Password" required name="password2" maxlength="30" id="password2" onblur="checkpwd2(this)">
         </div>
+        <!--验证码-->
         <div class="code-inline">
           <input type="text" class="form-control code-input" required name="codevalidate">
-          <img id="code-validate"  class="code-img" onclick="changeUrl()" th:src="'/codeValidate?time='+${#dates.createToday().getSeconds()}">
+          <img id="code-validate"  class="code-img" onclick="changeUrl()" th:src="@{/codeValidate(time=${#dates.createToday().getTime()})}">
         </div>
+        <!--提交按钮-->
         <div class="input-group">
           <a href="/login.html" th:href="@{/login}" class="btn btn-primary">Sign in</a>&nbsp;&nbsp;
           <button type="button" class="btn btn-primary sign-in" id="registerBtn">Register</button>
         </div>
       </form>
+
     </div>
   </div>
 </div>
 <script src="/static/scripts/vendor.js" th:src="@{static/scripts/vendor.js}"></script>
-
 <script src="/static/scripts/plugins.js" th:src="@{static/scripts/plugins.js}"></script>
 <script src="/static/scripts/login.js" th:src="@{static/scripts/login.js}"></script>
 </body>

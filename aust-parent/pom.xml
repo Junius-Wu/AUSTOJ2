@@ -35,9 +35,11 @@
         <commonbean.version>1.9.2</commonbean.version>
         <commonio.version>2.5</commonio.version>
         <commonfile.version>1.3.2</commonfile.version>
+        <commoncodec.version>1.10</commoncodec.version>
         <junit.version>4.12</junit.version>
         <jedis.version>2.8.0</jedis.version>
         <servlet.version>3.1.0</servlet.version>
+        <javamail.version>1.5.6</javamail.version>
     </properties>
 
     <!--集中控制依赖-->
@@ -131,6 +133,12 @@
                 <artifactId>thymeleaf-spring4</artifactId>
                 <version>${thymeleaf.version}</version>
             </dependency>
+            <!--java Mail start-->
+            <dependency>
+                <groupId>com.sun.mail</groupId>
+                <artifactId>javax.mail</artifactId>
+                <version>${javamail.version}</version>
+            </dependency>
             <!--shiro start-->
             <dependency>
                 <groupId>org.apache.shiro</groupId>
@@ -194,6 +202,11 @@
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-lang3</artifactId>
                 <version>${commonlang.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-codec</groupId>
+                <artifactId>commons-codec</artifactId>
+                <version>${commoncodec.version}</version>
             </dependency>
             <dependency>
                 <groupId>commons-beanutils</groupId>

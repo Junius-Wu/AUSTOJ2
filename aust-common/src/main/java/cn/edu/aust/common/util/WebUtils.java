@@ -29,8 +29,10 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.InetAddress;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.net.UnknownHostException;
 import java.security.KeyStore;
 import java.util.ArrayList;
 import java.util.Enumeration;
@@ -362,5 +364,35 @@ public abstract class WebUtils {
 			}
 		}
 		return result;
+	}
+
+	/**
+	 * 获取客户端ip地址
+	 */
+	public static String getIp(HttpServletRequest request) {
+
+		String ip = request.getHeader("x-forwarded-for");
+		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+			ip = request.getHeader("Proxy-Client-IP");
+		}
+		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+			ip = request.getHeader("WL-Proxy-Client-IP");
+		}
+		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+			ip = request.getRemoteAddr();
+		}
+		if (ip != null && ip.contains(",")) {
+			ip = ip.substring(ip.lastIndexOf(",") + 1, ip.length()).trim();
+		}
+		if (ip != null && "0:0:0:0:0:0:0:1".equals(ip)) {
+			InetAddress addr;
+			try {
+				addr = InetAddress.getLocalHost();
+				ip = addr.getHostAddress();
+			} catch (UnknownHostException e) {
+				e.printStackTrace();
+			}
+		}
+		return ip;
 	}
 }

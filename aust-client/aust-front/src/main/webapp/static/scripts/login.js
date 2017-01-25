@@ -44,9 +44,9 @@ function checkpwd(obj) {
     var reg = /^[@A-Za-z0-9!#$%^&*.~]{6,22}$/;
     if (obj.value != '' && !reg.test(obj.value)){
         toastr.error('密码只能有数字,字母,特殊符号组成的6-23位序列');
-        $submitBtn.addClass('disabled');
+        $submitBtn.prop('disabled',true);
     }
-    $submitBtn.removeClass('disabled');
+    $submitBtn.prop('disabled',false);
 }
 //注册 邮箱验证
 function checkemail(obj) {
@@ -54,20 +54,20 @@ function checkemail(obj) {
     var emailReg = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
     if (obj.value != '' && !emailReg.test(obj.value) ){
         toastr.error('填写邮箱不正确!');
-        $submitBtn.addClass('disabled');
+        $submitBtn.prop('disabled',true);
     }
     if (obj.value != ''){
         $.ajax({
                    type: 'GET',
-                   url: 'checkemail',
+                   url: projectName+'/register/check',
                    dataType:'json',
                    data:{email:obj.value},
                    success: function(data){
-                       if (data.status == 0){
-                           $submitBtn.removeClass('disabled');
+                       if (data.status){
+                           $submitBtn.prop('disabled',false);
                        }else {
                            toastr.error(data.msg);
-                           $submitBtn.addClass('disabled');
+                           $submitBtn.prop('disabled',true);
                        }
                    }
                });
@@ -79,31 +79,11 @@ function checkpwd2(input){
     var password = $('#password').val();
     if (password != input.value){
         toastr.error('两次输入密码不一致');
-        $submitBtn.addClass('disabled');
+        $submitBtn.prop('disabled',true);
     }else {
-        $submitBtn.removeClass('disabled');
+        $submitBtn.prop('disabled',false);
     }
 }
-//注册 用户名验证
-function checkuser(obj){
-    var $submitBtn = $('#registerBtn');
-    if (obj.value != ''){
-        $.ajax({
-                   type: 'GET',
-                   url: 'check/'+obj.value,
-                   dataType:'json',
-                   success: function(data){
-                       if (data.status == 0){
-                           $submitBtn.removeClass('disabled');
-                       }else {
-                           toastr.error(data.msg);
-                           $submitBtn.addClass('disabled');
-                       }
-                   }
-               });
-    }
-}
-
 //注册
 $('#registerBtn').click(function () {
     var $registerForm = $('#registerForm');
@@ -118,7 +98,7 @@ $('#registerBtn').click(function () {
         },
         success:function (result) {
             $('#registerBtn').prop('disabled', false);
-            if(result.status !=0){
+            if(!result.status){
                toastr.error(result.msg);
                 changeUrl();
             }else {
@@ -149,7 +129,7 @@ $('#loginBtn').click(function () {
                 removeCookie('memberUsername');
             }
             $('#loginBtn').prop('disabled', false);
-            if(result.status !=0){
+            if(result.status){
                toastr.error(result.msg);
                 changeUrl();
             }else {

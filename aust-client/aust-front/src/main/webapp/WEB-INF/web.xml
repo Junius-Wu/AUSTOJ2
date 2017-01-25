@@ -75,8 +75,8 @@
     </servlet-mapping>
 
     <!--错误页面配置-->
-    <error-page>
+    <msg-page>
         <exception-type>java.lang.Exception</exception-type>
-        <location>/error</location>
-    </error-page>
+        <location>/msg</location>
+    </msg-page>
 </web-app>

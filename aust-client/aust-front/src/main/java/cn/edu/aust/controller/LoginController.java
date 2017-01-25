@@ -38,7 +38,6 @@ public class LoginController {
      */
     @GetMapping(value = "login",produces = "text/html;charset=UTF-8")
     public String login(HttpServletRequest request) {
-
         //获取进入前的链接
         Optional.ofNullable(request.getHeader("referer"))
                 .ifPresent(s -> request.getSession().setAttribute("referer", s));

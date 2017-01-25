@@ -134,7 +134,7 @@
                                     <span th:text="${article.viewcount}">91</span>
                                 </li>
                                 <li class="meta-like fr mr0">
-                                    <a href="javascript:void(0)" th:class="${article.isVote}!=0?'text-danger':'text-success'"
+                                    <a href="javascript:void(0)" th:class="${article.isVote}!=0?'text-danger':'text-status'"
                                        class="text-danger" title="Like" th:onclick="'voteArticle('+${article.id}+')'">
                                         <i class="fa fa-heart-o"></i>
                                         <span th:text="${article.likecount}" th:id="'like'+${article.id}">91</span>

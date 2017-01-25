@@ -12,7 +12,7 @@
     <!--启动定时器-->
     <!--<task:annotation-driven/>-->
     <!-- 启动组件扫描，排除@Controller组件，该组件由SpringMVC配置文件扫描 -->
-    <context:component-scan base-package="cn.edu.aust">
+    <context:component-scan base-package="cn.edu.aust.service">
         <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller" />
         <context:exclude-filter type="annotation" expression="org.springframework.web.bind.annotation.RestController" />
     </context:component-scan>
@@ -97,5 +97,29 @@
         <property name="queueCapacity" value="1000" />
         <!-- 线程池维护线程所允许的空闲时间，默认为60s -->
         <property name="keepAliveSeconds" value="60" />
+    </bean>
+
+    <!-- 配置redis客户端单机版 -->
+    <bean id="jedispoolConfig" class="redis.clients.jedis.JedisPoolConfig">
+        <property name="maxTotal" value="${redis.maxactive}"/>
+        <property name="maxIdle" value="${redis.maxidle}"/>
+        <property name="minIdle" value="${redis.minidle}"/>
+        <property name="maxWaitMillis" value="${redis.timeout}"/>
+    </bean>
+    <bean id="jedisPool" class="redis.clients.jedis.JedisPool" destroy-method="destroy"  depends-on="jedispoolConfig">
+        <constructor-arg name="poolConfig" ref="jedispoolConfig"/>
+        <constructor-arg name="host" value="${redis.ip}"/>
+        <constructor-arg name="port" value="${redis.port}"/>
+        <constructor-arg name="timeout" value="100"/>
+        <constructor-arg name="password" value="niuli"/>
+    </bean>
+    <bean id="jedisClient" class="cn.edu.aust.common.service.JedisClientSingle">
+        <constructor-arg ref="jedisPool"/>
+    </bean>
+    <!--邮件客户端-->
+    <bean id="javaMailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+        <property name="host" value="${mail.host}"/>
+        <property name="username" value="${mail.username}"/>
+        <property name="password" value="${mail.password}"/>
     </bean>
 </beans>
