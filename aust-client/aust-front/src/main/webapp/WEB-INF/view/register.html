@@ -33,7 +33,7 @@
         <div class="input-group form-group" :class="emailValid ?'':'has-error'">
           <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
           <input type="email" class="form-control"
-                 placeholder="example@XX.com" name="email" required v-model="email" @blur="checkEmail">
+                 placeholder="example@XX.com" name="email" required v-model="email" @blur="checkEmail" th:value="${email}">
         </div>
         <!--密码-->
         <div class="input-group form-group" :class="passwordValid?'':'has-error'">

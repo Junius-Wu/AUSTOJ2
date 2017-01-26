@@ -13,15 +13,31 @@ toastr.options = {
   'showMethod': 'fadeIn',
   'hideMethod': 'fadeOut'
 };
+
+var indexApp = new Vue({
+    el:"#app",
+    data:{
+
+    },
+    methods:{
+
+    },
+    computed:{
+        scrollTop:function () {
+            var scrollTop = parseInt(document.body.scrollTop||document.documentElement.scrollTop);
+            if(scrollTop > 10){
+                return 'nav-backcolor';
+            }else {
+                return '';
+            }
+        }
+    }
+});
+
 //导航颜色监听
 $(window).scroll(function () {
   var nav = $('#nav');
-  var scrollTop = parseInt(document.body.scrollTop||document.documentElement.scrollTop);
-  if(scrollTop > 0){
-    nav.addClass('nav-backcolor');
-  }else {
-    nav.removeClass('nav-backcolor');
-  }
+
 });
 
 //首页展示信息

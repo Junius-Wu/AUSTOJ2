@@ -37,7 +37,7 @@ var loginOrRegister = new Vue({
                     dataType: 'json',
                     data: {email: this.email},
                     success: function (data) {
-                        if (data.status) {
+                        if (data.status == 0) {
                             loginOrRegister.submit = true;
                             loginOrRegister.err_msg = '';
                         } else {
@@ -63,17 +63,48 @@ var loginOrRegister = new Vue({
                 dataType: 'json',
                 cache: false,
                 beforeSend: function () {
-                    this.submit = false;
+                    loginOrRegister.submit = false;
                 },
                 success: function (result) {
-                    this.submit = true;
-                    if (!result.status) {
-                        toastr.error(result.msg);
-                        this.err_msg = result.msg;
-                        this.changeUrl();
-                    } else {
+                    loginOrRegister.submit = true;
+                    if (result.status == 0) {
                         toastr.success('注册成功,正在跳转中...', 'SUCCESS', {progressBar: true});
                         setTimeout(function () {location.href = result.referer;}, 1500);
+                    } else {
+                        toastr.error(result.msg);
+                        loginOrRegister.err_msg = result.msg;
+                        loginOrRegister.changeUrl();
+                    }
+                }
+            })
+        },
+        login:function () {
+            var $loginForm = $('#loginForm');
+            $.ajax({
+                type: 'POST',
+                url: $loginForm.prop('action'),
+                data: $loginForm.serialize(),
+                dataType: 'json',
+                cache: false,
+                beforeSend: function () {
+                    loginOrRegister.submit = false;
+                },
+                success: function (result) {
+                    loginOrRegister.submit = true;
+                    if ($('#remmberMe').prop('checked')) {
+                        addCookie('email', $('#email').val(), {expires: 7 * 24 * 60 * 60});
+                    } else {
+                        removeCookie('email');
+                    }
+                    if (result.status == 0) {
+                        toastr.success('登录成功,正在跳转中...', 'SUCCESS', {progressBar: true});
+                        setTimeout(function () {
+                            location.href = result.referer;
+                        }, 1500);
+                    } else {
+                        toastr.error(result.msg);
+                        loginOrRegister.err_msg = result.msg;
+                        loginOrRegister.changeUrl();
                     }
                 }
             })
@@ -122,46 +153,15 @@ var loginOrRegister = new Vue({
 remmberMe();
 function remmberMe() {
     var $remmberMe = $('#remmberMe');
-    if (getCookie('memberUsername') != null) {
+    if (getCookie('email') != null) {
         $remmberMe.prop('checked', true);
-        $('#username').val(getCookie('memberUsername'));
+        $('#username').val(getCookie('email'));
         $('#password').focus();
     } else {
         $remmberMe.prop('checked', false);
         $('#username').focus();
     }
 }
-//登录
-$('#loginBtn').click(function () {
-    var $loginForm = $('#loginForm');
-    $.ajax({
-        type: 'POST',
-        url: $loginForm.prop('action'),
-        data: $loginForm.serialize(),
-        dataType: 'json',
-        cache: false,
-        beforeSend: function () {
-            $('#loginBtn').prop('disabled', true);
-        },
-        success: function (result) {
-            if ($('#remmberMe').prop('checked')) {
-                addCookie('memberUsername', $('#username').val(), {expires: 7 * 24 * 60 * 60});
-            } else {
-                removeCookie('memberUsername');
-            }
-            $('#loginBtn').prop('disabled', false);
-            if (result.status) {
-                toastr.error(result.msg);
-                changeUrl();
-            } else {
-                toastr.success('登录成功,正在跳转中...', 'SUCCESS', {progressBar: true});
-                setTimeout(function () {
-                    location.href = result.referer;
-                }, 1500);
-            }
-        }
-    })
-});
 
 //键盘监听
 $(document).keyup(function (event) {

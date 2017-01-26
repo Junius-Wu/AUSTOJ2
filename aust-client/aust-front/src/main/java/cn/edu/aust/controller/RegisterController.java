@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -61,10 +62,11 @@ public class RegisterController {
      * 该页面获取进入前的页面,注册完毕后跳转
      */
     @GetMapping(produces = "text/html;charset=UTF-8")
-    public String toRegister(HttpServletRequest request){
+    public String toRegister(String email, HttpServletRequest request, Model model){
         //获取进入前的链接
         Optional.ofNullable(request.getHeader("referer"))
                 .ifPresent(s -> request.getSession().setAttribute("referer", s));
+        model.addAttribute("email",email);
         return "register";
     }
 
@@ -79,26 +81,26 @@ public class RegisterController {
         //验证码验证
         String code = (String) session.getAttribute("codeValidate");
         if (!StringUtils.equalsIgnoreCase(code, codevalidate)) {
-            return new Result<PosCode>(false,PosCode.CODE_ERROR.getMsg());
+            return new Result<PosCode>(PosCode.CODE_ERROR);
         }
         Setting setting = SystemUtil.getSetting(jedisClient);
         if (!setting.isIsRegisterEnabled()){
-            return new Result<PosCode>(false,PosCode.NO_REGISTER.getMsg());
+            return new Result<PosCode>(PosCode.NOOPEN_REGISTER);
         }
         //参数校验
         Matcher matcher = emailPattern.matcher(email);
         if (!matcher.matches()){
-            return new Result<PosCode>(false,PosCode.USERNAME_NOALLOW.getMsg());
+            return new Result<PosCode>(PosCode.USERNAME_NOALLOW);
         }
         if (StringUtils.isEmpty(password) || password.length() > 30){
-            return new Result<PosCode>(false,PosCode.PASSWORD_NOALLOW.getMsg());
+            return new Result<PosCode>(PosCode.PASSWORD_NOALLOW);
         }
         if (StringUtils.isEmpty(nickname) || nickname.length() > 30){
-            return new Result<PosCode>(false,PosCode.NICKNAME_NOALLOW.getMsg());
+            return new Result<PosCode>(PosCode.NICKNAME_NOALLOW);
         }
         //用户存在验证
         if (userService.judgeUsernameOrEmail(null,email)){
-            return new Result<PosCode>(false,PosCode.USERNAME_EXIST.getMsg());
+            return new Result<PosCode>(PosCode.USERNAME_EXIST);
         }
         //注册用户
         User user = new User();
@@ -118,12 +120,8 @@ public class RegisterController {
         logger.info("{}用户已注册",user.getEmail());
 
         //存储cookies
-        WebUtils.addCookie(response, UserDTO.USERNAME_COOKIE_NAME, user.getUsername(),
-                null,setting.getCookiePath(),setting.getCookieDomain(),null);
-        if (StringUtils.isNotEmpty(user.getNickname())) {
-            WebUtils.addCookie(response,UserDTO.NICKNAME_COOKIE_NAME, user.getNickname(),
+        WebUtils.addCookie(response,UserDTO.NICKNAME_COOKIE_NAME, user.getNickname(),
                     null,setting.getCookiePath(),setting.getCookieDomain(),null);
-        }
         //发送邮件,验证
         mailService.sendRegister(email,jedisClient);
         //跳转到之前的页面
@@ -133,7 +131,7 @@ public class RegisterController {
 
         //移除session
         session.removeAttribute("referer");
-        return new Result<JSONObject>(true,result);
+        return new Result<JSONObject>(PosCode.OK,result);
     }
 
     /**
@@ -145,18 +143,18 @@ public class RegisterController {
 
         boolean check = userService.judgeUsernameOrEmail(null,email);
         if (check){
-            return new Result<>(false,PosCode.USERNAME_EXIST.getMsg());
+            return new Result<>(PosCode.USERNAME_EXIST);
         }
         //合法性检查
         Matcher matcher = emailPattern.matcher(email);
         if (!matcher.matches()){
-            return new Result<>(false,PosCode.USERNAME_NOALLOW.getMsg());
+            return new Result<>(PosCode.USERNAME_NOALLOW);
         }
         //是否含有违规字段
 //        if (userService.usernameIsDisabled(username)){
 //            return new Result<>(true,PosCode.USERNAME_NOALLOW);
 //        }
-        return new Result<>(true,PosCode.OK);
+        return new Result<>(PosCode.OK);
     }
 
     /**
@@ -167,14 +165,14 @@ public class RegisterController {
     public @ResponseBody Result<PosCode> checkToken(String token){
         String email = jedisClient.get(token);
         if (StringUtils.isEmpty(email)){
-            return new Result<>(true,PosCode.URL_ERROR.getMsg());
+            return new Result<>(PosCode.URL_ERROR);
         }
         //判断用户状态
         User user = new User();
         user.setEmail(email);
         user = userService.queryOne(user);
         if (user.getId() == null || user.getIsDefunct() != 2){
-            return new Result<>(false,PosCode.ALREADY_REGISTER.getMsg());
+            return new Result<>(PosCode.ALREADY_REGISTER);
         }
         //更新用户 已验证
         user.setIsDefunct((byte) 0);
@@ -182,6 +180,6 @@ public class RegisterController {
         userService.update(user);
         //清除缓存
         jedisClient.del(token);
-        return new Result<>(true,PosCode.OK);
+        return new Result<>(PosCode.OK);
     }
 }

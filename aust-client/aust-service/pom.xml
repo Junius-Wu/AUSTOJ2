@@ -10,6 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>aust-service</artifactId>
+    <version>1.0</version>
 
     <dependencies>
         <!--aust依赖  start-->

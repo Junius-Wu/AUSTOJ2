@@ -1,5 +1,7 @@
 package cn.edu.aust.common.entity;
 
+import cn.edu.aust.common.constant.PosCode;
+
 /**
  * 封装返回类,所有的ajax请求都用其包装返回
  * @author Niu Li
@@ -7,7 +9,7 @@ package cn.edu.aust.common.entity;
  */
 public class Result<T> {
 
-    private boolean status;// 是否成功标志
+    private Integer status;// 是否成功标志
 
     private T data;// 成功时返回的数据
 
@@ -17,22 +19,28 @@ public class Result<T> {
     }
 
     // 成功时的构造器
-    public Result(boolean status, T data) {
-        this.status = status;
+    public Result(PosCode posCode,T data) {
+        this.status = posCode.getStatus();
+        this.msg = posCode.getMsg();
         this.data = data;
     }
 
     // 错误时的构造器
-    public Result(boolean status, String msg) {
+    public Result(PosCode posCode) {
+        this.status = posCode.getStatus();
+        this.msg = posCode.getMsg();
+    }
+
+    public Result(int status,String msg) {
         this.status = status;
         this.msg = msg;
     }
 
-    public boolean isStatus() {
+    public Integer getStatus() {
         return status;
     }
 
-    public void setStatus(boolean status) {
+    public void setStatus(Integer status) {
         this.status = status;
     }
 

@@ -65,7 +65,6 @@
     </bean>
 
     <!--静态资源映射-->
-    <mvc:resources mapping="/static/**" location="/static/" />
-    <mvc:resources mapping="/upload/**" location="/upload/" />
+    <mvc:resources mapping="/styles/**" location="/static/styles/" />
 
 </beans>
