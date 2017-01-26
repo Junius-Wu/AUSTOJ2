@@ -47,7 +47,7 @@ public class UserService extends BaseService<User>{
             user.setEmail(email);
             user = queryOne(user);
         }
-        return user == null || user.getId() != null;
+        return user != null;
     }
 
     /**

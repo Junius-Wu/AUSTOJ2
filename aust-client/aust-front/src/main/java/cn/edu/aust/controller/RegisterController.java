@@ -97,7 +97,7 @@ public class RegisterController {
             return new Result<PosCode>(false,PosCode.NICKNAME_NOALLOW.getMsg());
         }
         //用户存在验证
-        if (!userService.judgeUsernameOrEmail(null,email)){
+        if (userService.judgeUsernameOrEmail(null,email)){
             return new Result<PosCode>(false,PosCode.USERNAME_EXIST.getMsg());
         }
         //注册用户
