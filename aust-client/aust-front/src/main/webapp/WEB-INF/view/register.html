@@ -32,8 +32,8 @@
         <!--邮箱-->
         <div class="input-group form-group" :class="emailValid ?'':'has-error'">
           <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-          <input type="email" class="form-control"
-                 placeholder="example@XX.com" name="email" required v-model="email" @blur="checkEmail" th:value="${email}">
+          <input type="email" class="form-control" id="email"
+                 placeholder="example@XX.com" name="email" required v-model="email" @blur="checkEmail" th:data-value="${email}">
         </div>
         <!--密码-->
         <div class="input-group form-group" :class="passwordValid?'':'has-error'">
@@ -66,5 +66,8 @@
 <script src="/static/scripts/plugins.js" th:src="@{static/scripts/plugins.js}"></script>
 <script src="/static/scripts/vue.js" th:src="@{static/scripts/vue.js}"></script>
 <script src="/static/scripts/login.js" th:src="@{static/scripts/login.js}"></script>
+<script th:inline="javascript">
+loginOrRegister.email = [[${email}]];
+</script>
 </body>
 </html>

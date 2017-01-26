@@ -1,126 +1,143 @@
 <!doctype html>
 <html xmlns:th="http://www.thymeleaf.org">
-  <head>
+<head>
     <meta charset="utf-8">
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>AUSTOJ WEB</title>
     <link rel="stylesheet" href="/static/styles/vendor.css" th:href="@{static/styles/vendor.css}">
     <link rel="stylesheet" href="/static/styles/main.css" th:href="@{static/styles/main.css}">
-  </head>
-  <body id="app">
-  <!--头部开始-->
-  <header>
-    <!-- Static navbar -->
-    <div class="navbar navbar-lg navbar-fixed-top" role="navigation" :class="scrollTop">
-      <div class="container" th:include="fragment/header :: header">
-      </div>
-    </div>
-  </header>
-  <!--头部结束-->
-
-  <!--one page start-->
-  <div class="index-one text-center">
-      <div class="row animated fadeInDown page-top">
-        <div class="col-md-12">
-          <h2 th:text="#{index.title}">这是一个ACM入门平台</h2>
-          <br/>
-          <h4 class="opacity-title" th:text="#{index.stitle}">这里给你提供入门指导和训练,相信在这个平台下你会找到自己的方向</h4>
-          <br/>
+</head>
+<body>
+<div id="app">
+    <!--头部开始-->
+    <header>
+        <!-- Static navbar -->
+        <div class="navbar navbar-lg navbar-fixed-top" role="navigation" :class="scrollTop">
+            <div class="container" th:include="fragment/header :: header">
+            </div>
         </div>
-      </div>
-      <div class="row animated fadeInDown">
-        <div class="col-md-4 col-md-offset-4">
-          <!--邮箱地址-->
-          <form class="sign-form" action="/register" onsubmit="return checkEmail(this)">
-            <div class="form-group">
-              <div class="input-group">
-                <input type="text" class="form-control" placeholder="Email Address" required name="email">
-                <span class="input-group-btn">
+    </header>
+    <!--头部结束-->
+
+    <!--one page start-->
+    <div class="index-one text-center">
+        <div class="row animated fadeInDown page-top">
+            <div class="col-md-12">
+                <h2 th:text="#{index.title}">这是一个ACM入门平台</h2>
+                <br/>
+                <h4 class="opacity-title" th:text="#{index.stitle}">
+                    这里给你提供入门指导和训练,相信在这个平台下你会找到自己的方向</h4>
+                <br/>
+            </div>
+        </div>
+        <div class="row animated fadeInDown">
+            <div class="col-md-4 col-md-offset-4">
+                <!--邮箱地址-->
+                <form class="sign-form" action="/register" onsubmit="return checkEmail(this)">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Email Address"
+                                   required name="email">
+                            <span class="input-group-btn">
                   <button class="btn" type="submit" id="signup">Sign Me Up!</button>
                 </span>
-              </div>
+                        </div>
+                    </div>
+                </form>
             </div>
-          </form>
         </div>
-      </div>
-    <!--代码图-->
-      <div class="row">
-        <div class="index-one-img">
-          <img src="/static/images/bg-one-img.png" th:src="@{static/images/bg-one-img.png}" class="animated fadeInUp img-responsive">
-        </div>
-      </div>
-  </div>
-  <!--one page end-->
-  <!--two page start-->
-  <div class="index-two text-center">
-      <div class="row page-top">
-        <div class="col-md-10 col-md-offset-1">
-          <div class="col-sm-6 col-md-3">
-            <div class="thumbnail">
-              <img src="/static/images/bg-two-start.png" th:src="@{static/images/bg-two-start.png}">
-              <div class="caption">
-                <h3>要从这里开始</h3>
-                <p th:text="#{index.start}">如果你是个初学者,那么就从这里开始,你可以在这里学习到一些基础的算法和技巧,牢固的基础有助于你走的路长久</p>
-                <a role="button" class="btn btn-primary" href="start.html" th:href="@{/start}">Start</a>
-              </div>
+        <!--代码图-->
+        <div class="row">
+            <div class="index-one-img">
+                <img src="/static/images/bg-one-img.png" th:src="@{static/images/bg-one-img.png}"
+                     class="animated fadeInUp img-responsive">
             </div>
-          </div>
-          <div class="col-sm-6 col-md-3">
-            <div class="thumbnail">
-              <img src="/static/images/bg-two-practice.png" th:src="@{static/images/bg-two-practice.png}">
-              <div class="caption">
-                <h3>不断接受训练</h3>
-                <p th:text="#{index.practice}">技巧总需要锤炼,你需要在这里不断地进行练习,直到你熟练掌握这些技巧和方法,从而拿到通往进阶之路的钥匙,开启下一关</p>
-                <a role="button" class="btn btn-primary" href="practice.html" th:href="@{/practice}">Practice</a>
-              </div>
-            </div>
-          </div>
-          <div class="col-sm-6 col-md-3">
-            <div class="thumbnail">
-              <img src="/static/images/bg-two-master.png" th:src="@{static/images/bg-two-master.png}">
-              <div class="caption">
-                <h3>高手必经之路</h3>
-                <p th:text="#{index.master}">浮躁的人容易问:我到底该学什么;浮躁的人容易问:X技术有钱途吗;什么是浮躁的人?只观望而不学或只学而不坚持的人</p>
-                <a role="button" class="btn btn-primary" href="master.html" th:href="@{/master}">Master</a>
-              </div>
-            </div>
-          </div>
-          <div class="col-sm-6 col-md-3">
-            <div class="thumbnail">
-              <img src="/static/images/bg-two-read.png" th:src="@{static/images/bg-two-read.png}">
-              <div class="caption">
-                <h3>多读才会进步</h3>
-                <p th:text="#{index.read}">三人行必有我师焉,则其善者而从之,其不善者而改之<br>乐于汲取和分享才会使你更加进步,且要多读,多问,多练</p>
-                <a role="button" class="btn btn-primary" href="articles.html" th:href="@{/articles}">Read</a>
-              </div>
-            </div>
-          </div>
         </div>
-      </div>
-  </div>
-  <!--two page end-->
-  <!--three page start-->
-  <div class="index-three">
-    <div class="row">
-      <div class="col-md-8 col-md-offset-2">
-        <div class="col-md-5 showUser1">
-
-        </div>
-        <div class="col-md-2"></div>
-        <div class="col-md-5 showUser2">
-
-        </div>
-      </div>
     </div>
-  </div>
-  <!--three page end-->
-  <footer th:include="fragment/footer :: footer">
+    <!--one page end-->
+    <!--two page start-->
+    <div class="index-two text-center">
+        <div class="row page-top">
+            <div class="col-md-10 col-md-offset-1">
+                <div class="col-sm-6 col-md-3">
+                    <div class="thumbnail">
+                        <img src="/static/images/bg-two-start.png"
+                             th:src="@{static/images/bg-two-start.png}">
+                        <div class="caption">
+                            <h3>要从这里开始</h3>
+                            <p th:text="#{index.start}">
+                                如果你是个初学者,那么就从这里开始,你可以在这里学习到一些基础的算法和技巧,牢固的基础有助于你走的路长久</p>
+                            <a role="button" class="btn btn-primary" href="start.html"
+                               th:href="@{/start}">Start</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-3">
+                    <div class="thumbnail">
+                        <img src="/static/images/bg-two-practice.png"
+                             th:src="@{static/images/bg-two-practice.png}">
+                        <div class="caption">
+                            <h3>不断接受训练</h3>
+                            <p th:text="#{index.practice}">
+                                技巧总需要锤炼,你需要在这里不断地进行练习,直到你熟练掌握这些技巧和方法,从而拿到通往进阶之路的钥匙,开启下一关</p>
+                            <a role="button" class="btn btn-primary" href="practice.html"
+                               th:href="@{/practice}">Practice</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-3">
+                    <div class="thumbnail">
+                        <img src="/static/images/bg-two-master.png"
+                             th:src="@{static/images/bg-two-master.png}">
+                        <div class="caption">
+                            <h3>高手必经之路</h3>
+                            <p th:text="#{index.master}">
+                                浮躁的人容易问:我到底该学什么;浮躁的人容易问:X技术有钱途吗;什么是浮躁的人?只观望而不学或只学而不坚持的人</p>
+                            <a role="button" class="btn btn-primary" href="master.html"
+                               th:href="@{/master}">Master</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-3">
+                    <div class="thumbnail">
+                        <img src="/static/images/bg-two-read.png"
+                             th:src="@{static/images/bg-two-read.png}">
+                        <div class="caption">
+                            <h3>多读才会进步</h3>
+                            <p th:text="#{index.read}">三人行必有我师焉,则其善者而从之,其不善者而改之<br>乐于汲取和分享才会使你更加进步,且要多读,多问,多练
+                            </p>
+                            <a role="button" class="btn btn-primary" href="articles.html"
+                               th:href="@{/articles}">Read</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--two page end-->
+    <!--three page start-->
+    <div class="index-three">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <div class="col-md-5 showUser1">
 
-  </footer>
-    <script src="/static/scripts/vendor.js" th:src="@{static/scripts/vendor.js}"></script>
-    <script src="/static/scripts/plugins.js" th:src="@{static/scripts/plugins.js}"></script>
-    <script src="/static/scripts/vue.js" th:src="@{static/scripts/vue.js}"></script>
-    <script src="/static/scripts/index.js" th:src="@{static/scripts/index.js}"></script>
-  </body>
+                </div>
+                <div class="col-md-2"></div>
+                <div class="col-md-5 showUser2">
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--three page end-->
+    <footer th:include="fragment/footer :: footer">
+
+    </footer>
+</div>
+<script src="/static/scripts/vendor.js" th:src="@{static/scripts/vendor.js}"></script>
+<script src="/static/scripts/plugins.js" th:src="@{static/scripts/plugins.js}"></script>
+<script src="/static/scripts/vue.js" th:src="@{static/scripts/vue.js}"></script>
+<script src="/static/scripts/index.js" th:src="@{static/scripts/index.js}"></script>
+</body>
 </html>

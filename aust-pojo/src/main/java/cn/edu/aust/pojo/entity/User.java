@@ -611,4 +611,36 @@ public class User {
     public void setIsEmail(Byte isEmail) {
         this.isEmail = isEmail;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", avatar='" + avatar + '\'' +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", nickname='" + nickname + '\'' +
+                ", qqOpenid='" + qqOpenid + '\'' +
+                ", email='" + email + '\'' +
+                ", school='" + school + '\'' +
+                ", studentNo='" + studentNo + '\'' +
+                ", motto='" + motto + '\'' +
+                ", honor='" + honor + '\'' +
+                ", point=" + point +
+                ", language=" + language +
+                ", submit=" + submit +
+                ", solved=" + solved +
+                ", isShow=" + isShow +
+                ", blog='" + blog + '\'' +
+                ", ip='" + ip + '\'' +
+                ", isLock=" + isLock +
+                ", loginfail=" + loginfail +
+                ", lockdate=" + lockdate +
+                ", createdate=" + createdate +
+                ", modifydate=" + modifydate +
+                ", isDefunct=" + isDefunct +
+                ", isOpensource=" + isOpensource +
+                ", isEmail=" + isEmail +
+                '}';
+    }
 }

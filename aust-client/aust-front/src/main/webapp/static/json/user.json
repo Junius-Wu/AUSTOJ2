@@ -1,1 +1,62 @@
-[{"avatar":"/uploadimg/1.jpg","honor":"代表学校参加蓝桥杯大赛,获得一等奖","id":1,"language":0,"nickname":"牛李","show":0,"solved":0,"submit":0},{"avatar":"/static/images/default-avatar.jpg","honor":"代表学校参加蓝桥杯大赛,获得一等奖","id":3,"language":0,"nickname":"张二","show":0,"solved":0,"submit":0},{"avatar":"/static/images/default-avatar.jpg","honor":"代表学校参加蓝桥杯大赛,获得一等奖","id":5,"language":0,"nickname":"张四","show":0,"solved":0,"submit":0},{"avatar":"/static/images/default-avatar.jpg","honor":"代表学校参加蓝桥杯大赛,获得一等奖","id":8,"language":0,"nickname":"张八","show":0,"solved":0,"submit":0},{"avatar":"/static/images/default-avatar.jpg","honor":"代表学校参加蓝桥杯大赛,获得一等奖","id":10,"language":0,"nickname":"张十","show":0,"solved":0,"submit":0},{"avatar":"/static/images/default-avatar.jpg","honor":"代表学校参加蓝桥杯大赛,获得一等奖","id":13,"language":0,"nickname":"李二","show":0,"solved":0,"submit":0}]
+[
+  {
+    "avatar": "/uploadimg/1.jpg",
+    "honor": "代表学校参加蓝桥杯大赛,获得一等奖",
+    "id": 1,
+    "language": 0,
+    "nickname": "牛李",
+    "show": 0,
+    "solved": 0,
+    "submit": 0
+  },
+  {
+    "avatar": "/static/images/default-avatar.jpg",
+    "honor": "代表学校参加蓝桥杯大赛,获得一等奖",
+    "id": 3,
+    "language": 0,
+    "nickname": "张二",
+    "show": 0,
+    "solved": 0,
+    "submit": 0
+  },
+  {
+    "avatar": "/static/images/default-avatar.jpg",
+    "honor": "代表学校参加蓝桥杯大赛,获得一等奖",
+    "id": 5,
+    "language": 0,
+    "nickname": "张四",
+    "show": 0,
+    "solved": 0,
+    "submit": 0
+  },
+  {
+    "avatar": "/static/images/default-avatar.jpg",
+    "honor": "代表学校参加蓝桥杯大赛,获得一等奖",
+    "id": 8,
+    "language": 0,
+    "nickname": "张八",
+    "show": 0,
+    "solved": 0,
+    "submit": 0
+  },
+  {
+    "avatar": "/static/images/default-avatar.jpg",
+    "honor": "代表学校参加蓝桥杯大赛,获得一等奖",
+    "id": 10,
+    "language": 0,
+    "nickname": "张十",
+    "show": 0,
+    "solved": 0,
+    "submit": 0
+  },
+  {
+    "avatar": "/static/images/default-avatar.jpg",
+    "honor": "代表学校参加蓝桥杯大赛,获得一等奖",
+    "id": 13,
+    "language": 0,
+    "nickname": "李二",
+    "show": 0,
+    "solved": 0,
+    "submit": 0
+  }
+]

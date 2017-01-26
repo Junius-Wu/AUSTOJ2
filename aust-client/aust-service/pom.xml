@@ -44,6 +44,11 @@
             <artifactId>spring-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <!--modelmapper start-->
+        <dependency>
+            <groupId>org.modelmapper</groupId>
+            <artifactId>modelmapper</artifactId>
+        </dependency>
         <!--pagehelper start-->
         <dependency>
             <groupId>com.github.pagehelper</groupId>

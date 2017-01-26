@@ -17,27 +17,18 @@ toastr.options = {
 var indexApp = new Vue({
     el:"#app",
     data:{
-
-    },
-    methods:{
-
+        scrollBar:0//滚动条位置
     },
     computed:{
         scrollTop:function () {
-            var scrollTop = parseInt(document.body.scrollTop||document.documentElement.scrollTop);
-            if(scrollTop > 10){
-                return 'nav-backcolor';
-            }else {
-                return '';
-            }
+            return this.scrollBar > 10?'nav-backcolor':'';
         }
     }
 });
 
 //导航颜色监听
 $(window).scroll(function () {
-  var nav = $('#nav');
-
+    indexApp.scrollBar = parseInt(document.body.scrollTop||document.documentElement.scrollTop);
 });
 
 //首页展示信息
@@ -45,7 +36,7 @@ $.ajax({
   //请求方式为get
   type: 'GET',
   //json文件位置
-  url: 'static/json/user.json',
+  url: projectName+'/static/json/user.json',
   //返回数据格式为json
   dataType: 'json',
   //请求成功完成后要执行的方法
@@ -76,6 +67,7 @@ function checkEmail(obj) {
   var value = obj.email.value;
   var emailReg = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
   if (!emailReg.test(value)){
+    toastr.remove();
     toastr.error('填写邮箱不正确!');
     return false;
   }

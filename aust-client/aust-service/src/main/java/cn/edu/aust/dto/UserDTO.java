@@ -23,10 +23,40 @@ public class UserDTO {
 
     private Long id;
     private String email;
+    private String avatar;
+    private String nickname;
+    private String honor;
+
 
     public UserDTO(User user) {
         this.id = user.getId();
         this.email = user.getEmail();
+    }
+    public UserDTO() {
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    public String getHonor() {
+        return honor;
+    }
+
+    public void setHonor(String honor) {
+        this.honor = honor;
     }
 
     public Long getId() {
@@ -43,5 +73,16 @@ public class UserDTO {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    @Override
+    public String toString() {
+        return "UserDTO{" +
+                "id=" + id +
+                ", email='" + email + '\'' +
+                ", avatar='" + avatar + '\'' +
+                ", nickname='" + nickname + '\'' +
+                ", honor='" + honor + '\'' +
+                '}';
     }
 }

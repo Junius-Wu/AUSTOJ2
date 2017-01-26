@@ -21,7 +21,7 @@ public class IndexController {
     /**
      * 前往首页
      */
-    @GetMapping(produces = "text/html;charset=UTF-8")
+    @GetMapping(value = "/",produces = "text/html;charset=UTF-8")
     public String index2(){
         return "index";
     }

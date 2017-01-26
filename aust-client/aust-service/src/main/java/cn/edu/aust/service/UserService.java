@@ -1,16 +1,21 @@
 package cn.edu.aust.service;
 
 import org.apache.commons.lang3.StringUtils;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import cn.edu.aust.common.entity.Setting;
 import cn.edu.aust.common.service.JedisClient;
 import cn.edu.aust.common.util.SystemUtil;
 import cn.edu.aust.dto.UserDTO;
+import cn.edu.aust.mapper.UserMapper;
 import cn.edu.aust.pojo.entity.User;
 
 /**
@@ -23,6 +28,8 @@ public class UserService extends BaseService<User>{
 
     @Autowired
     private JedisClient jedisClient;
+    @Autowired
+    private UserMapper userMapper;
 
     /**
      * 得到当前客户端登录用户
@@ -33,6 +40,20 @@ public class UserService extends BaseService<User>{
         UserDTO userDTO = (UserDTO) context.getAttribute(UserDTO.PRINCIPAL_ATTRIBUTE_NAME, RequestAttributes.SCOPE_SESSION);
         Long id = userDTO != null ? userDTO.getId() : null;
         return id == null?null:queryById(id);
+    }
+
+    /**
+     * 查询展示到首页的用户
+     * @return 展示到首页用户
+     */
+    public List<UserDTO> queryToIndexShow(){
+        List<User> users = userMapper.queryToIndexShow();
+        ModelMapper modelMapper = new ModelMapper();
+        List<UserDTO> userDTOS = new ArrayList<>(6);
+        for (User user : users) {
+            userDTOS.add(modelMapper.map(user,UserDTO.class));
+        }
+        return userDTOS;
     }
 
     /**
