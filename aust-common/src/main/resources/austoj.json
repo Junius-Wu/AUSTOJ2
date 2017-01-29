@@ -9,6 +9,7 @@
   "aside_tags":30,
   "aside_articles":7,
   "isCommentEnabled":true,
-  "isCommentChecked":false
+  "isCommentChecked":false,
+  "notify_count":5
 
 }

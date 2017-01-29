@@ -11,7 +11,9 @@
                 <i class="fa fa-bell"></i>
                 <div class="tips-bulls">
                     <ul class="list-unstyled notify">
-
+                        <li th:each="notify : ${application.app_notifys}">
+                            <a href="#" th:text="${notify.title}"></a>
+                        </li>
                     </ul>
                 </div>
             </div>

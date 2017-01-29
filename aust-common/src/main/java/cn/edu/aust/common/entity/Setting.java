@@ -63,6 +63,11 @@ public class Setting implements Serializable{
      * 是否开启评论审核
      */
     private boolean isCommentChecked;
+    /**
+     * 通知数量
+     */
+
+    private int notify_count;
 
 
     public boolean isIsEmailLogin() {
@@ -151,5 +156,13 @@ public class Setting implements Serializable{
 
     public void setIsCommentChecked(boolean isCommentChecked) {
         this.isCommentChecked = isCommentChecked;
+    }
+
+    public int getNotify_count() {
+        return notify_count;
+    }
+
+    public void setNotify_count(int notify_count) {
+        this.notify_count = notify_count;
     }
 }

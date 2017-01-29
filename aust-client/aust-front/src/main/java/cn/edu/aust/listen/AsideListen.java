@@ -16,9 +16,11 @@ import cn.edu.aust.common.service.JedisClient;
 import cn.edu.aust.common.util.SystemUtil;
 import cn.edu.aust.dto.ArticleAsideDTO;
 import cn.edu.aust.pojo.entity.Catelog;
+import cn.edu.aust.pojo.entity.Notify;
 import cn.edu.aust.pojo.entity.Tags;
 import cn.edu.aust.service.ArticleService;
 import cn.edu.aust.service.CatelogService;
+import cn.edu.aust.service.NotifyService;
 import cn.edu.aust.service.TagService;
 
 /**
@@ -41,6 +43,8 @@ public class AsideListen implements ServletContextAware {
     @Autowired
     private TagService tagService;
     @Autowired
+    private NotifyService notifyService;
+    @Autowired
     private JedisClient jedisClient;
 
     @Override
@@ -53,12 +57,24 @@ public class AsideListen implements ServletContextAware {
      */
     @PostConstruct
     public void init(){
+        jedisClient.del(SystemUtil.SETTING_CACHE);
         refreshCateLog();
         refreshArticle();
         refreshTag();
         logger.info("侧边栏写入完毕");
+        refreshNotify();
+        logger.info("通知写入完毕");
     }
 
+    /**
+     * 获取通知
+     */
+    public void refreshNotify(){
+        Setting setting = SystemUtil.getSetting(jedisClient);
+        List<Notify> notifies = notifyService.queryListNow(setting.getNotify_count());
+        servletContext.setAttribute("app_notifys",notifies);
+        logger.info("网站通知刷新完毕");
+    }
     /**
      * 侧边目录
      */

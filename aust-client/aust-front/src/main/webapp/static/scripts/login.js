@@ -99,7 +99,7 @@ var loginOrRegister = new Vue({
                     if (result.status == 0) {
                         toastr.success('登录成功,正在跳转中...', 'SUCCESS', {progressBar: true});
                         setTimeout(function () {
-                            location.href = result.referer;
+                            location.href = result.data.referer;
                         }, 1500);
                     } else {
                         toastr.error(result.msg);

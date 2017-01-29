@@ -4,13 +4,10 @@ setTable($('#start-table'),'/problem/stage/1',15);
 setTable($('#practice-table'),'/problem/stage/1',15);
 //master表格数据获取
 setTable($('#master-table'),'/problem/stage/1',15);
+
 setTable($('#cate-table'),'/catelog/table/'+$("#cate-table").attr("data-id"),15);
 //获取用户排名
 setTableClient($("#rank-table"),"/static/json/rank.json",20);
-
-//获取指定目录下的题目
-// var cateid = $('#cateid').val();
-// setTable($('#cate-table'),'/problem/findCateProblem/'+cateid);
 
 
 //表格数据获取

@@ -12,13 +12,35 @@ public class Notify {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    /**
+     * 标题
+     */
     private String title;
 
+    /**
+     * 所关联文章
+     */
     @Column(name = "article_id")
     private Integer articleId;
 
+    /**
+     * 过期时间
+     */
+    private Date expiredate;
+
+    /**
+     * 状态1正常,0待发布,2已过期
+     */
+    private Byte status;
+
+    /**
+     * 创建日期
+     */
     private Date createdate;
 
+    /**
+     * 修改日期
+     */
     private Date modifydate;
 
     /**
@@ -40,56 +62,108 @@ public class Notify {
     }
 
     /**
-     * @return title
+     * 获取标题
+     *
+     * @return title - 标题
      */
     public String getTitle() {
         return title;
     }
 
     /**
-     * @param title
+     * 设置标题
+     *
+     * @param title 标题
      */
     public void setTitle(String title) {
         this.title = title;
     }
 
     /**
-     * @return article_id
+     * 获取所关联文章
+     *
+     * @return article_id - 所关联文章
      */
     public Integer getArticleId() {
         return articleId;
     }
 
     /**
-     * @param articleId
+     * 设置所关联文章
+     *
+     * @param articleId 所关联文章
      */
     public void setArticleId(Integer articleId) {
         this.articleId = articleId;
     }
 
     /**
-     * @return createdate
+     * 获取过期时间
+     *
+     * @return expiredate - 过期时间
+     */
+    public Date getExpiredate() {
+        return expiredate;
+    }
+
+    /**
+     * 设置过期时间
+     *
+     * @param expiredate 过期时间
+     */
+    public void setExpiredate(Date expiredate) {
+        this.expiredate = expiredate;
+    }
+
+    /**
+     * 获取状态1正常,0待发布,2已过期
+     *
+     * @return status - 状态1正常,0待发布,2已过期
+     */
+    public Byte getStatus() {
+        return status;
+    }
+
+    /**
+     * 设置状态1正常,0待发布,2已过期
+     *
+     * @param status 状态1正常,0待发布,2已过期
+     */
+    public void setStatus(Byte status) {
+        this.status = status;
+    }
+
+    /**
+     * 获取创建日期
+     *
+     * @return createdate - 创建日期
      */
     public Date getCreatedate() {
         return createdate;
     }
 
     /**
-     * @param createdate
+     * 设置创建日期
+     *
+     * @param createdate 创建日期
      */
     public void setCreatedate(Date createdate) {
         this.createdate = createdate;
     }
 
     /**
-     * @return modifydate
+     * 获取修改日期
+     *
+     * @return modifydate - 修改日期
      */
     public Date getModifydate() {
         return modifydate;
     }
 
     /**
-     * @param modifydate
+     * 设置修改日期
+     *
+     * @param modifydate 修改日期
      */
     public void setModifydate(Date modifydate) {
         this.modifydate = modifydate;

@@ -11,5 +11,15 @@ import tk.mybatis.mapper.common.Mapper;
  * @date 2017/1/22
  */
 public interface UserMapper extends Mapper<User> {
+    /**
+     * 查询首页展示用户
+     * @return 结果集
+     */
     List<User> queryToIndexShow();
+
+    /**
+     * 查询出排名用户
+     * @return 结果集
+     */
+    List<User> queryForRank();
 }

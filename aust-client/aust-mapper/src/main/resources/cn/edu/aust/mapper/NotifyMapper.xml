@@ -8,6 +8,8 @@
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="title" property="title" jdbcType="VARCHAR" />
     <result column="article_id" property="articleId" jdbcType="INTEGER" />
+    <result column="expiredate" property="expiredate" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="TINYINT" />
     <result column="createdate" property="createdate" jdbcType="TIMESTAMP" />
     <result column="modifydate" property="modifydate" jdbcType="TIMESTAMP" />
   </resultMap>
@@ -15,6 +17,13 @@
     <!--
       WARNING - @mbg.generated
     -->
-    id, title, article_id, createdate, modifydate
+    id, title, article_id, expiredate, status, createdate, modifydate
   </sql>
+
+  <!--查询截止到目前有效的通知-->
+  <select id="queryListNow" parameterType="string" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List"/>
+    FROM notify
+    WHERE expiredate>#{expiredate} and  status = 1
+  </select>
 </mapper>

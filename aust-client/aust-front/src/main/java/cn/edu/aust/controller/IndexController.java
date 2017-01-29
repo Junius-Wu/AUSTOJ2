@@ -24,4 +24,26 @@ public class IndexController {
     public String start(){
         return "start";
     }
+    /**
+     * 前往practice页面
+     */
+    @GetMapping(value = "/practice",produces = "text/html;charset=UTF-8")
+    public String practice(){
+        return "practice";
+    }
+    /**
+     * 前往master页面
+     */
+    @GetMapping(value = "/master",produces = "text/html;charset=UTF-8")
+    public String master(){
+        return "master";
+    }
+    /**
+     * 前往rank页面
+     */
+    @GetMapping(value = "/rank",produces = "text/html;charset=UTF-8")
+    public String rank(){
+        return "rank";
+    }
+
 }
