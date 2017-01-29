@@ -5,9 +5,12 @@ import javax.persistence.*;
 
 @Table(name = "article")
 public class Article {
+    /**
+     * 主键
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     /**
      * 标题
@@ -44,28 +47,34 @@ public class Article {
     /**
      * 0不置顶,1置顶
      */
-    private Byte totop;
+    @Column(name = "is_top")
+    private Byte isTop;
 
     /**
      * 0不展示,1展示
      */
-    private Byte isshow;
+    @Column(name = "is_show")
+    private Byte isShow;
 
     private Date createdate;
 
     private Date modifydate;
 
     /**
-     * @return id
+     * 获取主键
+     *
+     * @return id - 主键
      */
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
     /**
-     * @param id
+     * 设置主键
+     *
+     * @param id 主键
      */
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -180,37 +189,37 @@ public class Article {
     /**
      * 获取0不置顶,1置顶
      *
-     * @return totop - 0不置顶,1置顶
+     * @return is_top - 0不置顶,1置顶
      */
-    public Byte getTotop() {
-        return totop;
+    public Byte getIsTop() {
+        return isTop;
     }
 
     /**
      * 设置0不置顶,1置顶
      *
-     * @param totop 0不置顶,1置顶
+     * @param isTop 0不置顶,1置顶
      */
-    public void setTotop(Byte totop) {
-        this.totop = totop;
+    public void setIsTop(Byte isTop) {
+        this.isTop = isTop;
     }
 
     /**
      * 获取0不展示,1展示
      *
-     * @return isshow - 0不展示,1展示
+     * @return is_show - 0不展示,1展示
      */
-    public Byte getIsshow() {
-        return isshow;
+    public Byte getIsShow() {
+        return isShow;
     }
 
     /**
      * 设置0不展示,1展示
      *
-     * @param isshow 0不展示,1展示
+     * @param isShow 0不展示,1展示
      */
-    public void setIsshow(Byte isshow) {
-        this.isshow = isshow;
+    public void setIsShow(Byte isShow) {
+        this.isShow = isShow;
     }
 
     /**

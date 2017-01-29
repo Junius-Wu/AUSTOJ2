@@ -26,13 +26,26 @@ public class UserDTO {
     private String avatar;
     private String nickname;
     private String honor;
+    private String motto;
 
 
     public UserDTO(User user) {
         this.id = user.getId();
         this.email = user.getEmail();
+        this.avatar = user.getAvatar();
+        this.nickname = user.getNickname();
+        this.honor = user.getHonor();
+        this.motto = user.getMotto();
     }
     public UserDTO() {
+    }
+
+    public String getMotto() {
+        return motto;
+    }
+
+    public void setMotto(String motto) {
+        this.motto = motto;
     }
 
     public String getAvatar() {

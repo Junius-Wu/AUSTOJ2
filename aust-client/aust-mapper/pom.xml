@@ -28,6 +28,11 @@
             <groupId>tk.mybatis</groupId>
             <artifactId>mapper</artifactId>
         </dependency>
+        <!--pagehelper start-->
+        <dependency>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper</artifactId>
+        </dependency>
         <!--junit start-->
         <dependency>
             <groupId>junit</groupId>

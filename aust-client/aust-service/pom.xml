@@ -49,11 +49,6 @@
             <groupId>org.modelmapper</groupId>
             <artifactId>modelmapper</artifactId>
         </dependency>
-        <!--pagehelper start-->
-        <dependency>
-            <groupId>com.github.pagehelper</groupId>
-            <artifactId>pagehelper</artifactId>
-        </dependency>
         <!--java Mail start-->
         <dependency>
             <groupId>com.sun.mail</groupId>

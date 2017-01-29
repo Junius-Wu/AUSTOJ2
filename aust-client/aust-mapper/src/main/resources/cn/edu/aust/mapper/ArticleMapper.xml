@@ -5,15 +5,15 @@
     <!--
       WARNING - @mbg.generated
     -->
-    <id column="id" property="id" jdbcType="INTEGER" />
+    <id column="id" property="id" jdbcType="BIGINT" />
     <result column="title" property="title" jdbcType="VARCHAR" />
     <result column="user_id" property="userId" jdbcType="INTEGER" />
     <result column="keyword" property="keyword" jdbcType="VARCHAR" />
     <result column="viewcount" property="viewcount" jdbcType="INTEGER" />
     <result column="likecount" property="likecount" jdbcType="INTEGER" />
     <result column="catelog_id" property="catelogId" jdbcType="INTEGER" />
-    <result column="totop" property="totop" jdbcType="TINYINT" />
-    <result column="isshow" property="isshow" jdbcType="TINYINT" />
+    <result column="is_top" property="isTop" jdbcType="TINYINT" />
+    <result column="is_show" property="isShow" jdbcType="TINYINT" />
     <result column="createdate" property="createdate" jdbcType="TIMESTAMP" />
     <result column="modifydate" property="modifydate" jdbcType="TIMESTAMP" />
   </resultMap>
@@ -21,7 +21,7 @@
     <!--
       WARNING - @mbg.generated
     -->
-    id, title, user_id, keyword, viewcount, likecount, catelog_id, totop, isshow, createdate, 
+    id, title, user_id, keyword, viewcount, likecount, catelog_id, is_top, is_show, createdate,
     modifydate
   </sql>
   <sql id="Blob_Column_List" >
@@ -30,4 +30,13 @@
     -->
     summary, content
   </sql>
+
+  <!--查询文章侧边栏显示-->
+  <resultMap id="ArticleAsideList" type="cn.edu.aust.pojo.entity.Article">
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+  </resultMap>
+  <select id="queryForAside" resultMap="ArticleAsideList">
+    SELECT id, title FROM article WHERE is_show = 1 ORDER by createdate DESC
+  </select>
 </mapper>

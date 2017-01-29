@@ -33,11 +33,11 @@
                 </ul>
             </li>
         </ul>
-        <ul class="nav navbar-nav navbar-right" th:if="${session.userpri} != null">
-            <li><a href="user/" th:href="@{/login}" th:text="${session.userpri.nickname}==null?${session.userpri.username}:${session.userpri.nickname}">独孤求败</a></li>
-            <li><a href="loginout" th:href="@{/loginout}">退出</a></li>
+        <ul class="nav navbar-nav navbar-right" th:if="${session.userinfo} != null">
+            <li><a href="user/" th:href="@{/login}" th:text="${session.userinfo.nickname}">独孤求败</a></li>
+            <li><a href="/login/out" th:href="@{/login/out}">退出</a></li>
         </ul>
-        <ul class="nav navbar-nav navbar-right" th:if="${session.userpri} == null">
+        <ul class="nav navbar-nav navbar-right" th:if="${session.userinfo} == null">
             <li><a href="login" th:href="@{/login}">登 录</a></li>
             <li><a href="register" th:href="@{/register}">注 册</a></li>
         </ul>

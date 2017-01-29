@@ -13,17 +13,15 @@ public class IndexController {
     /**
      * 前往首页
      */
-    @GetMapping(value = "/index",produces = "text/html;charset=UTF-8")
+    @GetMapping(value = {"/index","/"},produces = "text/html;charset=UTF-8")
     public String index(){
         return "index";
     }
-
     /**
-     * 前往首页
+     * 前往start页面
      */
-    @GetMapping(value = "/",produces = "text/html;charset=UTF-8")
-    public String index2(){
-        return "index";
+    @GetMapping(value = "/start",produces = "text/html;charset=UTF-8")
+    public String start(){
+        return "start";
     }
-
 }

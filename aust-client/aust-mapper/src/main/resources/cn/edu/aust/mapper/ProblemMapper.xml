@@ -36,4 +36,41 @@
     -->
     description, input, output, sample_input, sample_output, hit
   </sql>
+
+<!--查询列表显示的题目-->
+  <resultMap id="ListStageProblem" type="cn.edu.aust.query.ProblemPC" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="keyword" property="keyword" jdbcType="VARCHAR" />
+    <result column="catelog" property="catelog" jdbcType="TINYINT" />
+    <result column="stage" property="stage" jdbcType="TINYINT" />
+    <result column="spj" property="spj" jdbcType="TINYINT" />
+    <result column="time_limit" property="timeLimit" jdbcType="INTEGER" />
+    <result column="memory_limit" property="memoryLimit" jdbcType="INTEGER" />
+    <result column="difficulty" property="difficulty" jdbcType="TINYINT" />
+    <result column="accepted" property="accepted" jdbcType="INTEGER" />
+    <result column="solved" property="solved" jdbcType="INTEGER" />
+    <result column="submit" property="submit" jdbcType="INTEGER" />
+    <result column="submit_user" property="submitUser" jdbcType="INTEGER" />
+    <result column="author_id" property="authorId" jdbcType="INTEGER" />
+    <result column="contest_id" property="contestId" jdbcType="INTEGER" />
+    <!--额外字段-->
+    <result column="auchor" property="auchor" jdbcType="VARCHAR" />
+    <result column="catelog_name" property="categlogName" jdbcType="VARCHAR" />
+  </resultMap>
+  <select id="queryListStage" parameterType="cn.edu.aust.query.ProblemQM" resultMap="ListStageProblem">
+      SELECT p1.*,p2.name AS "catelog_name",p3.nickname AS "author" FROM problem p1
+      LEFT JOIN catelog p2 ON p1.catelog = p2.id
+      LEFT JOIN user p3 ON p1.author_id = p3.id
+      <where>
+        <if test="stage > 0">
+          p1.stage = #{stage}
+        </if>
+        <if test="search!= null">
+          and (p1.id LIKE #{search} or p1.title LIKE #{search} or p1.keyword LIKE #{search})
+        </if>
+      </where>
+    ORDER BY p1.id ${direction}
+  </select>
+
 </mapper>

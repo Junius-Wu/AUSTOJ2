@@ -36,13 +36,13 @@ $.ajax({
   //请求方式为get
   type: 'GET',
   //json文件位置
-  url: projectName+'/static/json/user.json',
+  url: projectName+'/index/show/users',
   //返回数据格式为json
   dataType: 'json',
   //请求成功完成后要执行的方法
-  success: function (data) {
+  success: function (result) {
     //使用$.each方法遍历返回的数据date,插入到id为#result中
-    $.each(data, function (i, item) {
+    $.each(result.data, function (i, item) {
       if (i < 3) {
         $('.showUser1').append(
           '<div class="list-view-item">' +

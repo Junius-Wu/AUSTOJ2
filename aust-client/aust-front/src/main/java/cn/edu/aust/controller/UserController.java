@@ -4,7 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
+import cn.edu.aust.common.constant.PosCode;
 import cn.edu.aust.common.entity.Result;
+import cn.edu.aust.dto.UserDTO;
 import cn.edu.aust.service.UserService;
 
 /**
@@ -13,15 +17,17 @@ import cn.edu.aust.service.UserService;
  */
 @RestController
 public class UserController {
+
     @Autowired
     private UserService userService;
 
     /**
      * 获取首页展示用户
      */
+    // TODO: 2017/1/29 缓存策略,最后统一使用redis
     @GetMapping(value = "/index/show/users",produces = "application/json; charset=UTF-8")
     public Result<?> indexToShow(){
-
-        return null;
+        List<UserDTO> userDTOS = userService.queryToIndexShow();
+        return new Result<List>(PosCode.OK,userDTOS);
     }
 }

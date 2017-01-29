@@ -6,24 +6,24 @@
 </head>
 <body>
 
-<div id="asideFragment">
+<div th:fragment="aside1" >
     <!--个人中心-->
     <aside class="widget">
         <h5><span>个人中心</span></h5>
         <!--/*@thymesVar id="user" type="cn.edu.aust.common.entity.User"*/-->
-        <p class="text-center preson" th:if="${user} == null">
+        <p class="text-center preson" th:if="${session.userinfo} == null">
             <a href="../login.html" th:href="@{/login}" class="btn">登录</a>
             <a href="../register.html" th:href="@{/register}" class="btn">注册</a>
         </p>
-        <th:block th:if="${user} != null">
+        <th:block th:if="${session.userinfo} != null" th:object="${session.userinfo}">
             <div class="text-center person">
                 <a href="/user/1">
-                    <img src="static/images/default-avatar.jpg" th:src="${user.avatar}" title="change your avatar"
+                    <img src="static/images/default-avatar.jpg" th:src="*{avatar}" title="change your avatar"
                          data-placement="bottom" data-toggle="tooltip" data-container="body">
                 </a>
-                <a href="/user/1" class="center-block" th:text="${user.nickname}==null?${user.username}:${user.nickname}">nl101531</a>
+                <a href="/user/1" class="center-block" th:text="*{nickname}">nl101531</a>
             </div>
-            <p>格言:<br><span th:text="${user.motto}">书山有路勤无用,学海无涯钱做主</span></p>
+            <p>格言:<br><span th:text="*{motto}">书山有路勤无用,学海无涯钱做主</span></p>
             <p class="tagcloud">近期AC:<br>
                 <a href="#" style="font-size: 12px;">1000</a>
                 <a href="#" style="font-size: 12px;">1000</a>
@@ -35,21 +35,21 @@
 
     </aside>
     <!--题目分类-->
-    <aside class="widget" th:if="${tags} == null">
+    <aside class="widget">
         <h5><span>题目分类</span></h5>
         <ul class="list-unstyled catelog">
             <!--/*@thymesVar id="catelogs" type="java.util.List<cn.edu.aust.common.entity.Catelog>"*/-->
-            <li th:each="catelog : ${catelogs}">
+            <li th:each="catelog : ${application.app_catelogs}">
                 <i class="fa fa-bookmark-o">&nbsp;&nbsp;<a href="#" th:href="@{/catelog/pro/{id}(id=${catelog.id})}" th:text="${catelog.name}"></a></i>
             </li>
         </ul>
     </aside>
     <!--标签列表-->
     <!--/*@thymesVar id="tags" type="java.util.List<cn.edu.aust.common.entity.Tag>"*/-->
-    <aside class="widget" th:if="${tags} != null">
+    <aside class="widget">
         <h5><span>标签</span></h5>
         <div class="tagcloud clearfix tags">
-            <th:block th:each="tag : ${tags}">
+            <th:block th:each="tag : ${application.app_tags}">
                 <a style="font-size: 12px;" th:text="${tag.tag}" th:href="@{/article(search=${tag.tag})}"></a>
             </th:block>
         </div>
@@ -59,7 +59,7 @@
         <h5><span>近期文章</span></h5>
         <ul class="list-unstyled article">
             <!--/*@thymesVar id="articles" type="java.util.List<cn.edu.aust.common.entity.Article>"*/-->
-            <li th:each="article : ${articles}">
+            <li th:each="article : ${application.app_articles}">
                 <i class="fa fa-file-text-o">
                     <a th:href="@{/article/{id}(id=article.id)}" target="_blank" th:text="${article.title}" th:title="${article.title}"></a>
                 </i>

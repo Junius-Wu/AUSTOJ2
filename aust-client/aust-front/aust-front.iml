@@ -48,6 +48,8 @@
     <orderEntry type="module" module-name="aust-mapper" />
     <orderEntry type="library" name="Maven: org.mybatis:mybatis:3.4.2" level="project" />
     <orderEntry type="library" name="Maven: tk.mybatis:mapper:3.3.9" level="project" />
+    <orderEntry type="library" name="Maven: com.github.pagehelper:pagehelper:5.0.0" level="project" />
+    <orderEntry type="library" name="Maven: com.github.jsqlparser:jsqlparser:0.9.5" level="project" />
     <orderEntry type="module" module-name="aust-service" />
     <orderEntry type="library" name="Maven: org.springframework:spring-webmvc:4.3.2.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-aop:4.3.2.RELEASE" level="project" />
@@ -60,8 +62,6 @@
     <orderEntry type="library" name="Maven: org.springframework:spring-tx:4.3.2.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-context-support:4.3.2.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.modelmapper:modelmapper:0.7.7" level="project" />
-    <orderEntry type="library" name="Maven: com.github.pagehelper:pagehelper:5.0.0" level="project" />
-    <orderEntry type="library" name="Maven: com.github.jsqlparser:jsqlparser:0.9.5" level="project" />
     <orderEntry type="library" name="Maven: com.sun.mail:javax.mail:1.5.6" level="project" />
     <orderEntry type="library" name="Maven: javax.activation:activation:1.1" level="project" />
     <orderEntry type="library" name="Maven: cglib:cglib:3.2.2" level="project" />

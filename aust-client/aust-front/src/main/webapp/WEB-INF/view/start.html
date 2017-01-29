@@ -4,12 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>起步</title>
-
-  <link rel="apple-touch-icon" href="apple-touch-icon.png" th:href="@{/static/images/favicon.ico}">
-  <!-- Place favicon.ico in the root directory -->
-
   <link rel="stylesheet" href="/static/styles/vendor.css" th:href="@{/static/styles/vendor.css}">
-
   <link rel="stylesheet" href="/static/styles/main.css" th:href="@{/static/styles/main.css}">
 </head>
 <body>
@@ -18,54 +13,12 @@
     <!-- Static navbar -->
     <div class="navbar navbar-lg navbar-default" role="navigation">
        <div class="container" th:include="fragment/header :: header">
-           <div class="navbar-header">
-               <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-               </button>
-               <a class="navbar-brand" href="/">AUST</a>
-           </div>
-           <div class="navbar-collapse collapse">
-               <ul class="nav navbar-nav">
-                   <li><a href="/start">起步</a></li>
-                   <li><a href="/practice">训练</a></li>
-                   <li><a href="/master">进阶</a></li>
-                   <li><a href="/contest">比赛</a></li>
-                   <li><a href="/rank">排名</a></li>
-                   <li><a href="/articles">干货</a></li>
-                   <li class="dropdown">
-                       <a href="#" class="dropdown-toggle" data-toggle="dropdown">联系我们<b class="caret"></b></a>
-                       <ul class="dropdown-menu animated fadeIn">
-                           <li><a href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=fBIVCRAVTU08DQ1SHxMR"
-                                  target="_blank"><i class="fa fa-envelope-o fa-fw"></i>&nbsp;&nbsp;文章投稿</a></li>
-                           <li><a href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=fBIVCRAVTU08DQ1SHxMR"
-                                  target="_blank"><i class="fa fa-envelope-o fa-fw"></i>&nbsp;&nbsp;题目投稿</a></li>
-                           <li class="divider"></li>
-                           <li class="dropdown-header">意见反馈</li>
-                           <li><a href="#footer"><i class="fa fa-qq"></i>&nbsp;&nbsp;QQ</a></li>
-                           <li><a href="#footer"><i class="fa fa-wechat"></i>&nbsp;&nbsp;We Chat</a></li>
-                       </ul>
-                   </li>
-               </ul>
-               <ul class="nav navbar-nav navbar-right">
-                   <li><a href="/user/">nickname</a></li>
-                   <li><a href="/loginout">退出</a></li>
-               </ul>
-           </div><!--/.nav-collapse -->
        </div>
     </div>
 </header>
 <!--头部结束-->
 <!--通知栏开始,主要用户发布一些通知-->
 <div class="tips" th:include="fragment/tips :: tips">
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2 tips-bg">
-            <i class="fa fa-bell"></i>
-            <div class="tips-bulls">
-                <ul class="list-unstyled notify">
-
-                </ul>
-            </div>
-        </div>
-    </div>
 </div>
 <!--通知栏结束-->
 <!--主体开始-->
@@ -77,9 +30,6 @@
                <section class="animated fadeIn">
                    <strong>&nbsp;&nbsp;须知:</strong><br/>
                    <p class="page-text" style="text-indent: 2em;" th:text="#{start.title}">
-                       起步主要考察基本算法,大多都是课本上的例题,每一道题涉及的考点都会在题目列表中提及
-                       起步主要考察基本算法,大多都是课本上的例题,每一道题涉及的考点都会在题目列表中提及
-                       起步主要考察基本算法,大多都是课本上的例题,每一道题涉及的考点都会在题目列表中提及
                        起步主要考察基本算法,大多都是课本上的例题,每一道题涉及的考点都会在题目列表中提及
                        起步主要考察基本算法,大多都是课本上的例题,每一道题涉及的考点都会在题目列表中提及
                    </p>
@@ -96,79 +46,23 @@
                         </tr>
                     </thead>
                     <tbody>
-
                     </tbody>
                 </table>
                </section>
            </div>
-            <div class="col-md-3 widget animated fadeInRight" id="aside">
-                <!--个人中心-->
-                <aside class="widget">
-                    <h5><span>个人中心</span></h5>
-                    <p class="text-center preson">
-                        <a href="login.html" class="btn">登录</a>
-                        <a href="register.html" class="btn">注册</a>
-                    </p>
-                    <div class="text-center person">
-                        <a href="/user/1">
-                            <img src="/static/images/default-avatar.jpg" th:src="@{static/images/default-avatar.jpg}" title="change your avatar" data-placement="bottom" data-toggle="tooltip">
-                        </a>
-                        <a href="/user/1" class="center-block">nl101531</a>
-                    </div>
-                </aside>
-                <!--题目分类-->
-                <aside class="widget">
-                    <h5><span>题目分类</span></h5>
-                    <ul class="list-unstyled catelog">
-
-                    </ul>
-                </aside>
-                <!--标签列表-->
-                <aside class="widget">
-                    <h5><span>标签</span></h5>
-                    <div class="tagcloud clearfix tags">
-
-                    </div>
-                </aside>
-                <!--文章列表-->
-                <aside class="widget">
-                    <h5><span>近期文章</span></h5>
-                    <ul class="list-unstyled article">
-
-                    </ul>
-                </aside>
+            <!--侧边栏-->
+            <div class="col-md-3 widget animated fadeInRight" th:include="fragment/aside :: aside1">
             </div>
         </div>
     </div>
 </div>
 <!--主体结束-->
 <footer th:include="fragment/footer :: footer">
-    <div class="row" id="footer">
-        <div class="col-md-4 col-lg-offset-2">
-            AUST University Of Technology Online Judge<br/>
-            Copyright © 2010-2015 AUST NIU LI <br/>
-            All Copyright Reserved
-        </div>
-        <div class="footer-socials">
-            <div class="text-center">
-                <span>
-                    <i title="<img src='/static/images/wechat.jpg' />" data-html="true" data-placement="top"
-                       data-toggle="tooltip" class="fa fa-wechat fa-3x mrs"></i>
-                </span>
-                <span>
-                    <i title="<img src='/static/images/qq.jpg' />" data-html="true" data-placement="top"
-                       data-toggle="tooltip" class="fa fa-qq fa-3x mrs"></i>
-                </span>
-            </div>
-            <div class="backtop text-center">
-                <a href="javascript:void(0)">BACK TO TOP</a>
-            </div>
-        </div>
-    </div>
 </footer>
 
 <script src="/static/scripts/vendor.js" th:src="@{static/scripts/vendor.js}"></script>
 <script src="/static/scripts/plugins.js" th:src="@{static/scripts/plugins.js}"></script>
+<script src="/static/scripts/vue.js" th:src="@{static/scripts/vue.js}"></script>
 <script src="/static/scripts/table.js" th:src="@{static/scripts/table.js}"></script>
 </body>
 </html>
