@@ -12,7 +12,7 @@ public class ProblemQM {
      */
     private static final Integer searchLimit = 15;
     /**
-     * 搜索id 标题 标签
+     * 搜索内容 id 标题 标签
      */
     private String search;
     /**

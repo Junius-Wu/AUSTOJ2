@@ -41,7 +41,7 @@ function setTableClient(obj,url,pageSize) {
     cache: true,					   //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
     pagination: true,				   //是否显示分页（*）
     queryParams: queryParams,//传递参数（*）
-    sidePagination: 'client',		   //分页方式：client客户端分页，server服务端分页（*）
+    sidePagination: 'client',	   //分页方式：client客户端分页，server服务端分页（*）
     search: !0,
     striped: true,
     showRefresh: !0,

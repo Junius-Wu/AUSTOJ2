@@ -30,7 +30,7 @@
 
         <!--<javaClientGenerator targetPackage="cn.edu.aust.pojo.entity" targetProject="F:\Git\AUSTOJ2\aust-common\src\main\java" type="XMLMAPPER" />-->
 
-        <table tableName="notify" enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
+        <table tableName="votelog" enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
             enableUpdateByExample="false">
             <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
         </table>

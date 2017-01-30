@@ -5,15 +5,18 @@ import javax.persistence.*;
 
 @Table(name = "votelog")
 public class Votelog {
+    /**
+     * 主键
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     /**
      * 用户id
      */
     @Column(name = "user_id")
-    private Integer userId;
+    private Long userId;
 
     /**
      * 类型,1:题目留言点赞,2文章点赞,3文章留言点赞
@@ -24,7 +27,7 @@ public class Votelog {
      * 点赞对象的id
      */
     @Column(name = "other_id")
-    private Integer otherId;
+    private Long otherId;
 
     /**
      * 0取消,1有效
@@ -37,16 +40,25 @@ public class Votelog {
     private Date createtime;
 
     /**
-     * @return id
+     * 修改时间
      */
-    public Integer getId() {
+    private Date modifytime;
+
+    /**
+     * 获取主键
+     *
+     * @return id - 主键
+     */
+    public Long getId() {
         return id;
     }
 
     /**
-     * @param id
+     * 设置主键
+     *
+     * @param id 主键
      */
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -55,7 +67,7 @@ public class Votelog {
      *
      * @return user_id - 用户id
      */
-    public Integer getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
@@ -64,7 +76,7 @@ public class Votelog {
      *
      * @param userId 用户id
      */
-    public void setUserId(Integer userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 
@@ -91,7 +103,7 @@ public class Votelog {
      *
      * @return other_id - 点赞对象的id
      */
-    public Integer getOtherId() {
+    public Long getOtherId() {
         return otherId;
     }
 
@@ -100,7 +112,7 @@ public class Votelog {
      *
      * @param otherId 点赞对象的id
      */
-    public void setOtherId(Integer otherId) {
+    public void setOtherId(Long otherId) {
         this.otherId = otherId;
     }
 
@@ -138,5 +150,23 @@ public class Votelog {
      */
     public void setCreatetime(Date createtime) {
         this.createtime = createtime;
+    }
+
+    /**
+     * 获取修改时间
+     *
+     * @return modifytime - 修改时间
+     */
+    public Date getModifytime() {
+        return modifytime;
+    }
+
+    /**
+     * 设置修改时间
+     *
+     * @param modifytime 修改时间
+     */
+    public void setModifytime(Date modifytime) {
+        this.modifytime = modifytime;
     }
 }

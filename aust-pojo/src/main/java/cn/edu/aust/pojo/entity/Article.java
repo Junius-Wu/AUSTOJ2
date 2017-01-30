@@ -11,7 +11,19 @@ public class Article {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    /**
+     * 摘要
+     */
+    private String summary;
+    /**
+     * html内容
+     */
+    @Column(name = "html_content")
+    private String htmlContent;
+    /**
+     * markdown内容
+     */
+    private String content;
     /**
      * 标题
      */
@@ -24,7 +36,7 @@ public class Article {
     private Integer userId;
 
     /**
-     * 关键词
+     * 关键词,都好分隔
      */
     private String keyword;
 
@@ -59,6 +71,31 @@ public class Article {
     private Date createdate;
 
     private Date modifydate;
+
+
+    public String getSummary() {
+        return summary;
+    }
+
+    public void setSummary(String summary) {
+        this.summary = summary;
+    }
+
+    public String getHtmlContent() {
+        return htmlContent;
+    }
+
+    public void setHtmlContent(String htmlContent) {
+        this.htmlContent = htmlContent;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
 
     /**
      * 获取主键
@@ -115,18 +152,18 @@ public class Article {
     }
 
     /**
-     * 获取关键词
+     * 获取关键词,都好分隔
      *
-     * @return keyword - 关键词
+     * @return keyword - 关键词,都好分隔
      */
     public String getKeyword() {
         return keyword;
     }
 
     /**
-     * 设置关键词
+     * 设置关键词,都好分隔
      *
-     * @param keyword 关键词
+     * @param keyword 关键词,都好分隔
      */
     public void setKeyword(String keyword) {
         this.keyword = keyword;

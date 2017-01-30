@@ -242,7 +242,7 @@ toastr.options = {
 
 //全局处理ajax函数,返回true则可以继续
 function consumeStatus(data) {
-  if (data.status==12){
+  if (data.status==20011){
     toastr.error('用户未登录,5秒后跳转登录页面','FAIL',{
       progressBar:true,
       onHidden:function () {

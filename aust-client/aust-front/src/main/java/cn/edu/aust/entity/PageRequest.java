@@ -13,6 +13,8 @@ public class PageRequest implements Serializable{
     private Integer limit = 15;
 
     private Integer offset = 1;
+    //页码针对自定义分页,框架则依据框架自己标准
+    private Integer pageNum = 0;
 
     private String order = "desc";
 
@@ -59,5 +61,13 @@ public class PageRequest implements Serializable{
 
     public void setSearch(String search) {
         this.search = search;
+    }
+
+    public Integer getPageNum() {
+        return pageNum;
+    }
+
+    public void setPageNum(Integer pageNum) {
+        this.pageNum = pageNum;
     }
 }

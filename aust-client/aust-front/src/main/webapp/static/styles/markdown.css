@@ -24,8 +24,11 @@
     text-align: start;
 }
 .preview-panel h1{
-    font-size: 3rem;
+    font-size: 2rem;
     color: #0077bb;
+}
+.preview-panel h3{
+    font-size: 1.8rem;
 }
 .preview-panel blockquote {
     background-color: rgba(102,128,153,0.05);
@@ -69,6 +72,7 @@
 .preview-panel p{
     font-family: inherit;
     line-height: 2.3rem;
+    font-size: 1.4rem;
 }
 
 /*代码配色*/
