@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="aust-front:war">
+    <output-path>$PROJECT_DIR$/aust-client/aust-front/target</output-path>
+    <root id="archive" name="aust-front.war">
+      <element id="artifact" artifact-name="aust-front:war exploded" />
+    </root>
+  </artifact>
+</component>
