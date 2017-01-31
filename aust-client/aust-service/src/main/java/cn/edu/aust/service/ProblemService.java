@@ -1,5 +1,6 @@
 package cn.edu.aust.service;
 
+import com.github.pagehelper.PageException;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
@@ -8,6 +9,8 @@ import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import cn.edu.aust.common.constant.PosCode;
+import cn.edu.aust.dto.ProblemDTO;
 import cn.edu.aust.dto.ProblemListDTO;
 import cn.edu.aust.mapper.ProblemMapper;
 import cn.edu.aust.pojo.entity.Problem;
@@ -25,6 +28,19 @@ public class ProblemService extends BaseService<Problem> {
     @Autowired
     private ProblemMapper problemMapper;
 
+    /**
+     * 查询一个题目的详情
+     * @param id 主键
+     * @return 结果
+     */
+    public ProblemDTO queryDetail(Long id){
+        ProblemPC problemPC = problemMapper.queryDetail(id);
+        if (problemPC == null){
+            throw new PageException(PosCode.NO_PRIVILEGE.getMsg());
+        }
+        ModelMapper modelMapper = new ModelMapper();
+        return modelMapper.map(problemPC,ProblemDTO.class);
+    }
     /**
      * 查询用于列表展示的题目
      *

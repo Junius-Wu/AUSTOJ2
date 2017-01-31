@@ -22,27 +22,40 @@
     <result column="contest_id" property="contestId" jdbcType="INTEGER" />
     <result column="createdate" property="createdate" jdbcType="TIMESTAMP" />
     <result column="modifydate" property="modifydate" jdbcType="TIMESTAMP" />
+    <result column="description" property="description" jdbcType="LONGVARCHAR" />
+    <result column="input" property="input" jdbcType="LONGVARCHAR" />
+    <result column="output" property="output" jdbcType="LONGVARCHAR" />
+    <result column="sample_input" property="sampleInput" jdbcType="LONGVARCHAR" />
+    <result column="sample_output" property="sampleOutput" jdbcType="LONGVARCHAR" />
+    <result column="hit" property="hit" jdbcType="LONGVARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     <!--
       WARNING - @mbg.generated
     -->
     id, title, keyword, catelog, stage, spj, time_limit, memory_limit, difficulty, accepted, 
-    solved, submit, submit_user, author_id, contest_id, createdate, modifydate
-  </sql>
-  <sql id="Blob_Column_List" >
-    <!--
-      WARNING - @mbg.generated
-    -->
+    solved, submit, submit_user, author_id, contest_id, createdate, modifydate,
     description, input, output, sample_input, sample_output, hit
   </sql>
+
+  <!--查询单条题目详情-->
+<resultMap id="ProblemDetail" type="cn.edu.aust.query.ProblemPC" extends="BaseResultMap">
+  <!--额外字段-->
+  <result column="auchor" property="auchor" jdbcType="VARCHAR" />
+  <result column="catelog_name" property="categlogName" jdbcType="VARCHAR" />
+</resultMap>
+  <select id="queryDetail" parameterType="long" resultMap="ProblemDetail">
+      SELECT p1.*,p2.name AS "catelog_name",p3.nickname AS "author" FROM problem p1
+      LEFT JOIN catelog p2 ON p1.catelog = p2.id
+      LEFT JOIN user p3 ON p1.author_id = p3.id
+      WHERE p1.contest_id = -1 AND p1.id=#{value}
+  </select>
 
 <!--查询列表显示的题目-->
   <resultMap id="ListStageProblem" type="cn.edu.aust.query.ProblemPC" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="title" property="title" jdbcType="VARCHAR" />
     <result column="keyword" property="keyword" jdbcType="VARCHAR" />
-    <result column="catelog" property="catelog" jdbcType="TINYINT" />
     <result column="stage" property="stage" jdbcType="TINYINT" />
     <result column="spj" property="spj" jdbcType="TINYINT" />
     <result column="time_limit" property="timeLimit" jdbcType="INTEGER" />
@@ -52,24 +65,23 @@
     <result column="solved" property="solved" jdbcType="INTEGER" />
     <result column="submit" property="submit" jdbcType="INTEGER" />
     <result column="submit_user" property="submitUser" jdbcType="INTEGER" />
-    <result column="author_id" property="authorId" jdbcType="INTEGER" />
-    <result column="contest_id" property="contestId" jdbcType="INTEGER" />
     <!--额外字段-->
     <result column="auchor" property="auchor" jdbcType="VARCHAR" />
     <result column="catelog_name" property="categlogName" jdbcType="VARCHAR" />
   </resultMap>
   <select id="queryListStage" parameterType="cn.edu.aust.query.ProblemQM" resultMap="ListStageProblem">
-      SELECT p1.*,p2.name AS "catelog_name",p3.nickname AS "author" FROM problem p1
+      SELECT p1.id,p1.title,p1.keyword,p1.stage,p1.spj,p1.time_limit,p1.memory_limit,p1.difficulty,p1.accepted,
+    p1.solved,p1.submit,p1.submit_user,
+      p2.name AS "catelog_name",p3.nickname AS "author" FROM problem p1
       LEFT JOIN catelog p2 ON p1.catelog = p2.id
       LEFT JOIN user p3 ON p1.author_id = p3.id
-      <where>
+      WHERE p1.contest_id = -1
         <if test="stage > 0">
-          p1.stage = #{stage}
+          and p1.stage = #{stage}
         </if>
         <if test="search!= null">
           and (p1.id LIKE #{search} or p1.title LIKE #{search} or p1.keyword LIKE #{search})
         </if>
-      </where>
     ORDER BY p1.id ${direction}
   </select>
 

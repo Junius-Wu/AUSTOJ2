@@ -14,4 +14,11 @@ public interface ProblemMapper extends Mapper<Problem> {
      * @return 查询集合包装类
      */
     List<ProblemPC> queryListStage(ProblemQM problemQM);
+
+    /**
+     * 根据主键查询一个题目的详细
+     * @param id 主键
+     * @return 结果
+     */
+    ProblemPC queryDetail(Long id);
 }
