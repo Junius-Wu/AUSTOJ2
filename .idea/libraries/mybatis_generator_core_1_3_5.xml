@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="mybatis-generator-core-1.3.5">
-    <CLASSES>
-      <root url="jar://$PROJECT_DIR$/aust-common/src/main/resources/mybatis-generator-core-1.3.5.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>
