@@ -22,6 +22,12 @@
             <artifactId>aust-common</artifactId>
             <version>${austcommon.version}</version>
         </dependency>
+        <!--junit start-->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
 </project>

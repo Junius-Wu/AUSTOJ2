@@ -4,6 +4,7 @@ import cn.edu.aust.common.util.JavaScriptUtil;
 import cn.edu.aust.common.util.WebUtils;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import sun.jvm.hotspot.tools.SysPropsDumper;
@@ -21,9 +22,8 @@ import java.util.Map;
  * @author Niu Li
  * @since 2017/2/12
  */
+@Slf4j
 public class GoogleTranslatePlugin {
-
-    private static Logger logger = LoggerFactory.getLogger(GoogleTranslatePlugin.class);
     /**
      * 请求参数合集
      */
@@ -33,13 +33,7 @@ public class GoogleTranslatePlugin {
      */
     private static final String GOOGLE_TRANSLATE = "http://translate.google.cn/translate_a/single";
 
-    public static void main(String[] args) throws ScriptException, NoSuchMethodException {
-        GoogleTranslatePlugin plugin = new GoogleTranslatePlugin();
-        String res = plugin.Trans("zh-CN", "en", "你好啊");
-        System.out.println(res);
-    }
-
-//    静态参数,不变化
+//  静态参数,不变化
     static{
         params.put("client", "t");
         params.put("hl", "zh-CN");
@@ -87,7 +81,7 @@ public class GoogleTranslatePlugin {
             result = parseResult(jsonResult);
         } catch (Exception e) {
             e.printStackTrace();
-            logger.error("谷歌翻译错误",e);
+            log.error("谷歌翻译错误",e);
             result = "";
         }
         return result;
@@ -109,7 +103,7 @@ public class GoogleTranslatePlugin {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            logger.error("谷歌翻译结果解析错误",e);
+            log.error("谷歌翻译结果解析错误",e);
             return ""; //解析失败就返回空
         }
         return new String(result);
