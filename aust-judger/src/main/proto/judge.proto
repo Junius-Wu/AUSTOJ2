@@ -9,7 +9,23 @@ package JudgerProto;
 
 //判题请求
 message judgeRequest{
-    int32 solution_id = 1;
-    string codesource = 2;
+    int32 solution_id = 1;//对应记录的id
+    int32 problem_id = 2; //题目id
+    string code_source = 3;//源码
+    string language = 4;//语言
+    int32 time_limit = 5;//时间限制
+    int32 memory_limit = 6;//内存限制
+}
 
+//判题响应
+message judgeResponse{
+    string runtimeResult = 1;//判题结果
+    int32 exitCode = 2; //错误码,0为成功
+    int32 used_time = 3; //消耗时间
+    int32 used_memory = 4; //消耗内存
+}
+
+//定义判题服务
+service JudgeServer{
+    rpc judge(judgeRequest) returns( judgeResponse ){}
 }
