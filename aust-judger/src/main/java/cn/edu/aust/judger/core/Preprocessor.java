@@ -36,7 +36,7 @@ public class Preprocessor {
      * @param sourceCode 源码
      * @param tempWordDir 邻水目录
      * @param language 语言
-     * @return 临时目录下文件绝对路径
+     * @return 临时目录下文件绝对路径,不包括扩展名
      * @throws Exception 临时文件路径不存在
      */
 	public String createTestCode(String sourceCode,String tempWordDir,LanguageUtil.Language language) throws Exception {
@@ -50,7 +50,7 @@ public class Preprocessor {
 		String codeFilePath = String.format("%s/%s.%s",
                  tempWordDir, baseFileName, language.getSuffix());
 		FileUtils.write(new File(codeFilePath), code,"UTF-8");
-		return codeFilePath;
+		return codeFilePath.substring(0,codeFilePath.lastIndexOf("."));
 	}
 	
 	/**
