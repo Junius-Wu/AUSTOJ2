@@ -1,0 +1,15 @@
+//指定proto3格式
+syntax = "proto3";
+//一些生成代码的设置
+option java_multiple_files = true;//以外部类模式生成
+option java_package = "cn.edu.aust.judger.proto";//所在包名
+option java_outer_classname = "JudgerProto";//最外层类名称
+
+package JudgerProto;
+
+//判题请求
+message judgeRequest{
+    int32 solution_id = 1;
+    string codesource = 2;
+
+}
