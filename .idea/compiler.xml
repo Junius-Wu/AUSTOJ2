@@ -9,6 +9,7 @@
         <module name="aust-admin" />
         <module name="aust-common" />
         <module name="aust-front" />
+        <module name="aust-judger" />
         <module name="aust-mapper" />
         <module name="aust-plugin" />
         <module name="aust-pojo" />
@@ -22,6 +23,7 @@
       <module name="aust-client" target="1.5" />
       <module name="aust-common" target="1.8" />
       <module name="aust-front" target="1.8" />
+      <module name="aust-judger" target="1.8" />
       <module name="aust-mapper" target="1.8" />
       <module name="aust-parent" target="1.5" />
       <module name="aust-plugin" target="1.8" />

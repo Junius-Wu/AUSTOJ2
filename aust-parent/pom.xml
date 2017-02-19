@@ -39,6 +39,8 @@
         <servlet.version>3.1.0</servlet.version>
         <javamail.version>1.5.6</javamail.version>
         <modelmapper.version>0.7.7</modelmapper.version>
+        <grpc.version>1.0.3</grpc.version>
+        <lombok.version>1.16.14</lombok.version>
     </properties>
 
     <!--集中控制依赖-->
@@ -264,6 +266,29 @@
                 <version>${servlet.version}</version>
                 <scope>provided</scope>
             </dependency>
+            <!--grpc start-->
+            <dependency>
+                <groupId>io.grpc</groupId>
+                <artifactId>grpc-netty</artifactId>
+                <version>${grpc.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.grpc</groupId>
+                <artifactId>grpc-protobuf</artifactId>
+                <version>${grpc.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.grpc</groupId>
+                <artifactId>grpc-stub</artifactId>
+                <version>${grpc.version}</version>
+            </dependency>
+            <!--lombok start-->
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
     <build>
