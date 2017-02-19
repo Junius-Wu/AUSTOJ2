@@ -52,7 +52,7 @@ public class Runner {
    * @param inputFilePath 输入数据路径
    * @param outputFilePath 结果输出路径
    * @param timeLimit 时间限制
-   * @param memoryLimit 内存限制
+   * @param memoryLimit 内存限制e
    * @return 一个包含程序运行结果的Map<String, Object>对象
    */
   public Map<String, Object> getRuntimeResultRun(long submission,String codeSource,String

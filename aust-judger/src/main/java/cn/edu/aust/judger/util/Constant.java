@@ -23,6 +23,10 @@ public final class Constant {
    * OJ工作根目录
    */
   public static String baseWorkDirectory;
+  /**
+   * 测试数据所在目录
+   */
+  public static String testCaseDirectory;
 
   static {
     init();
@@ -32,6 +36,7 @@ public final class Constant {
     systemUsername = PropertiesUtils.getClassPathProperty("system.username",CONFIG);
     systemPassword = PropertiesUtils.getClassPathProperty("system.password",CONFIG);
     baseWorkDirectory = PropertiesUtils.getClassPathProperty("judger.workDir",CONFIG);
+    testCaseDirectory = PropertiesUtils.getClassPathProperty("judge.testCase",CONFIG);
   }
 
 }
