@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import cn.edu.aust.judger.util.Constant;
+import cn.edu.aust.judger.util.LanguageUtil;
 import cn.edu.aust.judger.util.NativeLibraryLoader;
 import lombok.extern.slf4j.Slf4j;
 
@@ -47,7 +48,6 @@ public class Runner {
   /**
    * 获取执行数据结果
    * @param submission 对应提交的id
-   * @param codeSource 源码
    * @param commandLine 执行命令
    * @param inputFilePath 输入数据路径
    * @param outputFilePath 结果输出路径
@@ -55,7 +55,7 @@ public class Runner {
    * @param memoryLimit 内存限制e
    * @return 一个包含程序运行结果的Map<String, Object>对象
    */
-  public Map<String, Object> getRuntimeResultRun(long submission,String codeSource,String
+  public Map<String, Object> getRuntimeResultRun(long submission,String
       commandLine, String
       inputFilePath, String outputFilePath,int timeLimit,int memoryLimit) {
 
@@ -86,6 +86,25 @@ public class Runner {
   }
 
   /**
+   * 根据语言得到待执行命令
+   * @param language 语言
+   * @param sourcePath 源码路径
+   * @return 执行命令
+   */
+  public String getRunCommandLine(LanguageUtil.Language language,
+                                String sourcePath) {
+
+    StringBuilder runCommand = new StringBuilder(language.getRunCommand()
+            .replaceAll("\\{filename\\}", sourcePath));
+
+    if ( language.getLanguageName().equalsIgnoreCase("Java") ) {
+      int lastIndexOfSpace = runCommand.lastIndexOf("/");
+      runCommand.setCharAt(lastIndexOfSpace, ' ');
+    }
+    return runCommand.toString();
+  }
+
+  /**
    * 根据JNI返回的结果封装评测结果.
    *
    * @param exitCode    - 程序退出状态位
@@ -95,7 +114,7 @@ public class Runner {
    * @param memoryUsed  - 程序运行所用空间(最大值)
    * @return 程序运行结果的唯一英文缩写
    */
-  private String getRuntimeResultSlug(int exitCode, int timeLimit, int timeUsed, int memoryLimit, int memoryUsed) {
+  public String getRuntimeResultSlug(int exitCode, int timeLimit, int timeUsed, int memoryLimit, int memoryUsed) {
     if (exitCode == 0) {
       // Output will be compared in next stage
       return "AC";
@@ -107,30 +126,6 @@ public class Runner {
       return "MLE";
     }
     return "RE";
-  }
-
-  /**
-   * 获取(编译)程序运行结果.
-   *
-   * @param commandLine    - 待执行程序的命令行
-   * @param inputFilePath  - 输入文件路径(可为NULL)
-   * @param outputFilePath - 输出文件路径(可为NULL)
-   * @param timeLimit      - 时间限制(单位ms, 0表示不限制)
-   * @param memoryLimit    - 内存限制(单位KB, 0表示不限制)
-   * @return 一个包含程序运行结果的Map<String, Object>对象
-   */
-  public Map<String, Object> getRuntimeResultCompile(String commandLine, String inputFilePath,
-      String outputFilePath,
-      int timeLimit, int memoryLimit) {
-    Map<String, Object> result = null;
-    try {
-      result = getRuntimeResult(commandLine, Constant.systemUsername, Constant.systemPassword,
-          inputFilePath, outputFilePath, timeLimit, memoryLimit);
-    } catch (Exception ex) {
-      ex.printStackTrace();
-      log.error("jni调用失败",ex);
-    }
-    return result;
   }
 
   /**
