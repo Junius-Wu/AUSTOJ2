@@ -15,6 +15,7 @@ import com.google.common.collect.Lists;
 import io.grpc.ServerServiceDefinition;
 import io.grpc.stub.StreamObserver;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.math.NumberUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -81,21 +82,30 @@ public class JudgeService extends JudgeServerGrpc.JudgeServerImplBase {
         try {
             checkpoints = preprocessor.fetchTestPoints(request.getProblemId());
         } catch (Exception e) {
-            e.printStackTrace();
             log.error("不存在测试案例",e);
             response.setExitCode(PosCode.NO_TESTCASE.getStatus()).setRuntimeResult("不存在测试案例");
             responseObserver.onNext(response.build());
             responseObserver.onCompleted();
         }
         //执行
-
-        //对比结果
-
+        try {
+            Map<String, Object> results = runJudge(checkpoints,request,language,sourcePath,tempWorkDir);
+            response.setRuntimeResult(String.valueOf(results.get("runtimeResult")))
+                    .setUsedMemory(NumberUtils.toInt(String.valueOf(results.get("usedMemory"))))
+                    .setUsedTime(NumberUtils.toInt(String.valueOf(results.get("usedTime"))));
+        } catch (Exception e) {
+            log.error("judger error,solution id = %s",request.getSolutionId(),e);
+            response.setExitCode(PosCode.SYS_ERROR.getStatus()).setRuntimeResult("判题异常");
+            responseObserver.onNext(response.build());
+            responseObserver.onCompleted();
+        }
         //返回
+        responseObserver.onNext(response.build());
+        responseObserver.onCompleted();
     }
 
     private Map<String, Object> runJudge(List<Checkpoint> checkpoints, judgeRequest request, LanguageUtil.Language language,
-                          String sourcePath,String tempWorkDir) throws IOException {
+                          String sourcePath,String tempWorkDir) throws Exception {
         long threadId = Thread.currentThread().getId();
         String runtimeResultSlug = "SE";
         long totalUsedTime = 0L;
