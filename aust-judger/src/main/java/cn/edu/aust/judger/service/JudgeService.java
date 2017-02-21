@@ -54,7 +54,7 @@ public class JudgeService extends JudgeServerGrpc.JudgeServerImplBase {
         LanguageUtil.Language language = LanguageUtil.getLanguage(request.getLanguage());
         if (language == null) {
             response.setExitCode(PosCode.NO_LANGUAGE.getStatus()).setRuntimeResult("不支持的语言类型");
-            log.warn("不支持的语言类型,该提交的id为: %s",request.getSolutionId());
+            log.warn("不支持的语言类型,该提交的id为: {}",request.getSolutionId());
             responseObserver.onNext(response.build());
             responseObserver.onCompleted();
             return ;
