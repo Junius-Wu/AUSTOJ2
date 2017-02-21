@@ -1,5 +1,14 @@
 package cn.edu.aust.judger.service;
 
+import com.google.common.collect.Lists;
+
+import org.apache.commons.lang3.math.NumberUtils;
+
+import java.io.File;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import cn.edu.aust.judger.core.Comparator;
 import cn.edu.aust.judger.core.Compiler;
 import cn.edu.aust.judger.core.Preprocessor;
@@ -11,17 +20,9 @@ import cn.edu.aust.judger.proto.judgeResponse;
 import cn.edu.aust.judger.util.Constant;
 import cn.edu.aust.judger.util.LanguageUtil;
 import cn.edu.aust.judger.util.PosCode;
-import com.google.common.collect.Lists;
 import io.grpc.ServerServiceDefinition;
 import io.grpc.stub.StreamObserver;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.math.NumberUtils;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * 判题服务,目前是最简单的同步阻塞
@@ -56,6 +57,7 @@ public class JudgeService extends JudgeServerGrpc.JudgeServerImplBase {
             log.warn("不支持的语言类型,该提交的id为: %s",request.getSolutionId());
             responseObserver.onNext(response.build());
             responseObserver.onCompleted();
+            return ;
         }
         //安全检查
         //暂时无
@@ -69,6 +71,7 @@ public class JudgeService extends JudgeServerGrpc.JudgeServerImplBase {
             response.setExitCode(PosCode.SYS_ERROR.getStatus()).setRuntimeResult("系统异常");
             responseObserver.onNext(response.build());
             responseObserver.onCompleted();
+            return ;
         }
         //编译代码
         judgeResponse tempResp = compiler.getCompileResult(compiler.getCompileCommandLine(sourcePath,language),
@@ -76,16 +79,18 @@ public class JudgeService extends JudgeServerGrpc.JudgeServerImplBase {
         if (tempResp != null){
             responseObserver.onNext(tempResp);
             responseObserver.onCompleted();
+            return ;
         }
         //获取测试案例
         List<Checkpoint> checkpoints = Lists.newArrayList();
         try {
             checkpoints = preprocessor.fetchTestPoints(request.getProblemId());
         } catch (Exception e) {
-            log.error("不存在测试案例",e);
-            response.setExitCode(PosCode.NO_TESTCASE.getStatus()).setRuntimeResult("不存在测试案例");
+            log.error("该题目{}不存在测试案例",request.getProblemId(),e);
+            response.setExitCode(PosCode.NO_TESTCASE.getStatus()).setRuntimeResult("该题目不存在测试案例");
             responseObserver.onNext(response.build());
             responseObserver.onCompleted();
+            return ;
         }
         //执行
         try {
@@ -94,10 +99,11 @@ public class JudgeService extends JudgeServerGrpc.JudgeServerImplBase {
                     .setUsedMemory(NumberUtils.toInt(String.valueOf(results.get("usedMemory"))))
                     .setUsedTime(NumberUtils.toInt(String.valueOf(results.get("usedTime"))));
         } catch (Exception e) {
-            log.error("judger error,solution id = %s",request.getSolutionId(),e);
+            log.error("judger error,solution id = {}",request.getSolutionId(),e);
             response.setExitCode(PosCode.SYS_ERROR.getStatus()).setRuntimeResult("判题异常");
             responseObserver.onNext(response.build());
             responseObserver.onCompleted();
+            return ;
         }
         //返回
         responseObserver.onNext(response.build());
@@ -118,13 +124,12 @@ public class JudgeService extends JudgeServerGrpc.JudgeServerImplBase {
                                                     runner.getRunCommandLine(language,sourcePath),
                                                     tempCheckPoint.getInput(),tempOutFile,
                                                     request.getTimeLimit(),request.getMemoryLimit());
-            int exitCode = (Integer) result.get("exitCode");
-            int usedTime = (Integer) result.get("usedTime");
-            int usedMemory = (Integer) result.get("usedMemory");
+
+            int usedTime = NumberUtils.toInt(String.valueOf(result.get("usedTime")),0);
+            int usedMemory = NumberUtils.toInt(String.valueOf(result.get("usedMemory")),0) ;
+            runtimeResultSlug = String.valueOf(result.get("runtimeResult"));
             totalUsedMemory += usedMemory;
             totalUsedTime += usedTime;
-            runtimeResultSlug = runner.getRuntimeResultSlug(exitCode, request.getTimeLimit(), usedTime,
-                            request.getMemoryLimit(), usedMemory);
             //和标准答案对比
             if ( runtimeResultSlug.equals("AC") &&
                     !comparator.isOutputTheSame(tempCheckPoint.getOutput(),tempOutFile)) {
@@ -136,7 +141,8 @@ public class JudgeService extends JudgeServerGrpc.JudgeServerImplBase {
         Map<String, Object> result = new HashMap<>();
         result.put("usedTime",totalUsedTime / checkpoints.size());
         result.put("usedMemory",totalUsedMemory / checkpoints.size());
-        result.put("runtimeResult","AC");
+        result.put("runtimeResult",runtimeResultSlug);
+        log.debug("完成判题,结果预览:{}",result);
         return result;
     }
     @Override
