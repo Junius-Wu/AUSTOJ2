@@ -1,15 +1,16 @@
 package cn.edu.aust.judger.core;
 
-import cn.edu.aust.judger.proto.judgeResponse;
-import cn.edu.aust.judger.util.Constant;
-import cn.edu.aust.judger.util.LanguageUtil;
-import cn.edu.aust.judger.util.PosCode;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;
 import java.nio.charset.Charset;
 import java.util.Map;
+
+import cn.edu.aust.judger.proto.judgeResponse;
+import cn.edu.aust.judger.util.Constant;
+import cn.edu.aust.judger.util.LanguageUtil;
+import cn.edu.aust.judger.util.PosCode;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * 程序编译器, 用于编译用户提交的代码.
@@ -50,7 +51,7 @@ public class Compiler {
 		int timeLimit = 5000;
 		int memoryLimit = 0;
 		
-		log.info("Start compiling with command: %s",commandLine);
+		log.debug("Start compiling with command: {}",commandLine);
 		Map<String, Object> runningResult = runner.getRuntimeResult(commandLine, Constant.systemUsername,
                 Constant.systemPassword, null, compileLogPath, timeLimit, memoryLimit);
 		boolean isSuccessful = false;
@@ -76,13 +77,13 @@ public class Compiler {
         if (!logFile.exists()){
             return "no exits !";
         }
-		String compileLog = "";
+		String compileLog = "Success";
 		try {
 			compileLog = FileUtils.readFileToString(logFile, Charset.forName("UTF-8"));
 		} catch (Exception ex) {
 			// Do nothing
 		}
-		log.info("编译信息:%s",compileLog);
+		log.info("编译信息:{}",compileLog);
 		return compileLog;
 	}
 	

@@ -16,23 +16,6 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class Runner {
 
-  public static void main(String[] args) {
-    Runner runner = new Runner();
-    String workBaseDirectory = "/tmp";
-
-    String inputFilePath = workBaseDirectory + "/testpoints/1001/data1.in";
-    String outputFilePath = workBaseDirectory + "/voj-1001/output#0.txt";
-
-    //编译
-    runner.getRuntimeResult("javac /tmp/voj-1001/Main.java", "root", "7946521",
-        null, "/tmp/voj-1001/compile.log", 2000, 32768);
-    //执行
-    Map<String, Object> result = runner.getRuntimeResult("java -cp /tmp/voj-1001/ " +
-            "Main", "root", "7946521",
-        inputFilePath, outputFilePath, 2000, 32768);
-    System.out.println(result);
-  }
-
   /**
    * Load Native Library.
    */
@@ -58,25 +41,24 @@ public class Runner {
   public Map<String, Object> getRuntimeResultRun(long submission,String
       commandLine, String
       inputFilePath, String outputFilePath,int timeLimit,int memoryLimit) {
-
+    log.info("Start running with command: {}",commandLine);
     Map<String, Object> result = new HashMap<String, Object>(4, 1);
     String runtimeResultSlug = "SE";
     int usedTime = 0;
     int usedMemory = 0;
     try {
-      log.info("submission %d Start running with command %s (TimeLimit=%s,MemoryLimit=%s)",
+      log.info("submission {} Start running with command {} (TimeLimit={},MemoryLimit={})",
           submission,commandLine, timeLimit, memoryLimit);
       Map<String, Object> runtimeResult = getRuntimeResult(commandLine,
           Constant.systemUsername, Constant.systemPassword, inputFilePath, outputFilePath,
           timeLimit, memoryLimit);
-
+      log.debug("判题结果: {}",runtimeResult);
       int exitCode = (Integer) runtimeResult.get("exitCode");
       usedTime = (Integer) runtimeResult.get("usedTime");
       usedMemory = (Integer) runtimeResult.get("usedMemory");
       runtimeResultSlug = getRuntimeResultSlug(exitCode, timeLimit, usedTime, memoryLimit, usedMemory);
     } catch (Exception ex) {
-      ex.printStackTrace();
-      log.error("判题出错",ex);
+      log.error("solution ={} 判题出错",submission,ex);
     }
 
     result.put("runtimeResult", runtimeResultSlug);

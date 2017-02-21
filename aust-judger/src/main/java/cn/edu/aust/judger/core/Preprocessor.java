@@ -1,5 +1,12 @@
 package cn.edu.aust.judger.core;
 
+import org.apache.commons.io.FileUtils;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
 import cn.edu.aust.judger.exception.CreateDirectoryException;
 import cn.edu.aust.judger.exception.NoTestCaseException;
 import cn.edu.aust.judger.model.Checkpoint;
@@ -7,16 +14,6 @@ import cn.edu.aust.judger.util.Constant;
 import cn.edu.aust.judger.util.DigestUtils;
 import cn.edu.aust.judger.util.LanguageUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.IOUtils;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * 预处理器, 用于完成评测前准备工作.
@@ -83,8 +80,10 @@ public class Preprocessor {
             throw new NoTestCaseException("该题目不存在的测试数据");
         }
 
-		List<Checkpoint> checkpoints = new ArrayList<>(testCases.size());
-        for (int i = 1; i < testCases.size()+1; i++) {
+	int actualSize = testCases.size() >> 1;
+	List<Checkpoint> checkpoints = new ArrayList<>(actualSize);
+
+        for (int i = 1; i < actualSize +1; i++) {
             Checkpoint tempPoint = new Checkpoint();
             tempPoint.setProblemId(problemId);
             tempPoint.setCheckpointId(i);
