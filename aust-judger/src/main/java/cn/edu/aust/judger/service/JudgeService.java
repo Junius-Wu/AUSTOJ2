@@ -110,6 +110,15 @@ public class JudgeService extends JudgeServerGrpc.JudgeServerImplBase {
         responseObserver.onCompleted();
     }
 
+    /**
+     * 根据测试案例判题,每次执行后对比
+     * @param checkpoints 测试案例
+     * @param request 输入数据
+     * @param language 语言
+     * @param sourcePath 保存代码位置
+     * @param tempWorkDir 临时输出目录
+     * @throws Exception 判题失败
+     */
     private Map<String, Object> runJudge(List<Checkpoint> checkpoints, judgeRequest request, LanguageUtil.Language language,
                           String sourcePath,String tempWorkDir) throws Exception {
         long threadId = Thread.currentThread().getId();
