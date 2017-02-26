@@ -78,6 +78,7 @@
     <result column="catelog_name" property="categlogName" jdbcType="VARCHAR" />
   </resultMap>
 
+<!--查询阶段题目-->
   <select id="queryListStage" parameterType="cn.edu.aust.query.ProblemQM" resultMap="ListStageProblem">
       SELECT p1.id,p1.title,p1.keyword,p1.stage,p1.spj,p1.time_limit,p1.memory_limit,p1.difficulty,p1.accepted,
     p1.solved,p1.submit,p1.submit_user,
@@ -87,6 +88,23 @@
       WHERE p1.contest_id = -1
         <if test="stage > 0">
           and p1.stage = #{stage}
+        </if>
+        <if test="search!= null">
+          and (p1.id LIKE #{search} or p1.title LIKE #{search} or p1.keyword LIKE #{search})
+        </if>
+    ORDER BY p1.id ${direction}
+  </select>
+
+  <!--查询指定目录下的题目,使用queryModel的stage参数当成目录id-->
+  <select id="queryListCatelog" parameterType="cn.edu.aust.query.ProblemQM" resultMap="ListStageProblem">
+      SELECT p1.id,p1.title,p1.keyword,p1.stage,p1.spj,p1.time_limit,p1.memory_limit,p1.difficulty,p1.accepted,
+    p1.solved,p1.submit,p1.submit_user,
+      p2.name AS "catelog_name",p3.nickname AS "author" FROM problem p1
+      LEFT JOIN catelog p2 ON p1.catelog = p2.id
+      LEFT JOIN user p3 ON p1.author_id = p3.id
+      WHERE p1.contest_id = -1
+        <if test="stage > 0">
+          and p1.catelog = #{stage}
         </if>
         <if test="search!= null">
           and (p1.id LIKE #{search} or p1.title LIKE #{search} or p1.keyword LIKE #{search})

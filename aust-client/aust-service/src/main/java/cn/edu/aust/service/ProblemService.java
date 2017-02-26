@@ -81,13 +81,15 @@ public class ProblemService extends BaseService<Problem> {
    * @param direction 排序方向,针对id字段
    * @param offset    分页参数
    * @param limit     分页参数
+   * @param isCatelog     是否为目录,true时stage参数为目录id
    * @return DTO实体
    */
   public PageInfo<ProblemListDTO> queryListStage(String search,
                                                  Integer stage,
                                                  String direction,
                                                  Integer offset,
-                                                 Integer limit) {
+                                                 Integer limit,
+                                                 boolean isCatelog) {
     //封装查询条件
     ProblemQM problemQM = new ProblemQM();
     problemQM.setDirection(direction);
@@ -98,7 +100,11 @@ public class ProblemService extends BaseService<Problem> {
         PageHelper.offsetPage(offset, limit)
                   .doSelectPageInfo(
                       () -> {
-                        problemMapper.queryListStage(problemQM);
+                        if (isCatelog){
+                          problemMapper.queryListCatelog(problemQM);
+                        }else {
+                          problemMapper.queryListStage(problemQM);
+                        }
                       }
                   );
 

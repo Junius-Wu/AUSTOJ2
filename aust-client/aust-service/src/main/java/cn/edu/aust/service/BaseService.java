@@ -24,7 +24,7 @@ public class BaseService <T> {
     /**
      * 根据id查询
      */
-    public T queryById(Long id){
+    public T queryById(Object id){
         return this.mapper.selectByPrimaryKey(id);
     }
     /**

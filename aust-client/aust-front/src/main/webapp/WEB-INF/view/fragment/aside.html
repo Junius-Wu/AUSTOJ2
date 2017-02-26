@@ -40,7 +40,7 @@
         <ul class="list-unstyled catelog">
             <!--/*@thymesVar id="catelogs" type="java.util.List<cn.edu.aust.common.entity.Catelog>"*/-->
             <li th:each="catelog : ${application.app_catelogs}">
-                <i class="fa fa-bookmark-o">&nbsp;&nbsp;<a href="#" th:href="@{/catelog/pro/{id}(id=${catelog.id})}" th:text="${catelog.name}"></a></i>
+                <i class="fa fa-bookmark-o">&nbsp;&nbsp;<a href="#" th:href="@{/catelog/{id}(id=${catelog.id})}" th:text="${catelog.name}"></a></i>
             </li>
         </ul>
     </aside>
@@ -61,7 +61,8 @@
             <!--/*@thymesVar id="articles" type="java.util.List<cn.edu.aust.common.entity.Article>"*/-->
             <li th:each="article : ${application.app_articles}">
                 <i class="fa fa-file-text-o">
-                    <a th:href="@{/article/{id}(id=article.id)}" target="_blank" th:text="${article.title}" th:title="${article.title}"></a>
+                    <a th:href="@{/article/{id}(id=${article.id})}" target="_blank" th:text="${article.title}"
+                       th:title="${article.title}"></a>
                 </i>
             </li>
         </ul>

@@ -6,6 +6,7 @@ import com.alibaba.fastjson.JSONObject;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.servlet.HandlerExceptionResolver;
@@ -46,7 +47,6 @@ public class ExceptionHander implements HandlerExceptionResolver{
             result.put("msg",exception.getMessage());
             log.info(result.toJSONString());
             try {
-                response.setStatus(200);
                 response.setHeader("Content-Type", MediaType.APPLICATION_JSON_UTF8_VALUE);
                 response.getWriter().write(JSON.toJSONString(result));
             } catch (IOException e) {

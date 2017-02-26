@@ -155,17 +155,21 @@ function remmberMe() {
     var $remmberMe = $('#remmberMe');
     if (getCookie('email') != null) {
         $remmberMe.prop('checked', true);
-        $('#username').val(getCookie('email'));
+        loginOrRegister.email = getCookie('email');
         $('#password').focus();
     } else {
         $remmberMe.prop('checked', false);
-        $('#username').focus();
+        $('#email').focus();
     }
 }
 
 //键盘监听
 $(document).keyup(function (event) {
     if (event.keyCode == 13) {
+        if (pathName.indexOf("login") > 0){
+            loginOrRegister.login();
+            return;
+        }
         loginOrRegister.register();
     }
 });

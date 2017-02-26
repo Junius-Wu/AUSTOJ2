@@ -17,7 +17,8 @@ toastr.options = {
 var indexApp = new Vue({
     el:"#app",
     data:{
-        scrollBar:0//滚动条位置
+        scrollBar:0,//滚动条位置
+        imgTop:10
     },
     computed:{
         scrollTop:function () {
@@ -25,6 +26,17 @@ var indexApp = new Vue({
         }
     }
 });
+
+//计算展示图的位置
+compute();
+function compute() {
+    var $index = $('.index-one');
+    var $codeImage = $('#codeImage');
+    var imgWidth = $codeImage.width();
+    $index.css('height',$(window).height());
+    var mainwidth = $index.width();
+    $codeImage.css('left',(mainwidth - imgWidth)/2);
+}
 
 //导航颜色监听
 $(window).scroll(function () {
