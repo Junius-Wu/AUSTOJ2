@@ -7,6 +7,7 @@
 		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
 			<pattern>%d{HH:mm:ss} [%t] %logger{5} [%line] %p - %msg%n</pattern>
 		</encoder>
+		<charset>UTF-8</charset>
 	</appender>
 
 	<!-- project level -->

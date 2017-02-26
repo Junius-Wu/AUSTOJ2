@@ -21,4 +21,13 @@ public interface ProblemMapper extends Mapper<Problem> {
      * @return 结果
      */
     ProblemPC queryDetail(Long id);
+
+    /**
+     * 查询一个比赛题目
+     * @param problemId 题目id
+     * @return 查询结果
+     */
+    ProblemPC queryContestProblem(Long problemId);
+
+    List<ProblemPC> queryContest(Long contest);
 }

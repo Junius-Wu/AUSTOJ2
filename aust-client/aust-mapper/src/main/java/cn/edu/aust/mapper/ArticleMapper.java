@@ -20,5 +20,10 @@ public interface ArticleMapper extends Mapper<Article> {
      */
     List<ArticlePC> queryList(ArticleQM articleQM);
 
+    /**
+     * 根据id查询一个文章包装类型
+     * @param id 文章id
+     * @return 包装结果
+     */
     ArticlePC queryDetail(Long id);
 }

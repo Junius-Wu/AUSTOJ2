@@ -51,6 +51,14 @@
       WHERE p1.contest_id = -1 AND p1.id=#{value}
   </select>
 
+<!--查询比赛题目-->
+  <select id="queryContestProblem" parameterType="long" resultMap="ProblemDetail">
+    SELECT p1.*,p2.name AS "catelog_name",p3.nickname AS "author" FROM problem p1
+    LEFT JOIN catelog p2 ON p1.catelog = p2.id
+    LEFT JOIN user p3 ON p1.author_id = p3.id
+    WHERE p1.id = #{problemId}
+  </select>
+
 <!--查询列表显示的题目-->
   <resultMap id="ListStageProblem" type="cn.edu.aust.query.ProblemPC" >
     <id column="id" property="id" jdbcType="INTEGER" />
@@ -69,6 +77,7 @@
     <result column="auchor" property="auchor" jdbcType="VARCHAR" />
     <result column="catelog_name" property="categlogName" jdbcType="VARCHAR" />
   </resultMap>
+
   <select id="queryListStage" parameterType="cn.edu.aust.query.ProblemQM" resultMap="ListStageProblem">
       SELECT p1.id,p1.title,p1.keyword,p1.stage,p1.spj,p1.time_limit,p1.memory_limit,p1.difficulty,p1.accepted,
     p1.solved,p1.submit,p1.submit_user,
@@ -83,6 +92,16 @@
           and (p1.id LIKE #{search} or p1.title LIKE #{search} or p1.keyword LIKE #{search})
         </if>
     ORDER BY p1.id ${direction}
+  </select>
+
+  <!--查询竞赛中所有题目-->
+  <select id="queryContest" parameterType="Long" resultMap="ListStageProblem">
+    SELECT p1.id,p1.title,p1.keyword,p1.stage,p1.spj,p1.time_limit,p1.memory_limit,p1.difficulty,p1.accepted,
+    p1.solved,p1.submit,p1.submit_user,
+    p2.name AS "catelog_name",p3.nickname AS "author" FROM problem p1
+    LEFT JOIN catelog p2 ON p1.catelog = p2.id
+    LEFT JOIN user p3 ON p1.author_id = p3.id
+    WHERE p1.contest_id = #{contest}
   </select>
 
 </mapper>

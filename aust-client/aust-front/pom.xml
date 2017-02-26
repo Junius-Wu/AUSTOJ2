@@ -35,7 +35,11 @@
             <artifactId>aust-service</artifactId>
         </dependency>
         <!--spring start-->
-
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <scope>test</scope>
+        </dependency>
         <!--cglib start-->
         <dependency>
             <groupId>cglib</groupId>

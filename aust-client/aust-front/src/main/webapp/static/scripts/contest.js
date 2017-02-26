@@ -3,7 +3,7 @@ function getContestDetail(contest_id, type) {
     var $contestBtn = $("#contestDetail");
     $contestBtn.unbind('click');
     $contestBtn.bind('click', {id: contest_id}, getContestCommit);
-    if (type == 1) {//校内赛,需要密码
+    if (type == "校内赛") {//校内赛,需要密码
         $("#myModal").modal("show");
     }else {
         var event = {data:{id:contest_id}};

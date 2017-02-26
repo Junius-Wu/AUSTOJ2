@@ -36,6 +36,9 @@
         </property>
     </bean>
 
+    <!--全局异常-->
+    <bean class="cn.edu.aust.exception.ExceptionHander"/>
+
     <!-- 对模型视图名称的解析，即在模型视图名称添加前后缀(如果最后一个还是表示文件夹,则最后的斜杠不要漏了)-->
     <!--输出信息配置,id为固定名称,不然不会替换掉spring的messageSource-->
     <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
