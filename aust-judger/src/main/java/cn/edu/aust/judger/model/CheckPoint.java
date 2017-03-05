@@ -11,11 +11,11 @@ import java.io.Serializable;
  * @author Haozhe Xie
  */
 @Data
-public class Checkpoint implements Serializable {
+public class CheckPoint implements Serializable {
 	/**
 	 * CheckPoint的默认构造函数.
 	 */
-	public Checkpoint() { }
+	public CheckPoint() { }
 	
 	/**
 	 * CheckPoint的构造函数.
@@ -26,7 +26,7 @@ public class Checkpoint implements Serializable {
 	 * @param input - 测试点的标准输入
 	 * @param output - 测试点的标准输出
 	 */
-	public Checkpoint(long problemId, int checkpointId, boolean isExactlyMatch, int score, String input, String output) { 
+	public CheckPoint(long problemId, int checkpointId, boolean isExactlyMatch, int score, String input, String output) {
 		this.problemId = problemId;
 		this.checkpointId = checkpointId;
 		this.isExactlyMatch = isExactlyMatch;

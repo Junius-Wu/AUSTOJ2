@@ -9,7 +9,7 @@ import java.util.List;
 
 import cn.edu.aust.judger.exception.CreateDirectoryException;
 import cn.edu.aust.judger.exception.NoTestCaseException;
-import cn.edu.aust.judger.model.Checkpoint;
+import cn.edu.aust.judger.model.CheckPoint;
 import cn.edu.aust.judger.util.Constant;
 import cn.edu.aust.judger.util.DigestUtils;
 import cn.edu.aust.judger.util.LanguageUtil;
@@ -68,7 +68,7 @@ public class Preprocessor {
 	 * @param problemId - 试题的唯一标识符
 	 * @throws Exception 不存在数据抛出异常
 	 */
-	public List<Checkpoint> fetchTestPoints(long problemId) throws Exception {
+	public List<CheckPoint> fetchTestPoints(long problemId) throws Exception {
 		//获取全部测试数据
         String baseCase = Constant.testCaseDirectory + File.separator + String.valueOf(problemId);
         File file = new File(baseCase);
@@ -81,18 +81,18 @@ public class Preprocessor {
         }
 
 	int actualSize = testCases.size() >> 1;
-	List<Checkpoint> checkpoints = new ArrayList<>(actualSize);
+	List<CheckPoint> checkPoints = new ArrayList<>(actualSize);
 
         for (int i = 1; i < actualSize +1; i++) {
-            Checkpoint tempPoint = new Checkpoint();
+            CheckPoint tempPoint = new CheckPoint();
             tempPoint.setProblemId(problemId);
             tempPoint.setCheckpointId(i);
             tempPoint.setInput(baseCase+File.separator+"data"+i+".in");
             tempPoint.setOutput(baseCase+File.separator+"data"+i+".out");
             tempPoint.setScore(10);//暂时不计分
             tempPoint.setExactlyMatch(true);
-            checkpoints.add(tempPoint);
+            checkPoints.add(tempPoint);
         }
-        return checkpoints;
+        return checkPoints;
 	}
 }

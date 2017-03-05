@@ -41,6 +41,7 @@
         <modelmapper.version>0.7.7</modelmapper.version>
         <grpc.version>1.0.3</grpc.version>
         <lombok.version>1.16.14</lombok.version>
+        <commonpool.version>2.4.2</commonpool.version>
     </properties>
 
     <!--集中控制依赖-->
@@ -288,7 +289,12 @@
                 <artifactId>lombok</artifactId>
                 <version>${lombok.version}</version>
             </dependency>
-
+            <!--客户端连接池-->
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-pool2</artifactId>
+                <version>${commonpool.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
     <build>

@@ -19,7 +19,6 @@
           <element id="library" level="project" name="Maven: commons-io:commons-io:2.5" />
           <element id="library" level="project" name="Maven: com.alibaba:fastjson:1.2.24" />
           <element id="library" level="project" name="Maven: redis.clients:jedis:2.8.0" />
-          <element id="library" level="project" name="Maven: org.apache.commons:commons-pool2:2.3" />
           <element id="library" level="project" name="Maven: org.projectlombok:lombok:1.16.14" />
           <element id="library" level="project" name="Maven: com.google.guava:guava:21.0" />
           <element id="archive" name="aust-pojo-1.0.jar">
@@ -29,6 +28,27 @@
           <element id="archive" name="aust-plugin-1.0.jar">
             <element id="module-output" name="aust-plugin" />
           </element>
+          <element id="library" level="project" name="Maven: org.apache.commons:commons-pool2:2.4.2" />
+          <element id="library" level="project" name="Maven: io.grpc:grpc-netty:1.0.3" />
+          <element id="library" level="project" name="Maven: io.grpc:grpc-core:1.0.3" />
+          <element id="library" level="project" name="Maven: io.grpc:grpc-context:1.0.3" />
+          <element id="library" level="project" name="Maven: com.google.code.findbugs:jsr305:3.0.0" />
+          <element id="library" level="project" name="Maven: io.netty:netty-handler-proxy:4.1.6.Final" />
+          <element id="library" level="project" name="Maven: io.netty:netty-transport:4.1.6.Final" />
+          <element id="library" level="project" name="Maven: io.netty:netty-buffer:4.1.6.Final" />
+          <element id="library" level="project" name="Maven: io.netty:netty-common:4.1.6.Final" />
+          <element id="library" level="project" name="Maven: io.netty:netty-resolver:4.1.6.Final" />
+          <element id="library" level="project" name="Maven: io.netty:netty-codec-socks:4.1.6.Final" />
+          <element id="library" level="project" name="Maven: io.netty:netty-codec:4.1.6.Final" />
+          <element id="library" level="project" name="Maven: io.netty:netty-codec-http:4.1.6.Final" />
+          <element id="library" level="project" name="Maven: io.netty:netty-codec-http2:4.1.6.Final" />
+          <element id="library" level="project" name="Maven: io.netty:netty-handler:4.1.6.Final" />
+          <element id="library" level="project" name="Maven: io.grpc:grpc-protobuf:1.0.3" />
+          <element id="library" level="project" name="Maven: com.google.protobuf:protobuf-java-util:3.0.2" />
+          <element id="library" level="project" name="Maven: com.google.code.gson:gson:2.3" />
+          <element id="library" level="project" name="Maven: com.google.protobuf:protobuf-java:3.0.2" />
+          <element id="library" level="project" name="Maven: io.grpc:grpc-protobuf-lite:1.0.3" />
+          <element id="library" level="project" name="Maven: io.grpc:grpc-stub:1.0.3" />
           <element id="archive" name="aust-mapper-1.0.jar">
             <element id="module-output" name="aust-mapper" />
           </element>

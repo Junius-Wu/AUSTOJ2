@@ -6,7 +6,7 @@ import java.io.File;
 import java.nio.charset.Charset;
 import java.util.Map;
 
-import cn.edu.aust.judger.proto.judgeResponse;
+import cn.edu.aust.judger.proto.JudgeResponse;
 import cn.edu.aust.judger.util.Constant;
 import cn.edu.aust.judger.util.LanguageUtil;
 import cn.edu.aust.judger.util.PosCode;
@@ -46,8 +46,8 @@ public class Compiler {
      * @param compileLogPath 编译日志路径
      * @return null成功,否则返回错误信息
      */
-	public judgeResponse getCompileResult(String commandLine, String compileLogPath) {
-        judgeResponse.Builder builder = judgeResponse.newBuilder();
+	public JudgeResponse getCompileResult(String commandLine, String compileLogPath) {
+		JudgeResponse.Builder builder = JudgeResponse.newBuilder();
 		int timeLimit = 5000;
 		int memoryLimit = 0;
 		

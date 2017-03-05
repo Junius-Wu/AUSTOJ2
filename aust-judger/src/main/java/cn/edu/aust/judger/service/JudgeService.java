@@ -13,10 +13,10 @@ import cn.edu.aust.judger.core.Comparator;
 import cn.edu.aust.judger.core.Compiler;
 import cn.edu.aust.judger.core.Preprocessor;
 import cn.edu.aust.judger.core.Runner;
-import cn.edu.aust.judger.model.Checkpoint;
+import cn.edu.aust.judger.model.CheckPoint;
 import cn.edu.aust.judger.proto.JudgeServerGrpc;
-import cn.edu.aust.judger.proto.judgeRequest;
-import cn.edu.aust.judger.proto.judgeResponse;
+import cn.edu.aust.judger.proto.JudgeRequest;
+import cn.edu.aust.judger.proto.JudgeResponse;
 import cn.edu.aust.judger.util.Constant;
 import cn.edu.aust.judger.util.LanguageUtil;
 import cn.edu.aust.judger.util.PosCode;
@@ -46,8 +46,8 @@ public class JudgeService extends JudgeServerGrpc.JudgeServerImplBase {
      * @param responseObserver 判题结果
      */
     @Override
-    public void judge(judgeRequest request, StreamObserver<judgeResponse> responseObserver) {
-        judgeResponse.Builder response = judgeResponse.newBuilder();
+    public void judge(JudgeRequest request, StreamObserver<JudgeResponse> responseObserver) {
+        JudgeResponse.Builder response = JudgeResponse.newBuilder();
         //该次编译所在目录
         String tempWorkDir = Constant.baseWorkDirectory+ File.separator+request.getProblemId()+File.separator;
         //获取编译命令
@@ -74,7 +74,7 @@ public class JudgeService extends JudgeServerGrpc.JudgeServerImplBase {
             return ;
         }
         //编译代码
-        judgeResponse tempResp = compiler.getCompileResult(compiler.getCompileCommandLine(sourcePath,language),
+        JudgeResponse tempResp = compiler.getCompileResult(compiler.getCompileCommandLine(sourcePath,language),
                 compiler.getCompileLogPath(sourcePath));
         if (tempResp != null){
             responseObserver.onNext(tempResp);
@@ -82,9 +82,9 @@ public class JudgeService extends JudgeServerGrpc.JudgeServerImplBase {
             return ;
         }
         //获取测试案例
-        List<Checkpoint> checkpoints = Lists.newArrayList();
+        List<CheckPoint> checkPoints = Lists.newArrayList();
         try {
-            checkpoints = preprocessor.fetchTestPoints(request.getProblemId());
+            checkPoints = preprocessor.fetchTestPoints(request.getProblemId());
         } catch (Exception e) {
             log.error("该题目{}不存在测试案例",request.getProblemId(),e);
             response.setExitCode(PosCode.NO_TESTCASE.getStatus()).setRuntimeResult("该题目不存在测试案例");
@@ -94,7 +94,7 @@ public class JudgeService extends JudgeServerGrpc.JudgeServerImplBase {
         }
         //执行
         try {
-            Map<String, Object> results = runJudge(checkpoints,request,language,sourcePath,tempWorkDir);
+            Map<String, Object> results = runJudge(checkPoints, request, language, sourcePath, tempWorkDir);
             response.setRuntimeResult(String.valueOf(results.get("runtimeResult")))
                     .setUsedMemory(NumberUtils.toInt(String.valueOf(results.get("usedMemory"))))
                     .setUsedTime(NumberUtils.toInt(String.valueOf(results.get("usedTime"))));
@@ -112,22 +112,22 @@ public class JudgeService extends JudgeServerGrpc.JudgeServerImplBase {
 
     /**
      * 根据测试案例判题,每次执行后对比
-     * @param checkpoints 测试案例
+     * @param checkPoints 测试案例
      * @param request 输入数据
      * @param language 语言
      * @param sourcePath 保存代码位置
      * @param tempWorkDir 临时输出目录
      * @throws Exception 判题失败
      */
-    private Map<String, Object> runJudge(List<Checkpoint> checkpoints, judgeRequest request, LanguageUtil.Language language,
-                          String sourcePath,String tempWorkDir) throws Exception {
+    private Map<String, Object> runJudge(List<CheckPoint> checkPoints, JudgeRequest request, LanguageUtil.Language language,
+                                         String sourcePath, String tempWorkDir) throws Exception {
         long threadId = Thread.currentThread().getId();
         String runtimeResultSlug = "SE";
         long totalUsedTime = 0L;
         long totalUsedMemory = 0L;
-        for (int i = 1; i < checkpoints.size()+1; i++) {
+        for (int i = 1; i < checkPoints.size()+1; i++) {
             String tempOutFile = tempWorkDir + String.valueOf(threadId) + i + ".out";
-            Checkpoint tempCheckPoint = checkpoints.get(i-1);
+            CheckPoint tempCheckPoint = checkPoints.get(i-1);
             //获取编译结果
             Map<String, Object> result =  runner.getRuntimeResultRun(request.getSolutionId(),
                                                     runner.getRunCommandLine(language,sourcePath),
@@ -148,8 +148,8 @@ public class JudgeService extends JudgeServerGrpc.JudgeServerImplBase {
             }
         }
         Map<String, Object> result = new HashMap<>();
-        result.put("usedTime",totalUsedTime / checkpoints.size());
-        result.put("usedMemory",totalUsedMemory / checkpoints.size());
+        result.put("usedTime",totalUsedTime / checkPoints.size());
+        result.put("usedMemory",totalUsedMemory / checkPoints.size());
         result.put("runtimeResult",runtimeResultSlug);
         log.debug("完成判题,结果预览:{}",result);
         return result;

@@ -24,6 +24,7 @@ import cn.edu.aust.service.ProblemService;
 
 /**
  * 题目控制器
+ *
  * @author Niu Li
  * @date 2017/1/29
  */
@@ -31,40 +32,44 @@ import cn.edu.aust.service.ProblemService;
 @RequestMapping("/problem")
 public class ProblemController {
 
-    @Autowired
-    private ProblemService problemService;
-    /**
-     * 查询一个题目的详情
-     * @param id 该题目id
-     * @return 视图
-     */
-    @GetMapping(value = "/{id}",produces = "text/html;charset=UTF-8")
-    public String problemDetail(@PathVariable("id") Long id, Model model){
-        ProblemDTO problemDTO = problemService.queryDetail(id);
-        model.addAttribute("problem",problemDTO);
-        return "problem";
-    }
+  @Autowired
+  private ProblemService problemService;
 
-    /**
-     * 查询对应阶段的题目
-     * @param stage 指定阶段
-     * @param pageRequest 请求参数
-     * @return 结果集
-     */
-    @ResponseBody
-    @GetMapping(value = "/stage/{stage}", produces = "application/json; charset=UTF-8")
-    public JSONObject listStage(@PathVariable(value = "stage") Integer stage, PageRequest pageRequest){
-        JSONObject result = new JSONObject();
+  /**
+   * 查询一个题目的详情
+   *
+   * @param id 该题目id
+   * @return 视图
+   */
+  @GetMapping(value = "/{id}", produces = "text/html;charset=UTF-8")
+  public String problemDetail(@PathVariable("id") Long id, Model model) {
+    ProblemDTO problemDTO = problemService.queryDetail(id);
+    model.addAttribute("problem", problemDTO);
+    return "problem";
+  }
 
-        PageInfo<ProblemListDTO> pageInfo = problemService.queryListStage(pageRequest.getSearch(),
-                                                                          stage,
-                                                                          pageRequest.getOrder(),
-                                                                          pageRequest.getOffset(),
-                                                                          pageRequest.getLimit(),
-                                                                          false);
-        result.put("rows",pageInfo.getList());
-        result.put("total",pageInfo.getTotal());
-        return result;
-    }
+  /**
+   * 查询对应阶段的题目
+   *
+   * @param stage       指定阶段
+   * @param pageRequest 请求参数
+   * @return 结果集
+   */
+  @ResponseBody
+  @GetMapping(value = "/stage/{stage}", produces = "application/json; charset=UTF-8")
+  public JSONObject listStage(@PathVariable(value = "stage") Integer stage,
+                              PageRequest pageRequest) {
+    JSONObject result = new JSONObject();
+
+    PageInfo<ProblemListDTO> pageInfo = problemService.queryListStage(pageRequest.getSearch(),
+                                                                      stage,
+                                                                      pageRequest.getOrder(),
+                                                                      pageRequest.getOffset(),
+                                                                      pageRequest.getLimit(),
+                                                                      false);
+    result.put("rows", pageInfo.getList());
+    result.put("total", pageInfo.getTotal());
+    return result;
+  }
 
 }
