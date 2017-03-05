@@ -4,6 +4,7 @@ import org.apache.commons.pool2.impl.GenericObjectPool;
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 
 import cn.edu.aust.common.service.WorkCallBack;
+import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -12,30 +13,38 @@ import lombok.extern.slf4j.Slf4j;
  * @since 2017/3/5
  */
 @Slf4j
+@Data
 public class JudgeClientPool {
+
   private GenericObjectPool<JudgeClient> objectPool = null;
+  private String host;
+  private Integer port;
+  private Integer maxTotal;
+  private Integer minIdle;
+  private Integer maxIdle;
+  private Integer maxWaitMillis;
+  private Long minEvictableIdleTimeMillis;
 
 
-  public JudgeClientPool(Integer maxTotal,Integer minIdle, Integer maxIdle, Integer
-      maxWaitMillis,Long minEvictableIdleTimeMillis ) {
-      // 连接池的配置
-      GenericObjectPoolConfig poolConfig = new GenericObjectPoolConfig();
-      // 池中的最大连接数
-      poolConfig.setMaxTotal(maxTotal);
-      // 最少的空闲连接数
-      poolConfig.setMinIdle(minIdle);
-      // 最多的空闲连接数
-      poolConfig.setMaxIdle(maxIdle);
-      // 当连接池资源耗尽时,调用者最大阻塞的时间,超时时抛出异常 单位:毫秒数
-      poolConfig.setMaxWaitMillis(maxWaitMillis);
-      // 连接池存放池化对象方式,true放在空闲队列最前面,false放在空闲队列最后
-      poolConfig.setLifo(true);
-      // 连接空闲的最小时间,达到此值后空闲连接可能会被移除,默认即为30分钟
-      poolConfig.setMinEvictableIdleTimeMillis(minEvictableIdleTimeMillis);
-      // 连接耗尽时是否阻塞,默认为true
-      poolConfig.setBlockWhenExhausted(true);
-      // 连接池创建
-      objectPool = new GenericObjectPool<>(new JudgeClientFactory(), poolConfig);
+  public void init(){
+    // 连接池的配置
+    GenericObjectPoolConfig poolConfig = new GenericObjectPoolConfig();
+    // 池中的最大连接数
+    poolConfig.setMaxTotal(maxTotal);
+    // 最少的空闲连接数
+    poolConfig.setMinIdle(minIdle);
+    // 最多的空闲连接数
+    poolConfig.setMaxIdle(maxIdle);
+    // 当连接池资源耗尽时,调用者最大阻塞的时间,超时时抛出异常 单位:毫秒数
+    poolConfig.setMaxWaitMillis(maxWaitMillis);
+    // 连接池存放池化对象方式,true放在空闲队列最前面,false放在空闲队列最后
+    poolConfig.setLifo(true);
+    // 连接空闲的最小时间,达到此值后空闲连接可能会被移除,默认即为30分钟
+    poolConfig.setMinEvictableIdleTimeMillis(minEvictableIdleTimeMillis);
+    // 连接耗尽时是否阻塞,默认为true
+    poolConfig.setBlockWhenExhausted(true);
+    // 连接池创建
+    objectPool = new GenericObjectPool<>(new JudgeClientFactory(host,port), poolConfig);
   }
 
   /**
@@ -56,7 +65,7 @@ public class JudgeClientPool {
    * 当连接池异常,则主动创建对象
    */
   private JudgeClient createClient(){
-    return new JudgeClient(JudgeClientFactory.host, JudgeClientFactory.port);
+    return new JudgeClient(this.host, this.port);
   }
 
   /**

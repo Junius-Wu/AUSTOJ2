@@ -14,20 +14,15 @@ public class JudgeClientFactory extends BasePooledObjectFactory<JudgeClient> {
   /**
    * 判题服务器地址
    */
-  public static String host;
+  public String host;
   /**
    * 判题服务器端口
    */
-  public static int port;
+  public int port;
 
-  /**
-   * 配置地址和端口
-   * @param _host 地址
-   * @param _port 端口
-   */
-  public static void config(String _host,Integer _port){
-    host = _host;
-    port = _port;
+  public JudgeClientFactory(String host, int port) {
+    this.host = host;
+    this.port = port;
   }
 
   @Override
