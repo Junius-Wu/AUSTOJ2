@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 
 /**
  * 判题连接池,调用方使用依赖注入
+ *
  * @author Niu Li
  * @since 2017/3/5
  */
@@ -26,7 +27,7 @@ public class JudgeClientPool {
   private Long minEvictableIdleTimeMillis;
 
 
-  public void init(){
+  public void init() {
     // 连接池的配置
     GenericObjectPoolConfig poolConfig = new GenericObjectPoolConfig();
     // 池中的最大连接数
@@ -44,18 +45,19 @@ public class JudgeClientPool {
     // 连接耗尽时是否阻塞,默认为true
     poolConfig.setBlockWhenExhausted(true);
     // 连接池创建
-    objectPool = new GenericObjectPool<>(new JudgeClientFactory(host,port), poolConfig);
+    objectPool = new GenericObjectPool<>(new JudgeClientFactory(host, port), poolConfig);
   }
 
   /**
    * 从连接池获取对象
+   *
    * @return 该对象
    */
-  private JudgeClient borrowObject(){
+  private JudgeClient borrowObject() {
     try {
       return objectPool.borrowObject();
     } catch (Exception e) {
-      log.error("获取judgeClient对象出错",e);
+      log.error("获取judgeClient对象出错", e);
     }
     //连接池失败则主动创建
     return createClient();
@@ -64,15 +66,16 @@ public class JudgeClientPool {
   /**
    * 当连接池异常,则主动创建对象
    */
-  private JudgeClient createClient(){
+  private JudgeClient createClient() {
     return new JudgeClient(this.host, this.port);
   }
 
   /**
    * 判题任务执行器,具体任务逻辑在调用端
+   *
    * @param workCallBack 主要服务内容
    */
-  public Runnable execute(WorkCallBack<Boolean,JudgeClient> workCallBack){
+  public Runnable execute(WorkCallBack<Boolean, JudgeClient> workCallBack) {
     return () -> {
       JudgeClient client = borrowObject();
       try {

@@ -3,9 +3,9 @@ package cn.edu.aust.judge.client;
 import org.junit.Before;
 import org.junit.Test;
 
+import cn.edu.aust.judger.proto.JudgeRequest;
+import cn.edu.aust.judger.proto.JudgeResponse;
 import cn.edu.aust.judger.proto.JudgeServerGrpc;
-import cn.edu.aust.judger.proto.judgeRequest;
-import cn.edu.aust.judger.proto.judgeResponse;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 
@@ -28,14 +28,14 @@ public class JudgeClient {
 
     @Test
     public void judgeTest(){
-        judgeRequest request = judgeRequest.newBuilder().setLanguage("java")
+        JudgeRequest request = JudgeRequest.newBuilder().setLanguage("java")
             .setMemoryLimit(65532)
             .setTimeLimit(2000)
             .setSolutionId(1)
             .setProblemId(1001)
             .setCodeSource(source)
             .build();
-        judgeResponse response = blockingStub.judge(request);
+        JudgeResponse response = blockingStub.judge(request);
         System.out.println(response.getRuntimeResult());
     }
 
