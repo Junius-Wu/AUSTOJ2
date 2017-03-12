@@ -48,7 +48,8 @@ public class Comparator {
       while (stdFileItr.hasNext() && fileItr.hasNext()) {
         String stdLine = stdFileItr.nextLine();
         String line = fileItr.nextLine();
-
+        log.debug("std answer:{}",stdLine);
+        log.debug("other answer:{}",line);
         if (!isLineOutputTheSame(stdLine, line)) {
           return false;
         }

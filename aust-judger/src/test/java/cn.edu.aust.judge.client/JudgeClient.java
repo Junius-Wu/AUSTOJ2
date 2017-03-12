@@ -21,7 +21,7 @@ public class JudgeClient {
 
     @Before
     public void init(){
-        channel = ManagedChannelBuilder.forAddress("127.0.0.1",50013)
+        channel = ManagedChannelBuilder.forAddress("192.168.99.100",50013)
             .usePlaintext(true).build();
         blockingStub = JudgeServerGrpc.newBlockingStub(channel).withCompression("gzip");
     }
@@ -32,7 +32,7 @@ public class JudgeClient {
             .setMemoryLimit(65532)
             .setTimeLimit(2000)
             .setSolutionId(1)
-            .setProblemId(1001)
+            .setProblemId(1000)
             .setCodeSource(source)
             .build();
         JudgeResponse response = blockingStub.judge(request);
@@ -40,11 +40,15 @@ public class JudgeClient {
     }
 
 
-    private String source = "public class Main {\n" +
-        "  public static void main(String[] args) {\n" +
-        "    while (true){\n" +
-        "      System.out.println(\"hahahahhaha\");\n" +
-        "    }\n" +
-        "  }\n" +
+    private String source = "import java.io.*;\n" +
+        "import java.util.*;\n" +
+        "public class Main\n" +
+        "{\n" +
+        "            public static void main(String args[]) throws Exception\n" +
+        "            {\n" +
+        "                    Scanner cin=new Scanner(System.in);\n" +
+        "                    int a=cin.nextInt(),b=cin.nextInt();\n" +
+        "                    System.out.println(a+b);\n" +
+        "            }\n" +
         "}";
 }
