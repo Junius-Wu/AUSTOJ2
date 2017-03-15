@@ -80,7 +80,7 @@ public class ArticleService extends BaseService<Article> {
             article.setId(articleDTO.getId());
             int viewcount = articleDTO.getViewcount() + 1;
             article.setViewcount(viewcount);
-            updateSelective(article);
+            articleMapper.updateByPrimaryKeySelective(article);
             return viewcount;
         }
         return articleDTO.getViewcount();

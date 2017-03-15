@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 
+import cn.edu.aust.mapper.ArticleMapper;
 import cn.edu.aust.mapper.VotelogMapper;
 import cn.edu.aust.pojo.entity.Article;
 import cn.edu.aust.pojo.entity.Votelog;
@@ -17,11 +18,11 @@ import cn.edu.aust.pojo.entity.Votelog;
  * @date 2017/1/30
  */
 @Service
-public class VotelogService extends BaseService<Votelog>{
+public class VotelogService {
     @Autowired
     private VotelogMapper votelogMapper;
     @Autowired
-    private ArticleService articleService;
+    private ArticleMapper articleMapper;
 
     /**
      * 文章点赞
@@ -43,15 +44,15 @@ public class VotelogService extends BaseService<Votelog>{
             voteLog.setOtherId(article.getId());
             voteLog.setUserId(user_id);
             voteLog.setCreatetime(new Date());
-            save(voteLog);//这里需要设置插入并返回主键keyProperty="id"
+            votelogMapper.insert(voteLog);//这里需要设置插入并返回主键keyProperty="id"
         }else {
             voteLog.setStatus((byte)(voteLog.getStatus()^1));
-            updateSelective(voteLog);
+            votelogMapper.updateByPrimaryKeySelective(voteLog);
         }
         Article tempArticle = new Article();
         tempArticle.setId(article.getId());
         tempArticle.setLikecount(article.getLikecount()+(voteLog.getStatus()==(byte)0?-1:1));
-        articleService.updateSelective(tempArticle);
+        articleMapper.updateByPrimaryKeySelective(tempArticle);
         result.put("art_status",voteLog.getStatus());
         result.put("count",tempArticle.getLikecount());
         return result;

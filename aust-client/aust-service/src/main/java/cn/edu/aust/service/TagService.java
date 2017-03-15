@@ -16,7 +16,7 @@ import cn.edu.aust.pojo.entity.Tags;
  * @date 2017/1/29
  */
 @Service
-public class TagService extends BaseService<Tags>{
+public class TagService {
     @Autowired
     private TagsMapper tagsMapper;
 

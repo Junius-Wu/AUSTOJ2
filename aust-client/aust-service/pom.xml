@@ -26,6 +26,10 @@
             <groupId>cn.edu.aust</groupId>
             <artifactId>aust-mapper</artifactId>
         </dependency>
+        <dependency>
+            <groupId>cn.edu.aust</groupId>
+            <artifactId>aust-plugin</artifactId>
+        </dependency>
         <!--Spring start-->
         <dependency>
             <groupId>org.springframework</groupId>

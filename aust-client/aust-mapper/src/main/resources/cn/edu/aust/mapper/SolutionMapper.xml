@@ -7,7 +7,7 @@
     -->
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="problem_id" property="problemId" jdbcType="INTEGER" />
-    <result column="username" property="username" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
     <result column="memory" property="memory" jdbcType="INTEGER" />
     <result column="time" property="time" jdbcType="INTEGER" />
     <result column="code_length" property="codeLength" jdbcType="INTEGER" />

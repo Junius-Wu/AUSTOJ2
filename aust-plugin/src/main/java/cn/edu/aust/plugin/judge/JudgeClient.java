@@ -1,5 +1,6 @@
 package cn.edu.aust.plugin.judge;
 
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 import cn.edu.aust.judger.proto.JudgeRequest;
@@ -49,17 +50,28 @@ public class JudgeClient {
    * @param memoryLimit 内存限制
    * @return 判题结果
    */
-  public JudgeResponse judge(Long solutionId, Long problemId, String sourceCode, String language,
-                   Integer timeLimit, Long memoryLimit) {
+  public JudgeResultResponse judge(Long solutionId, Long problemId, String sourceCode, String language,
+                   Integer timeLimit, Integer memoryLimit) {
     JudgeRequest.Builder builder = JudgeRequest.newBuilder();
     JudgeRequest judgeRequest = builder.setSolutionId(solutionId.intValue())
                                        .setProblemId(problemId.intValue())
                                        .setCodeSource(sourceCode)
                                        .setLanguage(language)
                                        .setTimeLimit(timeLimit)
-                                       .setMemoryLimit(memoryLimit.intValue())
+                                       .setMemoryLimit(memoryLimit)
                                        .build();
     blockingStub = JudgeServerGrpc.newBlockingStub(channel);
-    return blockingStub.judge(judgeRequest);
+    JudgeResponse judgeResponse = blockingStub.judge(judgeRequest);
+    JudgeResultResponse judgeResultResponse = new JudgeResultResponse();
+    if (Objects.isNull(judgeResponse)){
+      judgeResultResponse.setExitCode(99);
+      judgeResultResponse.setRuntimeResult("判题异常");
+      return judgeResultResponse;
+    }
+    judgeResultResponse.setExitCode(judgeResponse.getExitCode());
+    judgeResultResponse.setRuntimeResult(judgeResponse.getRuntimeResult());
+    judgeResultResponse.setUseMemory(judgeResponse.getUsedMemory());
+    judgeResultResponse.setUseTime(judgeResponse.getUsedTime());
+    return judgeResultResponse;
   }
 }

@@ -52,6 +52,7 @@ public class ProblemService extends BaseService<Problem> {
 
   /**
    * 查询一个比赛的题目详情
+   *
    * @param problemId 竞赛id
    * @return 查询结果
    */
@@ -81,15 +82,15 @@ public class ProblemService extends BaseService<Problem> {
    * @param direction 排序方向,针对id字段
    * @param offset    分页参数
    * @param limit     分页参数
-   * @param isCatelog     是否为目录,true时stage参数为目录id
+   * @param isCatelog 是否为目录,true时stage参数为目录id
    * @return DTO实体
    */
   public PageInfo<ProblemListDTO> queryListStage(String search,
-                                                 Integer stage,
-                                                 String direction,
-                                                 Integer offset,
-                                                 Integer limit,
-                                                 boolean isCatelog) {
+      Integer stage,
+      String direction,
+      Integer offset,
+      Integer limit,
+      boolean isCatelog) {
     //封装查询条件
     ProblemQM problemQM = new ProblemQM();
     problemQM.setDirection(direction);
@@ -98,15 +99,15 @@ public class ProblemService extends BaseService<Problem> {
     //查询转换
     PageInfo<ProblemPC> problemPCS =
         PageHelper.offsetPage(offset, limit)
-                  .doSelectPageInfo(
-                      () -> {
-                        if (isCatelog){
-                          problemMapper.queryListCatelog(problemQM);
-                        }else {
-                          problemMapper.queryListStage(problemQM);
-                        }
-                      }
-                  );
+            .doSelectPageInfo(
+                () -> {
+                  if (isCatelog) {
+                    problemMapper.queryListCatelog(problemQM);
+                  } else {
+                    problemMapper.queryListStage(problemQM);
+                  }
+                }
+            );
 
     ModelMapper modelMapper = new ModelMapper();
     return modelMapper.map(problemPCS, new TypeToken<PageInfo<ProblemListDTO>>() {
@@ -115,10 +116,11 @@ public class ProblemService extends BaseService<Problem> {
 
   /**
    * 查询一个竞赛下面的比赛
+   *
    * @param contest 该竞赛
    * @return 查询结果
    */
-  public List<ProblemListDTO> queryContest(Long contest){
+  public List<ProblemListDTO> queryContest(Long contest) {
     List<ProblemPC> result = problemMapper.queryContest(contest);
     return ProblemAssemble.assembleList(result);
   }

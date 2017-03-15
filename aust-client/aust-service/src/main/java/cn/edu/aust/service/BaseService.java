@@ -12,6 +12,7 @@ import tk.mybatis.mapper.common.Mapper;
 import tk.mybatis.mapper.entity.Example;
 
 /**
+ * todo 需要替换掉,service不适合提供这些增删改查基本方法,service应该是针对业务来做封装
  * 利用通用mapper的泛型注入实现通用service模板
  * @author Niu Li
  * @date 2017/1/25

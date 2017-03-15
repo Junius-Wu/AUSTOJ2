@@ -2,11 +2,12 @@ package cn.edu.aust.service;
 
 import com.github.pagehelper.PageHelper;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
+
+import javax.annotation.Resource;
 
 import cn.edu.aust.common.util.DateUtil;
 import cn.edu.aust.mapper.NotifyMapper;
@@ -18,8 +19,8 @@ import cn.edu.aust.pojo.entity.Notify;
  * @date 2017/1/29
  */
 @Service
-public class NotifyService extends BaseService<Notify> {
-    @Autowired
+public class NotifyService {
+    @Resource
     private NotifyMapper notifyMapper;
 
     /**
