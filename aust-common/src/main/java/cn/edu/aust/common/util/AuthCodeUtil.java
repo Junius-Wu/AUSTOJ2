@@ -9,7 +9,7 @@ import java.util.Random;
  * @author Niu Li
  * @date 2017/1/25
  */
-public final class CodeUtil {
+public final class AuthCodeUtil {
 
     //验证码来源,去掉了混淆的O
     private static final char[] codeSequence = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J',

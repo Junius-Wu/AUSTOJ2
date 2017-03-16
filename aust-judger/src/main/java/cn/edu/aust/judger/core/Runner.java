@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import cn.edu.aust.judger.util.Constant;
-import cn.edu.aust.judger.util.LanguageUtil;
+import cn.edu.aust.common.util.LanguageUtil;
 import cn.edu.aust.judger.util.NativeLibraryLoader;
 import lombok.extern.slf4j.Slf4j;
 

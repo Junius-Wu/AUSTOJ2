@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import cn.edu.aust.common.util.CodeUtil;
+import cn.edu.aust.common.util.AuthCodeUtil;
 
 /**
  * 验证码
@@ -35,7 +35,7 @@ public class CodeController {
     public void getCode(HttpServletRequest request, HttpServletResponse response) throws IOException {
         //生成验证码
         BufferedImage buffImg = new BufferedImage(width,height,BufferedImage.TYPE_INT_RGB);
-        String resultCode = CodeUtil.createCodeImage(buffImg,width,height,lineCount,codeCount);
+        String resultCode = AuthCodeUtil.createCodeImage(buffImg,width,height,lineCount,codeCount);
         //保存到session中
         HttpSession session = request.getSession();
         session.setAttribute("codeValidate",resultCode);

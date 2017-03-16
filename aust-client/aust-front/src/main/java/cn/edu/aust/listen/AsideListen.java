@@ -2,13 +2,13 @@ package cn.edu.aust.listen;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.ServletContextAware;
 
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
 import javax.servlet.ServletContext;
 
 import cn.edu.aust.common.entity.Setting;
@@ -36,15 +36,15 @@ public class AsideListen implements ServletContextAware {
 
     /** ServletContext */
     private ServletContext servletContext;
-    @Autowired
+    @Resource
     private CatelogService catelogService;
-    @Autowired
+    @Resource
     private ArticleService articleService;
-    @Autowired
+    @Resource
     private TagService tagService;
-    @Autowired
+    @Resource
     private NotifyService notifyService;
-    @Autowired
+    @Resource
     private JedisClient jedisClient;
 
     @Override

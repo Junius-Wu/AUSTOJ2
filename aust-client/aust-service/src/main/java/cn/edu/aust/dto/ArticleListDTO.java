@@ -3,7 +3,7 @@ package cn.edu.aust.dto;
 import java.util.Date;
 
 /**
- * 文章列表伪装类
+ * 文章列表包装类
  *
  * @author Niu Li
  * @date 2017/1/30

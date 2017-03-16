@@ -18,8 +18,7 @@ import cn.edu.aust.judger.proto.JudgeServerGrpc;
 import cn.edu.aust.judger.proto.JudgeRequest;
 import cn.edu.aust.judger.proto.JudgeResponse;
 import cn.edu.aust.judger.util.Constant;
-import cn.edu.aust.judger.util.LanguageUtil;
-import cn.edu.aust.judger.util.PosCode;
+import cn.edu.aust.common.util.LanguageUtil;
 import io.grpc.ServerServiceDefinition;
 import io.grpc.stub.StreamObserver;
 import lombok.extern.slf4j.Slf4j;
@@ -53,7 +52,7 @@ public class JudgeService extends JudgeServerGrpc.JudgeServerImplBase {
         //获取编译命令
         LanguageUtil.Language language = LanguageUtil.getLanguage(request.getLanguage());
         if (language == null) {
-            response.setExitCode(PosCode.NO_LANGUAGE.getStatus()).setRuntimeResult("不支持的语言类型");
+            response.setExitCode(cn.edu.aust.common.constant.JudgeCode.JudgeCode.NO_LANGUAGE.getStatus()).setRuntimeResult("不支持的语言类型");
             log.warn("不支持的语言类型,该提交的id为: {}",request.getSolutionId());
             responseObserver.onNext(response.build());
             responseObserver.onCompleted();
@@ -68,7 +67,7 @@ public class JudgeService extends JudgeServerGrpc.JudgeServerImplBase {
         } catch (Exception e) {
             e.printStackTrace();
             log.error("保存源码出错",e);
-            response.setExitCode(PosCode.SYS_ERROR.getStatus()).setRuntimeResult("系统异常");
+            response.setExitCode(cn.edu.aust.common.constant.JudgeCode.JudgeCode.SYS_ERROR.getStatus()).setRuntimeResult("系统异常");
             responseObserver.onNext(response.build());
             responseObserver.onCompleted();
             return ;
@@ -87,7 +86,7 @@ public class JudgeService extends JudgeServerGrpc.JudgeServerImplBase {
             checkPoints = preprocessor.fetchTestPoints(request.getProblemId());
         } catch (Exception e) {
             log.error("该题目{}不存在测试案例",request.getProblemId(),e);
-            response.setExitCode(PosCode.NO_TESTCASE.getStatus()).setRuntimeResult("该题目不存在测试案例");
+            response.setExitCode(cn.edu.aust.common.constant.JudgeCode.JudgeCode.NO_TESTCASE.getStatus()).setRuntimeResult("该题目不存在测试案例");
             responseObserver.onNext(response.build());
             responseObserver.onCompleted();
             return ;
@@ -100,7 +99,7 @@ public class JudgeService extends JudgeServerGrpc.JudgeServerImplBase {
                     .setUsedTime(NumberUtils.toInt(String.valueOf(results.get("usedTime"))));
         } catch (Exception e) {
             log.error("judger error,solution id = {}",request.getSolutionId(),e);
-            response.setExitCode(PosCode.SYS_ERROR.getStatus()).setRuntimeResult("判题异常");
+            response.setExitCode(cn.edu.aust.common.constant.JudgeCode.JudgeCode.SYS_ERROR.getStatus()).setRuntimeResult("判题异常");
             responseObserver.onNext(response.build());
             responseObserver.onCompleted();
             return ;

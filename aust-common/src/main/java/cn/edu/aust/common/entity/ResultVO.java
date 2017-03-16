@@ -7,7 +7,7 @@ import cn.edu.aust.common.constant.PosCode;
  * @author Niu Li
  * @date 2017/1/25
  */
-public class ResultPackag<T> {
+public class ResultVO<T> {
 
     private Integer status;// 是否成功标志
 
@@ -15,23 +15,23 @@ public class ResultPackag<T> {
 
     private String msg;// 错误信息
 
-    public ResultPackag() {
+    public ResultVO() {
     }
 
     // 成功时的构造器
-    public ResultPackag(PosCode posCode,T data) {
+    public ResultVO(PosCode posCode,T data) {
         this.status = posCode.getStatus();
         this.msg = posCode.getMsg();
         this.data = data;
     }
 
     // 错误时的构造器
-    public ResultPackag(PosCode posCode) {
+    public ResultVO(PosCode posCode) {
         this.status = posCode.getStatus();
         this.msg = posCode.getMsg();
     }
 
-    public ResultPackag(int status,String msg) {
+    public ResultVO(int status,String msg) {
         this.status = status;
         this.msg = msg;
     }

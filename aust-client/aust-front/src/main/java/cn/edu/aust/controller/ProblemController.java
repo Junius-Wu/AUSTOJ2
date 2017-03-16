@@ -37,7 +37,7 @@ public class ProblemController {
    */
   @GetMapping(value = "/{id}", produces = "text/html;charset=UTF-8")
   public String problemDetail(@PathVariable("id") Long id, Model model) {
-    ProblemDTO problemDTO = problemService.queryDetail(id);
+    ProblemDTO problemDTO = problemService.findDetail(id);
     model.addAttribute("problem", problemDTO);
     return "problem";
   }

@@ -22,6 +22,7 @@ import cn.edu.aust.service.ProblemService;
 
 /**
  * 目录题目查询
+ *
  * @author Niu Li
  * @since 2017/2/26
  */
@@ -35,13 +36,14 @@ public class CatelogController {
 
   /**
    * 前往目录页面
+   *
    * @param id 该目录的id
    * @return 视图
    */
-  @GetMapping(value = "/catelog/{id}",produces = MediaType.TEXT_HTML_VALUE)
-  public String toCatelog(@PathVariable("id") Integer id, Model model){
+  @GetMapping(value = "/catelog/{id}", produces = MediaType.TEXT_HTML_VALUE)
+  public String toCatelog(@PathVariable("id") Integer id, Model model) {
     CatelogDO catelogDO = catelogService.queryById(id);
-    if (catelogDO == null){
+    if (catelogDO == null) {
       throw new PageException("所查看的目录不存在");
     }
     model.addAttribute("cateName", catelogDO.getName());
@@ -52,16 +54,17 @@ public class CatelogController {
 
   /**
    * 查看指定目录下的题目
+   *
    * @param id 目录id
    * @return 视图
    */
   @ResponseBody
-  @GetMapping(value = "/problem/catelog/{id}",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-  public JSONObject queryCategoryProblem(@PathVariable("id") Integer id, PageRequest pageRequest){
+  @GetMapping(value = "/problem/catelog/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+  public JSONObject queryCategoryProblem(@PathVariable("id") Integer id, PageRequest pageRequest) {
     JSONObject result = new JSONObject();
 
     CatelogDO catelogDO = catelogService.queryById(id);
-    if (catelogDO == null){
+    if (catelogDO == null) {
       result.put("status", PosCode.NO_PRIVILEGE.getStatus());
       result.put("msg", PosCode.NO_PRIVILEGE.getMsg());
       return result;
@@ -69,13 +72,9 @@ public class CatelogController {
     //查找题目
 
     PageInfo<ProblemListDTO> pageInfo = problemService.queryListStage(pageRequest.getSearch(),
-                                                                      id,
-                                                                      pageRequest.getOrder(),
-                                                                      pageRequest.getOffset(),
-                                                                      pageRequest.getLimit(),
-                                                                      true);
-    result.put("rows",pageInfo.getList());
-    result.put("total",pageInfo.getTotal());
+        id, pageRequest.getOrder(), pageRequest.getOffset(), pageRequest.getLimit(), true);
+    result.put("rows", pageInfo.getList());
+    result.put("total", pageInfo.getTotal());
     return result;
   }
 

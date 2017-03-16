@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import cn.edu.aust.common.constant.PosCode;
-import cn.edu.aust.common.entity.ResultPackag;
+import cn.edu.aust.common.entity.ResultVO;
 import cn.edu.aust.common.util.CgiHelper;
 import cn.edu.aust.dto.ContestDTO;
 import cn.edu.aust.dto.ProblemDTO;
@@ -70,12 +70,12 @@ public class ContestController {
    */
   @PostMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
   @ResponseBody
-  public ResultPackag<PosCode> canViewContest(@PathVariable(value = "id") Long id,
+  public ResultVO<PosCode> canViewContest(@PathVariable(value = "id") Long id,
                                         HttpServletRequest request,
                                         HttpSession session) {
     UserDO userDO = userService.getCurrent();
     if (userDO == null) {
-      return new ResultPackag<PosCode>(PosCode.NO_LOGIN);
+      return new ResultVO<PosCode>(PosCode.NO_LOGIN);
     }
     try {
       //判断是否验证过
@@ -85,20 +85,20 @@ public class ContestController {
       } else {
         String[] ids = StringUtils.split(curContest, ",");
         if (Arrays.binarySearch(ids, String.valueOf(id)) >= 0) {
-          return new ResultPackag<PosCode>(PosCode.OK);
+          return new ResultVO<PosCode>(PosCode.OK);
         }
       }
       //检查是否可以访问
       String passwd = CgiHelper.getString("passwd", null, request);
       if (contestService.canView(id, passwd)) {
         session.setAttribute("contest", curContest + "," + id);
-        return new ResultPackag<PosCode>(PosCode.OK);
+        return new ResultVO<PosCode>(PosCode.OK);
       }
     }catch (Exception e){
       log.error("访问比赛出错",e);
-      return new ResultPackag<PosCode>(PosCode.NO_PRIVILEGE.getStatus(),e.getMessage());
+      return new ResultVO<PosCode>(PosCode.NO_PRIVILEGE.getStatus(),e.getMessage());
     }
-    return new ResultPackag<PosCode>(PosCode.NO_PRIVILEGE);
+    return new ResultVO<PosCode>(PosCode.NO_PRIVILEGE);
   }
 
   /**

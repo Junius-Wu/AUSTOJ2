@@ -4,10 +4,12 @@ import org.apache.commons.lang3.StringUtils;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import java.util.Collections;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -28,6 +30,7 @@ import cn.edu.aust.pojo.entity.UserDO;
 @Service
 public class UserService extends BaseService<UserDO>{
 
+    private static final ModelMapper modelMapper = new ModelMapper();
     @Resource
     private JedisClient jedisClient;
     @Resource
@@ -60,7 +63,9 @@ public class UserService extends BaseService<UserDO>{
      */
     public List<UserDTO> queryToIndexShow(){
         List<UserDO> userDOS = userMapper.queryToIndexShow();
-        ModelMapper modelMapper = new ModelMapper();
+        if (CollectionUtils.isEmpty(userDOS)){
+            return Collections.emptyList();
+        }
         return modelMapper.map(userDOS,new TypeToken<List<UserDTO>>(){}.getType());
     }
 

@@ -12,7 +12,7 @@ import cn.edu.aust.judger.exception.NoTestCaseException;
 import cn.edu.aust.judger.model.CheckPoint;
 import cn.edu.aust.judger.util.Constant;
 import cn.edu.aust.judger.util.DigestUtils;
-import cn.edu.aust.judger.util.LanguageUtil;
+import cn.edu.aust.common.util.LanguageUtil;
 import lombok.extern.slf4j.Slf4j;
 
 /**

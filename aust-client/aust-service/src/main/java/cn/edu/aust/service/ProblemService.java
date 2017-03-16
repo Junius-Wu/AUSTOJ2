@@ -37,11 +37,10 @@ public class ProblemService extends BaseService<ProblemDO> {
 
   /**
    * 查询一个题目的详情
-   *
    * @param id 主键
    * @return 结果
    */
-  public ProblemDTO queryDetail(Long id) {
+  public ProblemDTO findDetail(Long id) {
     ProblemPK problemPK = problemMapper.queryDetail(id);
     if (problemPK == null) {
       throw new PageException(PosCode.NO_PRIVILEGE.getMsg());
@@ -49,6 +48,7 @@ public class ProblemService extends BaseService<ProblemDO> {
     ModelMapper modelMapper = new ModelMapper();
     return modelMapper.map(problemPK, ProblemDTO.class);
   }
+
 
   /**
    * 查询一个比赛的题目详情
