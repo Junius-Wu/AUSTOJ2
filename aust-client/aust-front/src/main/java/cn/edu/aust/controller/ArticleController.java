@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.Optional;
 
 import cn.edu.aust.common.constant.PosCode;
-import cn.edu.aust.common.entity.Result;
+import cn.edu.aust.common.entity.ResultPackag;
 import cn.edu.aust.dto.ArticleDTO;
 import cn.edu.aust.dto.ArticleListDTO;
 import cn.edu.aust.entity.PageRequest;
@@ -80,18 +80,18 @@ public class ArticleController {
      */
     @ResponseBody
     @PostMapping(value = "/vote/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public Result<?> articleVote(@PathVariable("id") Long id) throws PageException {
+    public ResultPackag<?> articleVote(@PathVariable("id") Long id) throws PageException {
         JSONObject result = new JSONObject();
         UserDO userDO = userService.getCurrent();
         if (userDO == null){
-            return new Result<PosCode>(PosCode.NO_LOGIN);
+            return new ResultPackag<PosCode>(PosCode.NO_LOGIN);
         }
         Optional<ArticleDO> article = Optional.of(articleService.queryById(id));
         article.filter(a -> a.getIsShow() != 0)
                .orElseThrow(()->new PageException(PosCode.NO_PRIVILEGE.getMsg()));
 
         votelogService.voteArticleComment(result,article.get(), userDO.getId());
-        return new Result<JSONObject>(PosCode.OK,result);
+        return new ResultPackag<JSONObject>(PosCode.OK,result);
     }
 
 

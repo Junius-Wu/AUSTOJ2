@@ -3,7 +3,7 @@ package cn.edu.aust.mapper;
 import java.util.List;
 
 import cn.edu.aust.pojo.entity.ArticleDO;
-import cn.edu.aust.query.ArticleDOPC;
+import cn.edu.aust.query.ArticlePK;
 import cn.edu.aust.query.ArticleQM;
 import tk.mybatis.mapper.common.Mapper;
 
@@ -18,12 +18,12 @@ public interface ArticleMapper extends Mapper<ArticleDO> {
      * 查询文章页面显示的列表
      * @return 结果集
      */
-    List<ArticleDOPC> queryList(ArticleQM articleQM);
+    List<ArticlePK> queryList(ArticleQM articleQM);
 
     /**
      * 根据id查询一个文章包装类型
      * @param id 文章id
      * @return 包装结果
      */
-    ArticleDOPC queryDetail(Long id);
+    ArticlePK queryDetail(Long id);
 }

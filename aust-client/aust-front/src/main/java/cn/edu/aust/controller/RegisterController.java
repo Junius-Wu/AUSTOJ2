@@ -24,7 +24,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import cn.edu.aust.common.constant.PosCode;
-import cn.edu.aust.common.entity.Result;
+import cn.edu.aust.common.entity.ResultPackag;
 import cn.edu.aust.common.entity.Setting;
 import cn.edu.aust.common.service.JedisClient;
 import cn.edu.aust.common.util.SystemUtil;
@@ -75,32 +75,32 @@ public class RegisterController {
      */
     @PostMapping(produces = "application/json; charset=UTF-8")
     public @ResponseBody
-    Result<?> register(String email,String password,String nickname, String codevalidate,
+    ResultPackag<?> register(String email,String password,String nickname, String codevalidate,
                         HttpServletRequest request, HttpServletResponse response){
         HttpSession session = request.getSession();
         //验证码验证
         String code = (String) session.getAttribute("codeValidate");
         if (!StringUtils.equalsIgnoreCase(code, codevalidate)) {
-            return new Result<PosCode>(PosCode.CODE_ERROR);
+            return new ResultPackag<PosCode>(PosCode.CODE_ERROR);
         }
         Setting setting = SystemUtil.getSetting(jedisClient);
         if (!setting.isIsRegisterEnabled()){
-            return new Result<PosCode>(PosCode.NOOPEN_REGISTER);
+            return new ResultPackag<PosCode>(PosCode.NOOPEN_REGISTER);
         }
         //参数校验
         Matcher matcher = emailPattern.matcher(email);
         if (!matcher.matches()){
-            return new Result<PosCode>(PosCode.USERNAME_NOALLOW);
+            return new ResultPackag<PosCode>(PosCode.USERNAME_NOALLOW);
         }
         if (StringUtils.isEmpty(password) || password.length() > 30){
-            return new Result<PosCode>(PosCode.PASSWORD_NOALLOW);
+            return new ResultPackag<PosCode>(PosCode.PASSWORD_NOALLOW);
         }
         if (StringUtils.isEmpty(nickname) || nickname.length() > 30){
-            return new Result<PosCode>(PosCode.NICKNAME_NOALLOW);
+            return new ResultPackag<PosCode>(PosCode.NICKNAME_NOALLOW);
         }
         //用户存在验证
         if (userService.judgeUsernameOrEmail(null,email)){
-            return new Result<PosCode>(PosCode.USERNAME_EXIST);
+            return new ResultPackag<PosCode>(PosCode.USERNAME_EXIST);
         }
         //注册用户
         UserDO userDO = new UserDO();
@@ -131,7 +131,7 @@ public class RegisterController {
 
         //移除session
         session.removeAttribute("referer");
-        return new Result<JSONObject>(PosCode.OK,result);
+        return new ResultPackag<JSONObject>(PosCode.OK,result);
     }
 
     /**
@@ -139,22 +139,23 @@ public class RegisterController {
      * @param username 要检查的用户名
      */
     @GetMapping(value = "/check",produces = "application/json; charset=UTF-8")
-    public @ResponseBody Result<PosCode> checkUsername(String username,String email){
+    public @ResponseBody
+    ResultPackag<PosCode> checkUsername(String username,String email){
 
         boolean check = userService.judgeUsernameOrEmail(null,email);
         if (check){
-            return new Result<>(PosCode.USERNAME_EXIST);
+            return new ResultPackag<>(PosCode.USERNAME_EXIST);
         }
         //合法性检查
         Matcher matcher = emailPattern.matcher(email);
         if (!matcher.matches()){
-            return new Result<>(PosCode.USERNAME_NOALLOW);
+            return new ResultPackag<>(PosCode.USERNAME_NOALLOW);
         }
         //是否含有违规字段
 //        if (userService.usernameIsDisabled(username)){
-//            return new Result<>(true,PosCode.USERNAME_NOALLOW);
+//            return new ResultPackag<>(true,PosCode.USERNAME_NOALLOW);
 //        }
-        return new Result<>(PosCode.OK);
+        return new ResultPackag<>(PosCode.OK);
     }
 
     /**
@@ -162,17 +163,18 @@ public class RegisterController {
      * @param token token
      */
     @GetMapping(value = "/check/token",produces = "application/json; charset=UTF-8")
-    public @ResponseBody Result<PosCode> checkToken(String token){
+    public @ResponseBody
+    ResultPackag<PosCode> checkToken(String token){
         String email = jedisClient.get(token);
         if (StringUtils.isEmpty(email)){
-            return new Result<>(PosCode.URL_ERROR);
+            return new ResultPackag<>(PosCode.URL_ERROR);
         }
         //判断用户状态
         UserDO userDO = new UserDO();
         userDO.setEmail(email);
         userDO = userService.queryOne(userDO);
         if (userDO.getId() == null || userDO.getIsDefunct() != 2){
-            return new Result<>(PosCode.ALREADY_REGISTER);
+            return new ResultPackag<>(PosCode.ALREADY_REGISTER);
         }
         //更新用户 已验证
         userDO.setIsDefunct((byte) 0);
@@ -180,6 +182,6 @@ public class RegisterController {
         userService.update(userDO);
         //清除缓存
         jedisClient.del(token);
-        return new Result<>(PosCode.OK);
+        return new ResultPackag<>(PosCode.OK);
     }
 }

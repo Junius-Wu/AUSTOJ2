@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import cn.edu.aust.common.constant.PosCode;
-import cn.edu.aust.common.entity.Result;
+import cn.edu.aust.common.entity.ResultPackag;
 import cn.edu.aust.common.entity.Setting;
 import cn.edu.aust.common.service.JedisClient;
 import cn.edu.aust.common.util.SystemUtil;
@@ -63,16 +63,16 @@ public class LoginController {
      */
     @PostMapping(produces = "application/json; charset=UTF-8")
     public @ResponseBody
-    Result<?> login(String email, String password, String codevalidate,
+    ResultPackag<?> login(String email, String password, String codevalidate,
                  HttpSession session, HttpServletRequest request, HttpServletResponse response) throws PageException {
         JSONObject result = new JSONObject();
         if (StringUtils.isEmpty(email) || StringUtils.isEmpty(password)){
-            return new Result<>(20001,"用户民或密码不能为空");
+            return new ResultPackag<>(20001,"用户民或密码不能为空");
         }
         //验证码验证
         String code = (String) session.getAttribute("codeValidate");
         if (!StringUtils.equalsIgnoreCase(code, codevalidate)) {
-            return new Result<>(PosCode.CODE_ERROR);
+            return new ResultPackag<>(PosCode.CODE_ERROR);
         }
         UserDO userDO = new UserDO();
         Setting setting = SystemUtil.getSetting(jedisClient);
@@ -80,18 +80,18 @@ public class LoginController {
         userDO = userService.queryOne(userDO);
         //验证不存在
         if (userDO == null) {
-            return new Result<>(PosCode.NO_REGISTER);
+            return new ResultPackag<>(PosCode.NO_REGISTER);
         }
         //验证是否冻结
         if (userDO.getIsDefunct() == 1){
-            return new Result<>(PosCode.USER_FREEZE);
+            return new ResultPackag<>(PosCode.USER_FREEZE);
         }
         //验证锁定状态
         if (userDO.getIsLock() == 1){
             int accountLockTime = setting.getAccountLockTime();
             //锁定时间0,则永久锁定
             if (accountLockTime == 0){
-                return new Result<>(PosCode.USER_LOCKED);
+                return new ResultPackag<>(PosCode.USER_LOCKED);
             }
             Date lockdate = userDO.getLockdate();
             Date unlockdate = DateUtils.addMinutes(lockdate,accountLockTime);
@@ -101,7 +101,7 @@ public class LoginController {
                 userDO.setLockdate(null);
                 userService.updateSelective(userDO);
             }else {
-                return new Result<>(PosCode.USER_LOCKED);
+                return new ResultPackag<>(PosCode.USER_LOCKED);
             }
         }
         //验证密码
@@ -115,9 +115,9 @@ public class LoginController {
             userDO.setLoginfail(accountLockCount);
             userService.updateSelective(userDO);
             if (userDO.getIsLock() == 1){
-                return new Result<>(PosCode.USER_LOCKED);
+                return new ResultPackag<>(PosCode.USER_LOCKED);
             }else {
-                return new Result<>(PosCode.USER_LOCKED.getStatus(),
+                return new ResultPackag<>(PosCode.USER_LOCKED.getStatus(),
                         "密码错误,若再错误"+(setting.getAccountLockCount()-accountLockCount+1)+"次,则锁定账户");
             }
         }
@@ -138,7 +138,7 @@ public class LoginController {
         result.put("referer",redirect.orElse("/index"));
 
         session.removeAttribute("referer");
-        return new Result<>(PosCode.OK,result);
+        return new ResultPackag<>(PosCode.OK,result);
     }
 
     /**

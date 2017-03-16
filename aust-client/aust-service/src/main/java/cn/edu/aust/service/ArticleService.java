@@ -28,7 +28,7 @@ import cn.edu.aust.dto.ArticleListDTO;
 import cn.edu.aust.mapper.ArticleMapper;
 import cn.edu.aust.pojo.entity.ArticleDO;
 import cn.edu.aust.pojo.entity.UserDO;
-import cn.edu.aust.query.ArticleDOPC;
+import cn.edu.aust.query.ArticlePK;
 import cn.edu.aust.query.ArticleQM;
 
 /**
@@ -48,7 +48,7 @@ public class ArticleService extends BaseService<ArticleDO> {
      * @return 详情展示对象
      */
     public ArticleDTO queryDetail(Long id){
-        ArticleDOPC article = articleMapper.queryDetail(id);
+        ArticlePK article = articleMapper.queryDetail(id);
         ModelMapper modelMapper = new ModelMapper();
         return modelMapper.map(article,ArticleDTO.class);
     }
@@ -116,7 +116,7 @@ public class ArticleService extends BaseService<ArticleDO> {
             articleQM.setUserId(userDO.getId());
         }
         //分页查询并转换结果
-        PageInfo<ArticleDOPC> articlePCS = PageHelper.startPage(pageNum, limit).doSelectPageInfo(
+        PageInfo<ArticlePK> articlePCS = PageHelper.startPage(pageNum, limit).doSelectPageInfo(
                                                                         () -> {
                                                                             articleMapper.queryList(articleQM);
                                                                         }
@@ -124,20 +124,20 @@ public class ArticleService extends BaseService<ArticleDO> {
         ModelMapper modelMapper = new ModelMapper();
         modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STANDARD);
         //针对内部list的转换
-        Converter<ArrayList<ArticleDOPC>,ArrayList<ArticleListDTO>> converter = new AbstractConverter<ArrayList<ArticleDOPC>, ArrayList<ArticleListDTO>>() {
+        Converter<ArrayList<ArticlePK>,ArrayList<ArticleListDTO>> converter = new AbstractConverter<ArrayList<ArticlePK>, ArrayList<ArticleListDTO>>() {
             @Override
-            protected ArrayList<ArticleListDTO> convert(ArrayList<ArticleDOPC> source) {
+            protected ArrayList<ArticleListDTO> convert(ArrayList<ArticlePK> source) {
                 return modelMapper.map(source,new TypeToken<ArrayList<ArticleListDTO>>(){}.getType());
             }
         };
-        PropertyMap<PageInfo<ArticleDOPC>,PageInfo<ArticleListDTO>> propertyMap = new PropertyMap<PageInfo<ArticleDOPC>, PageInfo<ArticleListDTO>>() {
+        PropertyMap<PageInfo<ArticlePK>,PageInfo<ArticleListDTO>> propertyMap = new PropertyMap<PageInfo<ArticlePK>, PageInfo<ArticleListDTO>>() {
             @Override
             protected void configure() {
                 using(converter).map(source.getList(),destination.getList());
             }
         };
         modelMapper.addMappings(propertyMap);
-        modelMapper.createTypeMap(ArticleDOPC.class,ArticleListDTO.class);
+        modelMapper.createTypeMap(ArticlePK.class,ArticleListDTO.class);
         return modelMapper.map(articlePCS, new TypeToken<PageInfo<ArticleListDTO>>() {}.getType());
     }
 }

@@ -39,7 +39,7 @@
   </sql>
 
   <!--查询单条题目详情-->
-<resultMap id="ProblemDetail" type="cn.edu.aust.query.ProblemDOPC" extends="BaseResultMap">
+<resultMap id="ProblemDetail" type="cn.edu.aust.query.ProblemPK" extends="BaseResultMap">
   <!--额外字段-->
   <result column="auchor" property="auchor" jdbcType="VARCHAR" />
   <result column="catelog_name" property="categlogName" jdbcType="VARCHAR" />
@@ -60,7 +60,7 @@
   </select>
 
 <!--查询列表显示的题目-->
-  <resultMap id="ListStageProblem" type="cn.edu.aust.query.ProblemDOPC" >
+  <resultMap id="ListStageProblem" type="cn.edu.aust.query.ProblemPK" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="title" property="title" jdbcType="VARCHAR" />
     <result column="keyword" property="keyword" jdbcType="VARCHAR" />

@@ -21,7 +21,7 @@ import cn.edu.aust.dto.ProblemDTO;
 import cn.edu.aust.dto.ProblemListDTO;
 import cn.edu.aust.mapper.ProblemMapper;
 import cn.edu.aust.pojo.entity.ProblemDO;
-import cn.edu.aust.query.ProblemDOPC;
+import cn.edu.aust.query.ProblemPK;
 import cn.edu.aust.query.ProblemQM;
 
 /**
@@ -42,12 +42,12 @@ public class ProblemService extends BaseService<ProblemDO> {
    * @return 结果
    */
   public ProblemDTO queryDetail(Long id) {
-    ProblemDOPC problemPC = problemMapper.queryDetail(id);
-    if (problemPC == null) {
+    ProblemPK problemPK = problemMapper.queryDetail(id);
+    if (problemPK == null) {
       throw new PageException(PosCode.NO_PRIVILEGE.getMsg());
     }
     ModelMapper modelMapper = new ModelMapper();
-    return modelMapper.map(problemPC, ProblemDTO.class);
+    return modelMapper.map(problemPK, ProblemDTO.class);
   }
 
   /**
@@ -57,8 +57,8 @@ public class ProblemService extends BaseService<ProblemDO> {
    * @return 查询结果
    */
   public ProblemDTO queryContestProblem(Long problemId, HttpSession session) {
-    ProblemDOPC problemPC = problemMapper.queryContestProblem(problemId);
-    if (problemPC == null) {
+    ProblemPK problemPK = problemMapper.queryContestProblem(problemId);
+    if (problemPK == null) {
       throw new PageException(PosCode.NO_PRIVILEGE.getMsg());
     }
     //判断是否有权查看该题目
@@ -67,11 +67,11 @@ public class ProblemService extends BaseService<ProblemDO> {
       throw new PageException(PosCode.NO_PRIVILEGE.getMsg());
     } else {
       String[] ids = StringUtils.split(curContest, ",");
-      if (Arrays.binarySearch(ids, String.valueOf(problemPC.getContestId())) < 0) {
+      if (Arrays.binarySearch(ids, String.valueOf(problemPK.getContestId())) < 0) {
         throw new PageException(PosCode.NO_PRIVILEGE.getMsg());
       }
     }
-    return ProblemAssemble.assemble(problemPC);
+    return ProblemAssemble.assemble(problemPK);
   }
 
   /**
@@ -97,7 +97,7 @@ public class ProblemService extends BaseService<ProblemDO> {
     problemQM.setSearch(search);
     problemQM.setStage(stage);
     //查询转换
-    PageInfo<ProblemDOPC> problemPCS =
+    PageInfo<ProblemPK> problemPCS =
         PageHelper.offsetPage(offset, limit)
             .doSelectPageInfo(
                 () -> {
@@ -121,7 +121,7 @@ public class ProblemService extends BaseService<ProblemDO> {
    * @return 查询结果
    */
   public List<ProblemListDTO> queryContest(Long contest) {
-    List<ProblemDOPC> result = problemMapper.queryContest(contest);
+    List<ProblemPK> result = problemMapper.queryContest(contest);
     return ProblemAssemble.assembleList(result);
   }
 }
