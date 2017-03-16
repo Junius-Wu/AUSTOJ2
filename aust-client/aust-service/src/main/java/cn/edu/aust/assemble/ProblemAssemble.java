@@ -1,7 +1,5 @@
 package cn.edu.aust.assemble;
 
-import com.github.pagehelper.PageInfo;
-
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 
@@ -9,7 +7,7 @@ import java.util.List;
 
 import cn.edu.aust.dto.ProblemDTO;
 import cn.edu.aust.dto.ProblemListDTO;
-import cn.edu.aust.query.ProblemPC;
+import cn.edu.aust.query.ProblemDOPC;
 
 /**
  * 题目包装类
@@ -27,7 +25,7 @@ public final class ProblemAssemble {
    * @param problemPCS 要转换的实体类
    * @return 结果
    */
-  public static List<ProblemListDTO> assembleList(List<ProblemPC> problemPCS) {
+  public static List<ProblemListDTO> assembleList(List<ProblemDOPC> problemPCS) {
     return modelMapper.map(problemPCS,
                            new TypeToken<List<ProblemListDTO>>() {
                            }.getType());
@@ -38,7 +36,7 @@ public final class ProblemAssemble {
    * @param problemPC 要转换的实体类
    * @return 转换结果
    */
-  public static ProblemDTO assemble(ProblemPC problemPC){
+  public static ProblemDTO assemble(ProblemDOPC problemPC){
     return modelMapper.map(problemPC,ProblemDTO.class);
   }
 }

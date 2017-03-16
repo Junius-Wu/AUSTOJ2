@@ -11,13 +11,13 @@
             <div class="commont-list">
                 <ul class="list-unstyled">
                     <!--/*@thymesVar id="comments" type="com.github.pagehelper.PageInfo"*/-->
-                    <!--/*@thymesVar id="user" type="cn.edu.aust.common.entity.User"*/-->
+                    <!--/*@thymesVar id="userDO" type="cn.edu.aust.common.entity.User"*/-->
                     <!--/*@thymesVar id="comment" type="cn.edu.aust.common.entity.pojo.ProblemCommentUser"*/-->
                     <li th:each="comment : ${comments.getList()}" th:id="${comment.getId()}+'del'">
                         <div class="reply-main row">
                             <div class="col-md-12" >
                                 <a href="#"
-                                   th:text="${comment.user.nickname}==null?${comment.user.username}:${comment.user.nickname}">牛李</a>
+                                   th:text="${comment.userDO.nickname}==null?${comment.userDO.username}:${comment.userDO.nickname}">牛李</a>
                                 <th:block th:if="${comment.friend} != null">回复:
                                     <a href="#" th:text="${comment.friend.nickname}==null?${comment.friend.username}:${comment.friend.nickname}">笑笑</a>
                                 </th:block>
@@ -29,7 +29,7 @@
                             <div class="reply-button">
                                 <a href="javascript:void(0)"
                                    th:onclick="'replyComment('+${root_id}+','+${comment.userId}+',\''
-                                   +${comment.user.nickname}+'\')'">回复</a>
+                                   +${comment.userDO.nickname}+'\')'">回复</a>
                                 <a href="javascript:void(0)" th:if="${session.userpri} !=null and ${comment.userId} == ${session.userpri.id}" th:onclick="'deleteComment('+${comment.id}+')'">删除</a>
                             </div>
                         </div>

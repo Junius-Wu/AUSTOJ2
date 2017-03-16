@@ -9,7 +9,7 @@ import lombok.ToString;
 @Table(name = "contest")
 @Data
 @ToString
-public class Contest {
+public class ContestDO {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

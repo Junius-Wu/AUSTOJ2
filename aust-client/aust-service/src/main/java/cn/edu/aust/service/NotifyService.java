@@ -11,7 +11,7 @@ import javax.annotation.Resource;
 
 import cn.edu.aust.common.util.DateUtil;
 import cn.edu.aust.mapper.NotifyMapper;
-import cn.edu.aust.pojo.entity.Notify;
+import cn.edu.aust.pojo.entity.NotifyDO;
 
 /**
  * 网站通知公告服务
@@ -28,7 +28,7 @@ public class NotifyService {
      * @param limit 查询数量
      * @return 结果集
      */
-    public List<Notify> queryListNow(int limit){
+    public List<NotifyDO> queryListNow(int limit){
         PageHelper.startPage(0,limit,false);
         return notifyMapper.queryListNow(DateUtil.format(new Date(),DateUtil.YMDHMS_));
     }

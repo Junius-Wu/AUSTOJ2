@@ -21,8 +21,8 @@ import cn.edu.aust.dto.ArticleDTO;
 import cn.edu.aust.dto.ArticleListDTO;
 import cn.edu.aust.entity.PageRequest;
 import cn.edu.aust.exception.PageException;
-import cn.edu.aust.pojo.entity.Article;
-import cn.edu.aust.pojo.entity.User;
+import cn.edu.aust.pojo.entity.ArticleDO;
+import cn.edu.aust.pojo.entity.UserDO;
 import cn.edu.aust.service.ArticleService;
 import cn.edu.aust.service.UserService;
 import cn.edu.aust.service.VotelogService;
@@ -82,15 +82,15 @@ public class ArticleController {
     @PostMapping(value = "/vote/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public Result<?> articleVote(@PathVariable("id") Long id) throws PageException {
         JSONObject result = new JSONObject();
-        User user = userService.getCurrent();
-        if (user == null){
+        UserDO userDO = userService.getCurrent();
+        if (userDO == null){
             return new Result<PosCode>(PosCode.NO_LOGIN);
         }
-        Optional<Article> article = Optional.of(articleService.queryById(id));
+        Optional<ArticleDO> article = Optional.of(articleService.queryById(id));
         article.filter(a -> a.getIsShow() != 0)
                .orElseThrow(()->new PageException(PosCode.NO_PRIVILEGE.getMsg()));
 
-        votelogService.voteArticleComment(result,article.get(),user.getId());
+        votelogService.voteArticleComment(result,article.get(), userDO.getId());
         return new Result<JSONObject>(PosCode.OK,result);
     }
 

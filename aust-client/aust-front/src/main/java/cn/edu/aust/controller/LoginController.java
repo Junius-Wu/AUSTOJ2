@@ -29,7 +29,7 @@ import cn.edu.aust.common.util.SystemUtil;
 import cn.edu.aust.common.util.WebUtils;
 import cn.edu.aust.dto.UserDTO;
 import cn.edu.aust.exception.PageException;
-import cn.edu.aust.pojo.entity.User;
+import cn.edu.aust.pojo.entity.UserDO;
 import cn.edu.aust.service.UserService;
 
 /**
@@ -74,47 +74,47 @@ public class LoginController {
         if (!StringUtils.equalsIgnoreCase(code, codevalidate)) {
             return new Result<>(PosCode.CODE_ERROR);
         }
-        User user = new User();
+        UserDO userDO = new UserDO();
         Setting setting = SystemUtil.getSetting(jedisClient);
-        user.setEmail(email);
-        user = userService.queryOne(user);
+        userDO.setEmail(email);
+        userDO = userService.queryOne(userDO);
         //验证不存在
-        if (user == null) {
+        if (userDO == null) {
             return new Result<>(PosCode.NO_REGISTER);
         }
         //验证是否冻结
-        if (user.getIsDefunct() == 1){
+        if (userDO.getIsDefunct() == 1){
             return new Result<>(PosCode.USER_FREEZE);
         }
         //验证锁定状态
-        if (user.getIsLock() == 1){
+        if (userDO.getIsLock() == 1){
             int accountLockTime = setting.getAccountLockTime();
             //锁定时间0,则永久锁定
             if (accountLockTime == 0){
                 return new Result<>(PosCode.USER_LOCKED);
             }
-            Date lockdate = user.getLockdate();
+            Date lockdate = userDO.getLockdate();
             Date unlockdate = DateUtils.addMinutes(lockdate,accountLockTime);
             if (new Date().after(unlockdate)){
-                user.setIsLock((byte) 0);
-                user.setLoginfail(0);
-                user.setLockdate(null);
-                userService.updateSelective(user);
+                userDO.setIsLock((byte) 0);
+                userDO.setLoginfail(0);
+                userDO.setLockdate(null);
+                userService.updateSelective(userDO);
             }else {
                 return new Result<>(PosCode.USER_LOCKED);
             }
         }
         //验证密码
-        if(!user.getPassword().equals(DigestUtils.sha256Hex(password.trim()))){
-            int accountLockCount = user.getLoginfail()+1;
+        if(!userDO.getPassword().equals(DigestUtils.sha256Hex(password.trim()))){
+            int accountLockCount = userDO.getLoginfail()+1;
             if (accountLockCount > setting.getAccountLockCount()){
-                user.setLockdate(new Date());
-                user.setIsLock((byte) 1);
-                logger.info("用户:{}已被锁定",user.getEmail());
+                userDO.setLockdate(new Date());
+                userDO.setIsLock((byte) 1);
+                logger.info("用户:{}已被锁定", userDO.getEmail());
             }
-            user.setLoginfail(accountLockCount);
-            userService.updateSelective(user);
-            if (user.getIsLock() == 1){
+            userDO.setLoginfail(accountLockCount);
+            userService.updateSelective(userDO);
+            if (userDO.getIsLock() == 1){
                 return new Result<>(PosCode.USER_LOCKED);
             }else {
                 return new Result<>(PosCode.USER_LOCKED.getStatus(),
@@ -122,16 +122,16 @@ public class LoginController {
             }
         }
         //登录成功
-        user.setIp(WebUtils.getIp(request));
-        user.setModifydate(new Date());
-        user.setLoginfail(0);
-        userService.updateSelective(user);
+        userDO.setIp(WebUtils.getIp(request));
+        userDO.setModifydate(new Date());
+        userDO.setLoginfail(0);
+        userService.updateSelective(userDO);
         //登录成功加入session
         session = request.getSession();
-        session.setAttribute(UserDTO.PRINCIPAL_ATTRIBUTE_NAME,new UserDTO(user));
-        logger.info("用户:{}已登录",user.getEmail());
+        session.setAttribute(UserDTO.PRINCIPAL_ATTRIBUTE_NAME,new UserDTO(userDO));
+        logger.info("用户:{}已登录", userDO.getEmail());
 
-        WebUtils.addCookie(response, UserDTO.NICKNAME_COOKIE_NAME, user.getNickname()
+        WebUtils.addCookie(response, UserDTO.NICKNAME_COOKIE_NAME, userDO.getNickname()
                     ,null,setting.getCookiePath(),setting.getCookieDomain(),null);
         //跳转到之前的页面
         Optional<String> redirect = Optional.ofNullable((String) session.getAttribute("referer"));

@@ -20,8 +20,8 @@ import cn.edu.aust.common.constant.PosCode;
 import cn.edu.aust.dto.ProblemDTO;
 import cn.edu.aust.dto.ProblemListDTO;
 import cn.edu.aust.mapper.ProblemMapper;
-import cn.edu.aust.pojo.entity.Problem;
-import cn.edu.aust.query.ProblemPC;
+import cn.edu.aust.pojo.entity.ProblemDO;
+import cn.edu.aust.query.ProblemDOPC;
 import cn.edu.aust.query.ProblemQM;
 
 /**
@@ -31,7 +31,7 @@ import cn.edu.aust.query.ProblemQM;
  * @date 2017/1/29
  */
 @Service
-public class ProblemService extends BaseService<Problem> {
+public class ProblemService extends BaseService<ProblemDO> {
   @Autowired
   private ProblemMapper problemMapper;
 
@@ -42,7 +42,7 @@ public class ProblemService extends BaseService<Problem> {
    * @return 结果
    */
   public ProblemDTO queryDetail(Long id) {
-    ProblemPC problemPC = problemMapper.queryDetail(id);
+    ProblemDOPC problemPC = problemMapper.queryDetail(id);
     if (problemPC == null) {
       throw new PageException(PosCode.NO_PRIVILEGE.getMsg());
     }
@@ -57,7 +57,7 @@ public class ProblemService extends BaseService<Problem> {
    * @return 查询结果
    */
   public ProblemDTO queryContestProblem(Long problemId, HttpSession session) {
-    ProblemPC problemPC = problemMapper.queryContestProblem(problemId);
+    ProblemDOPC problemPC = problemMapper.queryContestProblem(problemId);
     if (problemPC == null) {
       throw new PageException(PosCode.NO_PRIVILEGE.getMsg());
     }
@@ -97,7 +97,7 @@ public class ProblemService extends BaseService<Problem> {
     problemQM.setSearch(search);
     problemQM.setStage(stage);
     //查询转换
-    PageInfo<ProblemPC> problemPCS =
+    PageInfo<ProblemDOPC> problemPCS =
         PageHelper.offsetPage(offset, limit)
             .doSelectPageInfo(
                 () -> {
@@ -121,7 +121,7 @@ public class ProblemService extends BaseService<Problem> {
    * @return 查询结果
    */
   public List<ProblemListDTO> queryContest(Long contest) {
-    List<ProblemPC> result = problemMapper.queryContest(contest);
+    List<ProblemDOPC> result = problemMapper.queryContest(contest);
     return ProblemAssemble.assembleList(result);
   }
 }

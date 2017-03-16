@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="cn.edu.aust.mapper.ContestMapper" >
-  <resultMap id="BaseResultMap" type="cn.edu.aust.pojo.entity.Contest" >
+  <resultMap id="BaseResultMap" type="cn.edu.aust.pojo.entity.ContestDO" >
     <!--
       WARNING - @mbg.generated
     -->
@@ -16,7 +16,7 @@
     <result column="createdate" property="createdate" jdbcType="TIMESTAMP" />
     <result column="modifydate" property="modifydate" jdbcType="TIMESTAMP" />
   </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="cn.edu.aust.pojo.entity.Contest" extends="BaseResultMap" >
+  <resultMap id="ResultMapWithBLOBs" type="cn.edu.aust.pojo.entity.ContestDO" extends="BaseResultMap" >
     <!--
       WARNING - @mbg.generated
     -->

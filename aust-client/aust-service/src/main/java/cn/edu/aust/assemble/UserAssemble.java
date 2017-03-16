@@ -3,7 +3,7 @@ package cn.edu.aust.assemble;
 import org.modelmapper.ModelMapper;
 
 import cn.edu.aust.dto.UserDTO;
-import cn.edu.aust.pojo.entity.User;
+import cn.edu.aust.pojo.entity.UserDO;
 
 /**
  * 用户信息转换工具
@@ -16,10 +16,10 @@ public class UserAssemble {
 
   /**
    * 用户数据模型转换为传输类型
-   * @param user 数据模型
+   * @param userDO 数据模型
    * @return 传输类型
    */
-  public static UserDTO user2UserDTO(User user){
-    return modelMapper.map(user,UserDTO.class);
+  public static UserDTO user2UserDTO(UserDO userDO){
+    return modelMapper.map(userDO,UserDTO.class);
   }
 }

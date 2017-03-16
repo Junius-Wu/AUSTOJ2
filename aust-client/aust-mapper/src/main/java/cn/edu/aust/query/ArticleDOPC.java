@@ -1,13 +1,13 @@
 package cn.edu.aust.query;
 
-import cn.edu.aust.pojo.entity.Article;
+import cn.edu.aust.pojo.entity.ArticleDO;
 
 /**
  * 文章查询结果包装类
  * @author Niu Li
  * @date 2017/1/30
  */
-public class ArticlePC extends Article{
+public class ArticleDOPC extends ArticleDO {
     /**
      * 作者昵称
      */

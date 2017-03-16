@@ -14,7 +14,7 @@ import java.util.Objects;
 
 import javax.annotation.Resource;
 
-import cn.edu.aust.pojo.entity.Problem;
+import cn.edu.aust.pojo.entity.ProblemDO;
 import cn.edu.aust.service.ProblemService;
 
 /**
@@ -33,8 +33,8 @@ public class JudgerController {
       @RequestParam(value = "code") String sourceCode,
       @RequestParam(value = "way") Integer way){
     //登录限制
-    Problem problem = problemService.queryById(id);
-    Preconditions.checkArgument(Objects.nonNull(problem),"所提交的题目不存在");
+    ProblemDO problemDO = problemService.queryById(id);
+    Preconditions.checkArgument(Objects.nonNull(problemDO),"所提交的题目不存在");
     Preconditions.checkArgument(StringUtils.isNotEmpty(sourceCode),"源代码不能为空");
     // todo 判题语言的支持与否校验
 

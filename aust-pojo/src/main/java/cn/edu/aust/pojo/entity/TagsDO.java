@@ -4,18 +4,19 @@ import javax.persistence.*;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
-@Table(name = "solution_source")
+@Table(name = "tags")
 @Data
 @NoArgsConstructor
-public class SolutionSource {
+@ToString
+public class TagsDO {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
-    @Column(name = "solution_id")
-    private Long solutionId;
+    private String tag;
 
-    private String source;
+    private Integer count;
 
 }

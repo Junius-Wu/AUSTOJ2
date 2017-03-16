@@ -25,7 +25,7 @@ import cn.edu.aust.dto.ContestDTO;
 import cn.edu.aust.dto.ProblemDTO;
 import cn.edu.aust.dto.ProblemListDTO;
 import cn.edu.aust.exception.PageException;
-import cn.edu.aust.pojo.entity.User;
+import cn.edu.aust.pojo.entity.UserDO;
 import cn.edu.aust.service.ContestService;
 import cn.edu.aust.service.ProblemService;
 import cn.edu.aust.service.UserService;
@@ -73,8 +73,8 @@ public class ContestController {
   public Result<PosCode> canViewContest(@PathVariable(value = "id") Long id,
                                         HttpServletRequest request,
                                         HttpSession session) {
-    User user = userService.getCurrent();
-    if (user == null) {
+    UserDO userDO = userService.getCurrent();
+    if (userDO == null) {
       return new Result<PosCode>(PosCode.NO_LOGIN);
     }
     try {
@@ -112,8 +112,8 @@ public class ContestController {
   public String contestDetail(@PathVariable("id") Long id,
                               HttpSession session,
                               Model model) throws PageException {
-    User user = userService.getCurrent();
-    if (user == null) {
+    UserDO userDO = userService.getCurrent();
+    if (userDO == null) {
       throw new PageException("用户未登录");
     }
     //判断是否验证过
@@ -146,8 +146,8 @@ public class ContestController {
   public String contestProblem(@PathVariable("id") Long id,
                                HttpSession session,
                                Model model) throws PageException {
-    User user = userService.getCurrent();
-    if (user == null) {
+    UserDO userDO = userService.getCurrent();
+    if (userDO == null) {
       throw new PageException("用户未登录");
     }
     //查询题目

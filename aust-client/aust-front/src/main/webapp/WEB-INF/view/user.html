@@ -24,9 +24,9 @@
                     <li><a href="/start">起步</a></li>
                     <li><a href="/practice">训练</a></li>
                     <li><a href="/master">进阶</a></li>
-                    <li><a href="/contest">比赛</a></li>
+                    <li><a href="/contestDO">比赛</a></li>
                     <li><a href="/rank">排名</a></li>
-                    <li><a href="/articles">干货</a></li>
+                    <li><a href="/articleDOS">干货</a></li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">联系我们<b class="caret"></b></a>
                         <ul class="dropdown-menu animated fadeIn">
@@ -42,7 +42,7 @@
                     </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="/user/">nickname</a></li>
+                    <li><a href="/userDO/">nickname</a></li>
                     <li><a href="/loginout">退出</a></li>
                 </ul>
             </div><!--/.nav-collapse -->
@@ -86,7 +86,7 @@
           <!--题目分类-->
           <aside class="widget">
             <h5><span>题目分类</span></h5>
-            <ul class="list-unstyled catelog">
+            <ul class="list-unstyled catelogDO">
 
             </ul>
           </aside>
@@ -100,7 +100,7 @@
           <!--文章列表-->
           <aside class="widget">
             <h5><span>近期文章</span></h5>
-            <ul class="list-unstyled article">
+            <ul class="list-unstyled articleDO">
 
             </ul>
           </aside>
@@ -143,31 +143,31 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title">修改资料</h4>
             </div>
-            <form class="form-horizontal" action="/user/update" method="post">
-                <input type="hidden" value="${user.id}" name="id">
+            <form class="form-horizontal" action="/userDO/update" method="post">
+                <input type="hidden" value="${userDO.id}" name="id">
                 <div class="modal-body">
                     <div class="form-group">
                         <label class="col-lg-2 control-label">用户名:</label>
                         <div class="col-lg-10">
-                            <p class="form-control-static">${user.username}</p>
+                            <p class="form-control-static">${userDO.username}</p>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-lg-2 control-label">昵称:</label>
                         <div class="col-lg-10">
-                            <input type="text" class="form-control" value="${user.nickname}" name="nickname">
+                            <input type="text" class="form-control" value="${userDO.nickname}" name="nickname">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-lg-2 control-label">邮箱:</label>
                         <div class="col-lg-10">
-                            <p class="form-control-static" >${user.email}</p>
+                            <p class="form-control-static" >${userDO.email}</p>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-lg-2 control-label">学校:</label>
                         <div class="col-lg-10">
-                            <input type="text" class="form-control" value="${user.school}" name="school">
+                            <input type="text" class="form-control" value="${userDO.school}" name="school">
                         </div>
                     </div>
                     <div class="form-group">
@@ -181,14 +181,14 @@
                     <div class="form-group">
                         <label class="col-lg-2 control-label">宣言:</label>
                         <div class="col-lg-10">
-                            <input type="text" class="form-control" value="${user.motto}" name="motto">
+                            <input type="text" class="form-control" value="${userDO.motto}" name="motto">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-lg-2 control-label">博客:</label>
                         <div class="col-lg-10">
-                            <input type="text" class="form-control" value="${user.blogname}" name="blogname">
-                            <input type="text" class="form-control" value="${user.blog}" name="blog">
+                            <input type="text" class="form-control" value="${userDO.blogname}" name="blogname">
+                            <input type="text" class="form-control" value="${userDO.blog}" name="blog">
                         </div>
                     </div>
 
@@ -203,8 +203,8 @@
 </div><!-- /.modal -->
 <div class="modal fade" id="myImgModal">
     <div class="modal-dialog">
-        <form action="/user/updateimg" method="post" enctype="multipart/form-data">
-            <input type="hidden" value="${user.id}" name="id">
+        <form action="/userDO/updateimg" method="post" enctype="multipart/form-data">
+            <input type="hidden" value="${userDO.id}" name="id">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -216,19 +216,19 @@
                     <div class="row text-center">
                         <div class="col-md-4">
                             <div class="priview">
-                                <img id="ImgPr" src="..${user.avatar}" width="170" height="170">
+                                <img id="ImgPr" src="..${userDO.avatar}" width="170" height="170">
                                 <span class="text-center">170*170</span>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="priview">
-                                <img id="ImgPr2" src="..${user.avatar}" width="130" height="130">
+                                <img id="ImgPr2" src="..${userDO.avatar}" width="130" height="130">
                                 <span class="text-center">130*130</span>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="priview">
-                                <img id="ImgPr3" src="..${user.avatar}" width="100" height="100">
+                                <img id="ImgPr3" src="..${userDO.avatar}" width="100" height="100">
                                 <span class="text-center">100*100</span>
                             </div>
                         </div>

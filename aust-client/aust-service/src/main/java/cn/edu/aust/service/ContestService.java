@@ -15,7 +15,7 @@ import javax.annotation.Resource;
 import cn.edu.aust.assemble.ContestAssemble;
 import cn.edu.aust.dto.ContestDTO;
 import cn.edu.aust.mapper.ContestMapper;
-import cn.edu.aust.pojo.entity.Contest;
+import cn.edu.aust.pojo.entity.ContestDO;
 import lombok.extern.slf4j.Slf4j;
 
 import static com.google.common.base.Preconditions.checkArgument;
@@ -38,11 +38,11 @@ public class ContestService {
    * @return 该竞赛
    */
   public ContestDTO findDetail(Long id){
-    Contest contest = contestMapper.selectByPrimaryKey(id);
-    checkArgument(contest != null, "该竞赛不存在");
+    ContestDO contestDO = contestMapper.selectByPrimaryKey(id);
+    checkArgument(contestDO != null, "该竞赛不存在");
     // todo 该不在在service检查状态?还是应该在controller检查?
-    checkArgument(contest.getDefunct() == 1,"该竞赛不存在");
-    return ContestAssemble.assemble(contest);
+    checkArgument(contestDO.getDefunct() == 1,"该竞赛不存在");
+    return ContestAssemble.assemble(contestDO);
   }
 
   /**
@@ -54,14 +54,14 @@ public class ContestService {
    */
   public boolean canView (Long id, String passwd) {
     //权限检查
-    Contest contest = contestMapper.selectByPrimaryKey(id);
-    checkArgument(contest != null, "该竞赛不存在");
-    checkArgument(contest.getDefunct() == 1,"该竞赛不存在");
-    if (contest.getType() == 1) {
-      checkArgument(StringUtils.equals(contest.getPassword(), passwd), "密码错误");
+    ContestDO contestDO = contestMapper.selectByPrimaryKey(id);
+    checkArgument(contestDO != null, "该竞赛不存在");
+    checkArgument(contestDO.getDefunct() == 1,"该竞赛不存在");
+    if (contestDO.getType() == 1) {
+      checkArgument(StringUtils.equals(contestDO.getPassword(), passwd), "密码错误");
     }
     //时间检查
-    checkArgument(isStart(contest),"比赛还未开始,禁止查看");
+    checkArgument(isStart(contestDO),"比赛还未开始,禁止查看");
     return true;
   }
 
@@ -71,19 +71,19 @@ public class ContestService {
    * @return 结果集
    */
   public Map<String, List<ContestDTO>> queryAndKinds() {
-    List<Contest> contests = contestMapper.selectAll();
+    List<ContestDO> contestDOS = contestMapper.selectAll();
     //筛选出失效和未失效的
     List<ContestDTO> expire = Lists.newArrayList();
     List<ContestDTO> noExpire = Lists.newArrayList();
     //无效的比赛不展示
-    contests.stream().filter(contest -> contest.getDefunct() != 0)
-            .forEach(contest -> {
+    contestDOS.stream().filter(contestDO -> contestDO.getDefunct() != 0)
+            .forEach(contestDO -> {
               //去除该阶段没必要显示的字段
-              contest.setDescription(null);
-              if (isExpire(contest)) {
-                expire.add(ContestAssemble.assemble(contest));
+              contestDO.setDescription(null);
+              if (isExpire(contestDO)) {
+                expire.add(ContestAssemble.assemble(contestDO));
               } else {
-                noExpire.add(ContestAssemble.assemble(contest));
+                noExpire.add(ContestAssemble.assemble(contestDO));
               }
             });
     //返回结果
@@ -96,12 +96,12 @@ public class ContestService {
   /**
    * 判断一个比赛是否开始
    *
-   * @param contest 该比赛
+   * @param contestDO 该比赛
    * @return true已经开始
    */
-  private boolean isStart(Contest contest) {
+  private boolean isStart(ContestDO contestDO) {
     Date now = new Date();
-    if (contest.getStartTime().before(now)){
+    if (contestDO.getStartTime().before(now)){
       return true;
     }
     return false;
@@ -110,13 +110,13 @@ public class ContestService {
   /**
    * 判断一个竞赛是否过期
    *
-   * @param contest 该竞赛
+   * @param contestDO 该竞赛
    * @return true过期
    */
-  private boolean isExpire(Contest contest) {
+  private boolean isExpire(ContestDO contestDO) {
     //时间
     Date now = new Date();
-    if (contest.getEndTime().before(now)) {
+    if (contestDO.getEndTime().before(now)) {
       return true;
     }
     return false;

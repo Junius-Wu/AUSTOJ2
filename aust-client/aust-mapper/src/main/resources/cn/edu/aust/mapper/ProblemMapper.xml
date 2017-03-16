@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="cn.edu.aust.mapper.ProblemMapper" >
-  <resultMap id="BaseResultMap" type="cn.edu.aust.pojo.entity.Problem" >
+  <resultMap id="BaseResultMap" type="cn.edu.aust.pojo.entity.ProblemDO" >
     <!--
       WARNING - @mbg.generated
     -->
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="title" property="title" jdbcType="VARCHAR" />
     <result column="keyword" property="keyword" jdbcType="VARCHAR" />
-    <result column="catelog" property="catelog" jdbcType="TINYINT" />
+    <result column="catelogDO" property="catelogDO" jdbcType="TINYINT" />
     <result column="stage" property="stage" jdbcType="TINYINT" />
     <result column="spj" property="spj" jdbcType="TINYINT" />
     <result column="time_limit" property="timeLimit" jdbcType="INTEGER" />
@@ -33,34 +33,34 @@
     <!--
       WARNING - @mbg.generated
     -->
-    id, title, keyword, catelog, stage, spj, time_limit, memory_limit, difficulty, accepted, 
+    id, title, keyword, catelogDO, stage, spj, time_limit, memory_limit, difficulty, accepted,
     solved, submit, submit_user, author_id, contest_id, createdate, modifydate,
     description, input, output, sample_input, sample_output, hit
   </sql>
 
   <!--查询单条题目详情-->
-<resultMap id="ProblemDetail" type="cn.edu.aust.query.ProblemPC" extends="BaseResultMap">
+<resultMap id="ProblemDetail" type="cn.edu.aust.query.ProblemDOPC" extends="BaseResultMap">
   <!--额外字段-->
   <result column="auchor" property="auchor" jdbcType="VARCHAR" />
   <result column="catelog_name" property="categlogName" jdbcType="VARCHAR" />
 </resultMap>
   <select id="queryDetail" parameterType="long" resultMap="ProblemDetail">
-      SELECT p1.*,p2.name AS "catelog_name",p3.nickname AS "author" FROM problem p1
-      LEFT JOIN catelog p2 ON p1.catelog = p2.id
-      LEFT JOIN user p3 ON p1.author_id = p3.id
+      SELECT p1.*,p2.name AS "catelog_name",p3.nickname AS "author" FROM problemDO p1
+      LEFT JOIN catelogDO p2 ON p1.catelogDO = p2.id
+      LEFT JOIN userDO p3 ON p1.author_id = p3.id
       WHERE p1.contest_id = -1 AND p1.id=#{value}
   </select>
 
 <!--查询比赛题目-->
   <select id="queryContestProblem" parameterType="long" resultMap="ProblemDetail">
-    SELECT p1.*,p2.name AS "catelog_name",p3.nickname AS "author" FROM problem p1
-    LEFT JOIN catelog p2 ON p1.catelog = p2.id
-    LEFT JOIN user p3 ON p1.author_id = p3.id
+    SELECT p1.*,p2.name AS "catelog_name",p3.nickname AS "author" FROM problemDO p1
+    LEFT JOIN catelogDO p2 ON p1.catelogDO = p2.id
+    LEFT JOIN userDO p3 ON p1.author_id = p3.id
     WHERE p1.id = #{problemId}
   </select>
 
 <!--查询列表显示的题目-->
-  <resultMap id="ListStageProblem" type="cn.edu.aust.query.ProblemPC" >
+  <resultMap id="ListStageProblem" type="cn.edu.aust.query.ProblemDOPC" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="title" property="title" jdbcType="VARCHAR" />
     <result column="keyword" property="keyword" jdbcType="VARCHAR" />
@@ -82,9 +82,9 @@
   <select id="queryListStage" parameterType="cn.edu.aust.query.ProblemQM" resultMap="ListStageProblem">
       SELECT p1.id,p1.title,p1.keyword,p1.stage,p1.spj,p1.time_limit,p1.memory_limit,p1.difficulty,p1.accepted,
     p1.solved,p1.submit,p1.submit_user,
-      p2.name AS "catelog_name",p3.nickname AS "author" FROM problem p1
-      LEFT JOIN catelog p2 ON p1.catelog = p2.id
-      LEFT JOIN user p3 ON p1.author_id = p3.id
+      p2.name AS "catelog_name",p3.nickname AS "author" FROM problemDO p1
+      LEFT JOIN catelogDO p2 ON p1.catelogDO = p2.id
+      LEFT JOIN userDO p3 ON p1.author_id = p3.id
       WHERE p1.contest_id = -1
         <if test="stage > 0">
           and p1.stage = #{stage}
@@ -99,12 +99,12 @@
   <select id="queryListCatelog" parameterType="cn.edu.aust.query.ProblemQM" resultMap="ListStageProblem">
       SELECT p1.id,p1.title,p1.keyword,p1.stage,p1.spj,p1.time_limit,p1.memory_limit,p1.difficulty,p1.accepted,
     p1.solved,p1.submit,p1.submit_user,
-      p2.name AS "catelog_name",p3.nickname AS "author" FROM problem p1
-      LEFT JOIN catelog p2 ON p1.catelog = p2.id
-      LEFT JOIN user p3 ON p1.author_id = p3.id
+      p2.name AS "catelog_name",p3.nickname AS "author" FROM problemDO p1
+      LEFT JOIN catelogDO p2 ON p1.catelogDO = p2.id
+      LEFT JOIN userDO p3 ON p1.author_id = p3.id
       WHERE p1.contest_id = -1
         <if test="stage > 0">
-          and p1.catelog = #{stage}
+          and p1.catelogDO = #{stage}
         </if>
         <if test="search!= null">
           and (p1.id LIKE #{search} or p1.title LIKE #{search} or p1.keyword LIKE #{search})
@@ -116,10 +116,10 @@
   <select id="queryContest" parameterType="Long" resultMap="ListStageProblem">
     SELECT p1.id,p1.title,p1.keyword,p1.stage,p1.spj,p1.time_limit,p1.memory_limit,p1.difficulty,p1.accepted,
     p1.solved,p1.submit,p1.submit_user,
-    p2.name AS "catelog_name",p3.nickname AS "author" FROM problem p1
-    LEFT JOIN catelog p2 ON p1.catelog = p2.id
-    LEFT JOIN user p3 ON p1.author_id = p3.id
-    WHERE p1.contest_id = #{contest}
+    p2.name AS "catelog_name",p3.nickname AS "author" FROM problemDO p1
+    LEFT JOIN catelogDO p2 ON p1.catelogDO = p2.id
+    LEFT JOIN userDO p3 ON p1.author_id = p3.id
+    WHERE p1.contest_id = #{contestDO}
   </select>
 
 </mapper>

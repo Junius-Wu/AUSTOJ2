@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="cn.edu.aust.mapper.MailMapper" >
-  <resultMap id="BaseResultMap" type="cn.edu.aust.pojo.entity.Mail" >
+  <resultMap id="BaseResultMap" type="cn.edu.aust.pojo.entity.MailDO" >
     <!--
       WARNING - @mbg.generated
     -->
     <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="user" property="user" jdbcType="INTEGER" />
+    <result column="userDO" property="userDO" jdbcType="INTEGER" />
     <result column="friend" property="friend" jdbcType="INTEGER" />
     <result column="sender" property="sender" jdbcType="INTEGER" />
     <result column="receiver" property="receiver" jdbcType="INTEGER" />
@@ -15,7 +15,7 @@
     <result column="read_time" property="readTime" jdbcType="TIMESTAMP" />
     <result column="status" property="status" jdbcType="TINYINT" />
   </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="cn.edu.aust.pojo.entity.Mail" extends="BaseResultMap" >
+  <resultMap id="ResultMapWithBLOBs" type="cn.edu.aust.pojo.entity.MailDO" extends="BaseResultMap" >
     <!--
       WARNING - @mbg.generated
     -->
@@ -25,7 +25,7 @@
     <!--
       WARNING - @mbg.generated
     -->
-    id, user, friend, sender, receiver, type, send_time, read_time, status
+    id, userDO, friend, sender, receiver, type, send_time, read_time, status
   </sql>
   <sql id="Blob_Column_List" >
     <!--

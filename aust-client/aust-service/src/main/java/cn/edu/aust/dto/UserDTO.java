@@ -1,6 +1,6 @@
 package cn.edu.aust.dto;
 
-import cn.edu.aust.pojo.entity.User;
+import cn.edu.aust.pojo.entity.UserDO;
 
 /**
  * @author Niu Li
@@ -29,13 +29,13 @@ public class UserDTO {
     private String motto;
 
 
-    public UserDTO(User user) {
-        this.id = user.getId();
-        this.email = user.getEmail();
-        this.avatar = user.getAvatar();
-        this.nickname = user.getNickname();
-        this.honor = user.getHonor();
-        this.motto = user.getMotto();
+    public UserDTO(UserDO userDO) {
+        this.id = userDO.getId();
+        this.email = userDO.getEmail();
+        this.avatar = userDO.getAvatar();
+        this.nickname = userDO.getNickname();
+        this.honor = userDO.getHonor();
+        this.motto = userDO.getMotto();
     }
     public UserDTO() {
     }

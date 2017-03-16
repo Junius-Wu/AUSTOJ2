@@ -9,8 +9,8 @@ import java.util.Date;
 
 import cn.edu.aust.mapper.ArticleMapper;
 import cn.edu.aust.mapper.VotelogMapper;
-import cn.edu.aust.pojo.entity.Article;
-import cn.edu.aust.pojo.entity.Votelog;
+import cn.edu.aust.pojo.entity.ArticleDO;
+import cn.edu.aust.pojo.entity.VotelogDO;
 
 /**
  * 点赞关系表
@@ -27,21 +27,21 @@ public class VotelogService {
     /**
      * 文章点赞
      * @param result 写回结果
-     * @param article 对应文章
+     * @param articleDO 对应文章
      * @param user_id 对应用户id
      * @return 写回结果
      */
-    public JSONObject voteArticleComment(JSONObject result, Article article, Long user_id) {
-        Votelog voteLog = new Votelog();
+    public JSONObject voteArticleComment(JSONObject result, ArticleDO articleDO, Long user_id) {
+        VotelogDO voteLog = new VotelogDO();
         voteLog.setUserId(user_id);
-        voteLog.setOtherId(article.getId());
+        voteLog.setOtherId(articleDO.getId());
         voteLog.setType((byte) 2);
         voteLog = votelogMapper.selectOne(voteLog);
         if (voteLog == null){
-            voteLog = new Votelog();
+            voteLog = new VotelogDO();
             voteLog.setType((byte) 2);
             voteLog.setStatus((byte)1);
-            voteLog.setOtherId(article.getId());
+            voteLog.setOtherId(articleDO.getId());
             voteLog.setUserId(user_id);
             voteLog.setCreatetime(new Date());
             votelogMapper.insert(voteLog);//这里需要设置插入并返回主键keyProperty="id"
@@ -49,12 +49,12 @@ public class VotelogService {
             voteLog.setStatus((byte)(voteLog.getStatus()^1));
             votelogMapper.updateByPrimaryKeySelective(voteLog);
         }
-        Article tempArticle = new Article();
-        tempArticle.setId(article.getId());
-        tempArticle.setLikecount(article.getLikecount()+(voteLog.getStatus()==(byte)0?-1:1));
-        articleMapper.updateByPrimaryKeySelective(tempArticle);
+        ArticleDO tempArticleDO = new ArticleDO();
+        tempArticleDO.setId(articleDO.getId());
+        tempArticleDO.setLikecount(articleDO.getLikecount()+(voteLog.getStatus()==(byte)0?-1:1));
+        articleMapper.updateByPrimaryKeySelective(tempArticleDO);
         result.put("art_status",voteLog.getStatus());
-        result.put("count",tempArticle.getLikecount());
+        result.put("count", tempArticleDO.getLikecount());
         return result;
     }
 }

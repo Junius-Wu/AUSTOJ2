@@ -29,12 +29,12 @@
                 <!--主面板-->
                 <section class="animated fadeIn">
                     <strong>&nbsp;&nbsp;须知:</strong><br/>
-                    <p class="page-text" style="text-indent: 2em;" th:text="${contest.description}">
-                        ${contest.description}
+                    <p class="page-text" style="text-indent: 2em;" th:text="${contestDO.description}">
+                        ${contestDO.description}
                     </p>
                     <h4 class="text-center">题目列表</h4>
                     <table class="table table-striped table-bordered text-center" width="100%"
-                           data-toggle="table" id="contest-table">
+                           data-toggle="table" id="contestDO-table">
                         <thead>
                         <tr>
                             <th class="col-xs-1" align="center">ID</th>
@@ -48,7 +48,7 @@
                         <tr th:each="p1 : ${problems}">
                             <td class="col-xs-1" th:text="${p1.id}">1000</td>
                             <td class="col-xs-5">
-                                <a href="#" th:href="@{/contest/problem/{id}(id=${p1.id})}"
+                                <a href="#" th:href="@{/contestDO/problemDO/{id}(id=${p1.id})}"
                                    target="_blank" th:text="${p1.title}">111</a>
                             </td>
                             <td class="col-xs-3" th:text="${p1.keyword}">涉及知识点</td>

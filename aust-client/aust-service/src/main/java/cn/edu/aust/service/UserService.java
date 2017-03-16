@@ -18,7 +18,7 @@ import cn.edu.aust.common.util.SystemUtil;
 import cn.edu.aust.dto.UserDTO;
 import cn.edu.aust.dto.UserRankDTO;
 import cn.edu.aust.mapper.UserMapper;
-import cn.edu.aust.pojo.entity.User;
+import cn.edu.aust.pojo.entity.UserDO;
 
 /**
  * 用户service类
@@ -26,7 +26,7 @@ import cn.edu.aust.pojo.entity.User;
  * @date 2017/1/22
  */
 @Service
-public class UserService extends BaseService<User>{
+public class UserService extends BaseService<UserDO>{
 
     @Resource
     private JedisClient jedisClient;
@@ -37,7 +37,7 @@ public class UserService extends BaseService<User>{
      * 得到当前客户端登录用户
      * @return 该用户
      */
-    public User getCurrent(){
+    public UserDO getCurrent(){
         ServletRequestAttributes context = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         UserDTO userDTO = (UserDTO) context.getAttribute(UserDTO.PRINCIPAL_ATTRIBUTE_NAME, RequestAttributes.SCOPE_SESSION);
         Long id = userDTO != null ? userDTO.getId() : null;
@@ -49,9 +49,9 @@ public class UserService extends BaseService<User>{
      * @return 排名后的用户
      */
     public List<UserRankDTO> queryForRank(){
-        List<User> users = userMapper.queryForRank();
+        List<UserDO> userDOS = userMapper.queryForRank();
         ModelMapper modelMapper = new ModelMapper();
-        return modelMapper.map(users,new TypeToken<List<UserRankDTO>>(){}.getType());
+        return modelMapper.map(userDOS,new TypeToken<List<UserRankDTO>>(){}.getType());
     }
 
     /**
@@ -59,9 +59,9 @@ public class UserService extends BaseService<User>{
      * @return 展示到首页用户
      */
     public List<UserDTO> queryToIndexShow(){
-        List<User> users = userMapper.queryToIndexShow();
+        List<UserDO> userDOS = userMapper.queryToIndexShow();
         ModelMapper modelMapper = new ModelMapper();
-        return modelMapper.map(users,new TypeToken<List<UserDTO>>(){}.getType());
+        return modelMapper.map(userDOS,new TypeToken<List<UserDTO>>(){}.getType());
     }
 
     /**
@@ -71,19 +71,19 @@ public class UserService extends BaseService<User>{
      * @return true存在
      */
     public boolean judgeUsernameOrEmail(String username,String email){
-        User user = new User();
+        UserDO userDO = new UserDO();
         if (StringUtils.isNoneEmpty(username)){
-            user.setUsername(username);
-            user = userMapper.selectOne(user);
-            if (user.getId() != null){
+            userDO.setUsername(username);
+            userDO = userMapper.selectOne(userDO);
+            if (userDO.getId() != null){
                 return true;
             }
         }
         if (StringUtils.isNoneEmpty(email)){
-            user.setEmail(email);
-            user = userMapper.selectOne(user);
+            userDO.setEmail(email);
+            userDO = userMapper.selectOne(userDO);
         }
-        return user != null;
+        return userDO != null;
     }
 
     /**

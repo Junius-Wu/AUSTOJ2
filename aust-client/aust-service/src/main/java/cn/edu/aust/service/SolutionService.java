@@ -13,9 +13,10 @@ import cn.edu.aust.mapper.SolutionMapper;
 import cn.edu.aust.mapper.SolutionSourceMapper;
 import cn.edu.aust.plugin.judge.JudgeClientPool;
 import cn.edu.aust.plugin.judge.JudgeResultResponse;
-import cn.edu.aust.pojo.entity.Problem;
-import cn.edu.aust.pojo.entity.Solution;
-import cn.edu.aust.pojo.entity.SolutionSource;
+import cn.edu.aust.pojo.entity.ProblemDO;
+import cn.edu.aust.pojo.entity.SolutionDO;
+import cn.edu.aust.pojo.entity.SolutionSourceDO;
+import lombok.extern.slf4j.Slf4j;
 
 
 /**
@@ -23,6 +24,7 @@ import cn.edu.aust.pojo.entity.SolutionSource;
  * @since 2017/3/15
  */
 @Service
+@Slf4j
 public class SolutionService {
   @Resource
   private SolutionMapper solutionMapper;
@@ -36,32 +38,32 @@ public class SolutionService {
   /**
    * 保存用户提交记录,并且开启一个判题线程
    *
-   * @param problem 判题题目
+   * @param problemDO 判题题目
    * @param source  用户源码
    * @param way     所用语言
    */
   @Transactional
-  public void startJudger(Long userId, Problem problem, String source, String way) {
-    Solution solution = new Solution();
-    solution.setCreatedate(new Date());
-    solution.setModifydate(solution.getCreatedate());
-    solution.setCodeLength(source.getBytes().length / 1000.0);
-    solution.setContestId(problem.getContestId());
-    solution.setLanguage(NumberUtils.toInt(way));
-    solution.setProblemId(problem.getId());
-    solution.setUserId(userId);
+  public void startJudger(Long userId, ProblemDO problemDO, String source, String way) {
+    SolutionDO solutionDO = new SolutionDO();
+    solutionDO.setCreatedate(new Date());
+    solutionDO.setModifydate(solutionDO.getCreatedate());
+    solutionDO.setCodeLength(source.getBytes().length / 1000.0);
+    solutionDO.setContestId(problemDO.getContestId());
+    solutionDO.setLanguage(NumberUtils.toInt(way));
+    solutionDO.setProblemId(problemDO.getId());
+    solutionDO.setUserId(userId);
     //这里自动写回主键
-    solutionMapper.insert(solution);
+    solutionMapper.insert(solutionDO);
     //保存判题源码
-    SolutionSource solutionSource = new SolutionSource();
-    solutionSource.setSource(source);
-    solutionSource.setSolutionId(solution.getId());
-    solutionSourceMapper.insert(solutionSource);
+    SolutionSourceDO solutionSourceDO = new SolutionSourceDO();
+    solutionSourceDO.setSource(source);
+    solutionSourceDO.setSolutionId(solutionDO.getId());
+    solutionSourceMapper.insert(solutionSourceDO);
 
     taskExecutor.execute(() -> {
       judgeClientPool.execute(judgeClient -> {
-        JudgeResultResponse resultResponse = judgeClient.judge(solution.getId(), problem.getId(),
-            source, way, problem.getTimeLimit(), problem.getMemoryLimit());
+        JudgeResultResponse resultResponse = judgeClient.judge(solutionDO.getId(), problemDO.getId(),
+            source, way, problemDO.getTimeLimit(), problemDO.getMemoryLimit());
 
         return false;
       });

@@ -4,7 +4,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageException;
 import com.github.pagehelper.PageInfo;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,7 +16,7 @@ import javax.annotation.Resource;
 import cn.edu.aust.common.constant.PosCode;
 import cn.edu.aust.dto.ProblemListDTO;
 import cn.edu.aust.entity.PageRequest;
-import cn.edu.aust.pojo.entity.Catelog;
+import cn.edu.aust.pojo.entity.CatelogDO;
 import cn.edu.aust.service.CatelogService;
 import cn.edu.aust.service.ProblemService;
 
@@ -41,12 +40,12 @@ public class CatelogController {
    */
   @GetMapping(value = "/catelog/{id}",produces = MediaType.TEXT_HTML_VALUE)
   public String toCatelog(@PathVariable("id") Integer id, Model model){
-    Catelog catelog = catelogService.queryById(id);
-    if (catelog == null){
+    CatelogDO catelogDO = catelogService.queryById(id);
+    if (catelogDO == null){
       throw new PageException("所查看的目录不存在");
     }
-    model.addAttribute("cateName",catelog.getName());
-    model.addAttribute("cateId",catelog.getId());
+    model.addAttribute("cateName", catelogDO.getName());
+    model.addAttribute("cateId", catelogDO.getId());
     return "searchpro";
   }
 
@@ -61,8 +60,8 @@ public class CatelogController {
   public JSONObject queryCategoryProblem(@PathVariable("id") Integer id, PageRequest pageRequest){
     JSONObject result = new JSONObject();
 
-    Catelog catelog = catelogService.queryById(id);
-    if (catelog == null){
+    CatelogDO catelogDO = catelogService.queryById(id);
+    if (catelogDO == null){
       result.put("status", PosCode.NO_PRIVILEGE.getStatus());
       result.put("msg", PosCode.NO_PRIVILEGE.getMsg());
       return result;

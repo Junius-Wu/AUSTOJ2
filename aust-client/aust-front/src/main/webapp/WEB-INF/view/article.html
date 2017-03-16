@@ -28,21 +28,21 @@
                <!--主面板-->
                <section class="pro-section animated fadeInUp">
                        <div class="title">
-                           <h5 class="text-center"><a th:href="@{/article/{id}(id=${article.id})}" th:text="${article.title}">A+B问题</a></h5>
+                           <h5 class="text-center"><a th:href="@{/articleDO/{id}(id=${articleDO.id})}" th:text="${articleDO.title}">A+B问题</a></h5>
                            <p class="text-center">
-                               作者:<span th:text="${article.nickname}">作者:网络&nbsp;&nbsp;</span>
+                               作者:<span th:text="${articleDO.nickname}">作者:网络&nbsp;&nbsp;</span>
                                <!--<span>&nbsp;&nbsp;分类:初级</span></p>-->
                        </div>
-                       <article style="text-indent: 2em" class="preview-panel">
+                       <articleDO style="text-indent: 2em" class="preview-panel">
                            <div class="widget">
                                <aside class="widget">
                                    <h5><span>正文内容</span></h5>
                                </aside>
                            </div>
-                           <th:block th:utext="${article.htmlContent}">
+                           <th:block th:utext="${articleDO.htmlContent}">
 
                            </th:block>
-                       </article>
+                       </articleDO>
                </section>
            </div>
             <!--侧边栏-->
@@ -59,6 +59,6 @@
 <script src="/static/scripts/plugins.js" th:src="@{/static/scripts/plugins.js}"></script>
 <script src="/static/scripts/highlight.min.js" th:src="@{/static/scripts/highlight.min.js}"></script>
 <script src="/static/scripts/md2html.js" th:src="@{/static/scripts/md2html.js}"></script>
-<script src="/static/scripts/article.js" th:src="@{/static/scripts/article.js}"></script>
+<script src="/static/scripts/articleDO.js" th:src="@{/static/scripts/articleDO.js}"></script>
 </body>
 </html>

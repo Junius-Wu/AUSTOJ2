@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="cn.edu.aust.mapper.ArticleMapper" >
-  <resultMap id="BaseResultMap" type="cn.edu.aust.pojo.entity.Article" >
+  <resultMap id="BaseResultMap" type="cn.edu.aust.pojo.entity.ArticleDO" >
     <!--
       WARNING - @mbg.generated
     -->
@@ -33,16 +33,16 @@
 
 
   <!--查询文章侧边栏显示-->
-  <resultMap id="ArticleAsideList" type="cn.edu.aust.pojo.entity.Article">
+  <resultMap id="ArticleAsideList" type="cn.edu.aust.pojo.entity.ArticleDO">
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="title" property="title" jdbcType="VARCHAR" />
   </resultMap>
   <select id="queryForAside" resultMap="ArticleAsideList">
-    SELECT id, title FROM article WHERE is_show = 1 ORDER by createdate DESC
+    SELECT id, title FROM articleDO WHERE is_show = 1 ORDER by createdate DESC
   </select>
 
   <!--查询文章页面文章列表-->
-  <resultMap id="ArticleList" type="cn.edu.aust.query.ArticlePC">
+  <resultMap id="ArticleList" type="cn.edu.aust.query.ArticleDOPC">
     <id column="id" property="id" jdbcType="BIGINT" />
     <result column="title" property="title" jdbcType="VARCHAR" />
     <result column="nickname" property="nickname" jdbcType="VARCHAR" />
@@ -59,8 +59,8 @@
     <if test="userId != null">
       ,ifnull(vote.is_vote,0) as is_vote
     </if>
-    FROM article t1
-    LEFT JOIN user t2 ON t2.id = t1.user_id
+    FROM articleDO t1
+    LEFT JOIN userDO t2 ON t2.id = t1.user_id
     <if test="userId != null">
       LEFT JOIN
       (select status as "is_vote",other_id FROM votelog t3 WHERE t3.type = 2 AND t3.user_id = #{userId}) as vote ON vote.other_id = t1.id
@@ -73,12 +73,12 @@
   </select>
 
   <!--查询单篇文章详情-->
-  <resultMap id="ArticleDetail" extends="ArticleList" type="cn.edu.aust.query.ArticlePC">
+  <resultMap id="ArticleDetail" extends="ArticleList" type="cn.edu.aust.query.ArticleDOPC">
     <result column="html_content" property="htmlContent" jdbcType="VARCHAR" />
   </resultMap>
   <select id="queryDetail" parameterType="long" resultMap="ArticleDetail">
-      SELECT p.*,p1.nickname FROM article p
-      LEFT JOIN user p1 ON p1.id = p.user_id
+      SELECT p.*,p1.nickname FROM articleDO p
+      LEFT JOIN userDO p1 ON p1.id = p.user_id
       WHERE p.id = #{value} and p.is_show=1
   </select>
 </mapper>

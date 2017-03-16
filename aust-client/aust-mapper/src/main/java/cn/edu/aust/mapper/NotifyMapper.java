@@ -2,14 +2,14 @@ package cn.edu.aust.mapper;
 
 import java.util.List;
 
-import cn.edu.aust.pojo.entity.Notify;
+import cn.edu.aust.pojo.entity.NotifyDO;
 import tk.mybatis.mapper.common.Mapper;
 
-public interface NotifyMapper extends Mapper<Notify> {
+public interface NotifyMapper extends Mapper<NotifyDO> {
     /**
      * 查询截止到当前可用的通知
      * @param expriedate 过期时间
      * @return 结果集
      */
-    List<Notify> queryListNow(String expriedate);
+    List<NotifyDO> queryListNow(String expriedate);
 }

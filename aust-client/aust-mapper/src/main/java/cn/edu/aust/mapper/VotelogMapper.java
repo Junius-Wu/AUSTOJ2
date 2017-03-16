@@ -1,7 +1,7 @@
 package cn.edu.aust.mapper;
 
-import cn.edu.aust.pojo.entity.Votelog;
+import cn.edu.aust.pojo.entity.VotelogDO;
 import tk.mybatis.mapper.common.Mapper;
 
-public interface VotelogMapper extends Mapper<Votelog> {
+public interface VotelogMapper extends Mapper<VotelogDO> {
 }

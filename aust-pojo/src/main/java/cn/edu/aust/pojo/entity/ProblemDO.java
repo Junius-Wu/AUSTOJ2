@@ -1,15 +1,22 @@
 package cn.edu.aust.pojo.entity;
 
 import java.util.Date;
-import javax.persistence.*;
+
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Table(name = "problem")
 @Data
 @NoArgsConstructor
-public class Problem {
+@ToString
+public class ProblemDO {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -27,17 +34,17 @@ public class Problem {
     /**
      * 所属目录
      */
-    private Byte catelog;
+    private Integer catelog;
 
     /**
      * 属于的阶段
      */
-    private Byte stage;
+    private Integer stage;
 
     /**
      * 是否特殊判题
      */
-    private Byte spj;
+    private Integer spj;
 
     /**
      * 时间限制
@@ -54,7 +61,7 @@ public class Problem {
     /**
      * 难度等级
      */
-    private Byte difficulty;
+    private Integer difficulty;
 
     /**
      * 接收次数

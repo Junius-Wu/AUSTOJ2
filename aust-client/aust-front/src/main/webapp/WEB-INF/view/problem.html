@@ -27,36 +27,36 @@
                <!--主面板-->
                        <section class="pro-section animated fadeInUp" >
                                <div class="title">
-                                   <h3 class="text-center"><a th:href="@{/problem/{id}(id=${problem.id})}" th:text="${problem.title}"></a></h3>
-                                   <p class="text-center text-danger"><span th:text="'时间:'+${problem.timeLimit}+'ms  '">时间:1000ms  </span><span th:text="'  内存:'+${problem.memoryLimit/1000}+'M'"> 内存:32M</span></p>
+                                   <h3 class="text-center"><a th:href="@{/problemDO/{id}(id=${problemDO.id})}" th:text="${problemDO.title}"></a></h3>
+                                   <p class="text-center text-danger"><span th:text="'时间:'+${problemDO.timeLimit}+'ms  '">时间:1000ms  </span><span th:text="'  内存:'+${problemDO.memoryLimit/1000}+'M'"> 内存:32M</span></p>
                                </div>
                                <h4 >题目描述:</h4>
-                               <p th:text="${problem.description}">
-                                       ${problem.description}
+                               <p th:text="${problemDO.description}">
+                                       ${problemDO.description}
                                </p>
                                <h4 >输入:</h4>
-                               <p th:text="${problem.input}">
-                                       ${problem.input}
+                               <p th:text="${problemDO.input}">
+                                       ${problemDO.input}
                                </p>
                                <h4 >输出:</h4>
-                               <p th:text="${problem.output}">
-                                       ${problem.output}
+                               <p th:text="${problemDO.output}">
+                                       ${problemDO.output}
                                </p>
                                <h4 >样例输入:</h4>
-                               <p th:text="${problem.sampleInput}">
-                                       ${problem.sample_input}
+                               <p th:text="${problemDO.sampleInput}">
+                                       ${problemDO.sample_input}
                                </p>
                                <h4 >样例输出:</h4>
-                               <p th:text="${problem.sampleOutput}">
-                                       ${problem.sample_output}
+                               <p th:text="${problemDO.sampleOutput}">
+                                       ${problemDO.sample_output}
                                </p>
                                <h4 >提示:</h4>
-                               <p th:text="${problem.hit}">
-                                       ${problem.hit}
+                               <p th:text="${problemDO.hit}">
+                                       ${problemDO.hit}
                                </p>
                                <h4 >来源:</h4>
                                <p >
-                                   <a href="#" th:text="${problem.nickname}">${problem.author}</a>
+                                   <a href="#" th:text="${problemDO.nickname}">${problemDO.author}</a>
                                </p>
                            <button type="button" th:if="${session.userinfo} != null" class="btn btn-primary btn-lg center-block" data-toggle="modal" data-target="#myModal">提&nbsp;交</button>
                        </section>
@@ -79,7 +79,7 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title">提交代码</h4>
                 </div>
-                <form id="pro_form" action="/problem/judge" method="post">
+                <form id="pro_form" action="/problemDO/judge" method="post">
                 <div class="modal-body">
                         <div class="form-group">
                             <label class="radio-inline">选择编译器:</label>

@@ -30,7 +30,7 @@ import cn.edu.aust.common.service.JedisClient;
 import cn.edu.aust.common.util.SystemUtil;
 import cn.edu.aust.common.util.WebUtils;
 import cn.edu.aust.dto.UserDTO;
-import cn.edu.aust.pojo.entity.User;
+import cn.edu.aust.pojo.entity.UserDO;
 import cn.edu.aust.service.MailService;
 import cn.edu.aust.service.UserService;
 
@@ -103,24 +103,24 @@ public class RegisterController {
             return new Result<PosCode>(PosCode.USERNAME_EXIST);
         }
         //注册用户
-        User user = new User();
-        user.setPassword(DigestUtils.sha256Hex(password));
-        user.setCreatedate(new Date());
-        user.setModifydate(user.getCreatedate());
-        user.setIp(WebUtils.getIp(request));
-        user.setNickname(nickname);
-        user.setEmail(email);
-        user.setUsername(email);
-        user.setIsDefunct((byte) 2);//设置待验证状态
-        userService.save(user);
+        UserDO userDO = new UserDO();
+        userDO.setPassword(DigestUtils.sha256Hex(password));
+        userDO.setCreatedate(new Date());
+        userDO.setModifydate(userDO.getCreatedate());
+        userDO.setIp(WebUtils.getIp(request));
+        userDO.setNickname(nickname);
+        userDO.setEmail(email);
+        userDO.setUsername(email);
+        userDO.setIsDefunct((byte) 2);//设置待验证状态
+        userService.save(userDO);
 
         //登录成功加入session
         session = request.getSession();
-        session.setAttribute(UserDTO.PRINCIPAL_ATTRIBUTE_NAME,new UserDTO(user));
-        logger.info("{}用户已注册",user.getEmail());
+        session.setAttribute(UserDTO.PRINCIPAL_ATTRIBUTE_NAME,new UserDTO(userDO));
+        logger.info("{}用户已注册", userDO.getEmail());
 
         //存储cookies
-        WebUtils.addCookie(response,UserDTO.NICKNAME_COOKIE_NAME, user.getNickname(),
+        WebUtils.addCookie(response,UserDTO.NICKNAME_COOKIE_NAME, userDO.getNickname(),
                     null,setting.getCookiePath(),setting.getCookieDomain(),null);
         //发送邮件,验证
         mailService.sendRegister(email,jedisClient);
@@ -168,16 +168,16 @@ public class RegisterController {
             return new Result<>(PosCode.URL_ERROR);
         }
         //判断用户状态
-        User user = new User();
-        user.setEmail(email);
-        user = userService.queryOne(user);
-        if (user.getId() == null || user.getIsDefunct() != 2){
+        UserDO userDO = new UserDO();
+        userDO.setEmail(email);
+        userDO = userService.queryOne(userDO);
+        if (userDO.getId() == null || userDO.getIsDefunct() != 2){
             return new Result<>(PosCode.ALREADY_REGISTER);
         }
         //更新用户 已验证
-        user.setIsDefunct((byte) 0);
-        user.setModifydate(new Date());
-        userService.update(user);
+        userDO.setIsDefunct((byte) 0);
+        userDO.setModifydate(new Date());
+        userService.update(userDO);
         //清除缓存
         jedisClient.del(token);
         return new Result<>(PosCode.OK);

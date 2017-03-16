@@ -15,9 +15,9 @@ import cn.edu.aust.common.entity.Setting;
 import cn.edu.aust.common.service.JedisClient;
 import cn.edu.aust.common.util.SystemUtil;
 import cn.edu.aust.dto.ArticleAsideDTO;
-import cn.edu.aust.pojo.entity.Catelog;
-import cn.edu.aust.pojo.entity.Notify;
-import cn.edu.aust.pojo.entity.Tags;
+import cn.edu.aust.pojo.entity.CatelogDO;
+import cn.edu.aust.pojo.entity.NotifyDO;
+import cn.edu.aust.pojo.entity.TagsDO;
 import cn.edu.aust.service.ArticleService;
 import cn.edu.aust.service.CatelogService;
 import cn.edu.aust.service.NotifyService;
@@ -71,7 +71,7 @@ public class AsideListen implements ServletContextAware {
      */
     public void refreshNotify(){
         Setting setting = SystemUtil.getSetting(jedisClient);
-        List<Notify> notifies = notifyService.queryListNow(setting.getNotify_count());
+        List<NotifyDO> notifies = notifyService.queryListNow(setting.getNotify_count());
         servletContext.setAttribute("app_notifys",notifies);
         logger.info("网站通知刷新完毕");
     }
@@ -79,8 +79,8 @@ public class AsideListen implements ServletContextAware {
      * 侧边目录
      */
     public void refreshCateLog(){
-        List<Catelog> catelogs = catelogService.queryAll();
-        servletContext.setAttribute("app_catelogs",catelogs);
+        List<CatelogDO> catelogDOS = catelogService.queryAll();
+        servletContext.setAttribute("app_catelogs", catelogDOS);
         logger.info("侧边栏目录刷新完毕");
     }
 
@@ -99,8 +99,8 @@ public class AsideListen implements ServletContextAware {
      */
     public void refreshTag(){
         Setting setting = SystemUtil.getSetting(jedisClient);
-        List<Tags> tagss = tagService.queryList(setting.getAside_tags());
-        servletContext.setAttribute("app_tags",tagss);
+        List<TagsDO> tagsDOS = tagService.queryList(setting.getAside_tags());
+        servletContext.setAttribute("app_tags", tagsDOS);
         logger.info("侧边栏标签刷新完毕");
     }
 

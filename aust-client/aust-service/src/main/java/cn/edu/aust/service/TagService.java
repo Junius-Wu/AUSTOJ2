@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 import cn.edu.aust.mapper.TagsMapper;
-import cn.edu.aust.pojo.entity.Tags;
+import cn.edu.aust.pojo.entity.TagsDO;
 
 /**
  * 标签
@@ -25,7 +25,7 @@ public class TagService {
      * @param limit 数量
      * @return 结果集
      */
-    public List<Tags> queryList(Integer limit){
+    public List<TagsDO> queryList(Integer limit){
         PageHelper.startPage(0,limit);
         return tagsMapper.queryList();
     }

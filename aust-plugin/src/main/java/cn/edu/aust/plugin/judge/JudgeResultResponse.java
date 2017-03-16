@@ -2,6 +2,7 @@ package cn.edu.aust.plugin.judge;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 /**
  * 封装RPC调用返回的判题结果
@@ -10,6 +11,7 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @NoArgsConstructor
+@ToString
 public class JudgeResultResponse {
 
   private Integer exitCode;

@@ -29,15 +29,15 @@
                 <section class="discuss-section animated fadeInUp">
                     <!--标题部分-->
                     <div class="title">
-                        <button class="btn btn-inverse" id="share_btn" th:title="${problem.id}">
+                        <button class="btn btn-inverse" id="share_btn" th:title="${problemDO.id}">
                             分享思路
                         </button>
                         <h3 class="text-center text-primary">
-                            <a href="#" th:href="@{/problem/{id}(id=${problem.id})}" th:text="${problem.title}">A+B问题</a>
+                            <a href="#" th:href="@{/problemDO/{id}(id=${problemDO.id})}" th:text="${problemDO.title}">A+B问题</a>
                         </h3>
                         <p class="text-center text-danger">
-                            <span th:text="'时间:'+${problem.timeLimit}+'ms  '">时间:1000ms  </span>
-                            <span th:text="'  内存:'+${problem.memoryLimit/1000}+'M'"> 内存:32M</span></p>
+                            <span th:text="'时间:'+${problemDO.timeLimit}+'ms  '">时间:1000ms  </span>
+                            <span th:text="'  内存:'+${problemDO.memoryLimit/1000}+'M'"> 内存:32M</span></p>
                         <hr>
                     </div>
                     <!--留言讨论框-->
@@ -87,14 +87,14 @@
                                         </ul>
                                     </div>
                                     <!--底部头像-->
-                                    <div class="col-md-4 discuss-user">
+                                    <div class="col-md-4 discuss-userDO">
                                         <a href="#">
                                             <img src="apple-touch-icon.png"
-                                                 th:src="@{${comment.user.avatar}}"
+                                                 th:src="@{${comment.userDO.avatar}}"
                                                  class="img-circle" width="32" height="32"
                                                  style="padding-bottom: 3px">
                                             <span style="margin-left: 5px"
-                                                  th:text="${comment.user.nickname}">牛李</span>
+                                                  th:text="${comment.userDO.nickname}">牛李</span>
                                         </a>
                                     </div>
                                 </div>
@@ -108,11 +108,11 @@
                     <ul class="pagination-plain">
                         <li class="previous" th:if="${pageinfo.hasPreviousPage}">
                             <a href="#"
-                               th:href="@{/comment/pro/{id}(id=${problem.id},pageNum=${pageinfo.prePage})}">Previous</a>
+                               th:href="@{/comment/pro/{id}(id=${problemDO.id},pageNum=${pageinfo.prePage})}">Previous</a>
                         </li>
                         <li class="next" style="float: right" th:if="${pageinfo.hasNextPage}">
                             <a href="#"
-                               th:href="@{/comment/pro/{id}(id=${problem.id},pageNum=${pageinfo.nextPage})}">next</a>
+                               th:href="@{/comment/pro/{id}(id=${problemDO.id},pageNum=${pageinfo.nextPage})}">next</a>
                         </li>
                     </ul>
                 </section>
@@ -136,7 +136,7 @@
                         aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title">提交思路</h4>
             </div>
-            <form id="comment_form" th:action="@{/comment/pro/add/{id}(id=${problem.id})}"
+            <form id="comment_form" th:action="@{/comment/pro/add/{id}(id=${problemDO.id})}"
                   method="post">
                 <input type="hidden" name="isReply" th:value="false">
                 <div class="modal-body">
