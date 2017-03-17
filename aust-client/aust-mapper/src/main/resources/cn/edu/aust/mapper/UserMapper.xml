@@ -38,20 +38,7 @@
     createdate, modifydate, is_defunct, is_opensource, is_email
   </sql>
 
-  <!--查找出首页展示用户-->
-    <resultMap id="indexshow" type="cn.edu.aust.pojo.entity.UserDO">
-      <id column="id" property="id" jdbcType="BIGINT" />
-      <result column="avatar" property="avatar" jdbcType="VARCHAR" />
-      <result column="nickname" property="nickname" jdbcType="VARCHAR" />
-      <result column="honor" property="honor" jdbcType="VARCHAR" />
-    </resultMap>
-    <select id="queryToIndexShow" resultType="cn.edu.aust.pojo.entity.UserDO">
-        SELECT u.id,u.avatar,u.honor,u.nickname FROM userDO u
-        WHERE u.is_defunct = 0 AND u.is_show =1 ORDER BY point LIMIT 6
-    </select>
-
-  <!--查找出用户排名,必须是有效用户才能参与排名-->
-  <resultMap id="RankMap" type="cn.edu.aust.pojo.entity.UserDO" >
+  <resultMap id="UserBasicMap" type="cn.edu.aust.pojo.entity.UserDO" >
     <id column="id" property="id" jdbcType="BIGINT" />
     <result column="avatar" property="avatar" jdbcType="VARCHAR" />
     <result column="nickname" property="nickname" jdbcType="VARCHAR" />
@@ -59,8 +46,18 @@
     <result column="submit" property="submit" jdbcType="INTEGER" />
     <result column="solved" property="solved" jdbcType="INTEGER" />
     <result column="blog" property="blog" jdbcType="VARCHAR" />
+    <result column="honor" property="honor" jdbcType="VARCHAR" />
   </resultMap>
-  <select id="queryForRank" resultMap="RankMap">
+
+  <!--查找出首页展示用户-->
+
+    <select id="queryToShow" resultMap="UserBasicMap">
+        SELECT u.id,u.avatar,u.honor,u.nickname FROM userDO u
+        WHERE u.is_defunct = 0 AND u.is_show =1 ORDER BY point LIMIT 6
+    </select>
+
+  <!--查找出用户排名,必须是有效用户才能参与排名-->
+  <select id="queryForRank" resultMap="UserBasicMap">
     SELECT u.id,u.avatar,u.nickname,u.point,u.submit,u.solved,u.blog
     FROM userDO u WHERE u.is_defunct = 0
     ORDER BY u.solved DESC ,u.submit DESC LIMIT 10000

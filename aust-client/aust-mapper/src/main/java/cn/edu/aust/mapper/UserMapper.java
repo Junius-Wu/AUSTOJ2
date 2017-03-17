@@ -15,7 +15,7 @@ public interface UserMapper extends Mapper<UserDO> {
      * 查询首页展示用户
      * @return 结果集
      */
-    List<UserDO> queryToIndexShow();
+    List<UserDO> queryToShow();
 
     /**
      * 查询出排名用户

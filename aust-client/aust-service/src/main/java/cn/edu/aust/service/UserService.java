@@ -62,7 +62,7 @@ public class UserService extends BaseService<UserDO>{
      * @return 展示到首页用户
      */
     public List<UserDTO> queryToIndexShow(){
-        List<UserDO> userDOS = userMapper.queryToIndexShow();
+        List<UserDO> userDOS = userMapper.queryToShow();
         if (CollectionUtils.isEmpty(userDOS)){
             return Collections.emptyList();
         }

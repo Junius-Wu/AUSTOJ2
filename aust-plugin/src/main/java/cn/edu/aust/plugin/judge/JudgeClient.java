@@ -1,6 +1,7 @@
 package cn.edu.aust.plugin.judge;
 
-import java.util.Objects;
+import com.google.common.base.Preconditions;
+
 import java.util.concurrent.TimeUnit;
 
 import cn.edu.aust.judger.proto.JudgeRequest;
@@ -8,6 +9,7 @@ import cn.edu.aust.judger.proto.JudgeResponse;
 import cn.edu.aust.judger.proto.JudgeServerGrpc;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * 判题客户端
@@ -15,6 +17,7 @@ import io.grpc.ManagedChannelBuilder;
  * @author Niu Li
  * @since 2017/3/5
  */
+@Slf4j
 public class JudgeClient {
   /**
    * 通信信道
@@ -60,18 +63,24 @@ public class JudgeClient {
                                        .setTimeLimit(timeLimit)
                                        .setMemoryLimit(memoryLimit)
                                        .build();
-    blockingStub = JudgeServerGrpc.newBlockingStub(channel);
-    JudgeResponse judgeResponse = blockingStub.judge(judgeRequest);
     JudgeResultResponse judgeResultResponse = new JudgeResultResponse();
-    if (Objects.isNull(judgeResponse)){
+    try {
+      blockingStub = JudgeServerGrpc.newBlockingStub(channel);
+      JudgeResponse judgeResponse = blockingStub.judge(judgeRequest);
+      Preconditions.checkNotNull(judgeResponse,"判题异常");
+
+      judgeResultResponse.setExitCode(judgeResponse.getExitCode());
+      judgeResultResponse.setRuntimeResult(judgeResponse.getRuntimeResult());
+      judgeResultResponse.setUseMemory(judgeResponse.getUsedMemory());
+      judgeResultResponse.setUseTime(judgeResponse.getUsedTime());
+      judgeResultResponse.setIsSuccess(true);
+    } catch (Exception e) {
+      log.error("JudgeClient judge error",e);
       judgeResultResponse.setExitCode(99);
       judgeResultResponse.setRuntimeResult("判题异常");
+      judgeResultResponse.setIsSuccess(false);
       return judgeResultResponse;
     }
-    judgeResultResponse.setExitCode(judgeResponse.getExitCode());
-    judgeResultResponse.setRuntimeResult(judgeResponse.getRuntimeResult());
-    judgeResultResponse.setUseMemory(judgeResponse.getUsedMemory());
-    judgeResultResponse.setUseTime(judgeResponse.getUsedTime());
     return judgeResultResponse;
   }
 }

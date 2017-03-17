@@ -10,14 +10,11 @@
     <result column="count" property="count" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
-    <!--
-      WARNING - @mbg.generated
-    -->
     id, tag, count
   </sql>
 
   <!--按照count排序查找出所有的tag-->
-  <select id="queryList" resultMap="BaseResultMap">
+  <select id="queryAllOrderByCount" resultMap="BaseResultMap">
     SELECT <include refid="Base_Column_List"/> FROM tags ORDER BY COUNT ASC
   </select>
 </mapper>

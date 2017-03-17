@@ -18,5 +18,6 @@ public class JudgeResultResponse {
   private String runtimeResult;
   private Integer useTime;
   private Integer useMemory;
+  private Boolean isSuccess;
 
 }

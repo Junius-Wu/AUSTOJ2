@@ -21,7 +21,7 @@
   </sql>
 
   <!--查询截止到目前有效的通知-->
-  <select id="queryListNow" parameterType="string" resultMap="BaseResultMap">
+  <select id="queryAllOrderTime" parameterType="string" resultMap="BaseResultMap">
     SELECT <include refid="Base_Column_List"/>
     FROM notify
     WHERE expiredate>#{expiredate} and  status = 1

@@ -1,6 +1,5 @@
 package cn.edu.aust.service;
 
-import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -9,6 +8,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 
 import javax.annotation.Resource;
 
+import cn.edu.aust.common.util.LanguageUtil;
 import cn.edu.aust.mapper.SolutionMapper;
 import cn.edu.aust.mapper.SolutionSourceMapper;
 import cn.edu.aust.plugin.judge.JudgeClientPool;
@@ -40,16 +40,17 @@ public class SolutionService {
    *
    * @param problemDO 判题题目
    * @param source  用户源码
-   * @param way     所用语言
+   * @param language     所用语言
    */
   @Transactional
-  public void startJudger(Long userId, ProblemDO problemDO, String source, String way) {
+  public void startJudger(Long userId, ProblemDO problemDO, String source,
+      LanguageUtil.Language language) {
     SolutionDO solutionDO = new SolutionDO();
     solutionDO.setCreatedate(new Date());
     solutionDO.setModifydate(solutionDO.getCreatedate());
     solutionDO.setCodeLength(source.getBytes().length / 1000.0);
     solutionDO.setContestId(problemDO.getContestId());
-    solutionDO.setLanguage(NumberUtils.toInt(way));
+    solutionDO.setLanguage(language.getLanguageName());
     solutionDO.setProblemId(problemDO.getId());
     solutionDO.setUserId(userId);
     //这里自动写回主键
@@ -59,12 +60,28 @@ public class SolutionService {
     solutionSourceDO.setSource(source);
     solutionSourceDO.setSolutionId(solutionDO.getId());
     solutionSourceMapper.insert(solutionSourceDO);
+    //创建判题任务
+    judgeExecute(problemDO, source, language.getLanguageName(), solutionDO.getId());
+  }
 
+  /**
+   * 创建判题任务,并处理判题结果
+   * @param problemDO 题目
+   * @param source 源码
+   * @param language 语言
+   * @param solutionId id
+   */
+  private void judgeExecute(ProblemDO problemDO, String source, String language,
+      Long solutionId) {
     taskExecutor.execute(() -> {
       judgeClientPool.execute(judgeClient -> {
-        JudgeResultResponse resultResponse = judgeClient.judge(solutionDO.getId(), problemDO.getId(),
-            source, way, problemDO.getTimeLimit(), problemDO.getMemoryLimit());
+        JudgeResultResponse resultResponse = judgeClient.judge(solutionId, problemDO.getId(),
+            source, language, problemDO.getTimeLimit(), problemDO.getMemoryLimit());
+        if (resultResponse.getIsSuccess()){
+          //todo 判题成功后策略
+        }else {
 
+        }
         return false;
       });
     });

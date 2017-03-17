@@ -28,7 +28,7 @@ public class SolutionDO {
     @Column(name = "code_length")
     private Double codeLength;
 
-    private Integer language;
+    private String language;
 
     @Column(name = "contest_id")
     private Integer contestId;

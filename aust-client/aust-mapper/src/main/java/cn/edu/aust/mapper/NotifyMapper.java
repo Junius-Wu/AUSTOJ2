@@ -11,5 +11,5 @@ public interface NotifyMapper extends Mapper<NotifyDO> {
      * @param expriedate 过期时间
      * @return 结果集
      */
-    List<NotifyDO> queryListNow(String expriedate);
+    List<NotifyDO> queryAllOrderTime(String expriedate);
 }

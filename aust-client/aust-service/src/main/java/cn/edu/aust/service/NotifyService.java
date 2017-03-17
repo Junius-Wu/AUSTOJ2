@@ -30,6 +30,6 @@ public class NotifyService {
      */
     public List<NotifyDO> queryListNow(int limit){
         PageHelper.startPage(0,limit,false);
-        return notifyMapper.queryListNow(DateUtil.format(new Date(),DateUtil.YMDHMS_));
+        return notifyMapper.queryAllOrderTime(DateUtil.format(new Date(),DateUtil.YMDHMS_));
     }
 }
