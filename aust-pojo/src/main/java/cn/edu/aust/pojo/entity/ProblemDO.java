@@ -64,11 +64,6 @@ public class ProblemDO {
     private Integer difficulty;
 
     /**
-     * 接收次数
-     */
-    private Integer accepted;
-
-    /**
      * 解决次数
      */
     private Integer solved;
@@ -77,12 +72,6 @@ public class ProblemDO {
      * 提交次数
      */
     private Integer submit;
-
-    /**
-     * 提交人数
-     */
-    @Column(name = "submit_user")
-    private Integer submitUser;
 
     /**
      * 作者id

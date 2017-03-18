@@ -4,10 +4,14 @@ setTable($('#start-table'),'/problem/stage/1',15);
 setTable($('#practice-table'),'/problem/stage/1',15);
 //master表格数据获取
 setTable($('#master-table'),'/problem/stage/1',15);
-
-setTable($('#cate-table'),'/problem/catelog/'+$("#cate-table").attr("data-id"),15);
+//获取目录下题目
+var $cate = $("#cate-table");
+setTable($cate, '/problem/catelog/' + $cate.attr("data-id"), 15);
+//获取用户判题记录
+setTable($("#submit-table"),"/judge/list",40);
 //获取用户排名
 setTableClient($("#rank-table"),"/static/json/rank.json",20);
+
 
 
 //表格数据获取
@@ -67,62 +71,7 @@ function queryParams(params) {
     search:params.search
   };
 }
-//给出语言id显示对应语言
-function setlanguage(value, row, index) {
-  switch (value){
-    case 3:
-      value = 'C';break;
-    case 4:
-      value = 'C++';break;
-    case 5:
-      value = 'Java';
-  }
-  return [
-    '<div>',
-    '<span>' + value + '</span>',
-    '</div>'
-  ].join('');
-}
 
-//设置判题显示
-function setVerdict(value, row, index) {
-  var msg = 'text-danger';
-  switch (value){
-    case 1:
-      value = 'Compiling';break;
-    case 2:
-      value = 'Compiling';break;
-    case 3:
-      value = '编译错误';break;
-    case 4:
-      value = 'Compiling';break;
-    case 5:
-      value = 'Accepted';msg = 'text-success';break;
-    case 6:
-      value = '答案错误';break;
-    case 7:
-      value = '运行错误';break;
-    case 8:
-      value = '超时';break;
-    case 9:
-      value = '内存超出';break;
-    case 10:
-      value = '格式错误';break;
-    case 11:
-      value = '输出错误';break;
-    case 12:
-      value = '非法函数';break;
-    case 13:
-      value = '竞赛已结束';break;
-    case 14:
-      value = '未知错误';break;
-  }
-  return [
-    '<div>',
-    '<span class="'+msg+'">' + value + '</span>',
-    '</div>'
-  ].join('');
-}
 //设置内存显示
 function setMemory(value, row, index) {
   return [
@@ -147,6 +96,14 @@ function setTitle(value, row, index) {
   return [
     '<div>',
     '<a href="problem/'+row.id+'" target="_blank">' + value + '</a>',
+    '</div>'
+  ].join('');
+}
+//增加题目title点击功能
+function setTitleWithid(value, row, index) {
+  return [
+    '<div>',
+    '<a href="problem/'+row.problem_id+'" target="_blank">' + value + '</a>',
     '</div>'
   ].join('');
 }

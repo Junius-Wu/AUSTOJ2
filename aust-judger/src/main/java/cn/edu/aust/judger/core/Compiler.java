@@ -6,9 +6,10 @@ import java.io.File;
 import java.nio.charset.Charset;
 import java.util.Map;
 
+import cn.edu.aust.common.constant.JudgeCode;
+import cn.edu.aust.common.util.LanguageUtil;
 import cn.edu.aust.judger.proto.JudgeResponse;
 import cn.edu.aust.judger.util.Constant;
-import cn.edu.aust.common.util.LanguageUtil;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -62,7 +63,7 @@ public class Compiler {
 		    return null;
         }
         builder.setRuntimeResult(getCompileOutput(compileLogPath))
-                .setExitCode(cn.edu.aust.common.constant.JudgeCode.JudgeCode.COMPILE_ERROR.getStatus());
+                .setExitCode(JudgeCode.COMPILE_ERROR.getStatus());
 		return builder.build();
 	}
 	

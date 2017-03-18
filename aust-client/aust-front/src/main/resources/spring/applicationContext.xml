@@ -118,7 +118,7 @@
         <constructor-arg name="poolConfig" ref="jedispoolConfig"/>
         <constructor-arg name="host" value="${redis.ip}"/>
         <constructor-arg name="port" value="${redis.port}"/>
-        <constructor-arg name="timeout" value="1000"/>
+        <constructor-arg name="timeout" value="10000"/>
         <constructor-arg name="password" value="niuli"/>
     </bean>
 
@@ -137,6 +137,7 @@
     <bean id="judgeClientPool" class="cn.edu.aust.plugin.judge.JudgeClientPool"
           p:host="${judger.host}"
           p:port="${judger.port}"
+          p:minIdle="${judger.minIdle}"
           p:maxIdle="${judger.maxIdel}"
           p:maxTotal="${judger.maxTotal}"
           p:maxWaitMillis="${judger.maxWaitMillis}"

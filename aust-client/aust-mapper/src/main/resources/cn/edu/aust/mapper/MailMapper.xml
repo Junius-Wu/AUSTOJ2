@@ -6,7 +6,7 @@
       WARNING - @mbg.generated
     -->
     <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="userDO" property="userDO" jdbcType="INTEGER" />
+    <result column="user" property="user" jdbcType="INTEGER" />
     <result column="friend" property="friend" jdbcType="INTEGER" />
     <result column="sender" property="sender" jdbcType="INTEGER" />
     <result column="receiver" property="receiver" jdbcType="INTEGER" />
@@ -25,7 +25,7 @@
     <!--
       WARNING - @mbg.generated
     -->
-    id, userDO, friend, sender, receiver, type, send_time, read_time, status
+    id, user, friend, sender, receiver, type, send_time, read_time, status
   </sql>
   <sql id="Blob_Column_List" >
     <!--

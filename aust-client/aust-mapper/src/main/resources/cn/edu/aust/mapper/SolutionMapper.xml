@@ -1,27 +1,57 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="cn.edu.aust.mapper.SolutionMapper" >
-  <resultMap id="BaseResultMap" type="cn.edu.aust.pojo.entity.SolutionDO" >
-    <!--
-      WARNING - @mbg.generated
-    -->
-    <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="problem_id" property="problemId" jdbcType="INTEGER" />
-    <result column="user_id" property="userId" jdbcType="VARCHAR" />
-    <result column="memory" property="memory" jdbcType="INTEGER" />
-    <result column="time" property="time" jdbcType="INTEGER" />
-    <result column="code_length" property="codeLength" jdbcType="INTEGER" />
-    <result column="language" property="language" jdbcType="TINYINT" />
-    <result column="contest_id" property="contestId" jdbcType="INTEGER" />
-    <result column="testcase" property="testcase" jdbcType="INTEGER" />
-    <result column="createdate" property="createdate" jdbcType="TIMESTAMP" />
-    <result column="modifydate" property="modifydate" jdbcType="TIMESTAMP" />
-  </resultMap>
-  <sql id="Base_Column_List" >
-    <!--
-      WARNING - @mbg.generated
-    -->
-    id, problem_id, username, memory, time, code_length, language, contest_id, testcase, 
-    createdate, modifydate
-  </sql>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.edu.aust.mapper.SolutionMapper">
+    <resultMap id="BaseResultMap" type="cn.edu.aust.pojo.entity.SolutionDO">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="problem_id" property="problemId" jdbcType="INTEGER"/>
+        <result column="problem_title" property="problemTitle" jdbcType="VARCHAR"/>
+        <result column="user_id" property="userId" jdbcType="VARCHAR"/>
+        <result column="memory" property="memory" jdbcType="INTEGER"/>
+        <result column="time" property="time" jdbcType="INTEGER"/>
+        <result column="code_length" property="codeLength" jdbcType="INTEGER"/>
+        <result column="language" property="language" jdbcType="TINYINT"/>
+        <result column="contest_id" property="contestId" jdbcType="INTEGER"/>
+        <result column="testcase" property="testcase" jdbcType="INTEGER"/>
+        <result column="createdate" property="createdate" jdbcType="TIMESTAMP"/>
+        <result column="modifydate" property="modifydate" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        id, problem_id,problem_title, user_id, memory, time, code_length, language, contest_id,
+        testcase,createdate, modifydate
+    </sql>
+
+    <!--查询用户提交列表-->
+    <select id="queryDetailByUserId" resultMap="BaseResultMap">
+      SELECT <include refid="Base_Column_List"/>
+        FROM solution
+        <where>
+            <if test="search != null">
+                problem_title LIKE #{search}
+            </if>
+            AND solution.user_id = #{userId}
+        </where>
+        ORDER BY createdate DESC
+    </select>
+
+    <!--根据用户id和状态等字段查询其提交记录-->
+    <select id="queryIdByUserId" resultType="Long">
+      SELECT id
+      FROM solution
+      <where>
+          <if test="problemId != null">
+              problem_id = #{problemId}
+          </if>
+          <if test="verdict != null">
+              AND solution.verdict = #{verdict}
+          </if>
+          AND user_id = #{userId}
+      </where>
+  </select>
 </mapper>

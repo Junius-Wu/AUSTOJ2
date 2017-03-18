@@ -19,7 +19,7 @@ public final class LanguageUtil {
   //主要不想关联到数据库,暂时先写死
   static {
     //java语言
-    Language java = new Language("text/x-java", "java",
+    Language java = new Language("text/x-java", "Java",
         "javac {filename}.java", "java -cp {filename}", "java");
     langMap.put(java.getLanguageName(), java);
     //c语言

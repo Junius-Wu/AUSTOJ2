@@ -19,6 +19,9 @@ public class SolutionDO {
     @Column(name = "problem_id")
     private Long problemId;
 
+    @Column(name = "problem_title")
+    private String problemTitle;
+
     private Long userId;
 
     private Integer memory;
@@ -32,6 +35,8 @@ public class SolutionDO {
 
     @Column(name = "contest_id")
     private Integer contestId;
+
+    private Integer verdict;
 
     private Integer testcase;
 

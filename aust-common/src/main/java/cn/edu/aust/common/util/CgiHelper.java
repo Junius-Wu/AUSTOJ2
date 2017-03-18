@@ -22,4 +22,5 @@ public final class CgiHelper {
     String value = request.getParameter(key);
     return value == null ? defaultValue : value;
   }
+
 }

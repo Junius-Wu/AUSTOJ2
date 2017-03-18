@@ -27,7 +27,7 @@
         <!-- Default charset -->
         <property name="charset" value="UTF-8" />
         <!-- Default dateFormat -->
-        <property name="dateFormat" value="yyyy-MM-dd" />
+        <property name="dateFormat" value="yyyy-MM-dd HH:mm:ss" />
         <!-- SerializerFeature -->
         <property name="serializerFeatures">
             <list>
