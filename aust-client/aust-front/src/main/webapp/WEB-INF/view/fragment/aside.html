@@ -39,8 +39,8 @@
         <h5><span>题目分类</span></h5>
         <ul class="list-unstyled catelogDO">
             <!--/*@thymesVar id="catelogs" type="java.util.List<cn.edu.aust.common.entity.Catelog>"*/-->
-            <li th:each="catelogDO : ${application.app_catelogs}">
-                <i class="fa fa-bookmark-o">&nbsp;&nbsp;<a href="#" th:href="@{/catelogDO/{id}(id=${catelogDO.id})}" th:text="${catelogDO.name}"></a></i>
+            <li th:each="catelog : ${application.app_catelogs}">
+                <i class="fa fa-bookmark-o">&nbsp;&nbsp;<a href="#" th:href="@{/catelog/{id}(id=${catelog.id})}" th:text="${catelog.name}"></a></i>
             </li>
         </ul>
     </aside>
@@ -50,7 +50,7 @@
         <h5><span>标签</span></h5>
         <div class="tagcloud clearfix tags">
             <th:block th:each="tag : ${application.app_tags}">
-                <a style="font-size: 12px;" th:text="${tag.tag}" th:href="@{/articleDO(search=${tag.tag})}"></a>
+                <a style="font-size: 12px;" th:text="${tag.tag}" th:href="@{/article(search=${tag.tag})}"></a>
             </th:block>
         </div>
     </aside>
@@ -59,10 +59,10 @@
         <h5><span>近期文章</span></h5>
         <ul class="list-unstyled articleDO">
             <!--/*@thymesVar id="articles" type="java.util.List<cn.edu.aust.common.entity.Article>"*/-->
-            <li th:each="articleDO : ${application.app_articles}">
+            <li th:each="article : ${application.app_articles}">
                 <i class="fa fa-file-text-o">
-                    <a th:href="@{/articleDO/{id}(id=${articleDO.id})}" target="_blank" th:text="${articleDO.title}"
-                       th:title="${articleDO.title}"></a>
+                    <a th:href="@{/article/{id}(id=${article.id})}" target="_blank" th:text="${article.title}"
+                       th:title="${article.title}"></a>
                 </i>
             </li>
         </ul>

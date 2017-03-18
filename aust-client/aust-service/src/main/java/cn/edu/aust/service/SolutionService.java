@@ -54,19 +54,20 @@ public class SolutionService {
 
   /**
    * 查询用户提交列表
+   *
    * @param searchContext 搜索内容
-   * @param userId 用户id
+   * @param userId        用户id
    * @return 查询集合
    */
-  public PageInfo<SolutionDTO> userSolutionList(String searchContext,Long userId,Integer offset,
-      Integer limit){
+  public PageInfo<SolutionDTO> userSolutionList(String searchContext, Long userId, Integer offset,
+      Integer limit) {
     if (StringUtils.isNotEmpty(searchContext)) {
       searchContext = "%" + searchContext + "%";
     }
-    PageHelper.offsetPage(offset,limit);
-    List<SolutionDO> queryresult = solutionMapper.queryDetailByUserId(searchContext,userId);
+    PageHelper.offsetPage(offset, limit);
+    List<SolutionDO> queryresult = solutionMapper.queryDetailByUserId(searchContext, userId);
     PageInfo<SolutionDTO> pageInfo = new PageInfo<>(SolutionAssemble.do2dto(queryresult));
-    pageInfo.setTotal(((Page)queryresult).getTotal());
+    pageInfo.setTotal(((Page) queryresult).getTotal());
     return pageInfo;
   }
 
@@ -75,8 +76,8 @@ public class SolutionService {
    * 保存用户提交记录,并且开启一个判题线程
    *
    * @param problemDO 判题题目
-   * @param source  用户源码
-   * @param language     所用语言
+   * @param source    用户源码
+   * @param language  所用语言
    */
   @Transactional(rollbackFor = Exception.class)
   public void startJudger(Long userId, ProblemDO problemDO, String source,
@@ -91,6 +92,7 @@ public class SolutionService {
     solutionDO.setProblemTitle(problemDO.getTitle());
     solutionDO.setUserId(userId);
     solutionDO.setVerdict(JudgeCode.COMPILEING.getStatus());
+    solutionDO.setTestcase(0);
     //这里自动写回主键
     solutionMapper.insert(solutionDO);
     //保存判题源码
@@ -104,49 +106,53 @@ public class SolutionService {
 
   /**
    * 创建判题任务,并处理判题结果
+   *
    * @param problemDO 题目
-   * @param source 源码
-   * @param language 语言
-   * @param solution 对应判题记录
+   * @param source    源码
+   * @param language  语言
+   * @param solution  对应判题记录
    */
   private void judgeExecute(ProblemDO problemDO, String source, String language,
       SolutionDO solution) {
-    taskExecutor.execute(() -> {
-      judgeClientPool.execute(judgeClient -> {
-        JudgeResultResponse resultResponse = judgeClient.judge(solution.getId(), problemDO.getId(),
-            source, language, problemDO.getTimeLimit(), problemDO.getMemoryLimit());
-        //更新solution
-        solution.setModifydate(new Date());
-        solution.setTime(resultResponse.getUseTime());
-        solution.setMemory(resultResponse.getUseMemory());
-        solution.setVerdict(resultResponse.getExitCode());
-        solutionMapper.updateByPrimaryKeySelective(solution);
-        //根据返回错误码更新题目和用户信息
-        dealWithByJudgeCode(resultResponse,problemDO.getId(),solution.getUserId());
-        return false;
-      });
-    });
+    taskExecutor.execute(
+        judgeClientPool.execute(judgeClient -> {
+          JudgeResultResponse resultResponse = judgeClient.judge(solution.getId(), problemDO.getId(),
+              source, language, problemDO.getTimeLimit(), problemDO.getMemoryLimit());
+          //更新solution
+          solution.setModifydate(new Date());
+          solution.setTime(resultResponse.getUseTime());
+          solution.setMemory(resultResponse.getUseMemory());
+          solution.setVerdict(resultResponse.getExitCode());
+          solution.setTestcase(resultResponse.getTestcase());
+          solutionMapper.updateByPrimaryKeySelective(solution);
+          //根据返回错误码更新题目和用户信息
+          dealWithByJudgeCode(resultResponse, problemDO.getId(), solution.getUserId());
+          return false;
+        })
+    );
   }
 
   /**
    * 根据判题返回错误码更新用户和题目的最新信息
+   *
    * @param resultResponse 判题结果
    */
-  private void dealWithByJudgeCode(JudgeResultResponse resultResponse,Long problemId,Long userId) {
+  @Transactional(rollbackFor = Exception.class)
+  private void dealWithByJudgeCode(JudgeResultResponse resultResponse, Long problemId, Long userId) {
     UserDO userDO = userMapper.selectByPrimaryKey(userId);
     ProblemDO problemDO = problemMapper.selectByPrimaryKey(problemId);
     //判断该题目是否被该用户AC过
-    List<Long> solution = solutionMapper.queryIdByUserId(problemId, JudgeCode.AC.getStatus(),userId);
+    List<Long> solution = solutionMapper.queryIdByUserId(problemId, JudgeCode.AC.getStatus(), userId);
     //未被AC
-    problemDO.setSubmit(problemDO.getSubmit()+1);
-    userDO.setSubmit(userDO.getSubmit()+1);
-    if (CollectionUtils.isEmpty(solution)){
-      if (resultResponse.getExitCode().equals(JudgeCode.AC.getStatus())){
-        userDO.setSolved(userDO.getSolved()+1);
+    problemDO.setSubmit(problemDO.getSubmit() + 1);
+    userDO.setSubmit(userDO.getSubmit() + 1);
+    if (CollectionUtils.isEmpty(solution)) {
+      if (resultResponse.getExitCode().equals(JudgeCode.AC.getStatus())) {
+        userDO.setSolved(userDO.getSolved() + 1);
       }
     }
-    if (resultResponse.getExitCode().equals(JudgeCode.AC.getStatus())){
-      problemDO.setSolved(problemDO.getSolved()+1);
+    if (resultResponse.getExitCode().equals(JudgeCode.AC.getStatus())) {
+      problemDO.setSolved(problemDO.getSolved() + 1);
     }
     problemMapper.updateByPrimaryKeySelective(problemDO);
     userMapper.updateByPrimaryKeySelective(userDO);

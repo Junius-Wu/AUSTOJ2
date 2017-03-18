@@ -12,14 +12,19 @@ import java.util.Objects;
  * @since 2017/2/19
  */
 public enum JudgeCode {
-  AC(0, "SUCCESS"),COMPILEING(1,"正在编译"), NO_LANGUAGE(99, "不支持的语言类型"), SYS_ERROR(96, "系统异常"),
-  COMPILE_ERROR(97, "编译错误"), NO_TESTCASE(98, "不存在测试案例");
+  AC(0, "AC"),COMPILEING(1,"COMPILEING"), NO_LANGUAGE(99, "不支持的语言类型"), SYS_ERROR(96, "系统异常"),
+  COMPILE_ERROR(97, "COMPILE_ERROR"), NO_TESTCASE(98, "不存在测试案例");
 
 
   private static final Map<Integer,JudgeCode> existCode = Maps.newHashMap();
 
   static {
     existCode.put(AC.getStatus(),AC);
+    existCode.put(COMPILEING.getStatus(),COMPILEING);
+    existCode.put(NO_LANGUAGE.getStatus(),NO_LANGUAGE);
+    existCode.put(SYS_ERROR.getStatus(),SYS_ERROR);
+    existCode.put(COMPILE_ERROR.getStatus(),COMPILE_ERROR);
+    existCode.put(NO_TESTCASE.getStatus(),NO_TESTCASE);
   }
 
   private Integer status;

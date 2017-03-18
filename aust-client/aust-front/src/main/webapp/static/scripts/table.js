@@ -103,7 +103,7 @@ function setTitle(value, row, index) {
 function setTitleWithid(value, row, index) {
   return [
     '<div>',
-    '<a href="problem/'+row.problem_id+'" target="_blank">' + value + '</a>',
+    '<a href="'+projectName+'/problem/'+row.problem_id+'" target="_blank">' + value + '</a>',
     '</div>'
   ].join('');
 }

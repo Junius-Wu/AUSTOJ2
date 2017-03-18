@@ -35,7 +35,7 @@ public class SolutionDTO {
   @JSONField(name = "contest_id")
   private Integer contestId;
 
-  private Integer verdict;
+  private String verdict;
 
   private Integer testcase;
 

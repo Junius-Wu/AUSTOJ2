@@ -1,10 +1,12 @@
 package cn.edu.aust.assemble;
 
 import org.modelmapper.ModelMapper;
+import org.modelmapper.PropertyMap;
 import org.modelmapper.TypeToken;
 
 import java.util.List;
 
+import cn.edu.aust.convert.JudgeCodeConvent;
 import cn.edu.aust.dto.SolutionDTO;
 import cn.edu.aust.pojo.entity.SolutionDO;
 
@@ -17,6 +19,14 @@ public class SolutionAssemble {
 
   private static final ModelMapper modelMapper = new ModelMapper();
 
+  static{
+    modelMapper.addMappings(new PropertyMap<SolutionDO, SolutionDTO>() {
+      @Override
+      protected void configure() {
+       using(JudgeCodeConvent.judgeCodeConvent).map(source.getVerdict(),destination.getVerdict());
+      }
+    });
+  }
   /**
    * do转dto
    * @param solutionDOS do集合

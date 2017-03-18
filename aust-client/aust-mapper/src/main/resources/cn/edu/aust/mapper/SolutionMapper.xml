@@ -12,10 +12,11 @@
         <result column="user_id" property="userId" jdbcType="VARCHAR"/>
         <result column="memory" property="memory" jdbcType="INTEGER"/>
         <result column="time" property="time" jdbcType="INTEGER"/>
-        <result column="code_length" property="codeLength" jdbcType="INTEGER"/>
+        <result column="code_length" property="codeLength" jdbcType="FLOAT"/>
         <result column="language" property="language" jdbcType="TINYINT"/>
         <result column="contest_id" property="contestId" jdbcType="INTEGER"/>
         <result column="testcase" property="testcase" jdbcType="INTEGER"/>
+        <result column="verdict" property="verdict" jdbcType="INTEGER"/>
         <result column="createdate" property="createdate" jdbcType="TIMESTAMP"/>
         <result column="modifydate" property="modifydate" jdbcType="TIMESTAMP"/>
     </resultMap>
@@ -24,7 +25,7 @@
           WARNING - @mbg.generated
         -->
         id, problem_id,problem_title, user_id, memory, time, code_length, language, contest_id,
-        testcase,createdate, modifydate
+        testcase, verdict, createdate, modifydate
     </sql>
 
     <!--查询用户提交列表-->
