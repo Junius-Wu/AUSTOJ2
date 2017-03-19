@@ -1,5 +1,7 @@
 package cn.edu.aust.common.util;
 
+import java.util.Optional;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -19,8 +21,18 @@ public final class CgiHelper {
    * @return 值
    */
   public static String getString(String key, String defaultValue, HttpServletRequest request) {
-    String value = request.getParameter(key);
-    return value == null ? defaultValue : value;
+    return Optional.ofNullable(request.getParameter(key)).orElse(defaultValue);
+  }
+
+  /**
+   * 从header中读取值
+   * @param key          指定key
+   * @param defaultValue 不存在的value
+   * @param request      该请求
+   * @return 值
+   */
+  public static String getHeader(String key, String defaultValue, HttpServletRequest request){
+    return Optional.ofNullable(request.getHeader(key)).orElse(defaultValue);
   }
 
 }

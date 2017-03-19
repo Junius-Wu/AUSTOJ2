@@ -2,6 +2,8 @@ package cn.edu.aust.assemble;
 
 import org.modelmapper.ModelMapper;
 
+import java.util.Objects;
+
 import cn.edu.aust.dto.UserDTO;
 import cn.edu.aust.pojo.entity.UserDO;
 
@@ -20,6 +22,9 @@ public class UserAssemble {
    * @return 传输类型
    */
   public static UserDTO user2UserDTO(UserDO userDO){
+    if (Objects.isNull(userDO)){
+      return null;
+    }
     return modelMapper.map(userDO,UserDTO.class);
   }
 }

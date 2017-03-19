@@ -47,9 +47,22 @@ public class ResultVO<T> {
     return this;
   }
 
+  public ResultVO buildWithPosCode(PosCode posCode){
+    this.status = posCode.getStatus();
+    this.msg = posCode.getMsg();
+    return this;
+  }
+
   public ResultVO buildOK() {
     this.status = PosCode.OK.getStatus();
     this.msg = PosCode.OK.getMsg();
     return this;
   }
+  public ResultVO buildOKWithData(T data) {
+    this.status = PosCode.OK.getStatus();
+    this.msg = PosCode.OK.getMsg();
+    this.data = data;
+    return this;
+  }
+
 }

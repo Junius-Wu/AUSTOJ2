@@ -11,6 +11,9 @@ import tk.mybatis.mapper.common.Mapper;
  * @date 2017/1/22
  */
 public interface UserMapper extends Mapper<UserDO> {
+
+    UserDO findByEmail(String email);
+
     /**
      * 查询首页展示用户
      * @return 结果集

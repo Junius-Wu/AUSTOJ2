@@ -1,101 +1,21 @@
 package cn.edu.aust.dto;
 
-import cn.edu.aust.pojo.entity.UserDO;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 /**
  * @author Niu Li
  * @date 2017/1/25
  */
+@Data
+@NoArgsConstructor
+@ToString
 public class UserDTO {
-    /**
-     * 认证名称
-     */
-    public static final String PRINCIPAL_ATTRIBUTE_NAME = "userinfo";
-    /**
-     * 用户名cookies
-     */
-    public static final String USERNAME_COOKIE_NAME = "username";
-    /**
-     * 用户昵称cookies
-     */
-    public static final String NICKNAME_COOKIE_NAME = "nickname";
-
-
     private Long id;
     private String email;
     private String avatar;
     private String nickname;
     private String honor;
     private String motto;
-
-
-    public UserDTO(UserDO userDO) {
-        this.id = userDO.getId();
-        this.email = userDO.getEmail();
-        this.avatar = userDO.getAvatar();
-        this.nickname = userDO.getNickname();
-        this.honor = userDO.getHonor();
-        this.motto = userDO.getMotto();
-    }
-    public UserDTO() {
-    }
-
-    public String getMotto() {
-        return motto;
-    }
-
-    public void setMotto(String motto) {
-        this.motto = motto;
-    }
-
-    public String getAvatar() {
-        return avatar;
-    }
-
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
-    }
-
-    public String getNickname() {
-        return nickname;
-    }
-
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
-    }
-
-    public String getHonor() {
-        return honor;
-    }
-
-    public void setHonor(String honor) {
-        this.honor = honor;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    @Override
-    public String toString() {
-        return "UserDTO{" +
-                "id=" + id +
-                ", email='" + email + '\'' +
-                ", avatar='" + avatar + '\'' +
-                ", nickname='" + nickname + '\'' +
-                ", honor='" + honor + '\'' +
-                '}';
-    }
 }

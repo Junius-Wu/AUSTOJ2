@@ -2,17 +2,15 @@ package cn.edu.aust.controller;
 
 import com.alibaba.fastjson.JSONObject;
 
-import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.time.DateUtils;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.Date;
-import java.util.Optional;
+import java.util.Objects;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -22,12 +20,11 @@ import javax.servlet.http.HttpSession;
 import cn.edu.aust.common.constant.PosCode;
 import cn.edu.aust.common.entity.ResultVO;
 import cn.edu.aust.common.entity.Setting;
-import cn.edu.aust.common.service.JedisClient;
-import cn.edu.aust.common.util.SystemUtil;
+import cn.edu.aust.common.util.CgiHelper;
 import cn.edu.aust.common.util.WebUtils;
 import cn.edu.aust.dto.UserDTO;
 import cn.edu.aust.exception.PageException;
-import cn.edu.aust.pojo.entity.UserDO;
+import cn.edu.aust.service.SettingService;
 import cn.edu.aust.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 
@@ -41,103 +38,69 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/login")
 @Slf4j
 public class LoginController {
+  /**
+   * 认证名称
+   */
+  public static final String PRINCIPAL_ATTRIBUTE_NAME = "userinfo";
+  /**
+   * 用户昵称cookies
+   */
+  public static final String NICKNAME_COOKIE_NAME = "nickname";
 
   @Resource
   private UserService userService;
   @Resource
-  private JedisClient jedisClient;
+  private SettingService settingService;
 
   /**
    * 前往登录页面
    */
-  @GetMapping(produces = "text/html;charset=UTF-8")
+  @GetMapping(produces = MediaType.TEXT_HTML_VALUE)
   public String login(HttpServletRequest request) {
-    //获取进入前的链接
-    Optional.ofNullable(request.getHeader("referer"))
-        .ifPresent(s -> request.getSession().setAttribute("referer", s));
+    Setting setting = settingService.getSetting();
+    String referer = CgiHelper.getHeader("referer",setting.getDomain(),request);
+    request.getSession().setAttribute("referer",referer);
     return "login";
   }
 
   /**
    * 用户登录控制
    */
-  @PostMapping(produces = "application/json; charset=UTF-8")
+  @PostMapping(produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
   public
   @ResponseBody
   ResultVO<?> login(String email, String password, String codevalidate,
       HttpSession session, HttpServletRequest request, HttpServletResponse response) throws PageException {
     JSONObject result = new JSONObject();
+    ResultVO resultVO = new ResultVO();
     if (StringUtils.isEmpty(email) || StringUtils.isEmpty(password)) {
-      return new ResultVO<>(20001, "用户民或密码不能为空");
+       return resultVO.buildWithMsgAndStatus(PosCode.PARAM_ERROR,"用户民或密码不能为空");
     }
     //验证码验证
     String code = (String) session.getAttribute("codeValidate");
     if (!StringUtils.equalsIgnoreCase(code, codevalidate)) {
-      return new ResultVO<>(PosCode.CODE_ERROR);
+      return resultVO.buildWithPosCode(PosCode.CODE_ERROR);
     }
-    UserDO userDO = new UserDO();
-    Setting setting = SystemUtil.getSetting(jedisClient);
-    userDO.setEmail(email);
-    userDO = userService.queryOne(userDO);
+
+    UserDTO userDTO = userService.findByEmail(email);
     //验证不存在
-    if (userDO == null) {
-      return new ResultVO<>(PosCode.NO_REGISTER);
+    if (Objects.isNull(userDTO)) {
+      return resultVO.buildWithPosCode(PosCode.NO_REGISTER);
     }
-    //验证是否冻结
-    if (userDO.getIsDefunct() == 1) {
-      return new ResultVO<>(PosCode.USER_FREEZE);
+    //检查是否能登陆
+    if (!userService.checkCanLogin(userDTO,password,WebUtils.getIp(request),resultVO)){
+      return resultVO;
     }
-    //验证锁定状态
-    if (userDO.getIsLock() == 1) {
-      int accountLockTime = setting.getAccountLockTime();
-      //锁定时间0,则永久锁定
-      if (accountLockTime == 0) {
-        return new ResultVO<>(PosCode.USER_LOCKED);
-      }
-      Date lockdate = userDO.getLockdate();
-      Date unlockdate = DateUtils.addMinutes(lockdate, accountLockTime);
-      if (new Date().after(unlockdate)) {
-        userDO.setIsLock((byte) 0);
-        userDO.setLoginfail(0);
-        userDO.setLockdate(null);
-        userService.updateSelective(userDO);
-      } else {
-        return new ResultVO<>(PosCode.USER_LOCKED);
-      }
-    }
-    //验证密码
-    if (!userDO.getPassword().equals(DigestUtils.sha256Hex(password.trim()))) {
-      int accountLockCount = userDO.getLoginfail() + 1;
-      if (accountLockCount > setting.getAccountLockCount()) {
-        userDO.setLockdate(new Date());
-        userDO.setIsLock((byte) 1);
-        log.info("用户:{}已被锁定", userDO.getEmail());
-      }
-      userDO.setLoginfail(accountLockCount);
-      userService.updateSelective(userDO);
-      if (userDO.getIsLock() == 1) {
-        return new ResultVO<>(PosCode.USER_LOCKED);
-      } else {
-        return new ResultVO<>(PosCode.USER_LOCKED.getStatus(),
-            "密码错误,若再错误" + (setting.getAccountLockCount() - accountLockCount + 1) + "次,则锁定账户");
-      }
-    }
-    //登录成功
-    userDO.setIp(WebUtils.getIp(request));
-    userDO.setModifydate(new Date());
-    userDO.setLoginfail(0);
-    userService.updateSelective(userDO);
     //登录成功加入session
     session = request.getSession();
-    session.setAttribute(UserDTO.PRINCIPAL_ATTRIBUTE_NAME, new UserDTO(userDO));
-    log.info("用户:{}已登录", userDO.getEmail());
-
-    WebUtils.addCookie(response, UserDTO.NICKNAME_COOKIE_NAME, userDO.getNickname()
+    session.setAttribute(PRINCIPAL_ATTRIBUTE_NAME, userDTO);
+    log.info("用户:{}已登录", email);
+    Setting setting = settingService.getSetting();
+    WebUtils.addCookie(response, NICKNAME_COOKIE_NAME, userDTO.getNickname()
         , null, setting.getCookiePath(), setting.getCookieDomain(), null);
-    //跳转到之前的页面
-    Optional<String> redirect = Optional.ofNullable((String) session.getAttribute("referer"));
-    result.put("referer", redirect.orElse("/index"));
 
+    //跳转到之前的页面
+    result.put("referer", session.getAttribute("referer"));
     session.removeAttribute("referer");
     return new ResultVO<>(PosCode.OK, result);
   }
@@ -146,12 +109,10 @@ public class LoginController {
    * 退出方法
    * @return 返回首页
    */
-  @GetMapping(value = "/out", produces = "text/html;charset=UTF-8")
+  @GetMapping(value = "/out", produces = MediaType.TEXT_HTML_VALUE)
   public String loginOut(HttpServletRequest request, HttpServletResponse response) {
-    Setting setting = SystemUtil.getSetting(jedisClient);
-    WebUtils.removeCookie(response, UserDTO.USERNAME_COOKIE_NAME,
-        setting.getCookiePath(), setting.getCookieDomain());
-    WebUtils.removeCookie(response, UserDTO.NICKNAME_COOKIE_NAME,
+    Setting setting = settingService.getSetting();
+    WebUtils.removeCookie(response, NICKNAME_COOKIE_NAME,
         setting.getCookiePath(), setting.getCookieDomain());
     request.getSession().invalidate();
     return "redirect:/";

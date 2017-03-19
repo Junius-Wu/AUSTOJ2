@@ -1,4 +1,5 @@
 {
+  "domain":"http://oj.mrdear.cn",
   "isEmailLogin":true,
   "accountLockCount":5,
   "accountLockTime":10,
@@ -11,5 +12,4 @@
   "isCommentEnabled":true,
   "isCommentChecked":false,
   "notify_count":5
-
 }

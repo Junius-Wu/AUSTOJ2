@@ -29,13 +29,13 @@
     <result column="is_opensource" property="isOpensource" jdbcType="TINYINT" />
     <result column="is_email" property="isEmail" jdbcType="TINYINT" />
   </resultMap>
-  <sql id="Base_Column_List" >
-    <!--
-      WARNING - @mbg.generated
-    -->
-    id, avatar, username, password, nickname, qq_openid, email, school, student_no, motto, 
+  <sql id="Detail_Column_List" >
+    id, avatar, username, password, nickname, qq_openid, email, school, student_no, motto,
     honor, point, language, submit, solved, is_show, blog, ip, is_lock, loginfail, lockdate, 
     createdate, modifydate, is_defunct, is_opensource, is_email
+  </sql>
+  <sql id="Basic_Column_List" >
+    id, avatar, nickname, honor, point, submit, solved, blog,
   </sql>
 
   <resultMap id="UserBasicMap" type="cn.edu.aust.pojo.entity.UserDO" >
@@ -49,17 +49,26 @@
     <result column="honor" property="honor" jdbcType="VARCHAR" />
   </resultMap>
 
-  <!--查找出首页展示用户-->
+  <!--根据email查找用户-->
+  <select id="findByEmail" resultMap="BaseResultMap">
+      select <include refid="Detail_Column_List"/>
+      FROM user
+      WHERE email = #{email}
+  </select>
 
+  <!--查找出首页展示用户-->
     <select id="queryToShow" resultMap="UserBasicMap">
-        SELECT u.id,u.avatar,u.honor,u.nickname FROM user u
-        WHERE u.is_defunct = 0 AND u.is_show =1 ORDER BY point LIMIT 6
+        SELECT <include refid="Basic_Column_List"/>
+        FROM user u
+        WHERE u.is_defunct = 0 AND u.is_show =1
+        ORDER BY point LIMIT 6
     </select>
 
   <!--查找出用户排名,必须是有效用户才能参与排名-->
   <select id="queryForRank" resultMap="UserBasicMap">
-    SELECT u.id,u.avatar,u.nickname,u.point,u.submit,u.solved,u.blog
-    FROM user u WHERE u.is_defunct = 0
+    SELECT  <include refid="Basic_Column_List"/>
+    FROM user u
+    WHERE u.is_defunct = 0
     ORDER BY u.solved DESC ,u.submit DESC LIMIT 10000
   </select>
 </mapper>

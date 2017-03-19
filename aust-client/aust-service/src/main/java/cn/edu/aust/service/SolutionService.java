@@ -101,6 +101,7 @@ public class SolutionService {
     solutionSourceDO.setSolutionId(solutionDO.getId());
     solutionSourceMapper.insert(solutionSourceDO);
     //创建判题任务
+    log.info("start judge , solutionID:{}",solutionDO.getId());
     judgeExecute(problemDO, source, language.getLanguageName(), solutionDO);
   }
 
@@ -114,10 +115,13 @@ public class SolutionService {
    */
   private void judgeExecute(ProblemDO problemDO, String source, String language,
       SolutionDO solution) {
+    log.info("judge request solutionID:{}",solution.getId());
     taskExecutor.execute(
         judgeClientPool.execute(judgeClient -> {
           JudgeResultResponse resultResponse = judgeClient.judge(solution.getId(), problemDO.getId(),
               source, language, problemDO.getTimeLimit(), problemDO.getMemoryLimit());
+
+          log.info("judge response solutionID:{},result:{}",solution.getId(),resultResponse);
           //更新solution
           solution.setModifydate(new Date());
           solution.setTime(resultResponse.getUseTime());
@@ -127,7 +131,7 @@ public class SolutionService {
           solutionMapper.updateByPrimaryKeySelective(solution);
           //根据返回错误码更新题目和用户信息
           dealWithByJudgeCode(resultResponse, problemDO.getId(), solution.getUserId());
-          return false;
+          return true;
         })
     );
   }
@@ -156,6 +160,7 @@ public class SolutionService {
     }
     problemMapper.updateByPrimaryKeySelective(problemDO);
     userMapper.updateByPrimaryKeySelective(userDO);
+
     // todo 重建一些显示上的缓存
   }
 }

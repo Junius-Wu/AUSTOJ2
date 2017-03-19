@@ -71,8 +71,4 @@ public abstract class SystemUtil {
         jedisClient.set(SETTING_CACHE,JSON.toJSONString(setting));
     }
 
-//    测试获取路径
-    public static void main(String[] args) {
-        System.out.println(SystemUtil.class.getClassLoader().getResource("").getPath()+"austoj.json");
-    }
 }

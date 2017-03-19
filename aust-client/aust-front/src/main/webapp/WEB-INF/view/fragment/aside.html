@@ -17,11 +17,11 @@
         </p>
         <th:block th:if="${session.userinfo} != null" th:object="${session.userinfo}">
             <div class="text-center person">
-                <a href="/userDO/1">
+                <a href="/user/1">
                     <img src="static/images/default-avatar.jpg" th:src="*{avatar}" title="change your avatar"
                          data-placement="bottom" data-toggle="tooltip" data-container="body">
                 </a>
-                <a href="/userDO/1" class="center-block" th:text="*{nickname}">nl101531</a>
+                <a href="/user/1" class="center-block" th:text="*{nickname}">nl101531</a>
             </div>
             <p>格言:<br><span th:text="*{motto}">书山有路勤无用,学海无涯钱做主</span></p>
             <p class="tagcloud">近期AC:<br>

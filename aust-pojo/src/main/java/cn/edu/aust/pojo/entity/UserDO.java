@@ -79,7 +79,7 @@ public class UserDO {
     /**
      * 常用语言1 C 2 C++ 3 Java
      */
-    private Byte language;
+    private Integer language;
 
     /**
      * 提交次数
@@ -95,7 +95,7 @@ public class UserDO {
      * 首页展示 1是 0否
      */
     @Column(name = "is_show")
-    private Byte isShow;
+    private Integer isShow;
 
     /**
      * 博客链接
@@ -111,7 +111,7 @@ public class UserDO {
      * 是否锁定 1是 0否
      */
     @Column(name = "is_lock")
-    private Byte isLock;
+    private Integer isLock;
 
     /**
      * 登录失败次数
@@ -137,18 +137,18 @@ public class UserDO {
      * 是否冻结,1正常,0冻结,2待验证
      */
     @Column(name = "is_defunct")
-    private Byte isDefunct;
+    private Integer isDefunct;
 
     /**
      * 是否开放代码,1是 0否
      */
     @Column(name = "is_opensource")
-    private Byte isOpensource;
+    private Integer isOpensource;
 
     /**
      * 是否接收邮件,1是 0否
      */
     @Column(name = "is_email")
-    private Byte isEmail;
+    private Integer isEmail;
 
 }
