@@ -21,6 +21,7 @@ import javax.annotation.Resource;
 import cn.edu.aust.common.constant.PosCode;
 import cn.edu.aust.common.entity.ResultVO;
 import cn.edu.aust.common.util.LanguageUtil;
+import cn.edu.aust.dto.ProblemDTO;
 import cn.edu.aust.dto.SolutionDTO;
 import cn.edu.aust.entity.PageRequest;
 import cn.edu.aust.pojo.entity.ProblemDO;
@@ -62,8 +63,8 @@ public class JudgerController {
     if (Objects.isNull(loginUser)){
       return resultVO.buildWithMsgAndStatus(PosCode.NO_LOGIN,"用户未登录");
     }
-    ProblemDO problemDO = problemService.queryById(id);
-    if(Objects.isNull(problemDO)){
+    ProblemDTO problemDTO = problemService.findBasicById(id);
+    if(Objects.isNull(problemDTO)){
       return resultVO.buildWithMsgAndStatus(PosCode.PARAM_ERROR,"所提交的题目不存在");
     }
     if (StringUtils.isEmpty(sourceCode)){
@@ -73,7 +74,7 @@ public class JudgerController {
     if (Objects.isNull(lang)){
       return resultVO.buildWithMsgAndStatus(PosCode.PARAM_ERROR,"所选语言不存在");
     }
-    solutionService.startJudger(loginUser.getId(),problemDO,sourceCode,lang);
+    solutionService.startJudger(loginUser.getId(),problemDTO,sourceCode,lang);
     return resultVO.buildOK();
   }
 

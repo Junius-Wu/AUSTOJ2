@@ -37,6 +37,7 @@ public class ExceptionHander {
   @ResponseStatus(HttpStatus.OK)//前端不支持处理非200的异常
   @ResponseBody
   public Object exceptionHandler(HttpServletRequest request, HttpServletResponse response, Exception ex) {
+    log.error("ExceptionHander catch error: ", ex);
     //判断是否为ajax请求
     String xRequested = CgiHelper.getHeader("x-requested-with",null,request);
     if (StringUtils.equalsIgnoreCase(xRequested,"XMLHttpRequest")){

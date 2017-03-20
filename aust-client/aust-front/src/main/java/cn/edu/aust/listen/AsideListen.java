@@ -13,7 +13,7 @@ import cn.edu.aust.common.entity.Setting;
 import cn.edu.aust.common.service.JedisClient;
 import cn.edu.aust.common.util.SystemUtil;
 import cn.edu.aust.dto.ArticleAsideDTO;
-import cn.edu.aust.pojo.entity.CatelogDO;
+import cn.edu.aust.dto.CatelogDTO;
 import cn.edu.aust.pojo.entity.NotifyDO;
 import cn.edu.aust.pojo.entity.TagsDO;
 import cn.edu.aust.service.ArticleService;
@@ -78,7 +78,7 @@ public class AsideListen implements ServletContextAware {
      * 侧边目录
      */
     public void refreshCateLog(){
-        List<CatelogDO> catelogDOS = catelogService.queryAll();
+        List<CatelogDTO> catelogDOS = catelogService.queryAll();
         servletContext.setAttribute("app_catelogs", catelogDOS);
         log.info("refreshCateLog end");
     }

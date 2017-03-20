@@ -1,7 +1,11 @@
 package cn.edu.aust.assemble;
 
 import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
+import org.springframework.util.CollectionUtils;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 
 import cn.edu.aust.dto.CatelogDTO;
@@ -26,5 +30,16 @@ public class CatelogAssemble {
       return null;
     }
     return modelMapper.map(catelogDO,CatelogDTO.class);
+  }
+  /**
+   * do转换为dto
+   * @param catelogDOs do实体
+   * @return dto实体
+   */
+  public static List<CatelogDTO> do2dto(List<CatelogDO> catelogDOs){
+    if (CollectionUtils.isEmpty(catelogDOs)){
+      return Collections.emptyList();
+    }
+    return modelMapper.map(catelogDOs,new TypeToken<List<CatelogDTO>>(){}.getType());
   }
 }

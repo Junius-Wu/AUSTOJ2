@@ -115,7 +115,7 @@ public class ContestController {
                               HttpSession session,
                               Model model) throws PageException {
     UserDO userDO = userService.getCurrent();
-    if (userDO == null) {
+    if (Objects.isNull(userDO)) {
       throw new PageException("用户未登录");
     }
     //判断是否验证过

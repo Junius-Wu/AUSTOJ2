@@ -1,18 +1,19 @@
 package cn.edu.aust.service;
 
+import com.github.pagehelper.Page;
 import com.github.pagehelper.PageException;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
 import org.apache.commons.lang3.StringUtils;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.TypeToken;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
 import cn.edu.aust.assemble.ProblemAssemble;
@@ -31,8 +32,8 @@ import cn.edu.aust.query.ProblemQM;
  * @date 2017/1/29
  */
 @Service
-public class ProblemService extends BaseService<ProblemDO> {
-  @Autowired
+public class ProblemService {
+  @Resource
   private ProblemMapper problemMapper;
 
   /**
@@ -42,11 +43,21 @@ public class ProblemService extends BaseService<ProblemDO> {
    */
   public ProblemDTO findDetail(Long id) {
     ProblemPK problemPK = problemMapper.queryDetail(id);
-    if (problemPK == null) {
+    if (Objects.isNull(problemPK)) {
       throw new PageException(PosCode.NO_PRIVILEGE.getMsg());
     }
     ModelMapper modelMapper = new ModelMapper();
     return modelMapper.map(problemPK, ProblemDTO.class);
+  }
+
+  /**
+   * 查询题目基本信息
+   * @param id 题目id
+   * @return 查询实体
+   */
+  public ProblemDTO findBasicById(Long id){
+    ProblemDO problemDO = problemMapper.selectByPrimaryKey(id);
+    return ProblemAssemble.do2dto(problemDO);
   }
 
 
@@ -58,7 +69,7 @@ public class ProblemService extends BaseService<ProblemDO> {
    */
   public ProblemDTO queryContestProblem(Long problemId, HttpSession session) {
     ProblemPK problemPK = problemMapper.queryContestProblem(problemId);
-    if (problemPK == null) {
+    if (Objects.isNull(problemPK)) {
       throw new PageException(PosCode.NO_PRIVILEGE.getMsg());
     }
     //判断是否有权查看该题目
@@ -71,7 +82,7 @@ public class ProblemService extends BaseService<ProblemDO> {
         throw new PageException(PosCode.NO_PRIVILEGE.getMsg());
       }
     }
-    return ProblemAssemble.assemble(problemPK);
+    return ProblemAssemble.pk2dto(problemPK);
   }
 
   /**
@@ -85,21 +96,17 @@ public class ProblemService extends BaseService<ProblemDO> {
    * @param isCatelog 是否为目录,true时stage参数为目录id
    * @return DTO实体
    */
-  public PageInfo<ProblemListDTO> queryListStage(String search,
-      Integer stage,
-      String direction,
-      Integer offset,
-      Integer limit,
-      boolean isCatelog) {
+  public PageInfo<ProblemListDTO> queryListStage(String search, Integer stage, String direction,
+      Integer offset, Integer limit, boolean isCatelog) {
     //封装查询条件
     ProblemQM problemQM = new ProblemQM();
     problemQM.setDirection(direction);
     problemQM.setSearch(search);
     problemQM.setStage(stage);
     //查询转换
-    PageInfo<ProblemPK> problemPCS =
+    Page<ProblemPK> problemPCS =
         PageHelper.offsetPage(offset, limit)
-            .doSelectPageInfo(
+            .doSelectPage(
                 () -> {
                   if (isCatelog) {
                     problemMapper.queryListCatelog(problemQM);
@@ -108,10 +115,10 @@ public class ProblemService extends BaseService<ProblemDO> {
                   }
                 }
             );
-
-    ModelMapper modelMapper = new ModelMapper();
-    return modelMapper.map(problemPCS, new TypeToken<PageInfo<ProblemListDTO>>() {
-    }.getType());
+    PageInfo<ProblemListDTO> pageInfo = new PageInfo<>();
+    pageInfo.setTotal(problemPCS.getTotal());
+    pageInfo.setList(ProblemAssemble.pk2ListDto(problemPCS.getResult()));
+    return pageInfo;
   }
 
   /**
@@ -122,6 +129,6 @@ public class ProblemService extends BaseService<ProblemDO> {
    */
   public List<ProblemListDTO> queryContest(Long contest) {
     List<ProblemPK> result = problemMapper.queryContest(contest);
-    return ProblemAssemble.assembleList(result);
+    return ProblemAssemble.pk2ListDto(result);
   }
 }

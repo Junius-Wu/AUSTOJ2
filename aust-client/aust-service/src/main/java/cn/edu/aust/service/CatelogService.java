@@ -2,6 +2,8 @@ package cn.edu.aust.service;
 
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import cn.edu.aust.assemble.CatelogAssemble;
@@ -14,7 +16,7 @@ import cn.edu.aust.pojo.entity.CatelogDO;
  * @date 2017/1/29
  */
 @Service
-public class CatelogService extends BaseService<CatelogDO> {
+public class CatelogService {
   @Resource
   private CatelogMapper catelogMapper;
 
@@ -26,5 +28,14 @@ public class CatelogService extends BaseService<CatelogDO> {
   public CatelogDTO findById(Integer id){
     CatelogDO catelogDO = catelogMapper.selectByPrimaryKey(id);
     return CatelogAssemble.do2dto(catelogDO);
+  }
+
+  /**
+   * 查询全部目录
+   * @return 全部目录集合
+   */
+  public List<CatelogDTO> queryAll(){
+    List<CatelogDO> list = catelogMapper.selectAll();
+    return CatelogAssemble.do2dto(list);
   }
 }

@@ -22,7 +22,6 @@ import cn.edu.aust.dto.ArticleDTO;
 import cn.edu.aust.dto.ArticleListDTO;
 import cn.edu.aust.entity.PageRequest;
 import cn.edu.aust.exception.PageException;
-import cn.edu.aust.pojo.entity.ArticleDO;
 import cn.edu.aust.pojo.entity.UserDO;
 import cn.edu.aust.service.ArticleService;
 import cn.edu.aust.service.UserService;
@@ -50,7 +49,7 @@ public class ArticleController {
    */
   @GetMapping(value = "/{id}", produces = "text/html;charset=UTF-8")
   public String showArticle(@PathVariable("id") Long id, Model model) throws PageException {
-    Optional<ArticleDTO> article = Optional.of(articleService.queryDetail(id));
+    Optional<ArticleDTO> article = Optional.of(articleService.findDetailById(id));
     article.orElseThrow(() -> new PageException(PosCode.NO_PRIVILEGE.getMsg()));
     articleService.viewHits(article.get());
     model.addAttribute("article", article.get());
@@ -90,7 +89,7 @@ public class ArticleController {
     if (userDO == null) {
       return new ResultVO<PosCode>(PosCode.NO_LOGIN);
     }
-    Optional<ArticleDO> article = Optional.of(articleService.queryById(id));
+    Optional<ArticleDTO> article = Optional.of(articleService.findBasicById(id));
     article.filter(a -> a.getIsShow() != 0)
         .orElseThrow(() -> new PageException(PosCode.NO_PRIVILEGE.getMsg()));
 

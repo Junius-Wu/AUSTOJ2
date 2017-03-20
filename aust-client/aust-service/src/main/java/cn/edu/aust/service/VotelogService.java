@@ -2,11 +2,13 @@ package cn.edu.aust.service;
 
 import com.alibaba.fastjson.JSONObject;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
 
+import javax.annotation.Resource;
+
+import cn.edu.aust.dto.ArticleDTO;
 import cn.edu.aust.mapper.ArticleMapper;
 import cn.edu.aust.mapper.VotelogMapper;
 import cn.edu.aust.pojo.entity.ArticleDO;
@@ -19,19 +21,20 @@ import cn.edu.aust.pojo.entity.VotelogDO;
  */
 @Service
 public class VotelogService {
-    @Autowired
+    @Resource
     private VotelogMapper votelogMapper;
-    @Autowired
+    @Resource
     private ArticleMapper articleMapper;
 
     /**
      * 文章点赞
      * @param result 写回结果
-     * @param articleDO 对应文章
+     * @param articleDTO 对应文章
      * @param user_id 对应用户id
      * @return 写回结果
      */
-    public JSONObject voteArticleComment(JSONObject result, ArticleDO articleDO, Long user_id) {
+    public JSONObject voteArticleComment(JSONObject result, ArticleDTO articleDTO, Long user_id) {
+        ArticleDO articleDO = articleMapper.selectByPrimaryKey(articleDTO.getId());
         VotelogDO voteLog = new VotelogDO();
         voteLog.setUserId(user_id);
         voteLog.setOtherId(articleDO.getId());

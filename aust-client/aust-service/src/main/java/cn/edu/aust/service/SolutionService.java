@@ -18,6 +18,7 @@ import javax.annotation.Resource;
 import cn.edu.aust.assemble.SolutionAssemble;
 import cn.edu.aust.common.constant.JudgeCode;
 import cn.edu.aust.common.util.LanguageUtil;
+import cn.edu.aust.dto.ProblemDTO;
 import cn.edu.aust.dto.SolutionDTO;
 import cn.edu.aust.mapper.ProblemMapper;
 import cn.edu.aust.mapper.SolutionMapper;
@@ -75,13 +76,14 @@ public class SolutionService {
   /**
    * 保存用户提交记录,并且开启一个判题线程
    *
-   * @param problemDO 判题题目
+   * @param problemDTO 判题题目
    * @param source    用户源码
    * @param language  所用语言
    */
   @Transactional(rollbackFor = Exception.class)
-  public void startJudger(Long userId, ProblemDO problemDO, String source,
+  public void startJudger(Long userId, ProblemDTO problemDTO, String source,
       LanguageUtil.Language language) {
+    ProblemDO problemDO = problemMapper.selectByPrimaryKey(problemDTO.getId());
     SolutionDO solutionDO = new SolutionDO();
     solutionDO.setCreatedate(new Date());
     solutionDO.setModifydate(solutionDO.getCreatedate());
