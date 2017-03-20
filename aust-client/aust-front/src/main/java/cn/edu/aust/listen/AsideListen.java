@@ -1,7 +1,5 @@
 package cn.edu.aust.listen;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.ServletContextAware;
 
@@ -21,7 +19,9 @@ import cn.edu.aust.pojo.entity.TagsDO;
 import cn.edu.aust.service.ArticleService;
 import cn.edu.aust.service.CatelogService;
 import cn.edu.aust.service.NotifyService;
+import cn.edu.aust.service.SettingService;
 import cn.edu.aust.service.TagService;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * 侧边栏等全局访问,保存到application作用域
@@ -30,9 +30,8 @@ import cn.edu.aust.service.TagService;
  * @date 2017/1/29
  */
 @Component
+@Slf4j
 public class AsideListen implements ServletContextAware {
-
-    private static Logger logger = LoggerFactory.getLogger(AsideListen.class);
 
     /** ServletContext */
     private ServletContext servletContext;
@@ -46,6 +45,8 @@ public class AsideListen implements ServletContextAware {
     private NotifyService notifyService;
     @Resource
     private JedisClient jedisClient;
+    @Resource
+    private SettingService settingService;
 
     @Override
     public void setServletContext(ServletContext servletContext) {
@@ -61,19 +62,17 @@ public class AsideListen implements ServletContextAware {
         refreshCateLog();
         refreshArticle();
         refreshTag();
-        logger.info("侧边栏写入完毕");
         refreshNotify();
-        logger.info("通知写入完毕");
     }
 
     /**
      * 获取通知
      */
     public void refreshNotify(){
-        Setting setting = SystemUtil.getSetting(jedisClient);
+        Setting setting = settingService.getSetting();
         List<NotifyDO> notifies = notifyService.queryListNow(setting.getNotify_count());
         servletContext.setAttribute("app_notifys",notifies);
-        logger.info("网站通知刷新完毕");
+        log.info("refreshNotify end");
     }
     /**
      * 侧边目录
@@ -81,27 +80,27 @@ public class AsideListen implements ServletContextAware {
     public void refreshCateLog(){
         List<CatelogDO> catelogDOS = catelogService.queryAll();
         servletContext.setAttribute("app_catelogs", catelogDOS);
-        logger.info("侧边栏目录刷新完毕");
+        log.info("refreshCateLog end");
     }
 
     /**
      * 侧边栏文章
      */
     public void refreshArticle(){
-        Setting setting = SystemUtil.getSetting(jedisClient);
+        Setting setting = settingService.getSetting();
         List<ArticleAsideDTO> articleAsideDTOS = articleService.queryForAside(setting.getAside_articles());
         servletContext.setAttribute("app_articles",articleAsideDTOS);
-        logger.info("侧边栏文章刷新完毕");
+        log.info("refreshArticle end");
     }
 
     /**
      * 刷新标签
      */
     public void refreshTag(){
-        Setting setting = SystemUtil.getSetting(jedisClient);
+        Setting setting = settingService.getSetting();
         List<TagsDO> tagsDOS = tagService.queryList(setting.getAside_tags());
         servletContext.setAttribute("app_tags", tagsDOS);
-        logger.info("侧边栏标签刷新完毕");
+        log.info("refreshTag end");
     }
 
 }

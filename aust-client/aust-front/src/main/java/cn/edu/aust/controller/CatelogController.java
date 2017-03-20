@@ -11,12 +11,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.Objects;
+
 import javax.annotation.Resource;
 
 import cn.edu.aust.common.constant.PosCode;
+import cn.edu.aust.dto.CatelogDTO;
 import cn.edu.aust.dto.ProblemListDTO;
 import cn.edu.aust.entity.PageRequest;
-import cn.edu.aust.pojo.entity.CatelogDO;
 import cn.edu.aust.service.CatelogService;
 import cn.edu.aust.service.ProblemService;
 
@@ -42,12 +44,12 @@ public class CatelogController {
    */
   @GetMapping(value = "/catelog/{id}", produces = MediaType.TEXT_HTML_VALUE)
   public String toCatelog(@PathVariable("id") Integer id, Model model) {
-    CatelogDO catelogDO = catelogService.queryById(id);
-    if (catelogDO == null) {
+    CatelogDTO catelogDTO = catelogService.findById(id);
+    if (Objects.isNull(catelogDTO)) {
       throw new PageException("所查看的目录不存在");
     }
-    model.addAttribute("cateName", catelogDO.getName());
-    model.addAttribute("cateId", catelogDO.getId());
+    model.addAttribute("cateName", catelogDTO.getName());
+    model.addAttribute("cateId", catelogDTO.getId());
     return "searchpro";
   }
 
@@ -63,14 +65,14 @@ public class CatelogController {
   public JSONObject queryCategoryProblem(@PathVariable("id") Integer id, PageRequest pageRequest) {
     JSONObject result = new JSONObject();
 
-    CatelogDO catelogDO = catelogService.queryById(id);
-    if (catelogDO == null) {
+    CatelogDTO catelogDTO = catelogService.findById(id);
+    if (Objects.isNull(catelogDTO)) {
       result.put("status", PosCode.NO_PRIVILEGE.getStatus());
       result.put("msg", PosCode.NO_PRIVILEGE.getMsg());
       return result;
     }
-    //查找题目
 
+    //查找题目
     PageInfo<ProblemListDTO> pageInfo = problemService.queryListStage(pageRequest.getSearch(),
         id, pageRequest.getOrder(), pageRequest.getOffset(), pageRequest.getLimit(), true);
     result.put("rows", pageInfo.getList());

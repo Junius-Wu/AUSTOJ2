@@ -36,11 +36,6 @@ public class ResultVO<T> {
     this.msg = posCode.getMsg();
   }
 
-  public ResultVO(int status, String msg) {
-    this.status = status;
-    this.msg = msg;
-  }
-
   public ResultVO buildWithMsgAndStatus(PosCode posCode, String msg) {
     this.status = posCode.getStatus();
     this.msg = msg;

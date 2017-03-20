@@ -24,6 +24,6 @@ public class CatelogDO {
     /**
      * 0题目分类
      */
-    private Byte type;
+    private Integer type;
 
 }

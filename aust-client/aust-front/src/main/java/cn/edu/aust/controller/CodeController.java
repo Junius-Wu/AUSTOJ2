@@ -47,6 +47,5 @@ public class CodeController {
         //写回
         ServletOutputStream sos = response.getOutputStream();
         ImageIO.write(buffImg,"png",sos);
-
     }
 }
