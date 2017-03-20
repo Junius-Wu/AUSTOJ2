@@ -3,13 +3,15 @@ package cn.edu.aust.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageInfo;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.annotation.Resource;
 
 import cn.edu.aust.dto.ProblemDTO;
 import cn.edu.aust.dto.ProblemListDTO;
@@ -26,7 +28,7 @@ import cn.edu.aust.service.ProblemService;
 @RequestMapping("/problem")
 public class ProblemController {
 
-  @Autowired
+  @Resource
   private ProblemService problemService;
 
   /**
@@ -35,7 +37,7 @@ public class ProblemController {
    * @param id 该题目id
    * @return 视图
    */
-  @GetMapping(value = "/{id}", produces = "text/html;charset=UTF-8")
+  @GetMapping(value = "/{id}", produces = MediaType.TEXT_HTML_VALUE)
   public String problemDetail(@PathVariable("id") Long id, Model model) {
     ProblemDTO problemDTO = problemService.findDetail(id);
     model.addAttribute("problem", problemDTO);
@@ -50,7 +52,7 @@ public class ProblemController {
    * @return 结果集
    */
   @ResponseBody
-  @GetMapping(value = "/stage/{stage}", produces = "application/json; charset=UTF-8")
+  @GetMapping(value = "/stage/{stage}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
   public JSONObject listStage(@PathVariable(value = "stage") Integer stage,
                               PageRequest pageRequest) {
     JSONObject result = new JSONObject();

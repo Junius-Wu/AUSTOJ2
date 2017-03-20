@@ -1,5 +1,6 @@
 package cn.edu.aust.controller;
 
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -27,7 +28,7 @@ public class UserController {
   /**
    * 获取首页展示用户
    */
-  @GetMapping(value = "/index/show/users", produces = "application/json; charset=UTF-8")
+  @GetMapping(value = "/index/show/users", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
   public ResultVO<?> indexToShow() {
     List<UserRankVO> userRanks = userService.queryToIndexShow()
         .stream().limit(6)

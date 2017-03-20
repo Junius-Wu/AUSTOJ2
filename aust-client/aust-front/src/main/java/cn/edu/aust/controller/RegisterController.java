@@ -22,10 +22,8 @@ import javax.servlet.http.HttpSession;
 import cn.edu.aust.common.constant.PosCode;
 import cn.edu.aust.common.entity.ResultVO;
 import cn.edu.aust.common.entity.Setting;
-import cn.edu.aust.common.service.JedisClient;
 import cn.edu.aust.common.util.CgiHelper;
 import cn.edu.aust.common.util.WebUtils;
-import cn.edu.aust.service.MailService;
 import cn.edu.aust.service.SettingService;
 import cn.edu.aust.service.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -43,10 +41,6 @@ public class RegisterController {
 
   @Resource
   private UserService userService;
-  @Resource
-  private JedisClient jedisClient;
-  @Resource
-  private MailService mailService;
   @Resource
   private SettingService settingService;
   /**
@@ -119,7 +113,7 @@ public class RegisterController {
    *
    * @param username 要检查的用户名
    */
-  @GetMapping(value = "/check", produces = "application/json; charset=UTF-8")
+  @GetMapping(value = "/check", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
   public
   @ResponseBody
   ResultVO checkUsername(String username, String email) {
@@ -145,7 +139,7 @@ public class RegisterController {
    *
    * @param token token
    */
-  @GetMapping(value = "/check/token", produces = "application/json; charset=UTF-8")
+  @GetMapping(value = "/check/token", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
   public @ResponseBody ResultVO checkToken(String token) {
     ResultVO resultVO = new ResultVO<>();
     if (!userService.checkEmailToken(token,resultVO)){

@@ -38,7 +38,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Service
 @Slf4j
-public class UserService extends BaseService<UserDO> {
+public class UserService {
 
   private static final ModelMapper modelMapper = new ModelMapper();
   @Resource

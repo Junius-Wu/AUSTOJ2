@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -54,7 +55,7 @@ public class ContestController {
    *
    * @return 首页模板
    */
-  @GetMapping(produces = "text/html;charset=UTF-8")
+  @GetMapping(produces = MediaType.TEXT_HTML_VALUE)
   public String toContest(Model model) {
     Map<String, List<ContestDTO>> resultMap = contestService.queryAndKinds();
     model.addAllAttributes(resultMap);
@@ -70,12 +71,13 @@ public class ContestController {
    */
   @PostMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
   @ResponseBody
-  public ResultVO<PosCode> canViewContest(@PathVariable(value = "id") Long id,
+  public ResultVO canViewContest(@PathVariable(value = "id") Long id,
                                         HttpServletRequest request,
                                         HttpSession session) {
+    ResultVO<PosCode> resultVO = new ResultVO<>();
     UserDO userDO = userService.getCurrent();
-    if (userDO == null) {
-      return new ResultVO<PosCode>(PosCode.NO_LOGIN);
+    if (Objects.isNull(userDO)) {
+      return resultVO.buildWithPosCode(PosCode.NO_LOGIN);
     }
     try {
       //判断是否验证过
@@ -85,20 +87,20 @@ public class ContestController {
       } else {
         String[] ids = StringUtils.split(curContest, ",");
         if (Arrays.binarySearch(ids, String.valueOf(id)) >= 0) {
-          return new ResultVO<PosCode>(PosCode.OK);
+          return resultVO.buildOK();
         }
       }
       //检查是否可以访问
       String passwd = CgiHelper.getString("passwd", null, request);
       if (contestService.canView(id, passwd)) {
         session.setAttribute("contest", curContest + "," + id);
-        return new ResultVO<PosCode>(PosCode.OK);
+        return resultVO.buildOK();
       }
     }catch (Exception e){
-      log.error("访问比赛出错",e);
-      return new ResultVO<PosCode>(PosCode.NO_PRIVILEGE.getStatus(),e.getMessage());
+      log.error("can't view contest: {}",id,e);
+      return resultVO.buildWithMsgAndStatus(PosCode.NO_PRIVILEGE,e.getMessage());
     }
-    return new ResultVO<PosCode>(PosCode.NO_PRIVILEGE);
+    return resultVO.buildWithPosCode(PosCode.NO_PRIVILEGE);
   }
 
   /**
@@ -147,7 +149,7 @@ public class ContestController {
                                HttpSession session,
                                Model model) throws PageException {
     UserDO userDO = userService.getCurrent();
-    if (userDO == null) {
+    if (Objects.isNull(userDO)) {
       throw new PageException("用户未登录");
     }
     //查询题目
