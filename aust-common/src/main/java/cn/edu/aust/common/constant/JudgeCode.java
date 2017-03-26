@@ -12,7 +12,8 @@ import java.util.Objects;
  * @since 2017/2/19
  */
 public enum JudgeCode {
-  AC(0, "AC"),COMPILEING(1,"COMPILEING"), NO_LANGUAGE(99, "不支持的语言类型"), SYS_ERROR(96, "系统异常"),
+  AC(0, "AC"),COMPILEING(1,"COMPILEING"),TLE(9,"TLE"), NO_LANGUAGE(99, "不支持的语言类型"),
+  SYS_ERROR(96, "系统异常"),
   COMPILE_ERROR(97, "COMPILE_ERROR"), NO_TESTCASE(98, "不存在测试案例");
 
 
@@ -25,6 +26,7 @@ public enum JudgeCode {
     existCode.put(SYS_ERROR.getStatus(),SYS_ERROR);
     existCode.put(COMPILE_ERROR.getStatus(),COMPILE_ERROR);
     existCode.put(NO_TESTCASE.getStatus(),NO_TESTCASE);
+    existCode.put(TLE.getStatus(),TLE);
   }
 
   private Integer status;

@@ -14,10 +14,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.Arrays;
 import java.util.Objects;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import cn.edu.aust.common.constant.PosCode;
 import cn.edu.aust.common.entity.ResultVO;
@@ -56,7 +58,9 @@ public class JudgerController {
   @ResponseBody
   public ResultVO judger(@PathVariable("id") Long id,
       @RequestParam(value = "code") String sourceCode,
-      @RequestParam(value = "lang") String language) {
+      @RequestParam(value = "lang") String language,
+      @RequestParam(value = "is_contest",defaultValue = "false") Boolean isContest,
+      HttpSession session) {
     //登录限制和参数检查
     UserDO loginUser = userService.getCurrent();
     ResultVO resultVO = new ResultVO();
@@ -66,6 +70,21 @@ public class JudgerController {
     ProblemDTO problemDTO = problemService.findBasicById(id);
     if(Objects.isNull(problemDTO)){
       return resultVO.buildWithMsgAndStatus(PosCode.PARAM_ERROR,"所提交的题目不存在");
+    }
+    if (isContest && Objects.equals(problemDTO.getContestId(),-1)){
+      return resultVO.buildWithMsgAndStatus(PosCode.PARAM_ERROR,"非竞赛题目");
+    }
+    if (isContest){
+      //判断是否验证过
+      String curContest = (String) session.getAttribute("contest");
+      if (StringUtils.isEmpty(curContest)) {
+        return resultVO.buildWithMsgAndStatus(PosCode.PARAM_ERROR,"没权限判题");
+      } else {
+        String[] ids = StringUtils.split(curContest, ",");
+        if (Arrays.binarySearch(ids, String.valueOf(problemDTO.getContestId())) < 0) {
+          return resultVO.buildWithMsgAndStatus(PosCode.PARAM_ERROR,"没权限判题");
+        }
+      }
     }
     if (StringUtils.isEmpty(sourceCode)){
       return resultVO.buildWithMsgAndStatus(PosCode.PARAM_ERROR,"源代码不能为空");

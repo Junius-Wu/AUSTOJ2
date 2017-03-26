@@ -56,7 +56,7 @@
       </where>
   </select>
     <!--查找用户最近AC的题目-->
-    <select id="queryACProblems" parameterType="Long" resultType="Long">
+    <select id="queryACProblems" parameterType="Long" resultType="integer">
       SELECT DISTINCT problem_id
       FROM solution
       WHERE user_id = #{userId} AND verdict = 0;

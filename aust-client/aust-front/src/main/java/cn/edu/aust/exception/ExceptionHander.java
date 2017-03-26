@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.io.IOException;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -45,7 +46,8 @@ public class ExceptionHander {
     }
 
     //重定向到错误页面
-    redirect("/error",HttpStatus.NOT_FOUND,response);
+    request.setAttribute("errorMessage",ex.getMessage());
+    redirect("/error",HttpStatus.NOT_FOUND,request,response);
     return null;
   }
 
@@ -63,11 +65,12 @@ public class ExceptionHander {
    * 重定向到错误页面
    * @param url 链接
    */
-  private void redirect(String url,HttpStatus status, HttpServletResponse response){
+  private void redirect(String url,HttpStatus status,HttpServletRequest request,
+      HttpServletResponse response){
     try {
       response.setStatus(status.value());
-      response.sendRedirect(url);
-    } catch (IOException e) {
+      request.getRequestDispatcher(url).forward(request,response);
+    } catch (IOException | ServletException e) {
       log.error("redirect fail,e:{}",e);
     }
   }

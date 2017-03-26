@@ -25,4 +25,5 @@ public class ProblemDTO {
   private String sampleOutput;
   private String hit;
   private String nickname;
+  private Integer contestId;
 }

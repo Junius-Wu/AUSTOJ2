@@ -57,6 +57,7 @@ public class Runner {
       usedTime = (Integer) runtimeResult.get("usedTime");
       usedMemory = (Integer) runtimeResult.get("usedMemory");
       runtimeResultSlug = getRuntimeResultSlug(exitCode, timeLimit, usedTime, memoryLimit, usedMemory);
+      result.put("exitCode", exitCode);
     } catch (Exception ex) {
       log.error("solution ={} 判题出错",submission,ex);
     }

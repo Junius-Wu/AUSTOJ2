@@ -31,5 +31,5 @@ public interface SolutionMapper extends Mapper<SolutionDO> {
    * @param userId 用户id
    * @return 题目id
    */
-  List<Long> queryACProblems(Long userId);
+  List<Integer> queryACProblems(Long userId);
 }

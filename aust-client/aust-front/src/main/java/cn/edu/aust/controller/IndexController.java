@@ -3,6 +3,8 @@ package cn.edu.aust.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * 首页控制器
  * @author Niu Li
@@ -44,6 +46,13 @@ public class IndexController {
     @GetMapping(value = "/rank",produces = "text/html;charset=UTF-8")
     public String rank(){
         return "rank";
+    }
+    /**
+     * 前往error页面
+     */
+    @GetMapping(value = "/error",produces = "text/html;charset=UTF-8")
+    public String error(HttpServletRequest request){
+        return "error";
     }
 
 }

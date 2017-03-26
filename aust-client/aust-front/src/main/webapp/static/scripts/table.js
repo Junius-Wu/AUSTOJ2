@@ -112,11 +112,19 @@ function setProblemId(value, row, index) {
 }
 //增加题目title点击功能
 function setTitleWithid(value, row, index) {
-  return [
-    '<div>',
-    '<a href="'+projectName+'/problem/'+row.problem_id+'" target="_blank">' + value + '</a>',
-    '</div>'
-  ].join('');
+  if (row.contest_id === null || row.contest_id < 0){
+    return [
+      '<div>',
+      '<a href="'+projectName+'/problem/'+row.problem_id+'" target="_blank">' + value + '</a>',
+      '</div>'
+    ].join('');
+  } else{
+    return [
+      '<div>',
+      '<a href="'+projectName+'/contest/problem/'+row.problem_id+'" target="_blank">' + value + '</a>',
+      '</div>'
+    ].join('');
+  }
 }
 
 //更改题目acsubmit
@@ -129,19 +137,19 @@ function setAcSubmit(value, row, index) {
   }
   return [
     '<div>',
-    '<span>('+row.solved+'/'+row.submit+ ')'+toDecimal(row.solved/submit)*100+'%</span>',
+    '<span>('+row.solved+'/'+row.submit+ ')'+toDecimal(row.solved/submit)+'%</span>',
     '</div>'
   ].join('');
 }
 //更改题目用户的radio
 function setUserRadio(value, row, index) {
   var submit = row.submit;
-  if (submit == 0){
+  if (submit === 0){
     submit = 1;
   }
   return [
     '<div>',
-    '<span>' + toDecimal(row.solved/submit)*100 + '%</span>',
+    '<span>' + toDecimal(row.solved/submit) + '%</span>',
     '</div>'
   ].join('');
 }
@@ -198,6 +206,6 @@ function toDecimal(x) {
   if (isNaN(f)) {
     return;
   }
-  f = Math.round(x*100)/100;
+  f = Math.round(x*100);
   return f;
 }

@@ -173,8 +173,8 @@ public class SolutionService {
    * @param userId 用户id
    * @return 题目id
    */
-  public List<Long> queryACProblems(Long userId){
-    List<Long> problemIds = null;
+  public List<Integer> queryACProblems(Long userId){
+    List<Integer> problemIds = null;
     try {
       problemIds = solutionMapper.queryACProblems(userId);
     } catch (Exception e) {

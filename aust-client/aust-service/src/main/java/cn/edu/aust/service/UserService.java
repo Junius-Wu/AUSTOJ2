@@ -268,7 +268,7 @@ public class UserService {
     //获取上下文信息
     ServletContext servletContext = ContextLoader.getCurrentWebApplicationContext().getServletContext();
 
-    List<Long> problemIds = solutionService.queryACProblems(userId);
+    List<Integer> problemIds = solutionService.queryACProblems(userId);
     servletContext.setAttribute("recent_ac", problemIds.stream().limit(5).collect(Collectors.toList()));
     StringBuilder builder = new StringBuilder();
     problemIds.forEach(x -> builder.append(x).append(','));

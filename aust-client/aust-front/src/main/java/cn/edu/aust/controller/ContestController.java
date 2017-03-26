@@ -155,6 +155,7 @@ public class ContestController {
     //查询题目
     ProblemDTO problemDTO = problemService.queryContestProblem(id, session);
     model.addAttribute("problem",problemDTO);
+    model.addAttribute("isContest",true);
     return "problem";
   }
 }
