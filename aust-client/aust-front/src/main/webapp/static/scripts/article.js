@@ -6,7 +6,7 @@ function voteArticle(id) {
         success: function(result){
             if (consumeStatus(result)){
                 var $span = $('#like'+id);
-                if (result.data.art_status == 0){
+                if (result.data.art_status === 0){
                     $span.parent().removeClass('text-danger').addClass('text-success');
                 }else {
                     $span.parent().removeClass('text-success').addClass('text-danger');

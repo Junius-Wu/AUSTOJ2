@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.MediaType;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,6 +25,7 @@ import cn.edu.aust.common.util.CgiHelper;
 import cn.edu.aust.common.util.WebUtils;
 import cn.edu.aust.dto.UserDTO;
 import cn.edu.aust.exception.PageException;
+import cn.edu.aust.listen.AsideListen;
 import cn.edu.aust.service.SettingService;
 import cn.edu.aust.service.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -51,6 +53,10 @@ public class LoginController {
   private UserService userService;
   @Resource
   private SettingService settingService;
+  @Resource
+  private AsideListen asideListen;
+  @Resource
+  private ThreadPoolTaskExecutor taskExecutor;
 
   /**
    * 前往登录页面
@@ -59,6 +65,9 @@ public class LoginController {
   public String login(HttpServletRequest request) {
     Setting setting = settingService.getSetting();
     String referer = CgiHelper.getHeader("referer",setting.getDomain(),request);
+    if (StringUtils.contains(referer,"login")){
+      referer = setting.getDomain();
+    }
     request.getSession().setAttribute("referer",referer);
     return "login";
   }
@@ -91,6 +100,8 @@ public class LoginController {
     if (!userService.checkCanLogin(userDTO,password,WebUtils.getIp(request),resultVO)){
       return resultVO;
     }
+    //更新用户的解题信息
+    userService.freshUserInfo(userDTO.getId(),response);
     //登录成功加入session
     session = request.getSession();
     session.setAttribute(PRINCIPAL_ATTRIBUTE_NAME, userDTO);
@@ -102,6 +113,7 @@ public class LoginController {
     //跳转到之前的页面
     result.put("referer", session.getAttribute("referer"));
     session.removeAttribute("referer");
+
     return new ResultVO<>(PosCode.OK, result);
   }
 

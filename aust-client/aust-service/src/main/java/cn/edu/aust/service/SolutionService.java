@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -46,6 +47,8 @@ public class SolutionService {
   private SolutionSourceMapper solutionSourceMapper;
   @Resource
   private UserMapper userMapper;
+  @Resource
+  private UserService userService;
   @Resource
   private ProblemMapper problemMapper;
   @Resource
@@ -162,7 +165,22 @@ public class SolutionService {
     }
     problemMapper.updateByPrimaryKeySelective(problemDO);
     userMapper.updateByPrimaryKeySelective(userDO);
+    //异步更新用户的解题信息
+  }
 
-    // todo 重建一些显示上的缓存
+  /**
+   * 根据用户id查询其最近AC的题目数
+   * @param userId 用户id
+   * @return 题目id
+   */
+  public List<Long> queryACProblems(Long userId){
+    List<Long> problemIds = null;
+    try {
+      problemIds = solutionMapper.queryACProblems(userId);
+    } catch (Exception e) {
+      log.error("queryACProblems error",e);
+      return Collections.emptyList();
+    }
+    return problemIds;
   }
 }

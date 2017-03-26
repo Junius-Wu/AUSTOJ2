@@ -25,11 +25,9 @@
             </div>
             <p>格言:<br><span th:text="*{motto}">书山有路勤无用,学海无涯钱做主</span></p>
             <p class="tagcloud">近期AC:<br>
-                <a href="#" style="font-size: 12px;">1000</a>
-                <a href="#" style="font-size: 12px;">1000</a>
-                <a href="#" style="font-size: 12px;">1000</a>
-                <a href="#" style="font-size: 12px;">1000</a>
-                <a href="#" style="font-size: 12px;">1000</a>
+                <a th:each="id : ${application.recent_ac}"  href="#"
+                   th:href="@{/problem/{id}(id = ${id})}" style="font-size: 12px;"
+                   th:text="${id}">1000</a>
             </p>
         </th:block>
 

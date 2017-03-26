@@ -25,14 +25,14 @@
         <div class="col-md-10 col-md-offset-1">
             <div class="col-md-9">
                 <!--主面板-->
-                <section class="articleDO-section animated fadeInUp">
+                <section class="article-section animated fadeInUp">
                     <!--顶部公共样式-->
-                    <div class="articleDO-top row">
+                    <div class="article-top row">
                         <div class="col-md-6">
                             <h5 th:if="${search} != null">当前搜索: <a href="#" th:text="${search}">Spring</a></h5>
                         </div>
                         <div class="col-md-3 col-md-offset-3">
-                            <form th:action="@{/articleDO}" method="get">
+                            <form th:action="@{/article}" method="get">
                                 <div class="search input-group">
                                     <input type="search" class="form-control" style="float: right" placeholder="Search" name="search">
                                     <span class="input-group-btn">
@@ -43,46 +43,46 @@
                         </div>
                     </div>
                     <!--文章列表-->
-                    <articleDO th:each="articleDO : ${pageinfo.list}">
+                    <article th:each="article : ${pageinfo.list}">
                         <!--时间-->
                         <div class="post-date">
-                            <span class="date-month" th:text="${#dates.month(articleDO.createdate)+'月'}">08月</span>
-                            <span class="date-day" th:text="${#dates.day(articleDO.createdate)}">25</span>
-                            <span class="date-year" th:text="${#dates.year(articleDO.createdate)}">2016</span>
+                            <span class="date-month" th:text="${#dates.month(article.createdate)+'月'}">08月</span>
+                            <span class="date-day" th:text="${#dates.day(article.createdate)}">25</span>
+                            <span class="date-year" th:text="${#dates.year(article.createdate)}">2016</span>
                         </div>
                         <div class="post-articleDO">
                             <header class="post-title">
-                                <span class="text-danger" th:if="${articleDO.isTop} == 1 ">[置顶]</span>
-                                <a href="#" target="_blank" th:href="@{/articleDO/{id}(id=${articleDO.id})}" th:text="${articleDO.title}">Spring实战教程</a>
+                                <span class="text-danger" th:if="${article.isTop} == 1 ">[置顶]</span>
+                                <a href="#" target="_blank" th:href="@{/article/{id}(id=${article.id})}" th:text="${article.title}">Spring实战教程</a>
                             </header>
                             <div class="post-content">
-                                <p th:text="${articleDO.summary}">
+                                <p th:text="${article.summary}">
                                     使用说明：http://zhw-island.com/owl-beta/#content 这是我第四个主题，名为“Pluto”，中文即“冥王星”，
                                 </p>
                                 <div class="read_more">
-                                    <a href="#" target="_blank" th:href="@{/articleDO/{id}(id=${articleDO.id})}">阅读更多</a>
+                                    <a href="#" target="_blank" th:href="@{/article/{id}(id=${article.id})}">阅读更多</a>
                                 </div>
                             </div>
                             <ul class="post-meta list-inline">
                                 <li class="mate-cat fl clearfix">
                                     <i class="fa fa-userDO"></i>
-                                    <a href="http://zhw-island.com/category/wordpress/" th:text="${articleDO.nickname}">niuli</a>
+                                    <a href="http://zhw-island.com/category/wordpress/" th:text="${article.nickname}">niuli</a>
                                 </li>
                                 <li class="meta-tabs fl clearfix">
                                     <i class="fa fa-tags"></i>
-                                    <th:block th:each="str : ${#strings.listSplit(articleDO.keyword,',')}">
-                                        <a th:href="@{/articleDO(search=${str})}" rel="tag" th:text="'#'+${str}">Pluto</a>
+                                    <th:block th:each="str : ${#strings.listSplit(article.keyword,',')}">
+                                        <a th:href="@{/article(search=${str})}" rel="tag" th:text="'#'+${str}">Pluto</a>
                                     </th:block>
                                 </li>
                                 <li class="mate-com fr">
                                     <i class="fa fa-eye"></i>
-                                    <span th:text="${articleDO.viewcount}">91</span>
+                                    <span th:text="${article.viewcount}">91</span>
                                 </li>
                                 <li class="meta-like fr mr0">
-                                    <a href="javascript:void(0)" th:class="${articleDO.isVote}!=null?(${articleDO.isVote}!=0?'text-danger':'text-status'):'text-status'"
-                                        title="Like" th:onclick="'voteArticle('+${articleDO.id}+')'">
+                                    <a href="javascript:void(0)" th:class="${article.isVote}!=null?(${article.isVote}!=0?'text-danger':'text-status'):'text-status'"
+                                        title="Like" th:onclick="'voteArticle('+${article.id}+')'">
                                         <i class="fa fa-heart-o"></i>
-                                        <span th:text="${articleDO.likecount}" th:id="'like'+${articleDO.id}">91</span>
+                                        <span th:text="${article.likecount}" th:id="'like'+${article.id}">91</span>
                                     </a>
                                 </li>
                                 <!--评论数暂时不加-->
@@ -92,13 +92,13 @@
                                 <!--</li>-->
                             </ul>
                         </div>
-                    </articleDO>
+                    </article>
                     <ul class="pagination-plain" style="margin-bottom: 60px">
                         <li class="previous" th:if="${pageinfo.hasPreviousPage}">
-                            <a href="#" th:href="@{/articleDO(search=${search},pageNum=${pageinfo.prePage})}">Previous</a>
+                            <a href="#" th:href="@{/article(search=${search},pageNum=${pageinfo.prePage})}">Previous</a>
                         </li>
                         <li class="next" style="float: right" th:if="${pageinfo.hasNextPage}">
-                            <a href="#" th:href="@{/articleDO(search=${search},pageNum=${pageinfo.nextPage})}">Next</a>
+                            <a href="#" th:href="@{/article(search=${search},pageNum=${pageinfo.nextPage})}">Next</a>
                         </li>
                     </ul>
                 </section>
@@ -116,6 +116,6 @@
 <script src="/static/scripts/vendor.js" th:src="@{/static/scripts/vendor.js}"></script>
 <script src="/static/scripts/plugins.js" th:src="@{/static/scripts/plugins.js}"></script>
 <script src="/static/scripts/md2html.js" th:src="@{/static/scripts/md2html.js}"></script>
-<script src="/static/scripts/articleDO.js" th:src="@{/static/scripts/articleDO.js}"></script>
+<script src="/static/scripts/article.js" th:src="@{/static/scripts/article.js}"></script>
 </body>
 </html>

@@ -119,7 +119,6 @@
         <constructor-arg name="host" value="${redis.ip}"/>
         <constructor-arg name="port" value="${redis.port}"/>
         <constructor-arg name="timeout" value="10000"/>
-        <constructor-arg name="password" value="niuli"/>
     </bean>
 
     <bean id="jedisClient" class="cn.edu.aust.common.service.JedisClientSingle"

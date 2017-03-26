@@ -22,7 +22,6 @@ import javax.servlet.http.HttpSession;
 import cn.edu.aust.common.constant.PosCode;
 import cn.edu.aust.common.entity.ResultVO;
 import cn.edu.aust.common.entity.Setting;
-import cn.edu.aust.common.util.CgiHelper;
 import cn.edu.aust.common.util.WebUtils;
 import cn.edu.aust.service.SettingService;
 import cn.edu.aust.service.UserService;
@@ -54,11 +53,7 @@ public class RegisterController {
    * 该页面获取进入前的页面,注册完毕后跳转
    */
   @GetMapping(produces = MediaType.TEXT_HTML_VALUE)
-  public String toRegister(String email, HttpServletRequest request, Model model) {
-    //获取进入前的链接
-    String domain = settingService.getSetting().getDomain();
-    String referer = CgiHelper.getHeader("referer", domain, request);
-    request.getSession().setAttribute("referer", referer);
+  public String toRegister(String email, Model model) {
     model.addAttribute("email", email);
     return "register";
   }
@@ -102,10 +97,7 @@ public class RegisterController {
     log.info("{}用户已注册", email);
 
     //跳转到之前的页面
-    JSONObject result = new JSONObject();
-    result.put("referer", session.getAttribute("referer"));
-    session.removeAttribute("referer");
-    return resultVO.buildOKWithData(result);
+    return resultVO.buildOK();
   }
 
   /**

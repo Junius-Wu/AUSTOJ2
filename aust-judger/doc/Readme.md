@@ -38,8 +38,11 @@ cp jawt_md.h jni_md.h ..
 在容器中编译打包.
 
 举例:
-`docker run -d  -p 50013:50013  -v /Users/niuli/workspace/git/AUSTOJ2/:/AUSTOJ2 -v /Users/niuli/workspace/git/testcase/:/austoj/testcase dev /bin/sh -c "while true; do echo hello world; sleep 1000; done"
-`
+```
+docker run -d  -p 50013:50013  -v /Users/niuli/workspace/git/AUSTOJ2/:/AUSTOJ2 -v /Users/niuli/workspace/git/testcase/:/austoj/testcase dev /bin/sh -c "while true; do echo hello world; sleep 1000; done"
+
+```
+
 
 启动命令:
 `java -jar 打包后的jar`

@@ -25,4 +25,11 @@ public interface SolutionMapper extends Mapper<SolutionDO> {
    * @return 查询集合
    */
   List<SolutionDO> queryDetailByUserId(@Param("search") String search,@Param("userId") Long userId);
+
+  /**
+   * 根据用户id查询其最近AC的题目数
+   * @param userId 用户id
+   * @return 题目id
+   */
+  List<Long> queryACProblems(Long userId);
 }

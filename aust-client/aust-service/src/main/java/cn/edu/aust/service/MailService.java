@@ -3,12 +3,13 @@ package cn.edu.aust.service;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
 
 import cn.edu.aust.common.service.JedisClient;
 
@@ -20,9 +21,9 @@ import cn.edu.aust.common.service.JedisClient;
 @Service
 public class MailService {
 
-    @Autowired
+    @Resource
     private JavaMailSenderImpl javaMailSender;
-    @Autowired
+    @Resource
     private ThreadPoolTaskExecutor taskExecutor;
     @Value("${mail.urlprefix}")
     private String mailPrefix;//邮件验证连接前缀

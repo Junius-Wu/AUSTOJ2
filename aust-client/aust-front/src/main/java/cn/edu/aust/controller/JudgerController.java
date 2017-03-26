@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.Objects;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 
 import cn.edu.aust.common.constant.PosCode;
 import cn.edu.aust.common.entity.ResultVO;
@@ -24,7 +25,6 @@ import cn.edu.aust.common.util.LanguageUtil;
 import cn.edu.aust.dto.ProblemDTO;
 import cn.edu.aust.dto.SolutionDTO;
 import cn.edu.aust.entity.PageRequest;
-import cn.edu.aust.pojo.entity.ProblemDO;
 import cn.edu.aust.pojo.entity.UserDO;
 import cn.edu.aust.service.ProblemService;
 import cn.edu.aust.service.SolutionService;
@@ -98,7 +98,7 @@ public class JudgerController {
    */
   @GetMapping(value = "/judge/list", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
   @ResponseBody
-  public JSONObject judgeList(PageRequest pageRequest){
+  public JSONObject judgeList(PageRequest pageRequest,HttpServletResponse response){
     JSONObject result = new JSONObject();
     UserDO loginUser = userService.getCurrent();
     if (Objects.isNull(loginUser)){
@@ -111,6 +111,8 @@ public class JudgerController {
         pageRequest.getOffset(), pageRequest.getLimit());
     result.put("rows",data.getList());
     result.put("total",data.getTotal());
+    //更新用户的解题
+    userService.freshUserInfo(loginUser.getId(),response);
     return result;
   }
 

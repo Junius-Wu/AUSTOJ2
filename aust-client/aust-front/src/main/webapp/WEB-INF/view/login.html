@@ -19,19 +19,19 @@
   <!--标题-->
   <div class="container-fluid text-center animated fadeInDown">
     <h1 class="login-logo">AUST</h1>
-    <h6 class="text-danger">{{err_msg}}</h6>
+    <h6 class="text-danger" v-text="err_msg"></h6>
   </div>
   <!--登录表单-->
   <div class="row animated fadeInUp">
     <div class="login-field">
       <form role="form"  method="post" action="login" id="loginForm">
         <!--邮箱-->
-        <div class="input-group form-group">
+        <div class="input-group form-group" :class="emailValid ?'':'has-error'">
           <span class="input-group-addon"><i class="fa fa-user"></i></span>
           <input type="text" class="form-control" placeholder="Email" id="email" required name="email" v-model="email">
         </div>
         <!--密码-->
-        <div class="input-group form-group">
+        <div class="input-group form-group" :class="passwordValid ?'':'has-error'">
           <span class="input-group-addon"><i class="fa fa-key"></i></span>
           <input type="password" class="form-control" placeholder="Password" required name="password" v-model="password">
         </div>

@@ -4,6 +4,30 @@ FROM java:8
 
 #维护人信息
 MAINTAINER quding niudear@foxmail.com
+#修改源信息
+RUN echo "deb http://mirrors.163.com/ubuntu/ wily main restricted universe multiverse" > /etc/apt/sources.list
+RUN echo "deb http://mirrors.163.com/ubuntu/ wily-security main restricted universe multiverse" >> /etc/apt/sources.list
+RUN echo "deb http://mirrors.163.com/ubuntu/ wily-updates main restricted universe multiverse" >> /etc/apt/sources.list
+RUN echo "deb http://mirrors.163.com/ubuntu/ wily-proposed main restricted universe multiverse">> /etc/apt/sources.list
+RUN echo "deb http://mirrors.163.com/ubuntu/ wily-backports main restricted universe multiverse">> /etc/apt/sources.list
+RUN echo "deb-src http://mirrors.163.com/ubuntu/ wily main restricted universe multiverse" >> /etc/apt/sources.list
+RUN echo "deb-src http://mirrors.163.com/ubuntu/ wily-security main restricted universe multiverse" >> /etc/apt/sources.list
+RUN echo "deb-src http://mirrors.163.com/ubuntu/ wily-updates main restricted universe multiverse" >> /etc/apt/sources.list
+RUN echo "deb-src http://mirrors.163.com/ubuntu/ wily-proposed main restricted universe multiverse" >> /etc/apt/sources.list
+RUN echo "deb-src http://mirrors.163.com/ubuntu/ wily-backports main restricted universe multiverse" >> /etc/apt/sources.list
+RUN echo "APT::Get::AllowUnauthenticated 1 ;" >> /etc/apt/apt.conf
+#echo "deb http://mirrors.163.com/ubuntu/ wily main restricted universe multiverse" > /etc/apt/sources.list
+#echo "deb http://mirrors.163.com/ubuntu/ wily-security main restricted universe multiverse" >> /etc/apt/sources.list
+#echo "deb http://mirrors.163.com/ubuntu/ wily-updates main restricted universe multiverse" >> /etc/apt/sources.list
+#echo "deb http://mirrors.163.com/ubuntu/ wily-proposed main restricted universe multiverse">> /etc/apt/sources.list
+#echo "deb http://mirrors.163.com/ubuntu/ wily-backports main restricted universe multiverse">> /etc/apt/sources.list
+#echo "deb-src http://mirrors.163.com/ubuntu/ wily main restricted universe multiverse" >> /etc/apt/sources.list
+#echo "deb-src http://mirrors.163.com/ubuntu/ wily-security main restricted universe multiverse" >> /etc/apt/sources.list
+#echo "deb-src http://mirrors.163.com/ubuntu/ wily-updates main restricted universe multiverse" >> /etc/apt/sources.list
+#echo "deb-src http://mirrors.163.com/ubuntu/ wily-proposed main restricted universe multiverse" >> /etc/apt/sources.list
+#echo "deb-src http://mirrors.163.com/ubuntu/ wily-backports main restricted universe multiverse" >> /etc/apt/sources.list
+#echo "APT::Get::AllowUnauthenticated 1 ;" >> /etc/apt/apt.conf
+
 #更新源
 RUN apt-get update
 #gcc g++ make安装

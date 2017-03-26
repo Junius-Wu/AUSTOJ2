@@ -17,7 +17,7 @@
   <!--标题-->
   <div class="container-fluid text-center animated fadeInDown">
     <h1 class="login-logo">AUST</h1>
-    <h6 class="text-danger">{{err_msg}}</h6>
+    <h6 class="text-danger" v-text="err_msg"></h6>
   </div>
   <!--input框-->
   <div class="row animated fadeInUp">
@@ -65,9 +65,9 @@
 <script src="/static/scripts/vendor.js" th:src="@{static/scripts/vendor.js}"></script>
 <script src="/static/scripts/plugins.js" th:src="@{static/scripts/plugins.js}"></script>
 <script src="/static/scripts/vue.js" th:src="@{static/scripts/vue.js}"></script>
-<script src="/static/scripts/login.js" th:src="@{static/scripts/login.js}"></script>
+<script src="/static/scripts/register.js" th:src="@{static/scripts/register.js}"></script>
 <script th:inline="javascript" th:if="${email} != null">
-loginOrRegister.email = [[${email}]];
+Register.email = [[${email}]];
 </script>
 </body>
 </html>

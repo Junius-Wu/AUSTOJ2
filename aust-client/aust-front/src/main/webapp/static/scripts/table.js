@@ -82,7 +82,7 @@ function setMemory(value, row, index) {
 }
 //点击查看功能
 function setContest(value, row, index) {
-  if (value == 0){
+  if (value === 0){
     value = '无';
   }
   return [
@@ -97,6 +97,17 @@ function setTitle(value, row, index) {
     '<div>',
     '<a href="problem/'+row.id+'" target="_blank">' + value + '</a>',
     '</div>'
+  ].join('');
+}
+//增加题目title点击功能
+var acList = getCookie('acList');
+function setProblemId(value, row, index) {
+  var textcss = '';
+  if (acList !== null && acList.indexOf(row.id) >= 0){
+    textcss = 'text-success';
+  }
+  return [
+    '<span class="'+textcss+'">' +row.id+ '</span>'
   ].join('');
 }
 //增加题目title点击功能
@@ -145,7 +156,7 @@ function setId(value, row, index) {
 //用户名点击功能
 function setUsername(value, row, index) {
 
-  if(value == null){
+  if(value === null){
     value = row.username;
   }
   return [
@@ -156,7 +167,7 @@ function setUsername(value, row, index) {
 }
 //用户博客点击功能
 function setUserBlog(value, row, index) {
-  if(value == null){
+  if(value === null){
     return [
       '<div>',
       '<a target="_blank" style="color: gray" title="无博客">无</a>',

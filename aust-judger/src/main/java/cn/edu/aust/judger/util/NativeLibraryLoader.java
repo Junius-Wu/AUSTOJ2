@@ -6,11 +6,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * Contains helper methods for loading native libraries, particularly JNI.
  *
  * @author gkubisa
  */
+@Slf4j
 public class NativeLibraryLoader {
   /**
    * Utility classes should not have a public constructor.
@@ -38,6 +41,7 @@ public class NativeLibraryLoader {
 
       byte[] buffer = new byte[4096];
       InputStream inputStream = NativeLibraryLoader.class.getClassLoader().getResourceAsStream(fileName);
+      log.info("load judgerCroe.so ,",fileName);
       OutputStream outputStream = new FileOutputStream(file);
 
       try {

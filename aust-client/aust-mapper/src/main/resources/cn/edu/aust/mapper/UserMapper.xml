@@ -35,7 +35,7 @@
     createdate, modifydate, is_defunct, is_opensource, is_email
   </sql>
   <sql id="Basic_Column_List" >
-    id, avatar, nickname, honor, point, submit, solved, blog,
+    id, avatar, nickname, honor, point, submit, solved, blog
   </sql>
 
   <resultMap id="UserBasicMap" type="cn.edu.aust.pojo.entity.UserDO" >
@@ -67,8 +67,8 @@
   <!--查找出用户排名,必须是有效用户才能参与排名-->
   <select id="queryForRank" resultMap="UserBasicMap">
     SELECT  <include refid="Basic_Column_List"/>
-    FROM user u
-    WHERE u.is_defunct = 0
-    ORDER BY u.solved DESC ,u.submit DESC LIMIT 10000
+    FROM user
+    WHERE is_defunct = 0
+    ORDER BY solved DESC ,submit DESC LIMIT 10000
   </select>
 </mapper>

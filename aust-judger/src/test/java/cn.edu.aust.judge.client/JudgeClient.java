@@ -21,14 +21,14 @@ public class JudgeClient {
 
     @Before
     public void init(){
-        channel = ManagedChannelBuilder.forAddress("192.168.99.100",50013)
+        channel = ManagedChannelBuilder.forAddress("115.159.185.14",50013)
             .usePlaintext(true).build();
         blockingStub = JudgeServerGrpc.newBlockingStub(channel).withCompression("gzip");
     }
 
     @Test
     public void judgeTest(){
-        JudgeRequest request = JudgeRequest.newBuilder().setLanguage("java")
+        JudgeRequest request = JudgeRequest.newBuilder().setLanguage("Java")
             .setMemoryLimit(65532)
             .setTimeLimit(2000)
             .setSolutionId(1)
@@ -36,7 +36,7 @@ public class JudgeClient {
             .setCodeSource(source)
             .build();
         JudgeResponse response = blockingStub.judge(request);
-        System.out.println(response.getRuntimeResult());
+        System.out.println(response);
     }
 
 

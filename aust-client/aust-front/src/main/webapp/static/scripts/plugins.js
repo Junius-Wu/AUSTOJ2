@@ -154,7 +154,8 @@ if(typeof jQuery==="undefined"){throw new Error("jquery-confirm requires jQuery"
 
 //获取项目路径
 var pathName = window.document.location.pathname;
-var projectName = pathName.substring(0, pathName.substr(1).indexOf('/') + 1);
+// var projectName = pathName.substring(0, pathName.substr(1).indexOf('/') + 1);
+var projectName = '';
 
 //底部二维码展示
 $(function () {

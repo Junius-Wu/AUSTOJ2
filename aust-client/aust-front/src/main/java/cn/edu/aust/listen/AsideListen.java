@@ -26,6 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * 侧边栏等全局访问,保存到application作用域
  * 需要提供刷新接口
+ *
  * @author Niu Li
  * @date 2017/1/29
  */
@@ -33,74 +34,78 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class AsideListen implements ServletContextAware {
 
-    /** ServletContext */
-    private ServletContext servletContext;
-    @Resource
-    private CatelogService catelogService;
-    @Resource
-    private ArticleService articleService;
-    @Resource
-    private TagService tagService;
-    @Resource
-    private NotifyService notifyService;
-    @Resource
-    private JedisClient jedisClient;
-    @Resource
-    private SettingService settingService;
+  /**
+   * ServletContext
+   */
+  private ServletContext servletContext;
+  @Resource
+  private CatelogService catelogService;
+  @Resource
+  private ArticleService articleService;
+  @Resource
+  private TagService tagService;
+  @Resource
+  private NotifyService notifyService;
+  @Resource
+  private JedisClient jedisClient;
+  @Resource
+  private SettingService settingService;
 
-    @Override
-    public void setServletContext(ServletContext servletContext) {
-        this.servletContext = servletContext;
-    }
+  @Override
+  public void setServletContext(ServletContext servletContext) {
+    this.servletContext = servletContext;
+  }
 
-    /**
-     * 初始化方法
-     */
-    @PostConstruct
-    public void init(){
-        jedisClient.del(SystemUtil.SETTING_CACHE);
-        refreshCateLog();
-        refreshArticle();
-        refreshTag();
-        refreshNotify();
-    }
+  /**
+   * 初始化方法
+   */
+  @PostConstruct
+  public void init() {
+    jedisClient.del(SystemUtil.SETTING_CACHE);
+    refreshCateLog();
+    refreshArticle();
+    refreshTag();
+    refreshNotify();
+  }
 
-    /**
-     * 获取通知
-     */
-    public void refreshNotify(){
-        Setting setting = settingService.getSetting();
-        List<NotifyDO> notifies = notifyService.queryListNow(setting.getNotify_count());
-        servletContext.setAttribute("app_notifys",notifies);
-        log.info("refreshNotify end");
-    }
-    /**
-     * 侧边目录
-     */
-    public void refreshCateLog(){
-        List<CatelogDTO> catelogDOS = catelogService.queryAll();
-        servletContext.setAttribute("app_catelogs", catelogDOS);
-        log.info("refreshCateLog end");
-    }
+  /**
+   * 获取通知
+   */
+  public void refreshNotify() {
+    Setting setting = settingService.getSetting();
+    List<NotifyDO> notifies = notifyService.queryListNow(setting.getNotify_count());
+    servletContext.setAttribute("app_notifys", notifies);
+    log.info("refreshNotify end");
+  }
 
-    /**
-     * 侧边栏文章
-     */
-    public void refreshArticle(){
-        Setting setting = settingService.getSetting();
-        List<ArticleAsideDTO> articleAsideDTOS = articleService.queryForAside(setting.getAside_articles());
-        servletContext.setAttribute("app_articles",articleAsideDTOS);
-        log.info("refreshArticle end");
-    }
+  /**
+   * 侧边目录
+   */
+  public void refreshCateLog() {
+    List<CatelogDTO> catelogDOS = catelogService.queryAll();
+    servletContext.setAttribute("app_catelogs", catelogDOS);
+    log.info("refreshCateLog end");
+  }
 
-    /**
-     * 刷新标签
-     */
-    public void refreshTag(){
-        Setting setting = settingService.getSetting();
-        List<TagsDO> tagsDOS = tagService.queryList(setting.getAside_tags());
-        servletContext.setAttribute("app_tags", tagsDOS);
-        log.info("refreshTag end");
-    }
+  /**
+   * 侧边栏文章
+   */
+  public void refreshArticle() {
+    Setting setting = settingService.getSetting();
+    List<ArticleAsideDTO> articleAsideDTOS = articleService.queryForAside(setting.getAside_articles());
+    servletContext.setAttribute("app_articles", articleAsideDTOS);
+    log.info("refreshArticle end");
+  }
+
+  /**
+   * 刷新标签
+   */
+  public void refreshTag() {
+    Setting setting = settingService.getSetting();
+    List<TagsDO> tagsDOS = tagService.queryList(setting.getAside_tags());
+    servletContext.setAttribute("app_tags", tagsDOS);
+    log.info("refreshTag end");
+  }
+
 
 }

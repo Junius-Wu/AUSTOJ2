@@ -55,4 +55,10 @@
           AND user_id = #{userId}
       </where>
   </select>
+    <!--查找用户最近AC的题目-->
+    <select id="queryACProblems" parameterType="Long" resultType="Long">
+      SELECT DISTINCT problem_id
+      FROM solution
+      WHERE user_id = #{userId} AND verdict = 0;
+    </select>
 </mapper>

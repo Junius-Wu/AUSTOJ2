@@ -8,6 +8,7 @@ import org.modelmapper.TypeToken;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
+import org.springframework.web.context.ContextLoader;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -15,8 +16,11 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.annotation.Resource;
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletResponse;
 
 import cn.edu.aust.assemble.UserAssemble;
 import cn.edu.aust.common.constant.PosCode;
@@ -24,6 +28,7 @@ import cn.edu.aust.common.entity.ResultVO;
 import cn.edu.aust.common.entity.Setting;
 import cn.edu.aust.common.service.JedisClient;
 import cn.edu.aust.common.util.SystemUtil;
+import cn.edu.aust.common.util.WebUtils;
 import cn.edu.aust.dto.UserDTO;
 import cn.edu.aust.dto.UserRankDTO;
 import cn.edu.aust.mapper.UserMapper;
@@ -49,6 +54,8 @@ public class UserService {
   private SettingService settingService;
   @Resource
   private MailService mailService;
+  @Resource
+  private SolutionService solutionService;
 
   /**
    * 得到当前客户端登录用户
@@ -87,9 +94,10 @@ public class UserService {
     userDO.setIp(ip);
     userDO.setNickname(nickname);
     userDO.setEmail(email);
+    userDO.setPoint(0);
     userDO.setUsername(email);
     userDO.setIsDefunct(2);//设置待验证状态
-    userMapper.insert(userDO);
+    userMapper.insertSelective(userDO);
     //发送邮件,验证
     mailService.sendRegister(email, jedisClient);
     return UserAssemble.user2UserDTO(userDO);
@@ -250,6 +258,23 @@ public class UserService {
       }
     }
     return false;
+  }
+
+  /**
+   * 用户登陆后或者AC后刷新用户的解题信息,写入cookies中不好,判题结束后异步任务拿不到response,导致没法更新
+   * todo 等待想办法解决
+   */
+  public void freshUserInfo(Long userId,HttpServletResponse response) {
+    //获取上下文信息
+    ServletContext servletContext = ContextLoader.getCurrentWebApplicationContext().getServletContext();
+
+    List<Long> problemIds = solutionService.queryACProblems(userId);
+    servletContext.setAttribute("recent_ac", problemIds.stream().limit(5).collect(Collectors.toList()));
+    StringBuilder builder = new StringBuilder();
+    problemIds.forEach(x -> builder.append(x).append(','));
+    Setting setting = settingService.getSetting();
+    WebUtils.addCookie(response, "acList", builder.toString(), null, setting.getCookiePath(),
+        setting.getCookieDomain(), false);
   }
 
 }

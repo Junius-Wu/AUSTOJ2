@@ -47,7 +47,7 @@ public class VotelogService {
             voteLog.setOtherId(articleDO.getId());
             voteLog.setUserId(user_id);
             voteLog.setCreatetime(new Date());
-            votelogMapper.insert(voteLog);//这里需要设置插入并返回主键keyProperty="id"
+            votelogMapper.insert(voteLog);
         }else {
             voteLog.setStatus((byte)(voteLog.getStatus()^1));
             votelogMapper.updateByPrimaryKeySelective(voteLog);
