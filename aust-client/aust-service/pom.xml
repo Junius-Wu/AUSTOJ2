@@ -48,6 +48,10 @@
             <artifactId>spring-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-redis</artifactId>
+        </dependency>
         <!--modelmapper start-->
         <dependency>
             <groupId>org.modelmapper</groupId>

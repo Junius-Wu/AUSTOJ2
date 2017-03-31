@@ -128,15 +128,15 @@ public class RegisterController {
 
   /**
    * 验证邮箱token
-   *
    * @param token token
    */
   @GetMapping(value = "/check/token", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-  public @ResponseBody ResultVO checkToken(String token) {
+  public String checkToken(String token,Model model) {
     ResultVO resultVO = new ResultVO<>();
     if (!userService.checkEmailToken(token,resultVO)){
-      return resultVO;
+      model.addAttribute("errorMessage","验证失败,请联系管理员");
+      return "error";
     }
-    return resultVO.buildOK();
+    return "emailcheck";
   }
 }

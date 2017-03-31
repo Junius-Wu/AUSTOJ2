@@ -106,24 +106,39 @@
         <property name="keepAliveSeconds" value="60"/>
     </bean>
 
-    <!-- 配置redis客户端单机版 -->
+    <!--spring data redis配置-->
     <bean id="jedispoolConfig" class="redis.clients.jedis.JedisPoolConfig">
         <property name="maxTotal" value="${redis.maxactive}"/>
         <property name="maxIdle" value="${redis.maxidle}"/>
         <property name="minIdle" value="${redis.minidle}"/>
         <property name="maxWaitMillis" value="${redis.timeout}"/>
     </bean>
-    <bean id="jedisPool" class="redis.clients.jedis.JedisPool" destroy-method="destroy"
-          depends-on="jedispoolConfig">
-        <constructor-arg name="poolConfig" ref="jedispoolConfig"/>
-        <constructor-arg name="host" value="${redis.ip}"/>
-        <constructor-arg name="port" value="${redis.port}"/>
-        <constructor-arg name="timeout" value="10000"/>
+    <bean id="connectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory"
+          p:host-name="${redis.host}"
+          p:port="${redis.port}"
+          p:password="${redis.pass}"
+          p:pool-config-ref="jedispoolConfig"/>
+    <!--执行客户端-->
+    <bean id="redisTemplate" class="org.springframework.data.redis.core.StringRedisTemplate">
+        <property name="connectionFactory"   ref="connectionFactory" />
     </bean>
-
-    <bean id="jedisClient" class="cn.edu.aust.common.service.JedisClientSingle"
-          c:jedisPool-ref="jedisPool"
-    />
+    <!--消息订阅-->
+    <bean id="judgerMessageListen" class="cn.edu.aust.listen.JudgerMessageListen"/>
+    <bean id="judgerCacheTopic" class="org.springframework.data.redis.listener.PatternTopic">
+        <constructor-arg value="judger"/>
+    </bean>
+    <bean id="listenAdapter" class="org.springframework.data.redis.listener.adapter.MessageListenerAdapter">
+        <constructor-arg index="0" ref="judgerMessageListen"/>
+        <constructor-arg index="1" value="handle"/>
+    </bean>
+    <bean id="redisMessageListenerContainer" class="org.springframework.data.redis.listener.RedisMessageListenerContainer">
+        <property name="connectionFactory" ref="connectionFactory"/>
+        <property name="messageListeners">
+            <map>
+                <entry key-ref="listenAdapter" value-ref="judgerCacheTopic"/>
+            </map>
+        </property>
+    </bean>
 
     <!--邮件客户端-->
     <bean id="javaMailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl"

@@ -261,8 +261,7 @@ public class UserService {
   }
 
   /**
-   * 用户登陆后或者AC后刷新用户的解题信息,写入cookies中不好,判题结束后异步任务拿不到response,导致没法更新
-   * todo 等待想办法解决
+   * 用户登陆后或者AC后刷新用户的解题信息
    */
   public void freshUserInfo(Long userId,HttpServletResponse response) {
     //获取上下文信息
