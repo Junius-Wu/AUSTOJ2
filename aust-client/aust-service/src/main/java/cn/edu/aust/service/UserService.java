@@ -5,6 +5,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateUtils;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
@@ -26,8 +27,6 @@ import cn.edu.aust.assemble.UserAssemble;
 import cn.edu.aust.common.constant.PosCode;
 import cn.edu.aust.common.entity.ResultVO;
 import cn.edu.aust.common.entity.Setting;
-import cn.edu.aust.common.service.JedisClient;
-import cn.edu.aust.common.util.SystemUtil;
 import cn.edu.aust.common.util.WebUtils;
 import cn.edu.aust.dto.UserDTO;
 import cn.edu.aust.dto.UserRankDTO;
@@ -47,8 +46,6 @@ public class UserService {
 
   private static final ModelMapper modelMapper = new ModelMapper();
   @Resource
-  private JedisClient jedisClient;
-  @Resource
   private UserMapper userMapper;
   @Resource
   private SettingService settingService;
@@ -56,6 +53,8 @@ public class UserService {
   private MailService mailService;
   @Resource
   private SolutionService solutionService;
+  @Resource
+  private StringRedisTemplate redisTemplate;
 
   /**
    * 得到当前客户端登录用户
@@ -99,7 +98,7 @@ public class UserService {
     userDO.setIsDefunct(2);//设置待验证状态
     userMapper.insertSelective(userDO);
     //发送邮件,验证
-    mailService.sendRegister(email, jedisClient);
+    mailService.sendRegister(email);
     return UserAssemble.user2UserDTO(userDO);
   }
 
@@ -110,7 +109,7 @@ public class UserService {
    * @return true成功
    */
   public Boolean checkEmailToken(String token, ResultVO resultVO){
-    String email = jedisClient.get(token);
+    String email = redisTemplate.opsForValue().get(token);
     if (StringUtils.isEmpty(email)) {
       resultVO.buildWithPosCode(PosCode.URL_ERROR);
       return false;
@@ -125,7 +124,7 @@ public class UserService {
     userDO.setIsDefunct(0);
     userDO.setModifydate(new Date());
     userMapper.updateByPrimaryKeySelective(userDO);
-    jedisClient.del(token);
+    redisTemplate.delete(token);
     return true;
   }
   /**
@@ -249,8 +248,7 @@ public class UserService {
    */
   public boolean usernameIsDisabled(String username) {
     if (StringUtils.isEmpty(username)) return false;
-
-    Setting setting = SystemUtil.getSetting(jedisClient);
+    Setting setting = settingService.getSetting();
     String[] disabledName = setting.getDisabledUsernames().split(",");
     for (String s : disabledName) {
       if (StringUtils.equalsIgnoreCase(s, username)) {

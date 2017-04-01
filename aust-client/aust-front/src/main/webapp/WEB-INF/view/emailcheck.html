@@ -17,8 +17,8 @@
   </div>
 
 </div>
-<script src="/static/scripts/vendor.js" th:src="@{static/scripts/vendor.js}"></script>
-<script src="/static/scripts/plugins.js" th:src="@{static/scripts/plugins.js}"></script>
+<script src="/static/scripts/vendor.js" th:src="@{/static/scripts/vendor.js}"></script>
+<script src="/static/scripts/plugins.js" th:src="@{/static/scripts/plugins.js}"></script>
 <script>
   //toastr设置
   toastr.options = {
@@ -38,7 +38,7 @@
   toastr.success('验证成功,正在跳转中...', 'SUCCESS', {progressBar: true});
   setTimeout(function () {
     location.href = "/";
-  }, 1000);
+  }, 2000);
 </script>
 </body>
 </html>

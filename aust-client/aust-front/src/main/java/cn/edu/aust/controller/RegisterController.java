@@ -102,7 +102,6 @@ public class RegisterController {
 
   /**
    * 检查邮箱是否存在(目前屏蔽用户名注册)
-   *
    * @param username 要检查的用户名
    */
   @GetMapping(value = "/check", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -133,10 +132,10 @@ public class RegisterController {
   @GetMapping(value = "/check/token", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
   public String checkToken(String token,Model model) {
     ResultVO resultVO = new ResultVO<>();
-    if (!userService.checkEmailToken(token,resultVO)){
-      model.addAttribute("errorMessage","验证失败,请联系管理员");
-      return "error";
-    }
+//    if (!userService.checkEmailToken(token,resultVO)){
+//      model.addAttribute("errorMessage","验证失败,请联系管理员");
+//      return "error";
+//    }
     return "emailcheck";
   }
 }

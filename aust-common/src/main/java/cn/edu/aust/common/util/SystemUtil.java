@@ -2,10 +2,6 @@ package cn.edu.aust.common.util;
 
 import com.alibaba.fastjson.JSON;
 
-import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -13,7 +9,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 import cn.edu.aust.common.entity.Setting;
-import cn.edu.aust.common.service.JedisClient;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * 管理整个后台配置文件
@@ -21,35 +17,26 @@ import cn.edu.aust.common.service.JedisClient;
  * @author Niu Li
  * @date 2017/1/25
  */
+@Slf4j
 public abstract class SystemUtil {
     /**
      * 配置缓存名称
      */
-    public static final String SETTING_CACHE = "setting";
-
-    private static Logger logger = LoggerFactory.getLogger(SystemUtil.class);
+    private static final String SETTING_NAME = "austoj.json";
 
     /**
-     * 得到系统配置 缓存>配置
-     * @param jedisClient redis缓存工具
+     * 得到系统配置
      * @return 结果
      */
-    public static Setting getSetting(JedisClient jedisClient) {
-        //从缓存中获取
-        String setting = jedisClient.get(SETTING_CACHE);
-        if (StringUtils.isNoneEmpty(setting)) {
-            logger.info("从缓存中获取的配置文件:{}", setting);
-            return JSON.parseObject(setting, Setting.class);
-        }
-        //缓存不存在则从配置文件获取
-        try (InputStream in = SystemUtil.class.getClassLoader().getResourceAsStream("austoj.json"))
+    public static Setting getSetting() {
+        //从配置文件获取
+        try (InputStream in = SystemUtil.class.getClassLoader().getResourceAsStream(SETTING_NAME))
         {
             Setting tempSetting = JSON.parseObject(in, null, Setting.class);
-            logger.info("从配置文件中获取的配置:{}",JSON.toJSONString(tempSetting));
+            log.info("get setting :{}",JSON.toJSONString(tempSetting));
             return tempSetting;
         } catch (IOException e) {
-            e.printStackTrace();
-            logger.error("获取setting文件出错", e);
+            log.error("read setting error", e);
         }
         //最后返回默认配置
         return new Setting();
@@ -58,17 +45,15 @@ public abstract class SystemUtil {
     /**
      * 设置或刷新系统配置
      * @param setting 设置
-     * @param jedisClient 缓存工具
      */
-    public static void setSetting(Setting setting,JedisClient jedisClient){
+    public static void setSetting(Setting setting){
         try {
             File file = new File(SystemUtil.class.getClassLoader().getResource("").getPath()+"austoj.json");
             OutputStream out = new FileOutputStream(file);
             JSON.writeJSONString(out,setting);
         } catch (IOException e) {
-            logger.error("设置setting文件出错",e);
+            log.error("read setting error",e);
         }
-        jedisClient.set(SETTING_CACHE,JSON.toJSONString(setting));
     }
 
 }

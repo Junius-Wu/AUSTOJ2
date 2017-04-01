@@ -4,14 +4,15 @@ import org.apache.commons.codec.digest.DigestUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
+import java.util.concurrent.TimeUnit;
 
-import cn.edu.aust.common.service.JedisClient;
+import javax.annotation.Resource;
 
 /**
  * 邮件服务
@@ -27,14 +28,15 @@ public class MailService {
     private ThreadPoolTaskExecutor taskExecutor;
     @Value("${mail.urlprefix}")
     private String mailPrefix;//邮件验证连接前缀
+    @Resource
+    private StringRedisTemplate redisTemplate;
 
     private static Logger logger = LoggerFactory.getLogger(MailService.class);
     /**
      * 注册后发送验证邮件
      * @param email 邮箱
-     * @param jedisClient 缓存
      */
-    public void sendRegister(String email, JedisClient jedisClient){
+    public void sendRegister(String email){
         String token = DigestUtils.sha256Hex(email+System.currentTimeMillis());
         // 构建简单邮件对象
         SimpleMailMessage smm = new SimpleMailMessage();
@@ -48,6 +50,6 @@ public class MailService {
             javaMailSender.send(smm);
         });
         logger.info("发送邮件成功:{}",email);
-        jedisClient.setex(token,3600*2,email);
+        redisTemplate.opsForValue().set(token,email,2L, TimeUnit.HOURS);
     }
 }
