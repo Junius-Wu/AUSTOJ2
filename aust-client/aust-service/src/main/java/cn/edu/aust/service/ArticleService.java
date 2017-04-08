@@ -16,7 +16,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import cn.edu.aust.assemble.ArticleAssemble;
+import cn.edu.aust.convert.ArticleConvert;
 import cn.edu.aust.common.util.WebUtils;
 import cn.edu.aust.dto.ArticleAsideDTO;
 import cn.edu.aust.dto.ArticleDTO;
@@ -46,7 +46,7 @@ public class ArticleService {
    */
   public ArticleDTO findDetailById(Long id) {
     ArticlePK article = articleMapper.queryDetail(id);
-    return ArticleAssemble.pk2dto(article);
+    return ArticleConvert.pk2dto(article);
   }
 
   /**
@@ -56,7 +56,7 @@ public class ArticleService {
    */
   public ArticleDTO findBasicById(Long id){
     ArticleDO articleDO = articleMapper.selectByPrimaryKey(id);
-    return ArticleAssemble.do2dto(articleDO);
+    return ArticleConvert.do2dto(articleDO);
   }
 
   /**
@@ -106,7 +106,7 @@ public class ArticleService {
   public List<ArticleAsideDTO> queryForAside(Integer limit) {
     PageHelper.offsetPage(0, limit, false);
     List<ArticleDO> articleDOS = articleMapper.queryForAside();
-    return ArticleAssemble.do2AsideDto(articleDOS);
+    return ArticleConvert.do2AsideDto(articleDOS);
   }
 
   /**
@@ -132,7 +132,7 @@ public class ArticleService {
     );
     PageInfo<ArticleListDTO> pageInfo = new PageInfo<>();
     pageInfo.setTotal(articlePCS.getTotal());
-    pageInfo.setList(ArticleAssemble.pk2ListDto(articlePCS.getResult()));
+    pageInfo.setList(ArticleConvert.pk2ListDto(articlePCS.getResult()));
     return pageInfo;
   }
 }

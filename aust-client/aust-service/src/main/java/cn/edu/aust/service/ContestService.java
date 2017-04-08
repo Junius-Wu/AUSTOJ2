@@ -12,7 +12,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
-import cn.edu.aust.assemble.ContestAssemble;
+import cn.edu.aust.convert.ContestConvert;
 import cn.edu.aust.dto.ContestDTO;
 import cn.edu.aust.mapper.ContestMapper;
 import cn.edu.aust.pojo.entity.ContestDO;
@@ -42,7 +42,7 @@ public class ContestService {
     checkArgument(contestDO != null, "该竞赛不存在");
     // todo 该不在在service检查状态?还是应该在controller检查?
     checkArgument(contestDO.getDefunct() == 1,"该竞赛不存在");
-    return ContestAssemble.assemble(contestDO);
+    return ContestConvert.assemble(contestDO);
   }
 
   /**
@@ -81,9 +81,9 @@ public class ContestService {
               //去除该阶段没必要显示的字段
               contestDO.setDescription(null);
               if (isExpire(contestDO)) {
-                expire.add(ContestAssemble.assemble(contestDO));
+                expire.add(ContestConvert.assemble(contestDO));
               } else {
-                noExpire.add(ContestAssemble.assemble(contestDO));
+                noExpire.add(ContestConvert.assemble(contestDO));
               }
             });
     //返回结果

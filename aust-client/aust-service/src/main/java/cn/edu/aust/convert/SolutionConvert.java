@@ -1,4 +1,4 @@
-package cn.edu.aust.assemble;
+package cn.edu.aust.convert;
 
 import org.modelmapper.ModelMapper;
 import org.modelmapper.PropertyMap;
@@ -6,7 +6,7 @@ import org.modelmapper.TypeToken;
 
 import java.util.List;
 
-import cn.edu.aust.convert.JudgeCodeConvent;
+import cn.edu.aust.utilconvert.JudgeCodeConvent;
 import cn.edu.aust.dto.SolutionDTO;
 import cn.edu.aust.pojo.entity.SolutionDO;
 
@@ -15,7 +15,7 @@ import cn.edu.aust.pojo.entity.SolutionDO;
  * @author Niu Li
  * @since 2017/3/18
  */
-public class SolutionAssemble {
+public class SolutionConvert {
 
   private static final ModelMapper modelMapper = new ModelMapper();
 

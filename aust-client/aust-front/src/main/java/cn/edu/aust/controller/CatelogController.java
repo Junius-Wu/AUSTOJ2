@@ -1,21 +1,20 @@
 package cn.edu.aust.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.github.pagehelper.PageException;
 import com.github.pagehelper.PageInfo;
 
 import org.springframework.http.MediaType;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.Objects;
 
 import javax.annotation.Resource;
 
 import cn.edu.aust.common.constant.PosCode;
+import cn.edu.aust.common.entity.ResultVO;
 import cn.edu.aust.dto.CatelogDTO;
 import cn.edu.aust.dto.ProblemListDTO;
 import cn.edu.aust.entity.PageRequest;
@@ -28,7 +27,7 @@ import cn.edu.aust.service.ProblemService;
  * @author Niu Li
  * @since 2017/2/26
  */
-@Controller
+@RestController
 public class CatelogController {
 
   @Resource
@@ -37,22 +36,15 @@ public class CatelogController {
   private ProblemService problemService;
 
   /**
-   * 前往目录页面
-   *
-   * @param id 该目录的id
-   * @return 视图
+   * 拿到全部的目录
+   * @return 全部目录
    */
-  @GetMapping(value = "/catelog/{id}", produces = MediaType.TEXT_HTML_VALUE)
-  public String toCatelog(@PathVariable("id") Integer id, Model model) {
-    CatelogDTO catelogDTO = catelogService.findById(id);
-    if (Objects.isNull(catelogDTO)) {
-      throw new PageException("所查看的目录不存在");
-    }
-    model.addAttribute("cateName", catelogDTO.getName());
-    model.addAttribute("cateId", catelogDTO.getId());
-    return "searchpro";
+  @GetMapping(value = "/catelogs", produces = MediaType.APPLICATION_JSON_UTF8_VALUE )
+  public ResultVO catelogs(){
+    ResultVO<List<CatelogDTO>> resultVO = new ResultVO<>();
+    List<CatelogDTO> catelogDTOS = catelogService.queryAll();
+    return resultVO.buildOKWithData(catelogDTOS);
   }
-
 
   /**
    * 查看指定目录下的题目
@@ -60,7 +52,6 @@ public class CatelogController {
    * @param id 目录id
    * @return 视图
    */
-  @ResponseBody
   @GetMapping(value = "/problem/catelog/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
   public JSONObject queryCategoryProblem(@PathVariable("id") Integer id, PageRequest pageRequest) {
     JSONObject result = new JSONObject();

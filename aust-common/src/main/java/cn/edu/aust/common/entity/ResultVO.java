@@ -53,6 +53,7 @@ public class ResultVO<T> {
     this.msg = PosCode.OK.getMsg();
     return this;
   }
+  @SuppressWarnings("unchecked")
   public ResultVO buildOKWithData(T data) {
     this.status = PosCode.OK.getStatus();
     this.msg = PosCode.OK.getMsg();

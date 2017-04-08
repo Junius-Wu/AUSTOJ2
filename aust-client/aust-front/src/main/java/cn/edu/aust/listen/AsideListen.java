@@ -13,7 +13,6 @@ import javax.servlet.ServletContext;
 import cn.edu.aust.common.entity.Setting;
 import cn.edu.aust.dto.ArticleAsideDTO;
 import cn.edu.aust.dto.CatelogDTO;
-import cn.edu.aust.pojo.entity.NotifyDO;
 import cn.edu.aust.pojo.entity.TagsDO;
 import cn.edu.aust.service.ArticleService;
 import cn.edu.aust.service.CatelogService;
@@ -64,17 +63,6 @@ public class AsideListen implements ServletContextAware {
     refreshCateLog();
     refreshArticle();
     refreshTag();
-    refreshNotify();
-  }
-
-  /**
-   * 获取通知
-   */
-  public void refreshNotify() {
-    Setting setting = settingService.getSetting();
-    List<NotifyDO> notifies = notifyService.queryListNow(setting.getNotify_count());
-    servletContext.setAttribute("app_notifys", notifies);
-    log.info("refreshNotify end");
   }
 
   /**

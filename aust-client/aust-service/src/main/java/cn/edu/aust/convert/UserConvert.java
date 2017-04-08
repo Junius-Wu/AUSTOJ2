@@ -1,4 +1,4 @@
-package cn.edu.aust.assemble;
+package cn.edu.aust.convert;
 
 import org.modelmapper.ModelMapper;
 
@@ -12,7 +12,7 @@ import cn.edu.aust.pojo.entity.UserDO;
  * @author Niu Li
  * @since 2017/3/15
  */
-public class UserAssemble {
+public class UserConvert {
 
   private static final ModelMapper modelMapper = new ModelMapper();
 

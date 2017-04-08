@@ -16,7 +16,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import cn.edu.aust.assemble.SolutionAssemble;
+import cn.edu.aust.convert.SolutionConvert;
 import cn.edu.aust.common.constant.JudgeCode;
 import cn.edu.aust.common.util.LanguageUtil;
 import cn.edu.aust.dto.ProblemDTO;
@@ -70,7 +70,7 @@ public class SolutionService {
     }
     PageHelper.offsetPage(offset, limit);
     List<SolutionDO> queryresult = solutionMapper.queryDetailByUserId(searchContext, userId);
-    PageInfo<SolutionDTO> pageInfo = new PageInfo<>(SolutionAssemble.do2dto(queryresult));
+    PageInfo<SolutionDTO> pageInfo = new PageInfo<>(SolutionConvert.do2dto(queryresult));
     pageInfo.setTotal(((Page) queryresult).getTotal());
     return pageInfo;
   }

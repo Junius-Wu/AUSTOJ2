@@ -6,7 +6,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import cn.edu.aust.assemble.CatelogAssemble;
+import cn.edu.aust.convert.CatelogConvert;
 import cn.edu.aust.dto.CatelogDTO;
 import cn.edu.aust.mapper.CatelogMapper;
 import cn.edu.aust.pojo.entity.CatelogDO;
@@ -27,7 +27,7 @@ public class CatelogService {
    */
   public CatelogDTO findById(Integer id){
     CatelogDO catelogDO = catelogMapper.selectByPrimaryKey(id);
-    return CatelogAssemble.do2dto(catelogDO);
+    return CatelogConvert.do2dto(catelogDO);
   }
 
   /**
@@ -36,6 +36,6 @@ public class CatelogService {
    */
   public List<CatelogDTO> queryAll(){
     List<CatelogDO> list = catelogMapper.selectAll();
-    return CatelogAssemble.do2dto(list);
+    return CatelogConvert.do2dto(list);
   }
 }

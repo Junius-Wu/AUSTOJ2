@@ -687,7 +687,7 @@ var Observer = function Observer (value) {
 };
 
 /**
- * Walk through each property and convert them into
+ * Walk through each property and utilconvert them into
  * getter/setters. This method should only be called when
  * value type is Object.
  */
@@ -2036,7 +2036,7 @@ function normalizeArrayChildren (children, nestedIndex) {
       if (last && last.text) {
         last.text += String(c);
       } else if (c !== '') {
-        // convert primitive to vnode
+        // utilconvert primitive to vnode
         res.push(createTextVNode(c));
       }
     } else {
@@ -2249,7 +2249,7 @@ function renderMixin (Vue) {
 
   // toString for mustaches
   Vue.prototype._s = _toString;
-  // convert text to vnode
+  // utilconvert text to vnode
   Vue.prototype._v = createTextVNode;
   // number conversion
   Vue.prototype._n = toNumber;
@@ -8506,7 +8506,7 @@ Vue$3.prototype.$mount = function (
   }
 
   var options = this.$options;
-  // resolve template/el and convert to render function
+  // resolve template/el and utilconvert to render function
   if (!options.render) {
     var template = options.template;
     if (template) {

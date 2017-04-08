@@ -16,7 +16,7 @@ import java.util.Objects;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
-import cn.edu.aust.assemble.ProblemAssemble;
+import cn.edu.aust.convert.ProblemConvert;
 import cn.edu.aust.common.constant.PosCode;
 import cn.edu.aust.dto.ProblemDTO;
 import cn.edu.aust.dto.ProblemListDTO;
@@ -57,7 +57,7 @@ public class ProblemService {
    */
   public ProblemDTO findBasicById(Long id){
     ProblemDO problemDO = problemMapper.selectByPrimaryKey(id);
-    return ProblemAssemble.do2dto(problemDO);
+    return ProblemConvert.do2dto(problemDO);
   }
 
 
@@ -82,7 +82,7 @@ public class ProblemService {
         throw new PageException(PosCode.NO_PRIVILEGE.getMsg());
       }
     }
-    return ProblemAssemble.pk2dto(problemPK);
+    return ProblemConvert.pk2dto(problemPK);
   }
 
   /**
@@ -117,7 +117,7 @@ public class ProblemService {
             );
     PageInfo<ProblemListDTO> pageInfo = new PageInfo<>();
     pageInfo.setTotal(problemPCS.getTotal());
-    pageInfo.setList(ProblemAssemble.pk2ListDto(problemPCS.getResult()));
+    pageInfo.setList(ProblemConvert.pk2ListDto(problemPCS.getResult()));
     return pageInfo;
   }
 
@@ -129,6 +129,6 @@ public class ProblemService {
    */
   public List<ProblemListDTO> queryContest(Long contest) {
     List<ProblemPK> result = problemMapper.queryContest(contest);
-    return ProblemAssemble.pk2ListDto(result);
+    return ProblemConvert.pk2ListDto(result);
   }
 }

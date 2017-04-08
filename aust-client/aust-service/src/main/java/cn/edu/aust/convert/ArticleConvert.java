@@ -1,4 +1,4 @@
-package cn.edu.aust.assemble;
+package cn.edu.aust.convert;
 
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
@@ -18,7 +18,7 @@ import cn.edu.aust.query.ArticlePK;
  * @author Niu Li
  * @since 2017/3/20
  */
-public class ArticleAssemble {
+public class ArticleConvert {
   private static final ModelMapper modelMapper = new ModelMapper();
 
   /**

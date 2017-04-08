@@ -4,10 +4,9 @@ import com.alibaba.fastjson.JSONObject;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.MediaType;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Objects;
 
@@ -30,7 +29,7 @@ import lombok.extern.slf4j.Slf4j;
  * @author Niu Li
  * @date 2016/9/11
  */
-@Controller
+@RestController
 @RequestMapping("/login")
 @Slf4j
 public class LoginController {
@@ -46,9 +45,7 @@ public class LoginController {
    * 用户登录控制
    */
   @PostMapping(produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-  public
-  @ResponseBody
-  ResultVO<?> login(String email, String password, String codevalidate,
+  public ResultVO<?> login(String email, String password, String codevalidate,
       HttpSession session, HttpServletRequest request, HttpServletResponse response) throws PageException {
     JSONObject result = new JSONObject();
     ResultVO resultVO = new ResultVO();

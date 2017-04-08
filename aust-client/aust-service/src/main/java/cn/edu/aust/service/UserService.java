@@ -23,7 +23,7 @@ import javax.annotation.Resource;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletResponse;
 
-import cn.edu.aust.assemble.UserAssemble;
+import cn.edu.aust.convert.UserConvert;
 import cn.edu.aust.common.constant.PosCode;
 import cn.edu.aust.common.entity.ResultVO;
 import cn.edu.aust.common.entity.Setting;
@@ -77,7 +77,7 @@ public class UserService {
    */
   public UserDTO findByEmail(String email) {
     UserDO userDO = userMapper.findByEmail(email);
-    return UserAssemble.user2UserDTO(userDO);
+    return UserConvert.user2UserDTO(userDO);
   }
 
   /**
@@ -87,7 +87,7 @@ public class UserService {
    */
   public UserDTO findById(Long id){
     UserDO userDO = userMapper.selectByPrimaryKey(id);
-    return UserAssemble.user2UserDTO(userDO);
+    return UserConvert.user2UserDTO(userDO);
   }
 
   /**
@@ -109,7 +109,7 @@ public class UserService {
     userMapper.insertSelective(userDO);
     //发送邮件,验证
     mailService.sendRegister(email);
-    return UserAssemble.user2UserDTO(userDO);
+    return UserConvert.user2UserDTO(userDO);
   }
 
   /**

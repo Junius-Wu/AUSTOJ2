@@ -1,4 +1,4 @@
-package cn.edu.aust.assemble;
+package cn.edu.aust.convert;
 
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
@@ -17,7 +17,7 @@ import cn.edu.aust.query.ProblemPK;
  * @author Niu Li
  * @since 2017/2/26
  */
-public final class ProblemAssemble {
+public final class ProblemConvert {
 
   private static final ModelMapper modelMapper = new ModelMapper();
 

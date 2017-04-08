@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 
 import javax.annotation.Resource;
 
-import cn.edu.aust.assemble.UserVOAssemble;
+import cn.edu.aust.convert.UserVOAssemble;
 import cn.edu.aust.common.constant.PosCode;
 import cn.edu.aust.common.entity.ResultVO;
 import cn.edu.aust.dto.UserDTO;
@@ -46,7 +46,7 @@ public class UserController {
 
   /**
    * 获取指定用户的基本信息
-   * @return 用户详情
+   * @return 用户详情,包含AC信息
    */
   @GetMapping(value = "/user/{id}",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
   public ResultVO userDetail(@PathVariable("id") Long id){

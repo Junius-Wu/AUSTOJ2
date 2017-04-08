@@ -1,11 +1,11 @@
-package cn.edu.aust.assemble;
+package cn.edu.aust.convert;
 
 import org.modelmapper.AbstractConverter;
 import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.PropertyMap;
 
-import cn.edu.aust.convert.Date2StrConvert;
+import cn.edu.aust.utilconvert.Date2StrConvert;
 import cn.edu.aust.dto.ContestDTO;
 import cn.edu.aust.pojo.entity.ContestDO;
 
@@ -14,7 +14,7 @@ import cn.edu.aust.pojo.entity.ContestDO;
  * @author Niu Li
  * @since 2017/2/26
  */
-public class ContestAssemble {
+public class ContestConvert {
 
   private static final ModelMapper modelMapper = new ModelMapper();
 

@@ -4,11 +4,10 @@ import com.alibaba.fastjson.JSONObject;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.MediaType;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -32,7 +31,7 @@ import lombok.extern.slf4j.Slf4j;
  * @author Niu Li
  * @date 2016/9/17
  */
-@Controller
+@RestController
 @RequestMapping("register")
 @Slf4j
 public class RegisterController {
@@ -50,9 +49,7 @@ public class RegisterController {
    * 注册方法
    */
   @PostMapping(produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-  public
-  @ResponseBody
-  ResultVO<?> register(String email, String password, String nickname, String codevalidate,
+  public ResultVO<?> register(String email, String password, String nickname, String codevalidate,
       HttpServletRequest request, HttpServletResponse response) {
     HttpSession session = request.getSession();
     Setting setting = settingService.getSetting();
@@ -93,9 +90,7 @@ public class RegisterController {
    * @param username 要检查的用户名
    */
   @GetMapping(value = "/check", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-  public
-  @ResponseBody
-  ResultVO checkUsername(String username, String email) {
+  public ResultVO checkUsername(String username, String email) {
     ResultVO<PosCode> resultVO = new ResultVO<>();
     boolean check = userService.judgeUsernameOrEmail(null, email);
     if (check) {
@@ -118,12 +113,11 @@ public class RegisterController {
    * @param token token
    */
   @GetMapping(value = "/check/token", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-  public String checkToken(String token,Model model) {
+  public ResultVO checkToken(String token) {
     ResultVO resultVO = new ResultVO<>();
-//    if (!userService.checkEmailToken(token,resultVO)){
-//      model.addAttribute("errorMessage","验证失败,请联系管理员");
-//      return "error";
-//    }
-    return "emailcheck";
+    if (!userService.checkEmailToken(token,resultVO)){
+      return resultVO;
+    }
+    return resultVO.buildOK();
   }
 }

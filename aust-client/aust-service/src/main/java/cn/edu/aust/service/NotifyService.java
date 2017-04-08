@@ -10,6 +10,8 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import cn.edu.aust.common.util.DateUtil;
+import cn.edu.aust.convert.NotifyConvert;
+import cn.edu.aust.dto.NotifyDTO;
 import cn.edu.aust.mapper.NotifyMapper;
 import cn.edu.aust.pojo.entity.NotifyDO;
 
@@ -28,8 +30,9 @@ public class NotifyService {
      * @param limit 查询数量
      * @return 结果集
      */
-    public List<NotifyDO> queryListNow(int limit){
+    public List<NotifyDTO> queryListNow(int limit){
         PageHelper.startPage(0,limit,false);
-        return notifyMapper.queryAllOrderTime(DateUtil.format(new Date(),DateUtil.YMDHMS_));
+        List<NotifyDO> notifyDOS = notifyMapper.queryAllOrderTime(DateUtil.format(new Date(), DateUtil.YMDHMS_));
+        return NotifyConvert.notify2DTO(notifyDOS);
     }
 }

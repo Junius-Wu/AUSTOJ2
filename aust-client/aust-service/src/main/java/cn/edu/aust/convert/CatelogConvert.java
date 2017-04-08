@@ -1,4 +1,4 @@
-package cn.edu.aust.assemble;
+package cn.edu.aust.convert;
 
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
@@ -16,7 +16,7 @@ import cn.edu.aust.pojo.entity.CatelogDO;
  * @author Niu Li
  * @since 2017/3/20
  */
-public class CatelogAssemble {
+public class CatelogConvert {
 
   private static final ModelMapper modelMapper = new ModelMapper();
 

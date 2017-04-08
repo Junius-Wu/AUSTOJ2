@@ -4,12 +4,12 @@ import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageInfo;
 
 import org.springframework.http.MediaType;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 
@@ -24,7 +24,7 @@ import cn.edu.aust.service.ProblemService;
  * @author Niu Li
  * @date 2017/1/29
  */
-@Controller
+@RestController
 @RequestMapping("/problem")
 public class ProblemController {
 
