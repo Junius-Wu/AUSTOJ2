@@ -82,6 +82,16 @@ public class UserService {
   }
 
   /**
+   * 根据用户id查找用户信息
+   * @param id 用户id
+   * @return 用户信息
+   */
+  public UserDTO findById(Long id){
+    UserDO userDO = userMapper.selectByPrimaryKey(id);
+    return UserAssemble.user2UserDTO(userDO);
+  }
+
+  /**
    * 用户注册
    * @return 注册后用户
    */

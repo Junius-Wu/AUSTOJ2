@@ -14,6 +14,8 @@ import lombok.ToString;
 @ToString
 public class UserRankVO {
 
+  private Long id;
+
   private String email;
 
   private String avatar;

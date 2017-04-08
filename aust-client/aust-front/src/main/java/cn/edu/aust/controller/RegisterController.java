@@ -5,7 +5,6 @@ import com.alibaba.fastjson.JSONObject;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -46,17 +45,6 @@ public class RegisterController {
    * 邮箱匹配正则
    */
   private Pattern emailPattern = Pattern.compile("^([a-zA-Z0-9_\\.\\-])+\\@(([a-zA-Z0-9\\-])+\\.)+([a-zA-Z0-9]{2,4})+$");
-
-  /**
-   * 前往注册页面
-   *
-   * 该页面获取进入前的页面,注册完毕后跳转
-   */
-  @GetMapping(produces = MediaType.TEXT_HTML_VALUE)
-  public String toRegister(String email, Model model) {
-    model.addAttribute("email", email);
-    return "register";
-  }
 
   /**
    * 注册方法
