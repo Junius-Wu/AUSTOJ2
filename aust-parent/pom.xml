@@ -12,6 +12,7 @@
     <!--集中控制版本号-->
     <properties>
         <spring.version>4.3.5.RELEASE</spring.version>
+        <springredis.version>1.8.1.RELEASE</springredis.version>
         <mybatis.version>3.4.2</mybatis.version>
         <mybatis.spring>1.3.1</mybatis.spring>
         <mybatis.pagehelper>5.0.0</mybatis.pagehelper>
@@ -35,7 +36,7 @@
         <commonfile.version>1.3.2</commonfile.version>
         <commoncodec.version>1.10</commoncodec.version>
         <junit.version>4.12</junit.version>
-        <jedis.version>2.8.0</jedis.version>
+        <jedis.version>2.9.0</jedis.version>
         <servlet.version>3.1.0</servlet.version>
         <javamail.version>1.5.6</javamail.version>
         <modelmapper.version>0.7.7</modelmapper.version>
@@ -87,6 +88,11 @@
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-test</artifactId>
                 <version>${spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.data</groupId>
+                <artifactId>spring-data-redis</artifactId>
+                <version>${springredis.version}</version>
             </dependency>
             <!--modelmapper start-->
             <dependency>

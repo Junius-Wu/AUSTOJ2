@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <!-- Place favicon.ico in the root directory -->
+    <link rel="stylesheet" href="/static/styles/vendor.css" th:href="@{/static/styles/vendor.css}">
+    <link rel="stylesheet" href="/static/styles/login.css" th:href="@{/static/styles/login.css}">
+</head>
+<body  style="overflow-x: hidden">
+<div class="index-one" style="height: 100vh">
+  <div class="container-fluid text-center animated fadeInDown" style="margin-top: 5%">
+    <h1 class="logo-name">AUST</h1>
+    <h3>邮件验证成功...</h3>
+  </div>
+
+</div>
+<script src="/static/scripts/vendor.js" th:src="@{/static/scripts/vendor.js}"></script>
+<script src="/static/scripts/plugins.js" th:src="@{/static/scripts/plugins.js}"></script>
+<script>
+  //toastr设置
+  toastr.options = {
+    'closeButton': true,
+    'debug': false,
+    'progressBar': false,
+    'positionClass': 'toast-top-center',
+    'showDuration': '400',
+    'hideDuration': '1000',
+    'timeOut': '4000',
+    'extendedTimeOut': '1000',
+    'showEasing': 'swing',
+    'hideEasing': 'linear',
+    'showMethod': 'fadeIn',
+    'hideMethod': 'fadeOut'
+  };
+  toastr.success('验证成功,正在跳转中...', 'SUCCESS', {progressBar: true});
+  setTimeout(function () {
+    location.href = "/";
+  }, 2000);
+</script>
+</body>
+</html>

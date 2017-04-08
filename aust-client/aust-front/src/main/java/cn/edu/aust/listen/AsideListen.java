@@ -1,5 +1,6 @@
 package cn.edu.aust.listen;
 
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.ServletContextAware;
 
@@ -10,8 +11,6 @@ import javax.annotation.Resource;
 import javax.servlet.ServletContext;
 
 import cn.edu.aust.common.entity.Setting;
-import cn.edu.aust.common.service.JedisClient;
-import cn.edu.aust.common.util.SystemUtil;
 import cn.edu.aust.dto.ArticleAsideDTO;
 import cn.edu.aust.dto.CatelogDTO;
 import cn.edu.aust.pojo.entity.NotifyDO;
@@ -47,7 +46,7 @@ public class AsideListen implements ServletContextAware {
   @Resource
   private NotifyService notifyService;
   @Resource
-  private JedisClient jedisClient;
+  private StringRedisTemplate redisTemplate;
   @Resource
   private SettingService settingService;
 
@@ -61,7 +60,7 @@ public class AsideListen implements ServletContextAware {
    */
   @PostConstruct
   public void init() {
-    jedisClient.del(SystemUtil.SETTING_CACHE);
+    redisTemplate.delete(SettingService.SETTING_CACHE);
     refreshCateLog();
     refreshArticle();
     refreshTag();
