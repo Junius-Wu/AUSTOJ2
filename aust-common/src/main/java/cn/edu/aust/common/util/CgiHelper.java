@@ -1,5 +1,7 @@
 package cn.edu.aust.common.util;
 
+import org.apache.commons.lang3.math.NumberUtils;
+
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
@@ -34,5 +36,27 @@ public final class CgiHelper {
   public static String getHeader(String key, String defaultValue, HttpServletRequest request){
     return Optional.ofNullable(request.getHeader(key)).orElse(defaultValue);
   }
+
+  /**
+   * 得到页码
+   * @param request 该请求
+   * @return 页面,最大50
+   */
+  public static Integer getPageNum(HttpServletRequest request) {
+    return Optional.ofNullable(request.getParameter("pageNum"))
+        .map(NumberUtils::toInt)
+        .filter(x -> x < 50).orElse(1);
+  }
+  /**
+   * 得到数量
+   * @param request 该请求
+   * @return 页面,最大30
+   */
+  public static Integer getPageSize(HttpServletRequest request) {
+    return Optional.ofNullable(request.getParameter("pageSize"))
+        .map(NumberUtils::toInt)
+        .filter(x -> x < 30).orElse(20);
+  }
+
 
 }

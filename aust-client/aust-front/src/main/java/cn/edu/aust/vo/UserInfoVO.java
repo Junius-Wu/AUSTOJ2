@@ -17,7 +17,7 @@ import lombok.ToString;
 @Data
 @NoArgsConstructor
 @ToString
-public class UserInfoVo {
+public class UserInfoVO {
 
   private Long id;
 
@@ -37,8 +37,8 @@ public class UserInfoVo {
    */
   List<Integer> ACRecents;
 
-  public static UserInfoVo assemble(UserDTO userDTO, List<Integer> ACProblems) {
-    UserInfoVo infoVo = new UserInfoVo();
+  public static UserInfoVO assemble(UserDTO userDTO, List<Integer> ACProblems) {
+    UserInfoVO infoVo = new UserInfoVO();
     infoVo.setId(userDTO.getId());
     infoVo.setEmail(userDTO.getEmail());
     infoVo.setAvatar(userDTO.getAvatar());

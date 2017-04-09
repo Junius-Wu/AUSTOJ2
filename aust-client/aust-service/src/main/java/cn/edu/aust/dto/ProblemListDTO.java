@@ -14,7 +14,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 public class ProblemListDTO {
-  private Integer id;
+  private Long id;
   /**
    * 标题
    */

@@ -91,13 +91,13 @@ public class ProblemService {
    * @param search    搜索内容
    * @param stage     对应阶段
    * @param direction 排序方向,针对id字段
-   * @param offset    分页参数
-   * @param limit     分页参数
+   * @param pageNum    分页参数
+   * @param pageSize     分页参数
    * @param isCatelog 是否为目录,true时stage参数为目录id
    * @return DTO实体
    */
   public PageInfo<ProblemListDTO> queryListStage(String search, Integer stage, String direction,
-      Integer offset, Integer limit, boolean isCatelog) {
+      Integer pageNum, Integer pageSize, boolean isCatelog) {
     //封装查询条件
     ProblemQM problemQM = new ProblemQM();
     problemQM.setDirection(direction);
@@ -105,7 +105,7 @@ public class ProblemService {
     problemQM.setStage(stage);
     //查询转换
     Page<ProblemPK> problemPCS =
-        PageHelper.offsetPage(offset, limit)
+        PageHelper.startPage(pageNum, pageSize)
             .doSelectPage(
                 () -> {
                   if (isCatelog) {

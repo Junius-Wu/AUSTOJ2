@@ -110,6 +110,7 @@ public class RegisterController {
 
   /**
    * 验证邮箱token
+   * todo验证方式
    * @param token token
    */
   @GetMapping(value = "/check/token", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)

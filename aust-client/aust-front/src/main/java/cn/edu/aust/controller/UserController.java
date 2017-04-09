@@ -17,7 +17,7 @@ import cn.edu.aust.common.entity.ResultVO;
 import cn.edu.aust.dto.UserDTO;
 import cn.edu.aust.service.SolutionService;
 import cn.edu.aust.service.UserService;
-import cn.edu.aust.vo.UserInfoVo;
+import cn.edu.aust.vo.UserInfoVO;
 import cn.edu.aust.vo.UserRankVO;
 
 /**
@@ -50,13 +50,13 @@ public class UserController {
    */
   @GetMapping(value = "/user/{id}",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
   public ResultVO userDetail(@PathVariable("id") Long id){
-    ResultVO<UserInfoVo> resultVO = new ResultVO<>();
+    ResultVO<UserInfoVO> resultVO = new ResultVO<>();
     UserDTO userDTO = userService.findById(id);
     if (Objects.isNull(userDTO)){
       return resultVO.buildOK();
     }
     List<Integer> problemIds = solutionService.queryACProblems(id);
-    return resultVO.buildOKWithData(UserInfoVo.assemble(userDTO,problemIds));
+    return resultVO.buildOKWithData(UserInfoVO.assemble(userDTO,problemIds));
   }
 
 }
