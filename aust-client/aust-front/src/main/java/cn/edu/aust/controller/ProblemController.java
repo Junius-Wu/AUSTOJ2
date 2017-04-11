@@ -9,13 +9,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Objects;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import cn.edu.aust.common.constant.PosCode;
 import cn.edu.aust.common.entity.ResultVO;
 import cn.edu.aust.common.util.CgiHelper;
+import cn.edu.aust.dto.ProblemDTO;
 import cn.edu.aust.dto.ProblemListDTO;
+import cn.edu.aust.pojo.entity.UserDO;
+import cn.edu.aust.service.ContestService;
 import cn.edu.aust.service.ProblemService;
+import cn.edu.aust.service.UserService;
 import cn.edu.aust.vo.ProblemTableVO;
 
 /**
@@ -30,7 +37,39 @@ public class ProblemController {
 
   @Resource
   private ProblemService problemService;
+  @Resource
+  private ContestService contestService;
+  @Resource
+  private UserService userService;
 
+  /**
+   * 得到一个题目的详情
+   * @param id 题目id
+   * @return 详情
+   */
+  @GetMapping(value = "/{id}",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+  public ResultVO problem(@PathVariable("id") Long id){
+    ResultVO<ProblemDTO> resultVO = new ResultVO<>();
+    if (id < 1000L || id > 10000L){
+      return resultVO.buildWithMsgAndStatus(PosCode.NO_PRIVILEGE,"不存在的题目或者无权访问");
+    }
+    ProblemDTO problemDTO = problemService.findDetail(id);
+    if (Objects.isNull(problemDTO)) {
+      return resultVO.buildWithMsgAndStatus(PosCode.NO_PRIVILEGE,"不存在的题目或者无权访问");
+    }
+    //如果是竞赛题
+    if (!problemDTO.getContestId().equals(-1)){
+      UserDO userDO = userService.getCurrent();
+      if (Objects.isNull(userDO)){
+        return resultVO.buildWithMsgAndStatus(PosCode.NO_LOGIN,"无权查看竞赛题");
+      }
+      if (!contestService.isVisited(problemDTO.getContestId(),userDO.getId())){
+        return resultVO.buildWithMsgAndStatus(PosCode.NO_PRIVILEGE,"无权查看竞赛题");
+      }
+    }
+    //构造返回
+    return resultVO.buildOKWithData(problemDTO);
+  }
 
 
   /**

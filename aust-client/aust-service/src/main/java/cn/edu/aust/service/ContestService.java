@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -31,7 +32,10 @@ import static com.google.common.base.Preconditions.checkArgument;
 public class ContestService {
   @Resource
   private ContestMapper contestMapper;
+  @Resource
+  private StringRedisTemplate redisTemplate;
 
+  private static final String USER_VISITED = "contest.user:";
   /**
    * 查看一个竞赛
    * @param id 该竞赛id
@@ -40,21 +44,30 @@ public class ContestService {
   public ContestDTO findDetail(Long id){
     ContestDO contestDO = contestMapper.selectByPrimaryKey(id);
     checkArgument(contestDO != null, "该竞赛不存在");
-    // todo 该不在在service检查状态?还是应该在controller检查?
     checkArgument(contestDO.getDefunct() == 1,"该竞赛不存在");
     return ContestConvert.assemble(contestDO);
   }
 
   /**
+   * 判断用户是否访问过该竞赛
+   * @param contestId 竞赛id
+   * @param userId 用户id
+   * @return true访问过
+   */
+  public Boolean isVisited(Long contestId,Long userId){
+    return redisTemplate.opsForSet().isMember(USER_VISITED+userId,contestId.toString());
+  }
+
+  /**
    * 判断一个竞赛是否可以显示
    *
-   * @param id     该竞赛id
+   * @param contestid     该竞赛id
    * @param passwd 密码(如果需要)
    * @return 查询结果 异常交给全局统一处理
    */
-  public boolean canView (Long id, String passwd) {
+  public boolean canView (Long contestid,Long userId, String passwd) {
     //权限检查
-    ContestDO contestDO = contestMapper.selectByPrimaryKey(id);
+    ContestDO contestDO = contestMapper.selectByPrimaryKey(contestid);
     checkArgument(contestDO != null, "该竞赛不存在");
     checkArgument(contestDO.getDefunct() == 1,"该竞赛不存在");
     if (contestDO.getType() == 1) {
@@ -62,6 +75,9 @@ public class ContestService {
     }
     //时间检查
     checkArgument(isStart(contestDO),"比赛还未开始,禁止查看");
+
+    //保存记录到redis
+    redisTemplate.opsForSet().add(USER_VISITED+userId,contestid.toString());
     return true;
   }
 

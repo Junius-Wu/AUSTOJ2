@@ -5,8 +5,8 @@ import com.google.common.collect.Lists;
 import org.springframework.util.CollectionUtils;
 
 import java.util.List;
-import java.util.Objects;
 
+import cn.edu.aust.common.util.ProblemUtil;
 import cn.edu.aust.dto.ProblemListDTO;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -45,19 +45,10 @@ public class ProblemTableVO {
       temp.setDifficulty(x.getDifficulty());
       temp.setKeyword(x.getKeyword());
       temp.setTitle(x.getTitle());
-      temp.setAcRate(buildAcRate(x.getSolved(),x.getSubmit()));
+      temp.setAcRate(ProblemUtil.buildAcRate(x.getSolved(),x.getSubmit()));
       result.add(temp);
     });
     return tableVO;
-  }
-
-  private static String buildAcRate(Integer solved,Integer submit){
-    if (Objects.isNull(solved) || Objects.isNull(submit)){
-      return "0%(0/0)";
-    }
-    double tempSubmit = submit == 0?1.0:submit;
-    double acRate = solved / tempSubmit * 100;
-    return String.format("%.2f",acRate)+ "%" + String.format("(%d/%d)",solved,submit);
   }
 
   @Data

@@ -48,8 +48,6 @@ public class SolutionService {
   @Resource
   private UserMapper userMapper;
   @Resource
-  private UserService userService;
-  @Resource
   private ProblemMapper problemMapper;
   @Resource
   private ThreadPoolTaskExecutor taskExecutor;
@@ -63,12 +61,12 @@ public class SolutionService {
    * @param userId        用户id
    * @return 查询集合
    */
-  public PageInfo<SolutionDTO> userSolutionList(String searchContext, Long userId, Integer offset,
-      Integer limit) {
+  public PageInfo<SolutionDTO> userSolutionList(String searchContext, Long userId, Integer pageNum,
+      Integer pageSize) {
     if (StringUtils.isNotEmpty(searchContext)) {
       searchContext = "%" + searchContext + "%";
     }
-    PageHelper.offsetPage(offset, limit);
+    PageHelper.startPage(pageNum, pageSize);
     List<SolutionDO> queryresult = solutionMapper.queryDetailByUserId(searchContext, userId);
     PageInfo<SolutionDTO> pageInfo = new PageInfo<>(SolutionConvert.do2dto(queryresult));
     pageInfo.setTotal(((Page) queryresult).getTotal());
