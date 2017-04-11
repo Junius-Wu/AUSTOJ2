@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 
 import javax.annotation.Resource;
 
-import cn.edu.aust.convert.UserVOAssemble;
+import cn.edu.aust.assemble.UserVOAssemble;
 import cn.edu.aust.common.constant.PosCode;
 import cn.edu.aust.common.entity.ResultVO;
 import cn.edu.aust.dto.UserDTO;
@@ -57,6 +57,17 @@ public class UserController {
     }
     List<Integer> problemIds = solutionService.queryACProblems(id);
     return resultVO.buildOKWithData(UserInfoVO.assemble(userDTO,problemIds));
+  }
+
+  /**
+   * 获取用户排名
+   * 当前用户少,可以做到实时查询
+   */
+  @GetMapping(value = "/rank/users",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+  public ResultVO rankUsers(){
+    ResultVO<List<UserRankVO>> resultVO = new ResultVO<>();
+    List<UserDTO> users = userService.queryForRank();
+    return resultVO.buildOKWithData(UserRankVO.assemble(users));
   }
 
 }

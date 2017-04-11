@@ -18,4 +18,7 @@ public class UserDTO {
     private String nickname;
     private String honor;
     private String motto;
+    private String blog;
+    private Integer submit;
+    private Integer solved;
 }

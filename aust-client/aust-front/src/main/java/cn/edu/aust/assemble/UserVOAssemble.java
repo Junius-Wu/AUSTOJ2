@@ -1,4 +1,4 @@
-package cn.edu.aust.convert;
+package cn.edu.aust.assemble;
 
 import org.modelmapper.ModelMapper;
 
@@ -6,6 +6,7 @@ import cn.edu.aust.dto.UserDTO;
 import cn.edu.aust.vo.UserRankVO;
 
 /**
+ * todo删掉
  * 用户排名相关转换
  * @author Niu Li
  * @since 2017/3/16

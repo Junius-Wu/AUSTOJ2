@@ -23,13 +23,12 @@ import javax.annotation.Resource;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletResponse;
 
-import cn.edu.aust.convert.UserConvert;
 import cn.edu.aust.common.constant.PosCode;
 import cn.edu.aust.common.entity.ResultVO;
 import cn.edu.aust.common.entity.Setting;
 import cn.edu.aust.common.util.WebUtils;
+import cn.edu.aust.convert.UserConvert;
 import cn.edu.aust.dto.UserDTO;
-import cn.edu.aust.dto.UserRankDTO;
 import cn.edu.aust.mapper.UserMapper;
 import cn.edu.aust.pojo.entity.UserDO;
 import lombok.extern.slf4j.Slf4j;
@@ -206,11 +205,9 @@ public class UserService {
    *
    * @return 排名后的用户
    */
-  public List<UserRankDTO> queryForRank() {
+  public List<UserDTO> queryForRank() {
     List<UserDO> userDOS = userMapper.queryForRank();
-    ModelMapper modelMapper = new ModelMapper();
-    return modelMapper.map(userDOS, new TypeToken<List<UserRankDTO>>() {
-    }.getType());
+    return modelMapper.map(userDOS, new TypeToken<List<UserDTO>>() {}.getType());
   }
 
   /**
