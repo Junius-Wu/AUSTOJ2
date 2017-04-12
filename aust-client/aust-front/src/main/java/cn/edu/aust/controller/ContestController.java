@@ -9,11 +9,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import cn.edu.aust.common.constant.PosCode;
 import cn.edu.aust.common.entity.ResultVO;
@@ -25,7 +25,8 @@ import cn.edu.aust.pojo.entity.UserDO;
 import cn.edu.aust.service.ContestService;
 import cn.edu.aust.service.ProblemService;
 import cn.edu.aust.service.UserService;
-import cn.edu.aust.vo.ContestDetailVo;
+import cn.edu.aust.vo.ContestDetailVO;
+import cn.edu.aust.vo.ContestTableVO;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -47,6 +48,16 @@ public class ContestController {
   private ProblemService problemService;
 
   /**
+   * 获取竞赛首页数据
+   */
+  @GetMapping(produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+  public ResultVO contests(){
+    ResultVO<ContestTableVO> resultVO = new ResultVO<>();
+    Map<String, List<ContestDTO>> contests = contestService.queryAndKinds();
+    return resultVO.buildOKWithData(ContestTableVO.assemble(contests));
+  }
+
+  /**
    * 判断一个比赛是否可以访问,若可以访问则给当前用户添加上信息
    *
    * @param id      该比赛id
@@ -56,8 +67,7 @@ public class ContestController {
   @PostMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
   @ResponseBody
   public ResultVO canViewContest(@PathVariable(value = "id") Long id,
-                                        HttpServletRequest request,
-                                        HttpSession session) {
+                                        HttpServletRequest request) {
     ResultVO<PosCode> resultVO = new ResultVO<>();
     UserDO userDO = userService.getCurrent();
     if (Objects.isNull(userDO)) {
@@ -88,7 +98,7 @@ public class ContestController {
    */
   @GetMapping(value = "/{id}", produces = MediaType.TEXT_HTML_VALUE)
   public ResultVO contestDetail(@PathVariable("id") Long id) throws PageException {
-    ResultVO<ContestDetailVo> resultVO = new ResultVO<>();
+    ResultVO<ContestDetailVO> resultVO = new ResultVO<>();
     UserDO userDO = userService.getCurrent();
     if (Objects.isNull(userDO)) {
       return resultVO.buildWithMsgAndStatus(PosCode.NO_LOGIN, "用户未登录");
@@ -105,6 +115,6 @@ public class ContestController {
     //查找相关题目
     List<ProblemListDTO> problems = problemService.queryContest(id);
 
-    return resultVO.buildOKWithData(ContestDetailVo.assemble(problems,contest));
+    return resultVO.buildOKWithData(ContestDetailVO.assemble(problems,contest));
   }
 }

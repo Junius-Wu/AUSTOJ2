@@ -28,6 +28,9 @@ public class UserInfoVO {
   private String nickname;
 
   private String motto;
+
+  private String language;
+
   /**
    * 用户历史解决题目
    */
@@ -44,6 +47,7 @@ public class UserInfoVO {
     infoVo.setAvatar(userDTO.getAvatar());
     infoVo.setNickname(userDTO.getNickname());
     infoVo.setMotto(userDTO.getMotto());
+    infoVo.setLanguage(userDTO.getLanguage());
     if (!CollectionUtils.isEmpty(ACProblems)) {
       infoVo.setACProblems(ACProblems);
       infoVo.setACRecents(ACProblems.stream().limit(6).collect(Collectors.toList()));

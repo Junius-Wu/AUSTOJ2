@@ -14,7 +14,7 @@
     <result column="motto" property="motto" jdbcType="VARCHAR" />
     <result column="honor" property="honor" jdbcType="VARCHAR" />
     <result column="point" property="point" jdbcType="INTEGER" />
-    <result column="language" property="language" jdbcType="TINYINT" />
+    <result column="language" property="language" jdbcType="VARCHAR" />
     <result column="submit" property="submit" jdbcType="INTEGER" />
     <result column="solved" property="solved" jdbcType="INTEGER" />
     <result column="is_show" property="isShow" jdbcType="TINYINT" />

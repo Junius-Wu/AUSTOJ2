@@ -18,8 +18,7 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @NoArgsConstructor
-public class ContestDetailVo {
-
+public class ContestDetailVO {
   /**
    * 主键
    */
@@ -48,16 +47,16 @@ public class ContestDetailVo {
 
   private List<ContestTableDetail> contents;
 
-  public static ContestDetailVo assemble(List<ProblemListDTO> listDTOS, ContestDTO contestDTO){
-    ContestDetailVo detailVo = new ContestDetailVo();
-    List<ContestDetailVo.ContestTableDetail> result = Lists.newArrayList();
+  public static ContestDetailVO assemble(List<ProblemListDTO> listDTOS, ContestDTO contestDTO){
+    ContestDetailVO detailVo = new ContestDetailVO();
+    List<ContestDetailVO.ContestTableDetail> result = Lists.newArrayList();
     detailVo.setContents(result);
 
     if (CollectionUtils.isEmpty(listDTOS)) {
       return detailVo;
     }
     listDTOS.forEach(x -> {
-      ContestDetailVo.ContestTableDetail temp = new ContestDetailVo.ContestTableDetail();
+      ContestDetailVO.ContestTableDetail temp = new ContestDetailVO.ContestTableDetail();
       temp.setId(x.getId());
       temp.setDifficulty(x.getDifficulty());
       temp.setKeyword(x.getKeyword());

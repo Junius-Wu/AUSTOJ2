@@ -25,6 +25,6 @@ public class UserConvert {
     if (Objects.isNull(userDO)){
       return null;
     }
-    return modelMapper.map(userDO,UserDTO.class);
+    return modelMapper.map(userDO, UserDTO.class);
   }
 }

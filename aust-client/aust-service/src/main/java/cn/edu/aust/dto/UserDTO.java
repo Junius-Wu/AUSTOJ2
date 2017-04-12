@@ -21,4 +21,6 @@ public class UserDTO {
     private String blog;
     private Integer submit;
     private Integer solved;
+    private String language;
+
 }

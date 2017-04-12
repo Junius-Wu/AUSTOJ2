@@ -58,7 +58,7 @@ public class ProblemController {
       return resultVO.buildWithMsgAndStatus(PosCode.NO_PRIVILEGE,"不存在的题目或者无权访问");
     }
     //如果是竞赛题
-    if (!problemDTO.getContestId().equals(-1)){
+    if (!problemDTO.getContestId().equals(-1L)){
       UserDO userDO = userService.getCurrent();
       if (Objects.isNull(userDO)){
         return resultVO.buildWithMsgAndStatus(PosCode.NO_LOGIN,"无权查看竞赛题");

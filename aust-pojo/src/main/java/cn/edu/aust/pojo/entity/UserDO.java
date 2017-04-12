@@ -79,7 +79,7 @@ public class UserDO {
     /**
      * 常用语言1 C 2 C++ 3 Java
      */
-    private Integer language;
+    private String language;
 
     /**
      * 提交次数
