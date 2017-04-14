@@ -28,6 +28,8 @@ public class ProblemTableVO {
 
   private Integer currentPage;
 
+  private String catelogName;
+
   public static ProblemTableVO assemble(List<ProblemListDTO> listDTOS,
       Long total, Integer currentPage){
     ProblemTableVO tableVO = new ProblemTableVO();

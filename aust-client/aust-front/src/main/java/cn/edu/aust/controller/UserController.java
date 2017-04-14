@@ -11,7 +11,6 @@ import java.util.stream.Collectors;
 
 import javax.annotation.Resource;
 
-import cn.edu.aust.assemble.UserVOAssemble;
 import cn.edu.aust.common.constant.PosCode;
 import cn.edu.aust.common.entity.ResultVO;
 import cn.edu.aust.dto.UserDTO;
@@ -22,7 +21,7 @@ import cn.edu.aust.vo.UserRankVO;
 
 /**
  * @author Niu Li
- * @date 2017/1/26
+ * @since  2017/1/26
  */
 @RestController
 public class UserController {
@@ -38,8 +37,7 @@ public class UserController {
   @GetMapping(value = "/index/users", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
   public ResultVO<?> indexToShow() {
     List<UserRankVO> userRanks = userService.queryToIndexShow()
-        .stream().limit(6)
-        .map(UserVOAssemble::userDTO2RankVO)
+        .stream().limit(6).map(UserRankVO::assemble)
         .collect(Collectors.toList());
     return new ResultVO<List>(PosCode.OK, userRanks);
   }

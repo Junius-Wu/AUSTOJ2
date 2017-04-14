@@ -25,7 +25,7 @@ import cn.edu.aust.service.VotelogService;
 
 /**
  * @author Niu Li
- * @date 2017/1/29
+ * @since  2017/1/29
  */
 @RestController
 public class ArticleController {
@@ -68,8 +68,15 @@ public class ArticleController {
         .orElseThrow(() -> new PageException(PosCode.NO_PRIVILEGE.getMsg()));
 
     votelogService.voteArticleComment(result, article.get(), userDO.getId());
-    return new ResultVO<JSONObject>(PosCode.OK, result);
+    return new ResultVO<>(PosCode.OK, result);
   }
 
+//  /**
+//   * 获取文章列表
+//   */
+//  @GetMapping(value = "/articles",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+//  public ResultVO articles(HttpServletRequest request){
+//    return null;
+//  }
 
 }

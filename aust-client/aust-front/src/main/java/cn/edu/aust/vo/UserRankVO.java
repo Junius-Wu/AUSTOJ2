@@ -54,7 +54,7 @@ public class UserRankVO {
     return result;
   }
 
-  private static UserRankVO assemble(UserDTO x) {
+  public static UserRankVO assemble(UserDTO x) {
     UserRankVO rankVO = new UserRankVO();
     rankVO.setId(x.getId());
     rankVO.setAvatar(x.getAvatar());

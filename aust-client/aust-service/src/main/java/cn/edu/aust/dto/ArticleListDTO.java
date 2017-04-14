@@ -8,10 +8,11 @@ import lombok.ToString;
 
 /**
  * 文章列表包装类
- *
+ * todo 等待被移除
  * @author Niu Li
  * @date 2017/1/30
  */
+@Deprecated
 @Data
 @NoArgsConstructor
 @ToString

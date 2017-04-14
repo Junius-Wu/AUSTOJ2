@@ -6,7 +6,6 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Objects;
@@ -17,9 +16,11 @@ import javax.servlet.http.HttpServletRequest;
 import cn.edu.aust.common.constant.PosCode;
 import cn.edu.aust.common.entity.ResultVO;
 import cn.edu.aust.common.util.CgiHelper;
+import cn.edu.aust.dto.CatelogDTO;
 import cn.edu.aust.dto.ProblemDTO;
 import cn.edu.aust.dto.ProblemListDTO;
 import cn.edu.aust.pojo.entity.UserDO;
+import cn.edu.aust.service.CatelogService;
 import cn.edu.aust.service.ContestService;
 import cn.edu.aust.service.ProblemService;
 import cn.edu.aust.service.UserService;
@@ -41,6 +42,8 @@ public class ProblemController {
   private ContestService contestService;
   @Resource
   private UserService userService;
+  @Resource
+  private CatelogService catelogService;
 
   /**
    * 得到一个题目的详情
@@ -78,7 +81,6 @@ public class ProblemController {
    * @param stage 指定阶段
    * @return 结果集
    */
-  @ResponseBody
   @GetMapping(value = "/stage/{stage}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
   public ResultVO listStage(@PathVariable(value = "stage") Integer stage,
       HttpServletRequest request) {
@@ -91,6 +93,31 @@ public class ProblemController {
     PageInfo<ProblemListDTO> pageInfo = problemService.queryListStage(search,
         stage, order, pageNum, pageSize, false);
     ProblemTableVO tableVO = ProblemTableVO.assemble(pageInfo.getList(), pageInfo.getTotal(), pageNum);
+    return resultVO.buildOKWithData(tableVO);
+  }
+  /**
+   * 查询对应目录的题目
+   *
+   * @param catelogId 指定目录
+   * @return 结果集
+   */
+  @GetMapping(value = "/catelog/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+  public ResultVO listCatelog(@PathVariable(value = "id") Integer catelogId,
+      HttpServletRequest request) {
+    ResultVO<ProblemTableVO> resultVO = new ResultVO<>();
+    String search = CgiHelper.getString("search", null, request);
+    String order = CgiHelper.getString("order", "asc", request);
+    Integer pageSize = CgiHelper.getPageSize(request);
+    Integer pageNum = CgiHelper.getPageNum(request);
+
+    CatelogDTO catelogDTO = catelogService.findById(catelogId);
+    if (Objects.isNull(catelogDTO)){
+      return resultVO.buildWithMsgAndStatus(PosCode.NO_PRIVILEGE,"用户无权限访问");
+    }
+    PageInfo<ProblemListDTO> pageInfo = problemService.queryListStage(search,
+        catelogId, order, pageNum, pageSize, true);
+    ProblemTableVO tableVO = ProblemTableVO.assemble(pageInfo.getList(), pageInfo.getTotal(), pageNum);
+    tableVO.setCatelogName(catelogDTO.getName());
     return resultVO.buildOKWithData(tableVO);
   }
 

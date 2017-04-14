@@ -46,7 +46,7 @@
       SELECT p1.*,p2.name AS "catelog_name",p3.nickname AS "author" FROM problem p1
       LEFT JOIN catelog p2 ON p1.catelog = p2.id
       LEFT JOIN user p3 ON p1.author_id = p3.id
-      WHERE p1.contest_id = -1 AND p1.id=#{value}
+      WHERE p1.id=#{value}
   </select>
 
 <!--查询比赛题目-->
@@ -100,7 +100,7 @@
       LEFT JOIN user p3 ON p1.author_id = p3.id
       WHERE p1.contest_id = -1
         <if test="stage > 0">
-          and p1.catelogDO = #{stage}
+          and p1.catelog = #{stage}
         </if>
         <if test="search!= null">
           and (p1.id LIKE #{search} or p1.title LIKE #{search} or p1.keyword LIKE #{search})

@@ -126,9 +126,7 @@ public class ArticleService {
     }
     //分页查询并转换结果
     Page<ArticlePK> articlePCS = PageHelper.startPage(pageNum, limit).doSelectPage(
-        () -> {
-          articleMapper.queryList(articleQM);
-        }
+        () -> articleMapper.queryList(articleQM)
     );
     PageInfo<ArticleListDTO> pageInfo = new PageInfo<>();
     pageInfo.setTotal(articlePCS.getTotal());

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.Base64;
 import java.util.Objects;
 
 import javax.annotation.Resource;
@@ -68,7 +69,7 @@ public class JudgerController {
     if(Objects.isNull(problemDTO)){
       return resultVO.buildWithMsgAndStatus(PosCode.PARAM_ERROR,"所提交的题目不存在");
     }
-    if (!Objects.equals(problemDTO.getContestId(),-1)){
+    if (!Objects.equals(problemDTO.getContestId(),-1L)){
       //判断是否验证过
       if (!contestService.isVisited(problemDTO.getContestId(),loginUser.getId())){
         return resultVO.buildWithMsgAndStatus(PosCode.PARAM_ERROR,"没权限判题");
@@ -81,7 +82,7 @@ public class JudgerController {
     if (Objects.isNull(lang)){
       return resultVO.buildWithMsgAndStatus(PosCode.PARAM_ERROR,"所选语言不存在");
     }
-    solutionService.startJudger(loginUser.getId(),problemDTO,sourceCode,lang);
+    solutionService.startJudger(loginUser.getId(),problemDTO, new String(Base64.getMimeDecoder().decode(sourceCode)),lang);
     return resultVO.buildOK();
   }
 

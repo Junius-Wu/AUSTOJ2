@@ -1,23 +1,18 @@
 package cn.edu.aust.service;
 
 import com.github.pagehelper.Page;
-import com.github.pagehelper.PageException;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
-import org.apache.commons.lang3.StringUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpSession;
 
 import cn.edu.aust.convert.ProblemConvert;
-import cn.edu.aust.common.constant.PosCode;
 import cn.edu.aust.dto.ProblemDTO;
 import cn.edu.aust.dto.ProblemListDTO;
 import cn.edu.aust.mapper.ProblemMapper;
@@ -44,7 +39,7 @@ public class ProblemService {
   public ProblemDTO findDetail(Long id) {
     ProblemPK problemPK = problemMapper.queryDetail(id);
     if (Objects.isNull(problemPK)) {
-      throw new PageException(PosCode.NO_PRIVILEGE.getMsg());
+      return null;
     }
     ModelMapper modelMapper = new ModelMapper();
     return modelMapper.map(problemPK, ProblemDTO.class);
@@ -58,31 +53,6 @@ public class ProblemService {
   public ProblemDTO findBasicById(Long id){
     ProblemDO problemDO = problemMapper.selectByPrimaryKey(id);
     return ProblemConvert.do2dto(problemDO);
-  }
-
-
-  /**
-   * 查询一个比赛的题目详情
-   *
-   * @param problemId 竞赛id
-   * @return 查询结果
-   */
-  public ProblemDTO queryContestProblem(Long problemId, HttpSession session) {
-    ProblemPK problemPK = problemMapper.queryContestProblem(problemId);
-    if (Objects.isNull(problemPK)) {
-      throw new PageException(PosCode.NO_PRIVILEGE.getMsg());
-    }
-    //判断是否有权查看该题目
-    String curContest = (String) session.getAttribute("contest");
-    if (StringUtils.isEmpty(curContest)) {
-      throw new PageException(PosCode.NO_PRIVILEGE.getMsg());
-    } else {
-      String[] ids = StringUtils.split(curContest, ",");
-      if (Arrays.binarySearch(ids, String.valueOf(problemPK.getContestId())) < 0) {
-        throw new PageException(PosCode.NO_PRIVILEGE.getMsg());
-      }
-    }
-    return ProblemConvert.pk2dto(problemPK);
   }
 
   /**

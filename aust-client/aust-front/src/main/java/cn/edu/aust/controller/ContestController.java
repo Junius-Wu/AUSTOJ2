@@ -96,7 +96,7 @@ public class ContestController {
    * @param id      该竞赛id
    * @return 该视图
    */
-  @GetMapping(value = "/{id}", produces = MediaType.TEXT_HTML_VALUE)
+  @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
   public ResultVO contestDetail(@PathVariable("id") Long id) throws PageException {
     ResultVO<ContestDetailVO> resultVO = new ResultVO<>();
     UserDO userDO = userService.getCurrent();
