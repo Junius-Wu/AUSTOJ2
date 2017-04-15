@@ -4,9 +4,9 @@ package cn.edu.aust.query;
  * 题目查询类,封装查询和排序条件
  * 注意防止sql注入
  * @author Niu Li
- * @date 2017/1/29
+ * @since  2017/1/29
  */
-public class ProblemQM {
+public class ProblemQuery {
     /**
      * 限制搜索最大15个字符
      */

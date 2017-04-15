@@ -13,7 +13,7 @@ import lombok.ToString;
 @Data
 @NoArgsConstructor
 @ToString
-public class ProblemListDTO {
+public class ProblemBasicDTO {
   private Long id;
   /**
    * 标题

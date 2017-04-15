@@ -7,7 +7,7 @@ import org.springframework.util.CollectionUtils;
 import java.util.List;
 
 import cn.edu.aust.common.util.ProblemUtil;
-import cn.edu.aust.dto.ProblemListDTO;
+import cn.edu.aust.dto.ProblemBasicDTO;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -30,7 +30,7 @@ public class ProblemTableVO {
 
   private String catelogName;
 
-  public static ProblemTableVO assemble(List<ProblemListDTO> listDTOS,
+  public static ProblemTableVO assemble(List<ProblemBasicDTO> listDTOS,
       Long total, Integer currentPage){
     ProblemTableVO tableVO = new ProblemTableVO();
     List<ProblemTableDetail> result = Lists.newArrayList();

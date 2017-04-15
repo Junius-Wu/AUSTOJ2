@@ -1,6 +1,9 @@
 package cn.edu.aust.common.entity;
 
+import java.util.List;
+
 import cn.edu.aust.common.constant.PosCode;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.ToString;
 
@@ -21,19 +24,6 @@ public class ResultVO<T> {
   private String msg;// 错误信息
 
   public ResultVO() {
-  }
-
-  // 成功时的构造器
-  public ResultVO(PosCode posCode, T data) {
-    this.status = posCode.getStatus();
-    this.msg = posCode.getMsg();
-    this.data = data;
-  }
-
-  // 错误时的构造器
-  public ResultVO(PosCode posCode) {
-    this.status = posCode.getStatus();
-    this.msg = posCode.getMsg();
   }
 
   public ResultVO buildWithMsgAndStatus(PosCode posCode, String msg) {
@@ -59,6 +49,17 @@ public class ResultVO<T> {
     this.msg = PosCode.OK.getMsg();
     this.data = data;
     return this;
+  }
+
+  /**
+   * 分页数据
+   */
+  @Data
+  @AllArgsConstructor
+  public static class paginationData<E>{
+    private Long total;
+    private Integer pageSize;
+    private List<E> contents;
   }
 
 }

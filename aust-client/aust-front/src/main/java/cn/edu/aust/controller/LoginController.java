@@ -1,5 +1,6 @@
 package cn.edu.aust.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 
 import org.apache.commons.lang3.StringUtils;
@@ -21,6 +22,7 @@ import cn.edu.aust.common.util.WebUtils;
 import cn.edu.aust.dto.UserDTO;
 import cn.edu.aust.exception.PageException;
 import cn.edu.aust.service.UserService;
+import cn.edu.aust.vo.UserInfoVO;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -48,7 +50,7 @@ public class LoginController {
   public ResultVO<?> login(String email, String password, String codevalidate,
       HttpSession session, HttpServletRequest request, HttpServletResponse response) throws PageException {
     JSONObject result = new JSONObject();
-    ResultVO resultVO = new ResultVO();
+    ResultVO<JSONObject> resultVO = new ResultVO<>();
     if (StringUtils.isEmpty(email) || StringUtils.isEmpty(password)) {
        return resultVO.buildWithMsgAndStatus(PosCode.PARAM_ERROR,"用户民或密码不能为空");
     }
@@ -67,15 +69,16 @@ public class LoginController {
     if (!userService.checkCanLogin(userDTO,password,WebUtils.getIp(request),resultVO)){
       return resultVO;
     }
-    //更新用户的解题信息
-    userService.freshUserInfo(userDTO.getId(),response);
-    //登录成功加入session
+    //登录成功加入session,保存cookies
     session = request.getSession();
     session.setAttribute(PRINCIPAL_ATTRIBUTE_NAME, userDTO);
     log.info("用户:{}已登录", email);
+    String userJson = JSON.toJSONString(UserInfoVO.assemble(userDTO, null));
+    WebUtils.addCookie(response,"currentUser", userJson,-1,null,
+        null,false);
     //跳转到之前的页面
     result.put("id", userDTO.getId());
-    return new ResultVO<>(PosCode.OK, result);
+    return resultVO.buildOKWithData(result);
   }
 
 }

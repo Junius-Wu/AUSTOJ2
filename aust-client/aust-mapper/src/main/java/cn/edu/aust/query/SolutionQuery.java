@@ -5,7 +5,7 @@ package cn.edu.aust.query;
  * @author Niu Li
  * @since 2017/3/18
  */
-public class SolutionQM {
+public class SolutionQuery {
   /**
    * 限制搜索最大15个字符
    */

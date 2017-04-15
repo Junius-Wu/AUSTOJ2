@@ -9,7 +9,6 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
-import org.springframework.web.context.ContextLoader;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -17,16 +16,13 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.annotation.Resource;
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletResponse;
 
 import cn.edu.aust.common.constant.PosCode;
+import cn.edu.aust.common.constant.UserStatus;
 import cn.edu.aust.common.entity.ResultVO;
 import cn.edu.aust.common.entity.Setting;
-import cn.edu.aust.common.util.WebUtils;
 import cn.edu.aust.convert.UserConvert;
 import cn.edu.aust.dto.UserDTO;
 import cn.edu.aust.mapper.UserMapper;
@@ -37,7 +33,7 @@ import lombok.extern.slf4j.Slf4j;
  * 用户service类
  *
  * @author Niu Li
- * @date 2017/1/22
+ * @since  2017/1/22
  */
 @Service
 @Slf4j
@@ -104,7 +100,7 @@ public class UserService {
     userDO.setEmail(email);
     userDO.setPoint(0);
     userDO.setUsername(email);
-    userDO.setIsDefunct(2);//设置待验证状态
+    userDO.setStatus(UserStatus.WAIT4EMAIL_CHECK.code);//设置待验证状态
     userMapper.insertSelective(userDO);
     //发送邮件,验证
     mailService.sendRegister(email);
@@ -125,12 +121,12 @@ public class UserService {
     }
     //判断用户状态
     UserDO userDO = userMapper.findByEmail(email);
-    if (userDO.getId() == null || userDO.getIsDefunct() != 2) {
+    if (userDO.getId() == null || userDO.getStatus() != UserStatus.WAIT4EMAIL_CHECK.code) {
       resultVO.buildWithPosCode(PosCode.ALREADY_REGISTER);
       return false;
     }
     //更新用户 已验证
-    userDO.setIsDefunct(0);
+    userDO.setStatus(UserStatus.WAIT4EMAIL_CHECK.code);
     userDO.setModifydate(new Date());
     userMapper.updateByPrimaryKeySelective(userDO);
     redisTemplate.delete(token);
@@ -149,7 +145,7 @@ public class UserService {
     UserDO userDO = userMapper.selectByPrimaryKey(userDTO.getId());
     Setting setting = settingService.getSetting();
     //验证是否冻结
-    if (userDO.getIsDefunct() == 1) {
+    if (userDO.getStatus() == UserStatus.FREEZE.code) {
       resultVO.buildWithPosCode(PosCode.USER_FREEZE);
       return false;
     }
@@ -263,22 +259,6 @@ public class UserService {
       }
     }
     return false;
-  }
-
-  /**
-   * 用户登陆后或者AC后刷新用户的解题信息
-   */
-  public void freshUserInfo(Long userId,HttpServletResponse response) {
-    //获取上下文信息
-    ServletContext servletContext = ContextLoader.getCurrentWebApplicationContext().getServletContext();
-
-    List<Integer> problemIds = solutionService.queryACProblems(userId);
-    servletContext.setAttribute("recent_ac", problemIds.stream().limit(5).collect(Collectors.toList()));
-    StringBuilder builder = new StringBuilder();
-    problemIds.forEach(x -> builder.append(x).append(','));
-    Setting setting = settingService.getSetting();
-    WebUtils.addCookie(response, "acList", builder.toString(), null, setting.getCookiePath(),
-        setting.getCookieDomain(), false);
   }
 
 }

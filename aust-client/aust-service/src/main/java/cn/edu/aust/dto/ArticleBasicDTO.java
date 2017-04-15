@@ -12,19 +12,27 @@ import lombok.ToString;
  * @author Niu Li
  * @date 2017/1/30
  */
-@Deprecated
 @Data
 @NoArgsConstructor
 @ToString
-public class ArticleListDTO {
+public class ArticleBasicDTO {
     private Long id;
+
     private String title;
+
     private String keyword;
+
     private Integer viewcount;
+
     private String likecount;
-    private Byte isTop;
+
+    private Integer isTop;
+
     private Date createdate;
-    private Byte isVote;
+
+    private Integer isVote;
+
     private String nickname;
+
     private String summary;
 }

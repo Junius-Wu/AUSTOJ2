@@ -7,9 +7,9 @@ import java.util.List;
 import java.util.Objects;
 
 import cn.edu.aust.dto.ProblemDTO;
-import cn.edu.aust.dto.ProblemListDTO;
+import cn.edu.aust.dto.ProblemBasicDTO;
 import cn.edu.aust.pojo.entity.ProblemDO;
-import cn.edu.aust.query.ProblemPK;
+import cn.edu.aust.query.ProblemPO;
 
 /**
  * 题目包装类
@@ -26,21 +26,21 @@ public final class ProblemConvert {
   /**
    * 集合转换
    *
-   * @param problemPKS 要转换的实体类
+   * @param problemPOS 要转换的实体类
    * @return 结果
    */
-  public static List<ProblemListDTO> pk2ListDto(List<ProblemPK> problemPKS) {
-    return modelMapper.map(problemPKS,
-                           new TypeToken<List<ProblemListDTO>>() {}.getType());
+  public static List<ProblemBasicDTO> pk2ListDto(List<ProblemPO> problemPOS) {
+    return modelMapper.map(problemPOS,
+                           new TypeToken<List<ProblemBasicDTO>>() {}.getType());
   }
 
   /**
    * 转化单个
-   * @param problemPK 要转换的实体类
+   * @param problemPO 要转换的实体类
    * @return 转换结果
    */
-  public static ProblemDTO pk2dto(ProblemPK problemPK){
-    return modelMapper.map(problemPK,ProblemDTO.class);
+  public static ProblemDTO pk2dto(ProblemPO problemPO){
+    return modelMapper.map(problemPO,ProblemDTO.class);
   }
 
   /**

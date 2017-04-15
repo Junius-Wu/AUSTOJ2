@@ -19,7 +19,7 @@ import cn.edu.aust.common.constant.PosCode;
 import cn.edu.aust.common.entity.ResultVO;
 import cn.edu.aust.common.util.CgiHelper;
 import cn.edu.aust.dto.ContestDTO;
-import cn.edu.aust.dto.ProblemListDTO;
+import cn.edu.aust.dto.ProblemBasicDTO;
 import cn.edu.aust.exception.PageException;
 import cn.edu.aust.pojo.entity.UserDO;
 import cn.edu.aust.service.ContestService;
@@ -113,7 +113,7 @@ public class ContestController {
       return resultVO.buildWithMsgAndStatus(PosCode.NO_PRIVILEGE, "用户无权限访问");
     }
     //查找相关题目
-    List<ProblemListDTO> problems = problemService.queryContest(id);
+    List<ProblemBasicDTO> problems = problemService.queryContest(id);
 
     return resultVO.buildOKWithData(ContestDetailVO.assemble(problems,contest));
   }

@@ -37,7 +37,7 @@
   </sql>
 
   <!--查询单条题目详情-->
-<resultMap id="ProblemDetail" type="cn.edu.aust.query.ProblemPK" extends="BaseResultMap">
+<resultMap id="ProblemDetail" type="cn.edu.aust.query.ProblemPO" extends="BaseResultMap">
   <!--额外字段-->
   <result column="auchor" property="auchor" jdbcType="VARCHAR" />
   <result column="catelog_name" property="categlogName" jdbcType="VARCHAR" />
@@ -58,7 +58,7 @@
   </select>
 
 <!--查询列表显示的题目-->
-  <resultMap id="ListStageProblem" type="cn.edu.aust.query.ProblemPK" >
+  <resultMap id="ListStageProblem" type="cn.edu.aust.query.ProblemPO" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="title" property="title" jdbcType="VARCHAR" />
     <result column="keyword" property="keyword" jdbcType="VARCHAR" />
@@ -75,7 +75,7 @@
   </resultMap>
 
 <!--查询阶段题目-->
-  <select id="queryListStage" parameterType="cn.edu.aust.query.ProblemQM" resultMap="ListStageProblem">
+  <select id="queryListStage" parameterType="cn.edu.aust.query.ProblemQuery" resultMap="ListStageProblem">
       SELECT p1.id,p1.title,p1.keyword,p1.stage,p1.spj,p1.time_limit,p1.memory_limit,p1.difficulty,
     p1.solved,p1.submit,
       p2.name AS "catelog_name",p3.nickname AS "author" FROM problem p1
@@ -92,7 +92,7 @@
   </select>
 
   <!--查询指定目录下的题目,使用queryModel的stage参数当成目录id-->
-  <select id="queryListCatelog" parameterType="cn.edu.aust.query.ProblemQM" resultMap="ListStageProblem">
+  <select id="queryListCatelog" parameterType="cn.edu.aust.query.ProblemQuery" resultMap="ListStageProblem">
       SELECT p1.id,p1.title,p1.keyword,p1.stage,p1.spj,p1.time_limit,p1.memory_limit,p1.difficulty,
     p1.solved,p1.submit,
       p2.name AS "catelog_name",p3.nickname AS "author" FROM problem p1

@@ -40,10 +40,9 @@ public class UserDO {
     private String nickname;
 
     /**
-     * QQ登录的授权id
+     * 授权id
      */
-    @Column(name = "qq_openid")
-    private String qqOpenid;
+    private String openid;
 
     /**
      * 邮箱
@@ -134,12 +133,6 @@ public class UserDO {
     private Date modifydate;
 
     /**
-     * 是否冻结,1正常,0冻结,2待验证
-     */
-    @Column(name = "is_defunct")
-    private Integer isDefunct;
-
-    /**
      * 是否开放代码,1是 0否
      */
     @Column(name = "is_opensource")
@@ -151,4 +144,9 @@ public class UserDO {
     @Column(name = "is_email")
     private Integer isEmail;
 
+    private Integer status;
+
+    private Integer type;
+
+    private String extend;
 }

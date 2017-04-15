@@ -18,7 +18,7 @@ import cn.edu.aust.common.entity.ResultVO;
 import cn.edu.aust.common.util.CgiHelper;
 import cn.edu.aust.dto.CatelogDTO;
 import cn.edu.aust.dto.ProblemDTO;
-import cn.edu.aust.dto.ProblemListDTO;
+import cn.edu.aust.dto.ProblemBasicDTO;
 import cn.edu.aust.pojo.entity.UserDO;
 import cn.edu.aust.service.CatelogService;
 import cn.edu.aust.service.ContestService;
@@ -90,7 +90,7 @@ public class ProblemController {
     Integer pageSize = CgiHelper.getPageSize(request);
     Integer pageNum = CgiHelper.getPageNum(request);
 
-    PageInfo<ProblemListDTO> pageInfo = problemService.queryListStage(search,
+    PageInfo<ProblemBasicDTO> pageInfo = problemService.queryListStage(search,
         stage, order, pageNum, pageSize, false);
     ProblemTableVO tableVO = ProblemTableVO.assemble(pageInfo.getList(), pageInfo.getTotal(), pageNum);
     return resultVO.buildOKWithData(tableVO);
@@ -114,7 +114,7 @@ public class ProblemController {
     if (Objects.isNull(catelogDTO)){
       return resultVO.buildWithMsgAndStatus(PosCode.NO_PRIVILEGE,"用户无权限访问");
     }
-    PageInfo<ProblemListDTO> pageInfo = problemService.queryListStage(search,
+    PageInfo<ProblemBasicDTO> pageInfo = problemService.queryListStage(search,
         catelogId, order, pageNum, pageSize, true);
     ProblemTableVO tableVO = ProblemTableVO.assemble(pageInfo.getList(), pageInfo.getTotal(), pageNum);
     tableVO.setCatelogName(catelogDTO.getName());

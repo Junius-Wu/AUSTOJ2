@@ -11,7 +11,6 @@ import java.util.stream.Collectors;
 
 import javax.annotation.Resource;
 
-import cn.edu.aust.common.constant.PosCode;
 import cn.edu.aust.common.entity.ResultVO;
 import cn.edu.aust.dto.UserDTO;
 import cn.edu.aust.service.SolutionService;
@@ -39,7 +38,7 @@ public class UserController {
     List<UserRankVO> userRanks = userService.queryToIndexShow()
         .stream().limit(6).map(UserRankVO::assemble)
         .collect(Collectors.toList());
-    return new ResultVO<List>(PosCode.OK, userRanks);
+    return new ResultVO<>().buildOKWithData(userRanks);
   }
 
   /**

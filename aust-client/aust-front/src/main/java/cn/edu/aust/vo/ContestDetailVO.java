@@ -8,7 +8,7 @@ import java.util.List;
 
 import cn.edu.aust.common.util.ProblemUtil;
 import cn.edu.aust.dto.ContestDTO;
-import cn.edu.aust.dto.ProblemListDTO;
+import cn.edu.aust.dto.ProblemBasicDTO;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -47,7 +47,7 @@ public class ContestDetailVO {
 
   private List<ContestTableDetail> contents;
 
-  public static ContestDetailVO assemble(List<ProblemListDTO> listDTOS, ContestDTO contestDTO){
+  public static ContestDetailVO assemble(List<ProblemBasicDTO> listDTOS, ContestDTO contestDTO){
     ContestDetailVO detailVo = new ContestDetailVO();
     List<ContestDetailVO.ContestTableDetail> result = Lists.newArrayList();
     detailVo.setContents(result);

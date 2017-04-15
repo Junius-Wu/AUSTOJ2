@@ -24,15 +24,15 @@ public class ArticleDTO {
 
     private String keyword;
 
-    private Integer viewcount;
+    private Integer viewCount;
 
     private Byte isTop;
 
-    private Date createdate;
+    private Date createDate;
 
-    private Integer likecount;
+    private Integer likeCount;
 
-    private String nickname;
+    private String nickName;
 
     private String htmlContent;
 

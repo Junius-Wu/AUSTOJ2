@@ -14,7 +14,6 @@ import java.util.regex.Pattern;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import cn.edu.aust.common.constant.PosCode;
@@ -50,7 +49,7 @@ public class RegisterController {
    */
   @PostMapping(produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
   public ResultVO<?> register(String email, String password, String nickname, String codevalidate,
-      HttpServletRequest request, HttpServletResponse response) {
+      HttpServletRequest request) {
     HttpSession session = request.getSession();
     Setting setting = settingService.getSetting();
     ResultVO<JSONObject> resultVO = new ResultVO<>();

@@ -3,9 +3,9 @@ package cn.edu.aust.query;
 /**
  * 文章查询包装类
  * @author Niu Li
- * @date 2017/1/30
+ * @since  2017/1/30
  */
-public class ArticleQM {
+public class ArticleQuery {
     /**
      * 限制搜索最大15个字符
      */

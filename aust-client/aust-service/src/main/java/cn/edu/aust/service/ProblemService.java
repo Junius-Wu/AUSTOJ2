@@ -14,11 +14,11 @@ import javax.annotation.Resource;
 
 import cn.edu.aust.convert.ProblemConvert;
 import cn.edu.aust.dto.ProblemDTO;
-import cn.edu.aust.dto.ProblemListDTO;
+import cn.edu.aust.dto.ProblemBasicDTO;
 import cn.edu.aust.mapper.ProblemMapper;
 import cn.edu.aust.pojo.entity.ProblemDO;
-import cn.edu.aust.query.ProblemPK;
-import cn.edu.aust.query.ProblemQM;
+import cn.edu.aust.query.ProblemPO;
+import cn.edu.aust.query.ProblemQuery;
 
 /**
  * 题目的service
@@ -37,12 +37,12 @@ public class ProblemService {
    * @return 结果
    */
   public ProblemDTO findDetail(Long id) {
-    ProblemPK problemPK = problemMapper.queryDetail(id);
-    if (Objects.isNull(problemPK)) {
+    ProblemPO problemPO = problemMapper.queryDetail(id);
+    if (Objects.isNull(problemPO)) {
       return null;
     }
     ModelMapper modelMapper = new ModelMapper();
-    return modelMapper.map(problemPK, ProblemDTO.class);
+    return modelMapper.map(problemPO, ProblemDTO.class);
   }
 
   /**
@@ -66,26 +66,26 @@ public class ProblemService {
    * @param isCatelog 是否为目录,true时stage参数为目录id
    * @return DTO实体
    */
-  public PageInfo<ProblemListDTO> queryListStage(String search, Integer stage, String direction,
+  public PageInfo<ProblemBasicDTO> queryListStage(String search, Integer stage, String direction,
       Integer pageNum, Integer pageSize, boolean isCatelog) {
     //封装查询条件
-    ProblemQM problemQM = new ProblemQM();
-    problemQM.setDirection(direction);
-    problemQM.setSearch(search);
-    problemQM.setStage(stage);
+    ProblemQuery problemQuery = new ProblemQuery();
+    problemQuery.setDirection(direction);
+    problemQuery.setSearch(search);
+    problemQuery.setStage(stage);
     //查询转换
-    Page<ProblemPK> problemPCS =
+    Page<ProblemPO> problemPCS =
         PageHelper.startPage(pageNum, pageSize)
             .doSelectPage(
                 () -> {
                   if (isCatelog) {
-                    problemMapper.queryListCatelog(problemQM);
+                    problemMapper.queryListCatelog(problemQuery);
                   } else {
-                    problemMapper.queryListStage(problemQM);
+                    problemMapper.queryListStage(problemQuery);
                   }
                 }
             );
-    PageInfo<ProblemListDTO> pageInfo = new PageInfo<>();
+    PageInfo<ProblemBasicDTO> pageInfo = new PageInfo<>();
     pageInfo.setTotal(problemPCS.getTotal());
     pageInfo.setList(ProblemConvert.pk2ListDto(problemPCS.getResult()));
     return pageInfo;
@@ -97,8 +97,8 @@ public class ProblemService {
    * @param contest 该竞赛
    * @return 查询结果
    */
-  public List<ProblemListDTO> queryContest(Long contest) {
-    List<ProblemPK> result = problemMapper.queryContest(contest);
+  public List<ProblemBasicDTO> queryContest(Long contest) {
+    List<ProblemPO> result = problemMapper.queryContest(contest);
     return ProblemConvert.pk2ListDto(result);
   }
 }
