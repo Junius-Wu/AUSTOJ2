@@ -1,9 +1,8 @@
 package cn.edu.aust.dto;
 
-import com.alibaba.fastjson.annotation.JSONField;
-
 import java.util.Date;
 
+import cn.edu.aust.common.constant.JudgeCode;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -25,10 +24,9 @@ public class SolutionDTO {
   private Double codeLength;
   private String language;
   private Integer contestId;
-  private String verdict;
+  private JudgeCode verdict;
   private Integer testcase;
 
-  @JSONField(name = "createdate",format = "yyyy-MM-dd HH:mm:ss")
   private Date createdate;
 
 }

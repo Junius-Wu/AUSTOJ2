@@ -1,10 +1,12 @@
 package cn.edu.aust.service;
 
+import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,9 +18,11 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import cn.edu.aust.convert.SolutionConvert;
 import cn.edu.aust.common.constant.JudgeCode;
+import cn.edu.aust.common.constant.MessageKey;
+import cn.edu.aust.common.entity.MessageType;
 import cn.edu.aust.common.util.LanguageUtil;
+import cn.edu.aust.convert.SolutionConvert;
 import cn.edu.aust.dto.ProblemDTO;
 import cn.edu.aust.dto.SolutionDTO;
 import cn.edu.aust.mapper.ProblemMapper;
@@ -53,6 +57,8 @@ public class SolutionService {
   private ThreadPoolTaskExecutor taskExecutor;
   @Resource
   private JudgeClientPool judgeClientPool;
+  @Resource
+  private StringRedisTemplate redisTemplate;
 
   /**
    * 查询用户提交列表
@@ -88,7 +94,7 @@ public class SolutionService {
     SolutionDO solutionDO = new SolutionDO();
     solutionDO.setCreatedate(new Date());
     solutionDO.setModifydate(solutionDO.getCreatedate());
-    solutionDO.setCodeLength(source.getBytes().length / 1000.0);
+    solutionDO.setCodeLength(source.getBytes().length / 8.0);
     solutionDO.setContestId(problemDO.getContestId());
     solutionDO.setLanguage(language.getLanguageName());
     solutionDO.setProblemId(problemDO.getId());
@@ -163,7 +169,12 @@ public class SolutionService {
     }
     problemMapper.updateByPrimaryKeySelective(problemDO);
     userMapper.updateByPrimaryKeySelective(userDO);
-    //异步更新用户的解题信息
+    //发布redis事件
+    MessageType ms = new MessageType();
+    ms.setSubjectId(userId);
+    ms.setSubjectId(problemId);
+    ms.setType(MessageKey.JUDGER_RESULT);
+    redisTemplate.convertAndSend("judger", JSON.toJSONString(ms));
   }
 
   /**

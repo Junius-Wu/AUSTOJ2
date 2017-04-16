@@ -10,11 +10,13 @@ import lombok.ToString;
  */
 @Data
 @ToString
-public class MessageTypeDO {
+public class MessageType {
   //消息id
   private Integer id;
-  //由消息类型决定实体类型id
-  private Long entityId;
+  //目标id
+  private Long objectId;
+  //主体id
+  private Long subjectId;
   //消息类型
   private String type;
 

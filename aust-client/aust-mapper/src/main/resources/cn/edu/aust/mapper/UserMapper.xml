@@ -62,15 +62,16 @@
     <select id="queryToShow" resultMap="UserBasicMap">
         SELECT <include refid="Basic_Column_List"/>
         FROM user u
-        WHERE u.is_defunct = 0 AND u.is_show =1
+        WHERE u.status = 1 AND u.is_show =1
         ORDER BY point LIMIT 6
     </select>
 
-  <!--查找出用户排名,必须是有效用户才能参与排名-->
+  <!--查找出用户排名列表,必须是有效用户才能参与排名-->
   <select id="queryForRank" resultMap="UserBasicMap">
     SELECT  <include refid="Basic_Column_List"/>
     FROM user
-    WHERE is_defunct = 0
+    WHERE status = 1
     ORDER BY solved DESC ,submit DESC LIMIT 10000
   </select>
+
 </mapper>

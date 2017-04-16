@@ -9,12 +9,12 @@ import cn.edu.aust.common.constant.JudgeCode;
  * @author Niu Li
  * @since 2017/3/18
  */
-public class JudgeCodeConvent extends AbstractConverter<Integer,String> {
+public class JudgeCodeConvent extends AbstractConverter<Integer,JudgeCode> {
 
   public static final JudgeCodeConvent judgeCodeConvent = new JudgeCodeConvent();
 
   @Override
-  protected String convert(Integer integer) {
-    return JudgeCode.statusOf(integer).getMsg();
+  protected JudgeCode convert(Integer integer) {
+    return JudgeCode.statusOf(integer);
   }
 }

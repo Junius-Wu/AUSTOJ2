@@ -3,6 +3,7 @@ package cn.edu.aust.vo;
 import org.springframework.util.CollectionUtils;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import cn.edu.aust.dto.UserDTO;
@@ -40,7 +41,11 @@ public class UserInfoVO {
    */
   List<Integer> ACRecents;
 
-  public static UserInfoVO assemble(UserDTO userDTO, List<Integer> ACProblems) {
+  private Integer ACTotal;
+
+  private Long rank;
+
+  public static UserInfoVO assemble(UserDTO userDTO, List<Integer> ACProblems,Long rank) {
     UserInfoVO infoVo = new UserInfoVO();
     infoVo.setId(userDTO.getId());
     infoVo.setEmail(userDTO.getEmail());
@@ -51,7 +56,14 @@ public class UserInfoVO {
     if (!CollectionUtils.isEmpty(ACProblems)) {
       infoVo.setACProblems(ACProblems);
       infoVo.setACRecents(ACProblems.stream().limit(6).collect(Collectors.toList()));
+      infoVo.setACTotal(ACProblems.size());
     }
+    if (Objects.nonNull(rank)){
+      infoVo.setRank(rank+1);
+    }else {
+      infoVo.setRank(-1L);
+    }
+
     return infoVo;
   }
 }

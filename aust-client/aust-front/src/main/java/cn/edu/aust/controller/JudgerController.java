@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.Base64;
+import java.util.List;
 import java.util.Objects;
 
 import javax.annotation.Resource;
@@ -93,7 +94,7 @@ public class JudgerController {
   @GetMapping(value = "/judge/list", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
   @ResponseBody
   public ResultVO judgeList(HttpServletRequest request){
-    ResultVO<SubmitTableVO> resultVO = new ResultVO<>();
+    ResultVO<ResultVO.paginationData> resultVO = new ResultVO<>();
     //参数校验
     Integer pageSize = CgiHelper.getPageSize(request);
     Integer pageNum = CgiHelper.getPageNum(request);
@@ -106,7 +107,9 @@ public class JudgerController {
     PageInfo<SolutionDTO> data = solutionService.userSolutionList(search, loginUser.getId(),
         pageNum, pageSize);
     //构造返回
-    return resultVO.buildOKWithData(SubmitTableVO.assemble(data.getList(),data.getTotal()));
+    List<SubmitTableVO> tableVOS = SubmitTableVO.assemble(data.getList());
+    return resultVO.buildOKWithData(new ResultVO.paginationData<>(data.getTotal(),
+        pageSize, tableVOS));
   }
 
 

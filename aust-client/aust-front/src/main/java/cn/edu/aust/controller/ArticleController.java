@@ -63,6 +63,8 @@ public class ArticleController {
     if (Objects.nonNull(articleDTO.getIsShow()) && articleDTO.getIsShow() == 0){
       return resultVO.buildWithMsgAndStatus(PosCode.NO_PRIVILEGE,"无权限查看");
     }
+    //点击量控制
+    articleService.viewHits(articleDTO);
     return resultVO.buildOKWithData(ArticleDetailVO.assembler(articleDTO));
   }
 
