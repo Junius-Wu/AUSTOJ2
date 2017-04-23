@@ -23,7 +23,7 @@
                 </a>
                 <a href="/user/1" class="center-block" th:text="*{nickname}">nl101531</a>
             </div>
-            <p>格言:<br><span th:text="*{motto}">书山有路勤无用,学海无涯钱做主</span></p>
+            <p>格言:<br><span th:text="*{intro}">书山有路勤无用,学海无涯钱做主</span></p>
             <p class="tagcloud">近期AC:<br>
                 <a th:each="id : ${application.recent_ac}"  href="#"
                    th:href="@{/problem/{id}(id = ${id})}" style="font-size: 12px;"

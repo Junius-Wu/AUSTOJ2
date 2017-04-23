@@ -63,7 +63,7 @@ public class UserDO {
     /**
      * 座右铭
      */
-    private String motto;
+    private String intro;
 
     /**
      * 所得荣誉

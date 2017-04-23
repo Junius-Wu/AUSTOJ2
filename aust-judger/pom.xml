@@ -96,7 +96,7 @@
                         <phase>process-classes</phase>
                         <configuration>
                             <target name="jni"
-                                    description="Generate headers and compile the native code">
+                                    description="Generate headers and compile the native value">
                                 <echo>Generating JNI headers</echo>
                                 <exec executable="javah">
                                     <arg value="-d" />

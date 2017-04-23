@@ -58,7 +58,7 @@ public class JudgerController {
   @PostMapping(value = "/judge/problem/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
   @ResponseBody
   public ResultVO judger(@PathVariable("id") Long id,
-      @RequestParam(value = "code") String sourceCode,
+      @RequestParam(value = "value") String sourceCode,
       @RequestParam(value = "lang") String language) {
     //登录限制和参数检查
     UserDO loginUser = userService.getCurrent();
@@ -78,6 +78,13 @@ public class JudgerController {
     }
     if (StringUtils.isEmpty(sourceCode)){
       return resultVO.buildWithMsgAndStatus(PosCode.PARAM_ERROR,"源代码不能为空");
+    }
+    if (Objects.isNull(language)) {
+      return resultVO.buildWithMsgAndStatus(PosCode.INTER_ERROR, "所选语言不能为空");
+    }
+    //浏览器端对加号支持有问题
+    if (StringUtils.equals("C2", language)) {
+      language = "C++";
     }
     LanguageUtil.Language lang = LanguageUtil.getLanguage(language);
     if (Objects.isNull(lang)){

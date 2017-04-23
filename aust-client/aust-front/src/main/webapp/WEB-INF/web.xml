@@ -12,7 +12,7 @@
     <context-param>
         <param-name>contextConfigLocation</param-name>
         <!--配置文件的路径-->
-        <param-value>classpath:spring/applicationContext.xml</param-value>
+        <param-value>classpath:spring/application-*.xml</param-value>
     </context-param>
     <!--filter start-->
     <!-- 配置字符编码过滤器，编码格式设为UTF-8，避免中文乱码 -->

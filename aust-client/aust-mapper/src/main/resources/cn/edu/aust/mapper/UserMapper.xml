@@ -11,7 +11,7 @@
     <result column="email" property="email" jdbcType="VARCHAR" />
     <result column="school" property="school" jdbcType="VARCHAR" />
     <result column="student_no" property="studentNo" jdbcType="VARCHAR" />
-    <result column="motto" property="motto" jdbcType="VARCHAR" />
+    <result column="intro" property="intro" jdbcType="VARCHAR" />
     <result column="honor" property="honor" jdbcType="VARCHAR" />
     <result column="point" property="point" jdbcType="INTEGER" />
     <result column="language" property="language" jdbcType="VARCHAR" />
@@ -26,15 +26,14 @@
     <result column="createdate" property="createdate" jdbcType="TIMESTAMP" />
     <result column="modifydate" property="modifydate" jdbcType="TIMESTAMP" />
     <result column="is_opensource" property="isOpensource" jdbcType="TINYINT" />
-    <result column="is_email" property="isEmail" jdbcType="TINYINT" />
     <result column="status" property="status" jdbcType="TINYINT" />
     <result column="type" property="type" jdbcType="TINYINT" />
     <result column="extend" property="extend" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Detail_Column_List" >
-    id, avatar, username, password, nickname, openid, email, school, student_no, motto,
+    id, avatar, username, password, nickname, openid, email, school, student_no, intro,
     honor, point, language, submit, solved, is_show, blog, ip, is_lock, loginfail, lockdate, 
-    createdate, modifydate, is_opensource, is_email,status,type,extend
+    createdate, modifydate, is_opensource,status,type,extend
   </sql>
   <sql id="Basic_Column_List" >
     id, avatar, nickname, honor, point, submit, solved, blog

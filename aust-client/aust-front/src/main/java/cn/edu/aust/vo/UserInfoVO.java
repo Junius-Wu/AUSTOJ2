@@ -1,11 +1,13 @@
 package cn.edu.aust.vo;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import cn.edu.aust.common.constant.UserStatus;
 import cn.edu.aust.dto.UserDTO;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -28,7 +30,9 @@ public class UserInfoVO {
 
   private String nickname;
 
-  private String motto;
+  private String intro;
+
+  private String blog;
 
   private String language;
 
@@ -45,14 +49,19 @@ public class UserInfoVO {
 
   private Long rank;
 
+  private Boolean isEmail;
+
   public static UserInfoVO assemble(UserDTO userDTO, List<Integer> ACProblems,Long rank) {
     UserInfoVO infoVo = new UserInfoVO();
     infoVo.setId(userDTO.getId());
     infoVo.setEmail(userDTO.getEmail());
     infoVo.setAvatar(userDTO.getAvatar());
     infoVo.setNickname(userDTO.getNickname());
-    infoVo.setMotto(userDTO.getMotto());
-    infoVo.setLanguage(userDTO.getLanguage());
+    infoVo.setIntro(userDTO.getIntro());
+    infoVo.setBlog(userDTO.getBlog());
+    infoVo.setLanguage(StringUtils.equals("C++",userDTO.getLanguage())
+        ?"C2":userDTO.getLanguage());
+    infoVo.setIsEmail(!(userDTO.getStatus() == UserStatus.WAIT4EMAIL_CHECK.value));
     if (!CollectionUtils.isEmpty(ACProblems)) {
       infoVo.setACProblems(ACProblems);
       infoVo.setACRecents(ACProblems.stream().limit(6).collect(Collectors.toList()));

@@ -11,11 +11,11 @@ public enum UserStatus{
   FREEZE(3,"冻结")
   ;
 
-  public int code;
+  public int value;
   public String msg;
 
-  UserStatus(int code, String msg) {
-    this.code = code;
+  UserStatus(int value, String msg) {
+    this.value = value;
     this.msg = msg;
   }
 }

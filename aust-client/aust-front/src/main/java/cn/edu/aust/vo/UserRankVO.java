@@ -33,7 +33,7 @@ public class UserRankVO {
 
   private String honor;
 
-  private String motto;
+  private String intro;
 
   private String blog;
 
@@ -61,7 +61,7 @@ public class UserRankVO {
     rankVO.setEmail(x.getEmail());
     rankVO.setNickname(x.getNickname());
     rankVO.setHonor(x.getHonor());
-    rankVO.setMotto(x.getMotto());
+    rankVO.setIntro(x.getIntro());
     rankVO.setBlog(x.getBlog());
     rankVO.setSubmit(x.getSubmit());
     rankVO.setSolved(x.getSolved());

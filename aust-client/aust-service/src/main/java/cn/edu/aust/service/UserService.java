@@ -100,7 +100,7 @@ public class UserService {
     userDO.setEmail(email);
     userDO.setPoint(0);
     userDO.setUsername(email);
-    userDO.setStatus(UserStatus.WAIT4EMAIL_CHECK.code);//设置待验证状态
+    userDO.setStatus(UserStatus.WAIT4EMAIL_CHECK.value);//设置待验证状态
     userMapper.insertSelective(userDO);
     //发送邮件,验证
     mailService.sendRegister(email);
@@ -113,6 +113,7 @@ public class UserService {
    * @param resultVO 返回封装类
    * @return true成功
    */
+  @Transactional
   public Boolean checkEmailToken(String token, ResultVO resultVO){
     String email = redisTemplate.opsForValue().get(token);
     if (StringUtils.isEmpty(email)) {
@@ -121,12 +122,12 @@ public class UserService {
     }
     //判断用户状态
     UserDO userDO = userMapper.findByEmail(email);
-    if (userDO.getId() == null || userDO.getStatus() != UserStatus.WAIT4EMAIL_CHECK.code) {
+    if (userDO.getId() == null || userDO.getStatus() != UserStatus.WAIT4EMAIL_CHECK.value) {
       resultVO.buildWithPosCode(PosCode.ALREADY_REGISTER);
       return false;
     }
     //更新用户 已验证
-    userDO.setStatus(UserStatus.WAIT4EMAIL_CHECK.code);
+    userDO.setStatus(UserStatus.NORMAL.value);
     userDO.setModifydate(new Date());
     userMapper.updateByPrimaryKeySelective(userDO);
     redisTemplate.delete(token);
@@ -145,7 +146,7 @@ public class UserService {
     UserDO userDO = userMapper.selectByPrimaryKey(userDTO.getId());
     Setting setting = settingService.getSetting();
     //验证是否冻结
-    if (userDO.getStatus() == UserStatus.FREEZE.code) {
+    if (userDO.getStatus() == UserStatus.FREEZE.value) {
       resultVO.buildWithPosCode(PosCode.USER_FREEZE);
       return false;
     }
@@ -259,6 +260,17 @@ public class UserService {
       }
     }
     return false;
+  }
+
+  /**
+   * 更新用户不为null的字段
+   * @param userDO
+   * @return
+   */
+  @Transactional
+  public boolean updateUserSelective(UserDO userDO){
+    int k = userMapper.updateByPrimaryKeySelective(userDO);
+    return k>0;
   }
 
 }

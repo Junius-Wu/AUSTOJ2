@@ -16,6 +16,8 @@ public final class AuthCodeUtil {
             'K', 'L', 'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W',
             'X', 'Y', 'Z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
 
+    private static final Random r = new Random();
+
     /**
      * 创建验证码
      * @param buffImg 放入的输出流
@@ -26,10 +28,6 @@ public final class AuthCodeUtil {
      * @return 验证码
      */
     public static String createCodeImage(BufferedImage buffImg,int width,int height,int lineCount,int codeCount){
-        //定义随机数类
-        Random r = new Random();
-        //定义存储验证码的类
-        StringBuilder builderCode = new StringBuilder();
         //得到画笔
         Graphics g = buffImg.getGraphics();
         //1.设置颜色,画边框
@@ -47,10 +45,31 @@ public final class AuthCodeUtil {
         g.setColor(Color.blue);
         //4.1设置验证码字体
         g.setFont(new Font("宋体",Font.BOLD|Font.ITALIC,30));
+        return getCode(codeCount, g);
+    }
+
+    /**
+     * 得到验证码
+     * @param codeCount 验证码数量
+     * @param g
+     */
+    private static String getCode(int codeCount, Graphics g) {
+        StringBuilder builderCode = new StringBuilder();
         for (int i = 0; i < codeCount; i++) {
             char c = codeSequence[r.nextInt(codeSequence.length)];
             builderCode.append(c);
             g.drawString(c+"",15*(i+1),30);
+        }
+        return builderCode.toString();
+    }
+    /**
+     * 得到验证码
+     * @param codeCount 数量
+     */
+    public static String getCode(int codeCount) {
+        StringBuilder builderCode = new StringBuilder();
+        for (int i = 0; i < codeCount; i++) {
+            builderCode.append(codeSequence[r.nextInt(codeSequence.length)]);
         }
         return builderCode.toString();
     }

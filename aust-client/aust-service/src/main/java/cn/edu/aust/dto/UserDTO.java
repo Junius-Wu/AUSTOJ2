@@ -17,10 +17,11 @@ public class UserDTO {
     private String avatar;
     private String nickname;
     private String honor;
-    private String motto;
+    private String intro;
     private String blog;
     private Integer submit;
     private Integer solved;
     private String language;
+    private Integer status;
 
 }

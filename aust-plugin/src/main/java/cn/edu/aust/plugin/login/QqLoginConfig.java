@@ -1,4 +1,4 @@
-package cn.edu.aust.plugin.qqlogin;
+package cn.edu.aust.plugin.login;
 
 /**
  * qq登录一些配置文件
