@@ -99,7 +99,6 @@ public class UserService {
     userDO.setNickname(nickname);
     userDO.setEmail(email);
     userDO.setPoint(0);
-    userDO.setUsername(email);
     userDO.setStatus(UserStatus.WAIT4EMAIL_CHECK.value);//设置待验证状态
     userMapper.insertSelective(userDO);
     //发送邮件,验证
@@ -224,19 +223,11 @@ public class UserService {
   /**
    * 判断用户名或者邮箱是否存在
    *
-   * @param username 用户名
    * @param email    邮箱
    * @return true存在
    */
-  public boolean judgeUsernameOrEmail(String username, String email) {
+  public boolean judgeEmail(String email) {
     UserDO userDO = new UserDO();
-    if (StringUtils.isNoneEmpty(username)) {
-      userDO.setUsername(username);
-      userDO = userMapper.selectOne(userDO);
-      if (userDO.getId() != null) {
-        return true;
-      }
-    }
     if (StringUtils.isNoneEmpty(email)) {
       userDO.setEmail(email);
       userDO = userMapper.selectOne(userDO);

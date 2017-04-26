@@ -31,17 +31,15 @@ public class ContestDO {
      * 所需密码
      */
     private String password;
-
+    /**
+     * 创建用户id
+     */
+    @Column(name = "user_id")
+    private Long userId;
     /**
      * 创建用户
      */
-    @Column(name = "create_user")
-    private String createUser;
-
-    /**
-     * 1有效,0无效
-     */
-    private Byte defunct;
+    private String username;
 
     private Date createdate;
 
@@ -51,5 +49,9 @@ public class ContestDO {
      * 描述信息
      */
     private String description;
+
+    private Integer status;
+
+    private String extend;
 
 }

@@ -47,6 +47,9 @@ public class ArticleDO {
   @Column(name = "user_id")
   private Integer userId;
 
+  @Column(name = "username")
+  private String username;
+
   /**
    * 关键词,都好分隔
    */
@@ -63,7 +66,7 @@ public class ArticleDO {
   private Integer likecount;
 
   /**
-   * 暂且废除字段
+   * 目录
    */
   @Column(name = "catelog_id")
   private Integer catelogId;

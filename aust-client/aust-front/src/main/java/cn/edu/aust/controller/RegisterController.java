@@ -73,7 +73,7 @@ public class RegisterController {
       return resultVO.buildWithPosCode(PosCode.NICKNAME_NOALLOW);
     }
     //用户存在验证
-    if (userService.judgeUsernameOrEmail(null, email)) {
+    if (userService.judgeEmail(email)) {
       return resultVO.buildWithPosCode(PosCode.USERNAME_EXIST);
     }
     //注册用户
@@ -91,7 +91,7 @@ public class RegisterController {
   @GetMapping(value = "/check", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
   public ResultVO checkUsername(String username, String email) {
     ResultVO<PosCode> resultVO = new ResultVO<>();
-    boolean check = userService.judgeUsernameOrEmail(null, email);
+    boolean check = userService.judgeEmail(email);
     if (check) {
       return resultVO.buildWithPosCode(PosCode.USERNAME_EXIST);
     }

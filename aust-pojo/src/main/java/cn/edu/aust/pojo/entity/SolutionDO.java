@@ -43,4 +43,6 @@ public class SolutionDO {
     private Date createdate;
 
     private Date modifydate;
+
+    private String extend;
 }

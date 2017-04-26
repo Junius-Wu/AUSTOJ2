@@ -19,13 +19,11 @@
         <result column="verdict" property="verdict" jdbcType="INTEGER"/>
         <result column="createdate" property="createdate" jdbcType="TIMESTAMP"/>
         <result column="modifydate" property="modifydate" jdbcType="TIMESTAMP"/>
+        <result column="extend" property="extend" jdbcType="LONGVARCHAR"/>
     </resultMap>
     <sql id="Base_Column_List">
-        <!--
-          WARNING - @mbg.generated
-        -->
         id, problem_id,problem_title, user_id, memory, time, code_length, language, contest_id,
-        testcase, verdict, createdate, modifydate
+        testcase, verdict, createdate, modifydate,extend
     </sql>
 
     <!--查询用户提交列表-->

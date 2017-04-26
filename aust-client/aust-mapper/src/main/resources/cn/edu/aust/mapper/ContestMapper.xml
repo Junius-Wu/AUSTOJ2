@@ -2,37 +2,25 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="cn.edu.aust.mapper.ContestMapper" >
   <resultMap id="BaseResultMap" type="cn.edu.aust.pojo.entity.ContestDO" >
-    <!--
-      WARNING - @mbg.generated
-    -->
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="title" property="title" jdbcType="VARCHAR" />
     <result column="start_time" property="startTime" jdbcType="TIMESTAMP" />
     <result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
     <result column="type" property="type" jdbcType="TINYINT" />
     <result column="password" property="password" jdbcType="VARCHAR" />
-    <result column="create_user" property="createUser" jdbcType="VARCHAR" />
-    <result column="defunct" property="defunct" jdbcType="TINYINT" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
     <result column="createdate" property="createdate" jdbcType="TIMESTAMP" />
     <result column="modifydate" property="modifydate" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="extend" property="extend" jdbcType="LONGVARCHAR" />
   </resultMap>
   <resultMap id="ResultMapWithBLOBs" type="cn.edu.aust.pojo.entity.ContestDO" extends="BaseResultMap" >
-    <!--
-      WARNING - @mbg.generated
-    -->
     <result column="description" property="description" jdbcType="LONGVARCHAR" />
   </resultMap>
+
   <sql id="Base_Column_List" >
-    <!--
-      WARNING - @mbg.generated
-    -->
-    id, title, start_time, end_time, type, password, create_user, defunct, createdate, 
-    modifydate
-  </sql>
-  <sql id="Blob_Column_List" >
-    <!--
-      WARNING - @mbg.generated
-    -->
-    description
+    id, title, description, start_time, end_time, type, password, user_id, username, createdate,
+    modifydate,status,extend
   </sql>
 </mapper>

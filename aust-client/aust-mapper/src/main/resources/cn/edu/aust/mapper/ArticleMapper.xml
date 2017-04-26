@@ -8,6 +8,7 @@
     <id column="id" property="id" jdbcType="BIGINT" />
     <result column="title" property="title" jdbcType="VARCHAR" />
     <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
     <result column="keyword" property="keyword" jdbcType="VARCHAR" />
     <result column="viewcount" property="viewcount" jdbcType="INTEGER" />
     <result column="likecount" property="likecount" jdbcType="INTEGER" />
@@ -18,16 +19,10 @@
     <result column="modifydate" property="modifydate" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
-    <!--
-      WARNING - @mbg.generated
-    -->
-    id, title, user_id, keyword, viewcount, likecount, catelog_id, is_top, is_show, createdate,
-    modifydate
+    id, title, user_id, username, keyword, viewcount, likecount, catelog_id, is_top, is_show,
+    createdate,modifydate
   </sql>
   <sql id="Blob_Column_List" >
-    <!--
-      WARNING - @mbg.generated
-    -->
     summary, content
   </sql>
 

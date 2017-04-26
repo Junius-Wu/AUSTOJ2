@@ -10,14 +10,14 @@
     <result column="keyword" property="keyword" jdbcType="VARCHAR" />
     <result column="catelog" property="catelog" jdbcType="TINYINT" />
     <result column="stage" property="stage" jdbcType="TINYINT" />
-    <result column="spj" property="spj" jdbcType="TINYINT" />
     <result column="time_limit" property="timeLimit" jdbcType="INTEGER" />
     <result column="memory_limit" property="memoryLimit" jdbcType="INTEGER" />
     <result column="difficulty" property="difficulty" jdbcType="TINYINT" />
     <result column="solved" property="solved" jdbcType="INTEGER" />
     <result column="submit" property="submit" jdbcType="INTEGER" />
     <result column="author_id" property="authorId" jdbcType="INTEGER" />
-    <result column="contest_id" property="contestId" jdbcType="INTEGER" />
+    <result column="author_name" property="authorName" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="TINYINT" />
     <result column="createdate" property="createdate" jdbcType="TIMESTAMP" />
     <result column="modifydate" property="modifydate" jdbcType="TIMESTAMP" />
     <result column="description" property="description" jdbcType="LONGVARCHAR" />
@@ -31,8 +31,8 @@
     <!--
       WARNING - @mbg.generated
     -->
-    id, title, keyword, catelogDO, stage, spj, time_limit, memory_limit, difficulty, accepted,
-    solved, submit, submit_user, author_id, contest_id, createdate, modifydate,
+    id, title, keyword, catelog, stage, time_limit, memory_limit, difficulty,
+    solved, submit, author_id, author_name, type, createdate, modifydate,
     description, input, output, sample_input, sample_output, hit
   </sql>
 
@@ -63,7 +63,6 @@
     <result column="title" property="title" jdbcType="VARCHAR" />
     <result column="keyword" property="keyword" jdbcType="VARCHAR" />
     <result column="stage" property="stage" jdbcType="TINYINT" />
-    <result column="spj" property="spj" jdbcType="TINYINT" />
     <result column="time_limit" property="timeLimit" jdbcType="INTEGER" />
     <result column="memory_limit" property="memoryLimit" jdbcType="INTEGER" />
     <result column="difficulty" property="difficulty" jdbcType="TINYINT" />

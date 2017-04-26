@@ -13,6 +13,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import cn.edu.aust.common.constant.ContestStatus;
 import cn.edu.aust.convert.ContestConvert;
 import cn.edu.aust.dto.ContestDTO;
 import cn.edu.aust.mapper.ContestMapper;
@@ -44,7 +45,6 @@ public class ContestService {
   public ContestDTO findDetail(Long id){
     ContestDO contestDO = contestMapper.selectByPrimaryKey(id);
     checkArgument(contestDO != null, "该竞赛不存在");
-    checkArgument(contestDO.getDefunct() == 1,"该竞赛不存在");
     return ContestConvert.assemble(contestDO);
   }
 
@@ -69,7 +69,7 @@ public class ContestService {
     //权限检查
     ContestDO contestDO = contestMapper.selectByPrimaryKey(contestid);
     checkArgument(contestDO != null, "该竞赛不存在");
-    checkArgument(contestDO.getDefunct() == 1,"该竞赛不存在");
+    checkArgument(contestDO.getStatus() != ContestStatus.NORMAL.value,"该竞赛不存在");
     if (contestDO.getType() == 1) {
       checkArgument(StringUtils.equals(contestDO.getPassword(), passwd), "密码错误");
     }
@@ -92,7 +92,7 @@ public class ContestService {
     List<ContestDTO> expire = Lists.newArrayList();
     List<ContestDTO> noExpire = Lists.newArrayList();
     //无效的比赛不展示
-    contestDOS.stream().filter(contestDO -> contestDO.getDefunct() != 0)
+    contestDOS.stream().filter(contestDO -> contestDO.getStatus() == ContestStatus.NORMAL.value)
             .forEach(contestDO -> {
               //去除该阶段没必要显示的字段
               contestDO.setDescription(null);

@@ -95,7 +95,7 @@ public class SolutionService {
     solutionDO.setCreatedate(new Date());
     solutionDO.setModifydate(solutionDO.getCreatedate());
     solutionDO.setCodeLength(source.getBytes().length / 8.0);
-    solutionDO.setContestId(problemDO.getContestId());
+//    solutionDO.setContestId(problemDO.getContestId());
     solutionDO.setLanguage(language.getLanguageName());
     solutionDO.setProblemId(problemDO.getId());
     solutionDO.setProblemTitle(problemDO.getTitle());

@@ -42,11 +42,6 @@ public class ProblemDO {
     private Integer stage;
 
     /**
-     * 是否特殊判题
-     */
-    private Integer spj;
-
-    /**
      * 时间限制
      */
     @Column(name = "time_limit")
@@ -78,12 +73,16 @@ public class ProblemDO {
      */
     @Column(name = "author_id")
     private Integer authorId;
+    /**
+     * 作者名称
+     */
+    @Column(name = "author_name")
+    private String authorName;
 
     /**
-     * 所属竞赛id
+     * 题目类型
      */
-    @Column(name = "contest_id")
-    private Integer contestId;
+    private Integer type;
 
     /**
      * 创建日期

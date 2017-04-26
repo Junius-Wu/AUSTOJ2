@@ -25,11 +25,6 @@ public class UserDO {
     private String avatar;
 
     /**
-     * 用户名,不可修改,弃用,邮箱+密码登录
-     */
-    private String username;
-
-    /**
      * 密码,sha256存储
      */
     private String password;
@@ -131,18 +126,6 @@ public class UserDO {
      * 修改日期
      */
     private Date modifydate;
-
-    /**
-     * 是否开放代码,1是 0否
-     */
-    @Column(name = "is_opensource")
-    private Integer isOpensource;
-
-    /**
-     * 是否接收邮件,1是 0否
-     */
-    @Column(name = "is_email")
-    private Integer isEmail;
 
     private Integer status;
 
