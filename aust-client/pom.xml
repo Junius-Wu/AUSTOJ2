@@ -2,64 +2,165 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>aust-parent</artifactId>
+        <groupId>cn.edu.aust</groupId>
+        <version>1.0</version>
+    </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>aust-client</artifactId>
     <version>1.0</version>
-    <packaging>pom</packaging>
-
-    <parent>
-        <groupId>cn.edu.aust</groupId>
-        <artifactId>aust-parent</artifactId>
-        <version>1.0</version>
-    </parent>
-
-    <modules>
-        <module>aust-front</module>
-        <module>aust-mapper</module>
-        <module>aust-service</module>
-    </modules>
-
+    <packaging>war</packaging>
+    <name>aust-client</name>
 
     <!--集中管理该项目依赖-->
     <properties>
         <austpojo.version>1.0</austpojo.version>
         <austcommon.version>1.0</austcommon.version>
-        <austmapper.version>1.0</austmapper.version>
         <austplugin.version>1.0</austplugin.version>
-        <austservice.version>1.0</austservice.version>
     </properties>
 
-    <dependencyManagement>
-        <dependencies>
-            <!--aust依赖  start-->
-            <dependency>
-                <groupId>cn.edu.aust</groupId>
-                <artifactId>aust-common</artifactId>
-                <version>${austcommon.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>cn.edu.aust</groupId>
-                <artifactId>aust-pojo</artifactId>
-                <version>${austpojo.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>cn.edu.aust</groupId>
-                <artifactId>aust-mapper</artifactId>
-                <version>${austmapper.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>cn.edu.aust</groupId>
-                <artifactId>aust-plugin</artifactId>
-                <version>${austplugin.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>cn.edu.aust</groupId>
-                <artifactId>aust-service</artifactId>
-                <version>${austservice.version}</version>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
+    <dependencies>
+        <!--aust依赖  start-->
+        <dependency>
+            <groupId>cn.edu.aust</groupId>
+            <artifactId>aust-common</artifactId>
+            <version>${austcommon.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>cn.edu.aust</groupId>
+            <artifactId>aust-pojo</artifactId>
+            <version>${austpojo.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>cn.edu.aust</groupId>
+            <artifactId>aust-plugin</artifactId>
+            <version>${austplugin.version}</version>
+        </dependency>
+        <!--spring start-->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jdbc</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context-support</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-redis</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <!--cglib start-->
+        <dependency>
+            <groupId>cglib</groupId>
+            <artifactId>cglib</artifactId>
+            <version>3.2.2</version>
+        </dependency>
+        <!--aspectj start-->
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
+            <version>1.8.6</version>
+        </dependency>
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjrt</artifactId>
+            <version>1.8.6</version>
+        </dependency>
+        <!-- springframe end -->
+        <!--thymeleaf start-->
+        <dependency>
+            <groupId>org.thymeleaf</groupId>
+            <artifactId>thymeleaf</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.thymeleaf</groupId>
+            <artifactId>thymeleaf-spring4</artifactId>
+        </dependency>
+        <!--mybatis start-->
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis</artifactId>
+        </dependency>
+        <!--通用mapper依赖 start-->
+        <dependency>
+            <groupId>tk.mybatis</groupId>
+            <artifactId>mapper</artifactId>
+        </dependency>
+        <!--pagehelper start-->
+        <dependency>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis-spring</artifactId>
+        </dependency>
+        <!--mysql start-->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+        </dependency>
+        <!--alibaba start-->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid</artifactId>
+        </dependency>
+        <!--junit start-->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <!--log start-->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.logback-extensions</groupId>
+            <artifactId>logback-ext-spring</artifactId>
+            <version>0.1.4</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jcl-over-slf4j</artifactId>
+            <version>1.7.12</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <!--modelmapper start-->
+        <dependency>
+            <groupId>org.modelmapper</groupId>
+            <artifactId>modelmapper</artifactId>
+        </dependency>
+        <!--java MailDO start-->
+        <dependency>
+            <groupId>com.sun.mail</groupId>
+            <artifactId>javax.mail</artifactId>
+        </dependency>
+    </dependencies>
 
 
 </project>

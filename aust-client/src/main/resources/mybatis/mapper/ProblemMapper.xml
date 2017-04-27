@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.edu.aust.mapper.ProblemMapper" >
+  <resultMap id="BaseResultMap" type="cn.edu.aust.pojo.entity.ProblemDO" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="keyword" property="keyword" jdbcType="VARCHAR" />
+    <result column="catelog" property="catelog" jdbcType="TINYINT" />
+    <result column="stage" property="stage" jdbcType="TINYINT" />
+    <result column="time_limit" property="timeLimit" jdbcType="INTEGER" />
+    <result column="memory_limit" property="memoryLimit" jdbcType="INTEGER" />
+    <result column="difficulty" property="difficulty" jdbcType="TINYINT" />
+    <result column="solved" property="solved" jdbcType="INTEGER" />
+    <result column="submit" property="submit" jdbcType="INTEGER" />
+    <result column="author_id" property="authorId" jdbcType="INTEGER" />
+    <result column="author_name" property="authorName" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="TINYINT" />
+    <result column="createdate" property="createdate" jdbcType="TIMESTAMP" />
+    <result column="modifydate" property="modifydate" jdbcType="TIMESTAMP" />
+    <result column="description" property="description" jdbcType="LONGVARCHAR" />
+    <result column="input" property="input" jdbcType="LONGVARCHAR" />
+    <result column="output" property="output" jdbcType="LONGVARCHAR" />
+    <result column="sample_input" property="sampleInput" jdbcType="LONGVARCHAR" />
+    <result column="sample_output" property="sampleOutput" jdbcType="LONGVARCHAR" />
+    <result column="hit" property="hit" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Detail_Column_List" >
+    <include refid="Basic_Column_List"/>
+    author_id, author_name, type, createdate, modifydate,
+    description, input, output, sample_input, sample_output, hit
+  </sql>
+  <sql id="Basic_Column_List">
+    id, title, keyword, catelog, stage, time_limit, memory_limit, difficulty,
+    solved, submit,
+  </sql>
+
+  <!--查询单条题目详情-->
+  <select id="findDetail" parameterType="long" resultMap="BaseResultMap">
+      SELECT <include refid="Detail_Column_List"/>
+       FROM problem p1
+      WHERE p1.id=#{value}
+  </select>
+  <!--查询单条题目基本信息-->
+  <!--todo 基本信息字段-->
+  <select id="findBasic" parameterType="long" resultMap="BaseResultMap">
+      SELECT <include refid="Basic_Column_List"/>
+       FROM problem p1
+      WHERE p1.id=#{value}
+  </select>
+
+<!--查询阶段题目-->
+  <select id="queryListStage" parameterType="cn.edu.aust.query.ProblemQuery" resultMap="BaseResultMap">
+      SELECT <include refid="Basic_Column_List"/>
+    FROM problem p1
+      WHERE p1.type = 1
+        <if test="stage > 0">
+          and p1.stage = #{stage}
+        </if>
+        <if test="search!= null">
+          and (p1.id LIKE #{search} or p1.title LIKE #{search} or p1.keyword LIKE #{search})
+        </if>
+    ORDER BY p1.id ${direction}
+  </select>
+
+  <!--查询指定目录下的题目,使用queryModel的stage参数当成目录id-->
+  <select id="queryListCatelog" parameterType="cn.edu.aust.query.ProblemQuery" resultMap="BaseResultMap">
+      SELECT <include refid="Basic_Column_List"/>
+     FROM problem p1
+      WHERE p1.type = 1
+        <if test="stage > 0">
+          and p1.catelog = #{stage}
+        </if>
+        <if test="search!= null">
+          and (p1.id LIKE #{search} or p1.title LIKE #{search} or p1.keyword LIKE #{search})
+        </if>
+    ORDER BY p1.id ${direction}
+  </select>
+
+  <!--查询竞赛中所有题目-->
+  <select id="queryContest" parameterType="Long" resultMap="BaseResultMap">
+    SELECT <include refid="Basic_Column_List"/>
+    FROM problem p1
+    WHERE p1.type = #{contest}
+  </select>
+
+</mapper>

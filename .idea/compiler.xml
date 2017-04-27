@@ -8,20 +8,18 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="aust-admin" />
+        <module name="aust-client" />
         <module name="aust-common" />
-        <module name="aust-front" />
         <module name="aust-judger" />
-        <module name="aust-mapper" />
         <module name="aust-plugin" />
         <module name="aust-pojo" />
-        <module name="aust-service" />
         <module name="aust-web" />
         <module name="austa-dmin" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="aust-admin" target="1.5" />
-      <module name="aust-client" target="1.5" />
+      <module name="aust-client" target="1.8" />
       <module name="aust-common" target="1.8" />
       <module name="aust-front" target="1.8" />
       <module name="aust-judger" target="1.8" />
