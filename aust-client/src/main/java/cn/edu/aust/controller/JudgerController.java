@@ -19,9 +19,11 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import cn.edu.aust.common.constant.PosCode;
+import cn.edu.aust.common.constant.ProblemType;
 import cn.edu.aust.common.entity.ResultVO;
 import cn.edu.aust.common.util.CgiHelper;
 import cn.edu.aust.common.util.LanguageUtil;
+import cn.edu.aust.dto.BaseProblemDTO;
 import cn.edu.aust.dto.SolutionDTO;
 import cn.edu.aust.pojo.entity.UserDO;
 import cn.edu.aust.service.ContestService;
@@ -65,15 +67,16 @@ public class JudgerController {
     if (Objects.isNull(loginUser)){
       return resultVO.buildWithMsgAndStatus(PosCode.NO_LOGIN,"用户未登录");
     }
-    ProblemDTO problemDTO = problemService.findBasicById(id);
+    BaseProblemDTO problemDTO = problemService.findBasicById(id);
     if(Objects.isNull(problemDTO)){
       return resultVO.buildWithMsgAndStatus(PosCode.PARAM_ERROR,"所提交的题目不存在");
     }
-    if (!Objects.equals(problemDTO.getContestId(),-1L)){
+    //竞赛题验证是否可以判题
+    if (problemDTO.getType() == ProblemType.CONTEST.value){
       //判断是否验证过
-      if (!contestService.isVisited(problemDTO.getContestId(),loginUser.getId())){
-        return resultVO.buildWithMsgAndStatus(PosCode.PARAM_ERROR,"没权限判题");
-      }
+//      if (!contestService.isVisited(problemDTO.getContestId(),loginUser.getId())){
+//        return resultVO.buildWithMsgAndStatus(PosCode.PARAM_ERROR,"没权限判题");
+//      }
     }
     if (StringUtils.isEmpty(sourceCode)){
       return resultVO.buildWithMsgAndStatus(PosCode.PARAM_ERROR,"源代码不能为空");

@@ -1,6 +1,8 @@
 package cn.edu.aust.controller;
 
 
+import com.github.pagehelper.PageInfo;
+
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,13 +18,12 @@ import javax.servlet.http.HttpServletRequest;
 import cn.edu.aust.common.constant.PosCode;
 import cn.edu.aust.common.entity.ResultVO;
 import cn.edu.aust.common.util.CgiHelper;
-import cn.edu.aust.dto.ArticleAsideDTO;
-import cn.edu.aust.dto.ArticleDTO;
+import cn.edu.aust.dto.BaseArticleDTO;
 import cn.edu.aust.exception.PageException;
+import cn.edu.aust.pojo.entity.ArticleDO;
 import cn.edu.aust.pojo.entity.UserDO;
 import cn.edu.aust.service.ArticleService;
 import cn.edu.aust.service.UserService;
-import cn.edu.aust.service.VotelogService;
 import cn.edu.aust.vo.ArticleDetailVO;
 import cn.edu.aust.vo.ArticleTableVO;
 
@@ -36,8 +37,6 @@ public class ArticleController {
   private ArticleService articleService;
   @Resource
   private UserService userService;
-  @Resource
-  private VotelogService votelogService;
 
   private static final Integer article_aside_limit = 7;
 
@@ -46,8 +45,8 @@ public class ArticleController {
    */
   @GetMapping(value = "/articles/aside",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
   public ResultVO articleAside(){
-    ResultVO<List<ArticleAsideDTO>> resultVO = new ResultVO<>();
-    List<ArticleAsideDTO> asideDTOS = articleService.queryForAside(article_aside_limit);
+    ResultVO<List<BaseArticleDTO>> resultVO = new ResultVO<>();
+    List<BaseArticleDTO> asideDTOS = articleService.queryForAside(article_aside_limit);
     return resultVO.buildOKWithData(asideDTOS);
   }
 
@@ -57,18 +56,18 @@ public class ArticleController {
   @GetMapping(value = "/article/{id}",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
   public ResultVO articleDetail(@PathVariable("id") Long id){
     ResultVO<ArticleDetailVO> resultVO = new ResultVO<>();
-    ArticleDTO articleDTO = articleService.findDetailById(id);
-    if (Objects.nonNull(articleDTO.getIsShow()) && articleDTO.getIsShow() == 0){
+    ArticleDO articleDO = articleService.findDetailById(id);
+    if (Objects.nonNull(articleDO.getIsShow()) && articleDO.getIsShow() == 0){
       return resultVO.buildWithMsgAndStatus(PosCode.NO_PRIVILEGE,"无权限查看");
     }
     //点击量控制
-    articleService.viewHits(articleDTO);
-    return resultVO.buildOKWithData(ArticleDetailVO.assembler(articleDTO));
+    articleService.viewHits(articleDO.getId(),articleDO.getViewCount());
+    return resultVO.buildOKWithData(ArticleDetailVO.assembler(articleDO));
   }
 
   /**
    * 点赞文章
-   *
+   * todo 点赞
    * @param id 该文章id
    * @return 对应结果
    * @throws PageException 文章不存在或不显示抛出异常
@@ -82,7 +81,7 @@ public class ArticleController {
       return resultVO.buildWithPosCode(PosCode.NO_LOGIN);
     }
     //查询
-    ArticleDTO article = articleService.findBasicById(id);
+    BaseArticleDTO article = articleService.findBasicById(id);
 
 //    votelogService.voteArticleComment(result, article.get(), userDO.getId());
     return resultVO;
@@ -99,7 +98,7 @@ public class ArticleController {
     Integer pageNum = CgiHelper.getPageNum(request);
     Integer pageSize = CgiHelper.getPageSize(request);
     //查询
-    PageInfo<ArticlePO> articlePos = articleService.queryList(search,pageNum,pageSize);
+    PageInfo<ArticleDO> articlePos = articleService.queryList(search,pageNum,pageSize);
     //包装返回
     ResultVO.paginationData<ArticleTableVO> tableVos = new ResultVO.paginationData<>(
         articlePos.getTotal(),

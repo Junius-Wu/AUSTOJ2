@@ -1,5 +1,7 @@
 package cn.edu.aust.controller;
 
+import com.google.common.collect.Lists;
+
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,7 +21,6 @@ import cn.edu.aust.common.constant.PosCode;
 import cn.edu.aust.common.entity.ResultVO;
 import cn.edu.aust.common.util.CgiHelper;
 import cn.edu.aust.dto.ContestDTO;
-import cn.edu.aust.dto.ProblemBasicDTO;
 import cn.edu.aust.exception.PageException;
 import cn.edu.aust.pojo.entity.UserDO;
 import cn.edu.aust.service.ContestService;
@@ -113,8 +114,9 @@ public class ContestController {
       return resultVO.buildWithMsgAndStatus(PosCode.NO_PRIVILEGE, "用户无权限访问");
     }
     //查找相关题目
-    List<ProblemBasicDTO> problems = problemService.queryContest(id);
+    // todo 查找竞赛题目
+//    List<BaseProblemDTO> problems = problemService.queryContest(id);
 
-    return resultVO.buildOKWithData(ContestDetailVO.assemble(problems,contest));
+    return resultVO.buildOKWithData(ContestDetailVO.assemble(Lists.newArrayList(),contest));
   }
 }

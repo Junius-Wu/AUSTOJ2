@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import cn.edu.aust.common.constant.UserStatus;
+import cn.edu.aust.common.constant.user.UserStatus;
 import cn.edu.aust.dto.UserDTO;
 import lombok.Data;
 import lombok.NoArgsConstructor;

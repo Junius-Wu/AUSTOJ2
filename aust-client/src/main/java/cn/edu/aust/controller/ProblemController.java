@@ -14,11 +14,12 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import cn.edu.aust.common.constant.PosCode;
+import cn.edu.aust.common.constant.ProblemType;
 import cn.edu.aust.common.entity.ResultVO;
 import cn.edu.aust.common.util.CgiHelper;
+import cn.edu.aust.dto.BaseProblemDTO;
 import cn.edu.aust.dto.CatelogDTO;
-import cn.edu.aust.dto.ProblemBasicDTO;
-import cn.edu.aust.pojo.entity.UserDO;
+import cn.edu.aust.pojo.entity.ProblemDO;
 import cn.edu.aust.service.CatelogService;
 import cn.edu.aust.service.ContestService;
 import cn.edu.aust.service.ProblemService;
@@ -51,26 +52,20 @@ public class ProblemController {
    */
   @GetMapping(value = "/{id}",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
   public ResultVO problem(@PathVariable("id") Long id){
-    ResultVO<ProblemDTO> resultVO = new ResultVO<>();
+    ResultVO<ProblemDO> resultVO = new ResultVO<>();
     if (id < 1000L || id > 10000L){
       return resultVO.buildWithMsgAndStatus(PosCode.NO_PRIVILEGE,"不存在的题目或者无权访问");
     }
-    ProblemDTO problemDTO = problemService.findDetail(id);
-    if (Objects.isNull(problemDTO)) {
+    ProblemDO problemDO = problemService.findDetail(id);
+    if (Objects.isNull(problemDO)) {
       return resultVO.buildWithMsgAndStatus(PosCode.NO_PRIVILEGE,"不存在的题目或者无权访问");
     }
-    //如果是竞赛题
-    if (!problemDTO.getContestId().equals(-1L)){
-      UserDO userDO = userService.getCurrent();
-      if (Objects.isNull(userDO)){
-        return resultVO.buildWithMsgAndStatus(PosCode.NO_LOGIN,"无权查看竞赛题");
-      }
-      if (!contestService.isVisited(problemDTO.getContestId(),userDO.getId())){
-        return resultVO.buildWithMsgAndStatus(PosCode.NO_PRIVILEGE,"无权查看竞赛题");
-      }
+    //如果非是常规题
+    if (problemDO.getType() != ProblemType.NORMAL.value){
+      return resultVO.buildWithMsgAndStatus(PosCode.NO_LOGIN,"无权查看竞赛题");
     }
     //构造返回
-    return resultVO.buildOKWithData(problemDTO);
+    return resultVO.buildOKWithData(problemDO);
   }
 
 
@@ -89,7 +84,7 @@ public class ProblemController {
     Integer pageSize = CgiHelper.getPageSize(request);
     Integer pageNum = CgiHelper.getPageNum(request);
 
-    PageInfo<ProblemBasicDTO> pageInfo = problemService.queryListStage(search,
+    PageInfo<BaseProblemDTO> pageInfo = problemService.queryListStage(search,
         stage, order, pageNum, pageSize, false);
     ProblemTableVO tableVO = ProblemTableVO.assemble(pageInfo.getList(), pageInfo.getTotal(), pageNum);
     return resultVO.buildOKWithData(tableVO);
@@ -113,7 +108,7 @@ public class ProblemController {
     if (Objects.isNull(catelogDTO)){
       return resultVO.buildWithMsgAndStatus(PosCode.NO_PRIVILEGE,"用户无权限访问");
     }
-    PageInfo<ProblemBasicDTO> pageInfo = problemService.queryListStage(search,
+    PageInfo<BaseProblemDTO> pageInfo = problemService.queryListStage(search,
         catelogId, order, pageNum, pageSize, true);
     ProblemTableVO tableVO = ProblemTableVO.assemble(pageInfo.getList(), pageInfo.getTotal(), pageNum);
     tableVO.setCatelogName(catelogDTO.getName());

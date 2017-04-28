@@ -23,6 +23,7 @@ import cn.edu.aust.common.constant.MessageKey;
 import cn.edu.aust.common.entity.MessageType;
 import cn.edu.aust.common.util.LanguageUtil;
 import cn.edu.aust.convert.SolutionConvert;
+import cn.edu.aust.dto.BaseProblemDTO;
 import cn.edu.aust.dto.SolutionDTO;
 import cn.edu.aust.mapper.ProblemMapper;
 import cn.edu.aust.mapper.SolutionMapper;
@@ -87,7 +88,7 @@ public class SolutionService {
    * @param language  所用语言
    */
   @Transactional(rollbackFor = Exception.class)
-  public void startJudger(Long userId, ProblemDTO problemDTO, String source,
+  public void startJudger(Long userId, BaseProblemDTO problemDTO, String source,
       LanguageUtil.Language language) {
     ProblemDO problemDO = problemMapper.selectByPrimaryKey(problemDTO.getId());
     SolutionDO solutionDO = new SolutionDO();

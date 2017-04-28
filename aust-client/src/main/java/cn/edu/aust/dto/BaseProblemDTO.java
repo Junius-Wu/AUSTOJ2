@@ -1,6 +1,7 @@
 package cn.edu.aust.dto;
 
-import cn.edu.aust.common.constant.ProblemType;
+import java.util.Date;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -13,18 +14,26 @@ import lombok.ToString;
 @Data
 @NoArgsConstructor
 @ToString
-public class ProblemBasicDTO {
+public class BaseProblemDTO {
   private Long id;
   private String title;
+  private String keyword;
+  private Integer catelog;
+  private Integer stage;
   private Integer timeLimit;
   private Integer memoryLimit;
+  private Integer difficulty;
+  private Integer solved;
+  private Integer submit;
   private String description;
   private String input;
   private String output;
   private String sampleInput;
   private String sampleOutput;
   private String hit;
-  private String nickname;
-  private ProblemType type;
-  private Integer catelogId;
+  private Integer authorId;
+  private String authorName;
+  private Integer type;
+  private Date createdate;
+  private Date modifydate;
 }

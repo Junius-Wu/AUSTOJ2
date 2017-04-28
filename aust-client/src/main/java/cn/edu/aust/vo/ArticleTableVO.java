@@ -9,7 +9,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import cn.edu.aust.query.ArticlePO;
+import cn.edu.aust.pojo.entity.ArticleDO;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -35,7 +35,7 @@ public class ArticleTableVO {
   private String nickname;
   private String summary;
 
-  public static ArticleTableVO assembler(ArticlePO articlePO) {
+  public static ArticleTableVO assembler(ArticleDO articlePO) {
     ArticleTableVO tableVO = new ArticleTableVO();
     tableVO.setId(articlePO.getId());
     tableVO.setTitle(articlePO.getTitle());
@@ -43,18 +43,18 @@ public class ArticleTableVO {
     tableVO.setViewcount(articlePO.getViewCount());
     tableVO.setLikecount(articlePO.getLikeCount());
     tableVO.setIsTop(articlePO.getIsTop());
-    tableVO.setIsVote(articlePO.getIsVote());
-    Date createDate = articlePO.getCreateDate();
+//    tableVO.setIsVote(articlePO.getIsVote());
+    Date createDate = articlePO.getCreatedate();
     LocalDate date = LocalDate.from(createDate.toInstant().atZone(ZoneId.systemDefault()));
     tableVO.setYear(date.getYear());
     tableVO.setMonth(date.getMonthValue());
     tableVO.setDay(date.getDayOfMonth());
-    tableVO.setNickname(articlePO.getNickname());
+    tableVO.setNickname(articlePO.getAuthorName());
     tableVO.setSummary(articlePO.getSummary());
     return tableVO;
   }
 
-  public static List<ArticleTableVO> assembler(List<ArticlePO> articlePOS){
+  public static List<ArticleTableVO> assembler(List<ArticleDO> articlePOS){
     if (CollectionUtils.isEmpty(articlePOS)) {
       return Collections.emptyList();
     }

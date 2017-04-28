@@ -20,7 +20,8 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import cn.edu.aust.common.constant.PosCode;
-import cn.edu.aust.common.constant.UserStatus;
+import cn.edu.aust.common.constant.user.UserStatus;
+import cn.edu.aust.common.constant.user.UserType;
 import cn.edu.aust.common.entity.ResultVO;
 import cn.edu.aust.common.entity.Setting;
 import cn.edu.aust.convert.UserConvert;
@@ -38,16 +39,14 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 @Slf4j
 public class UserService {
-
-  private static final ModelMapper modelMapper = new ModelMapper();
+  @Resource
+  private ModelMapper modelMapper;
   @Resource
   private UserMapper userMapper;
   @Resource
   private SettingService settingService;
   @Resource
   private MailService mailService;
-  @Resource
-  private SolutionService solutionService;
   @Resource
   private StringRedisTemplate redisTemplate;
 
@@ -99,6 +98,7 @@ public class UserService {
     userDO.setNickname(nickname);
     userDO.setEmail(email);
     userDO.setPoint(0);
+    userDO.setType(UserType.GENERAL.value);
     userDO.setStatus(UserStatus.WAIT4EMAIL_CHECK.value);//设置待验证状态
     userMapper.insertSelective(userDO);
     //发送邮件,验证

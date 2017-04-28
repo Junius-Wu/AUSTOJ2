@@ -44,7 +44,6 @@
       WHERE p1.id=#{value}
   </select>
   <!--查询单条题目基本信息-->
-  <!--todo 基本信息字段-->
   <select id="findBasic" parameterType="long" resultMap="BaseResultMap">
       SELECT <include refid="Basic_Column_List"/>
        FROM problem p1
@@ -77,13 +76,6 @@
           and (p1.id LIKE #{search} or p1.title LIKE #{search} or p1.keyword LIKE #{search})
         </if>
     ORDER BY p1.id ${direction}
-  </select>
-
-  <!--查询竞赛中所有题目-->
-  <select id="queryContest" parameterType="Long" resultMap="BaseResultMap">
-    SELECT <include refid="Basic_Column_List"/>
-    FROM problem p1
-    WHERE p1.type = #{contest}
   </select>
 
 </mapper>

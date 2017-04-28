@@ -17,12 +17,12 @@ public interface ArticleMapper extends Mapper<ArticleDO> {
      * 查询文章页面显示的列表
      * @return 结果集
      */
-    List<ArticlePO> queryList(ArticleQuery articleQuery);
+    List<ArticleDO> queryList(ArticleQuery articleQuery);
 
     /**
      * 根据id查询一个文章包装类型
      * @param id 文章id
      * @return 包装结果
      */
-    ArticlePO queryDetail(Long id);
+    ArticleDO findDetail(Long id);
 }

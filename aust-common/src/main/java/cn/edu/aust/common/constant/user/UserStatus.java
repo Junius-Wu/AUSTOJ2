@@ -1,4 +1,4 @@
-package cn.edu.aust.common.constant;
+package cn.edu.aust.common.constant.user;
 
 /**
  * @author Niu Li

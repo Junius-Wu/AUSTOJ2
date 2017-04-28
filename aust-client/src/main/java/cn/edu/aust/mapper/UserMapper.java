@@ -8,7 +8,7 @@ import tk.mybatis.mapper.common.Mapper;
 /**
  * 针对client的mapper
  * @author Niu Li
- * @date 2017/1/22
+ * @since  2017/1/22
  */
 public interface UserMapper extends Mapper<UserDO> {
 

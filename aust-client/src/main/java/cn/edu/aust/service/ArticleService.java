@@ -18,8 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import cn.edu.aust.common.util.WebUtils;
 import cn.edu.aust.convert.ArticleConvert;
-import cn.edu.aust.dto.ArticleAsideDTO;
-import cn.edu.aust.dto.ArticleDTO;
+import cn.edu.aust.dto.BaseArticleDTO;
 import cn.edu.aust.entity.ArticleQuery;
 import cn.edu.aust.mapper.ArticleMapper;
 import cn.edu.aust.pojo.entity.ArticleDO;
@@ -36,15 +35,17 @@ public class ArticleService {
   @Resource
   private UserService userService;
 
+  public static final String ARTICLEHIT_COOKIES = "view_articles";
+
+
   /**
    * 根据主键查询展示对象
    *
    * @param id 主键
    * @return 详情展示对象
    */
-  public ArticleDTO findDetailById(Long id) {
-    ArticlePO article = articleMapper.queryDetail(id);
-    return ArticleConvert.articlePo2dto(article);
+  public ArticleDO findDetailById(Long id) {
+    return articleMapper.findDetail(id);
   }
 
   /**
@@ -52,47 +53,53 @@ public class ArticleService {
    * @param id 文章id
    * @return 查询结果
    */
-  public ArticleDTO findBasicById(Long id){
+  public BaseArticleDTO findBasicById(Long id){
     ArticleDO articleDO = articleMapper.selectByPrimaryKey(id);
     return ArticleConvert.do2dto(articleDO);
   }
 
   /**
    * 增加点击次数
-   * @param articleDTO 文章实体
+   * @param articleId 文章id
+   * @param viewCount 文章阅读次数
    * @return 点击次数
    */
   @Transactional
-  public int viewHits(ArticleDTO articleDTO) {
+  public int viewHits(Long articleId, Integer viewCount) {
+    if (Objects.isNull(articleId)){
+      return 0;
+    }
+    if (Objects.isNull(viewCount)) {
+      viewCount = 0;
+    }
     ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
     HttpServletRequest request = requestAttributes.getRequest();
     HttpServletResponse response = requestAttributes.getResponse();
-    Long id = articleDTO.getId();
-    String articles = WebUtils.getCookie(request, ArticleDTO.ARTICLEHIT_COOKIES);
+    String articles = WebUtils.getCookie(request, ARTICLEHIT_COOKIES);
     boolean canAdd = false;
     //不存在则添加
     if (articles == null) {
-      WebUtils.addCookie(response, ArticleDTO.ARTICLEHIT_COOKIES, id + ",", 24 * 3600, "/", null, false);
+      WebUtils.addCookie(response, ARTICLEHIT_COOKIES, articleId + ",", 24 * 3600, "/", null, false);
       canAdd = true;
     } else {
       //cookies中不存在则添加
-      if (articles.contains(id + ",")) {
+      if (articles.contains(articleId + ",")) {
         canAdd = false;
       } else {
-        String value = articles + "," + id + ",";
-        WebUtils.addCookie(response, ArticleDTO.ARTICLEHIT_COOKIES, value, 24 * 3600, "/", null, false);
+        String value = articles + "," + articleId + ",";
+        WebUtils.addCookie(response, ARTICLEHIT_COOKIES, value, 24 * 3600, "/", null, false);
         canAdd = true;
       }
     }
     if (canAdd) {
       ArticleDO articleDO = new ArticleDO();
-      articleDO.setId(articleDTO.getId());
-      int viewcount = articleDTO.getViewCount() + 1;
-      articleDO.setViewcount(viewcount);
+      articleDO.setId(articleId);
+      int viewcount = viewCount + 1;
+      articleDO.setViewCount(viewcount);
       articleMapper.updateByPrimaryKeySelective(articleDO);
       return viewcount;
     }
-    return articleDTO.getViewCount();
+    return viewCount;
   }
 
   /**
@@ -100,10 +107,10 @@ public class ArticleService {
    * @param limit 数量
    * @return 映射集合
    */
-  public List<ArticleAsideDTO> queryForAside(Integer limit) {
+  public List<BaseArticleDTO> queryForAside(Integer limit) {
     PageHelper.offsetPage(0, limit, false);
     List<ArticleDO> articleDOS = articleMapper.queryForAside();
-    return ArticleConvert.do2AsideDto(articleDOS);
+    return ArticleConvert.do2dto(articleDOS);
   }
 
   /**
@@ -113,7 +120,7 @@ public class ArticleService {
    * @param pageSize   每页数量
    * @return 结果集
    */
-  public PageInfo<ArticlePO> queryList(String search, Integer pageNum, Integer pageSize) {
+  public PageInfo<ArticleDO> queryList(String search, Integer pageNum, Integer pageSize) {
     //查询条件
     ArticleQuery articleQuery = new ArticleQuery();
     articleQuery.setSearch(search);
@@ -122,10 +129,10 @@ public class ArticleService {
       articleQuery.setUserId(userDO.getId());
     }
     //分页查询并转换结果
-    Page<ArticlePO> articlePCS = PageHelper.startPage(pageNum, pageSize).doSelectPage(
+    Page<ArticleDO> articlePCS = PageHelper.startPage(pageNum, pageSize).doSelectPage(
         () -> articleMapper.queryList(articleQuery)
     );
-    PageInfo<ArticlePO> pageInfo = new PageInfo<>();
+    PageInfo<ArticleDO> pageInfo = new PageInfo<>();
     pageInfo.setTotal(articlePCS.getTotal());
     pageInfo.setList(articlePCS.getResult());
     return pageInfo;

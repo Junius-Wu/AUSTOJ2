@@ -5,16 +5,15 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
 import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 import javax.annotation.Resource;
 
-import cn.edu.aust.convert.ProblemConvert;
-import cn.edu.aust.dto.ProblemBasicDTO;
+import cn.edu.aust.dto.BaseProblemDTO;
 import cn.edu.aust.entity.ProblemQuery;
 import cn.edu.aust.mapper.ProblemMapper;
 import cn.edu.aust.pojo.entity.ProblemDO;
@@ -23,7 +22,7 @@ import cn.edu.aust.pojo.entity.ProblemDO;
  * 题目的service
  *
  * @author Niu Li
- * @date 2017/1/29
+ * @since  2017/1/29
  */
 @Service
 public class ProblemService {
@@ -45,9 +44,9 @@ public class ProblemService {
    * @param id 题目id
    * @return 查询实体
    */
-  public ProblemBasicDTO findBasicById(Long id){
+  public BaseProblemDTO findBasicById(Long id){
     Optional<ProblemDO> problemDO = Optional.ofNullable(problemMapper.findBasic(id));
-    return problemDO.map(x -> modelMapper.map(x,ProblemBasicDTO.class)).orElse(null);
+    return problemDO.map(x -> modelMapper.map(x,BaseProblemDTO.class)).orElse(null);
   }
 
   /**
@@ -61,7 +60,7 @@ public class ProblemService {
    * @param isCatelog 是否为目录,true时stage参数为目录id
    * @return DTO实体
    */
-  public PageInfo<ProblemBasicDTO> queryListStage(String search, Integer stage, String direction,
+  public PageInfo<BaseProblemDTO> queryListStage(String search, Integer stage, String direction,
       Integer pageNum, Integer pageSize, boolean isCatelog) {
     //封装查询条件
     ProblemQuery problemQuery = new ProblemQuery();
@@ -80,20 +79,11 @@ public class ProblemService {
                   }
                 }
             );
-    PageInfo<ProblemBasicDTO> pageInfo = new PageInfo<>();
+    PageInfo<BaseProblemDTO> pageInfo = new PageInfo<>();
     pageInfo.setTotal(problems.getTotal());
-    pageInfo.setList(ProblemConvert.pk2ListDto(problemPCS.getResult()));
+    pageInfo.setList(modelMapper.map(problems.getResult(),
+        new TypeToken<List<BaseProblemDTO>>(){}.getType()));
     return pageInfo;
   }
 
-  /**
-   * 查询一个竞赛下面的比赛
-   *
-   * @param contest 该竞赛
-   * @return 查询结果
-   */
-  public List<ProblemBasicDTO> queryContest(Long contest) {
-    List<ProblemPO> result = problemMapper.queryContest(contest);
-    return ProblemConvert.pk2ListDto(result);
-  }
 }

@@ -1,7 +1,7 @@
 package cn.edu.aust.vo;
 
 import cn.edu.aust.common.util.DateUtil;
-import cn.edu.aust.dto.ArticleDTO;
+import cn.edu.aust.pojo.entity.ArticleDO;
 import lombok.Data;
 
 /**
@@ -20,21 +20,21 @@ public class ArticleDetailVO {
   private Integer isTop;
   private String createDate;
   private Integer isVote;
-  private String nickname;
+  private String authorName;
   //内容
   private String htmlContent;
 
 
-  public static ArticleDetailVO assembler(ArticleDTO articleDTO) {
+  public static ArticleDetailVO assembler(ArticleDO article) {
     ArticleDetailVO detailVO = new ArticleDetailVO();
-    detailVO.setId(articleDTO.getId());
-    detailVO.setTitle(articleDTO.getTitle());
-    detailVO.setKeyword(articleDTO.getKeyword());
-    detailVO.setViewcount(articleDTO.getViewCount());
-    detailVO.setLikecount(articleDTO.getLikeCount());
-    detailVO.setCreateDate(DateUtil.format(articleDTO.getCreateDate(),DateUtil.YMDHMS_));
-    detailVO.setNickname(articleDTO.getNickName());
-    detailVO.setHtmlContent(articleDTO.getHtmlContent());
+    detailVO.setId(article.getId());
+    detailVO.setTitle(article.getTitle());
+    detailVO.setKeyword(article.getKeyword());
+    detailVO.setViewcount(article.getViewCount());
+    detailVO.setLikecount(article.getLikeCount());
+    detailVO.setCreateDate(DateUtil.format(article.getCreatedate(),DateUtil.YMDHMS_));
+    detailVO.setAuthorName(article.getAuthorName());
+    detailVO.setHtmlContent(article.getHtmlContent());
     return detailVO;
   }
 

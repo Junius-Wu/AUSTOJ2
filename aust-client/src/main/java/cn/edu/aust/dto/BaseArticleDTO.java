@@ -1,46 +1,33 @@
-package cn.edu.aust.pojo.entity;
+package cn.edu.aust.dto;
 
 import java.util.Date;
 
 import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-@Table(name = "article")
+/** 不同于ArticleDO,此实体中只包含基础字段
+ * @author Niu Li
+ * @since 2017/4/28
+ */
 @Data
 @NoArgsConstructor
 @ToString
-public class ArticleDO {
+public class BaseArticleDTO {
   /**
    * 主键
    */
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
   /**
    * 摘要
    */
   private String summary;
   /**
-   * html内容
-   */
-  @Column(name = "html_content")
-  private String htmlContent;
-  /**
-   * markdown内容
-   */
-  private String content;
-  /**
    * 标题
    */
   private String title;
-
   /**
    * 用户id
    */
@@ -49,18 +36,15 @@ public class ArticleDO {
 
   @Column(name = "author_name")
   private String authorName;
-
   /**
    * 关键词,都好分隔
    */
   private String keyword;
-
   /**
    * 阅读数
    */
   @Column(name = "view_count")
   private Integer viewCount;
-
   /**
    * 点赞数
    */
@@ -88,5 +72,4 @@ public class ArticleDO {
   private Date createdate;
 
   private Date modifydate;
-
 }
