@@ -22,28 +22,25 @@ public class ContestProblemDO {
     private Integer id;
 
     @Column(name = "problem_id")
-    private Integer problemId;
+    private Long problemId;
+
+    @Column(name = "problem_title")
+    private String problemTitle;
 
     @Column(name = "contest_id")
     private Integer contestId;
-
-    private String title;
 
     private String num;
 
     private Integer point;
 
-    private Integer accepted;
+    private Integer submit;
 
     private Integer solved;
 
-    private Integer submit;
-
-    @Column(name = "submit_user")
-    private Integer submitUser;
+    private Integer status;
 
     private Date createdate;
 
     private Date modifydate;
-
 }

@@ -58,13 +58,13 @@ public class ArticleDO {
   /**
    * 阅读数
    */
-  @Column(name = "view_count")
+  @Column(name = "viewcount")
   private Integer viewCount;
 
   /**
    * 点赞数
    */
-  @Column(name = "like_count")
+  @Column(name = "likecount")
   private Integer likeCount;
 
   /**

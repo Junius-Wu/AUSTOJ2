@@ -34,12 +34,13 @@ public class ContestDO {
     /**
      * 创建用户id
      */
-    @Column(name = "user_id")
-    private Long userId;
+    @Column(name = "author_id")
+    private Long authorId;
     /**
      * 创建用户
      */
-    private String username;
+    @Column(name = "author_name")
+    private String authorName;
 
     private Date createdate;
 

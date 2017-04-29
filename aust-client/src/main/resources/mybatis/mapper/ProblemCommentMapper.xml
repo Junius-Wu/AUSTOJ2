@@ -22,15 +22,9 @@
     <result column="content" property="content" jdbcType="LONGVARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    <!--
-      WARNING - @mbg.generated
-    -->
     id, problem_id, user_id, firend_id, likecount, root_id, status, createdate, modifydate
   </sql>
   <sql id="Blob_Column_List" >
-    <!--
-      WARNING - @mbg.generated
-    -->
     content
   </sql>
 </mapper>

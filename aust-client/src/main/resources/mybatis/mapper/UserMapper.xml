@@ -30,12 +30,12 @@
   </resultMap>
   <sql id="Detail_Column_List" >
     <include refid="Basic_Column_List"/>
-     password, openid, email, school, student_no,
+     ,password, openid, email, school, student_no,
      language, is_show, ip, is_lock, loginfail, lockdate,
-    createdate, modifydate,status,extend
+    createdate, modifydate ,extend
   </sql>
   <sql id="Basic_Column_List" >
-    id, avatar, nickname, honor, point, submit, solved, blog, type, intro,
+    id, avatar, nickname, honor, point, submit, solved, blog, type, intro, status
   </sql>
 
   <!--根据email查找用户-->

@@ -29,12 +29,11 @@
   </resultMap>
   <sql id="Detail_Column_List" >
     <include refid="Basic_Column_List"/>
-    author_id, author_name, type, createdate, modifydate,
-    description, input, output, sample_input, sample_output, hit
+    , description, input, output, sample_input, sample_output, hit
   </sql>
   <sql id="Basic_Column_List">
     id, title, keyword, catelog, stage, time_limit, memory_limit, difficulty,
-    solved, submit,
+    solved, submit, type, author_id, author_name,createdate, modifydate
   </sql>
 
   <!--查询单条题目详情-->
@@ -51,7 +50,7 @@
   </select>
 
 <!--查询阶段题目-->
-  <select id="queryListStage" parameterType="cn.edu.aust.query.ProblemQuery" resultMap="BaseResultMap">
+  <select id="queryListStage" parameterType="cn.edu.aust.entity.ProblemQuery" resultMap="BaseResultMap">
       SELECT <include refid="Basic_Column_List"/>
     FROM problem p1
       WHERE p1.type = 1
@@ -65,7 +64,8 @@
   </select>
 
   <!--查询指定目录下的题目,使用queryModel的stage参数当成目录id-->
-  <select id="queryListCatelog" parameterType="cn.edu.aust.query.ProblemQuery" resultMap="BaseResultMap">
+  <select id="queryListCatelog" parameterType="cn.edu.aust.entity.ProblemQuery"
+          resultMap="BaseResultMap">
       SELECT <include refid="Basic_Column_List"/>
      FROM problem p1
       WHERE p1.type = 1

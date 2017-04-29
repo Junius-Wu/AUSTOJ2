@@ -6,9 +6,10 @@ import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 
+import cn.edu.aust.common.util.DateUtil;
 import cn.edu.aust.common.util.ProblemUtil;
-import cn.edu.aust.dto.BaseProblemDTO;
 import cn.edu.aust.dto.ContestDTO;
+import cn.edu.aust.pojo.entity.ContestProblemDO;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -47,7 +48,7 @@ public class ContestDetailVO {
 
   private List<ContestTableDetail> contents;
 
-  public static ContestDetailVO assemble(List<BaseProblemDTO> listDTOS, ContestDTO contestDTO){
+  public static ContestDetailVO assemble(List<ContestProblemDO> listDTOS, ContestDTO contestDTO){
     ContestDetailVO detailVo = new ContestDetailVO();
     List<ContestDetailVO.ContestTableDetail> result = Lists.newArrayList();
     detailVo.setContents(result);
@@ -57,10 +58,9 @@ public class ContestDetailVO {
     }
     listDTOS.forEach(x -> {
       ContestDetailVO.ContestTableDetail temp = new ContestDetailVO.ContestTableDetail();
-      temp.setId(x.getId());
-      temp.setDifficulty(x.getDifficulty());
-      temp.setKeyword(x.getKeyword());
-      temp.setTitle(x.getTitle());
+      temp.setNum(x.getNum());
+      temp.setProblemId(x.getProblemId());
+      temp.setProblemTitle(x.getProblemTitle());
       temp.setAcRate(ProblemUtil.buildAcRate(x.getSolved(),x.getSubmit()));
       result.add(temp);
     });
@@ -68,8 +68,8 @@ public class ContestDetailVO {
     detailVo.setCreateUser(contestDTO.getCreateUser());
     detailVo.setDescription(contestDTO.getDescription());
     detailVo.setTitle(contestDTO.getTitle());
-    detailVo.setEndTime(contestDTO.getEndTime());
-    detailVo.setStartTime(contestDTO.getStartTime());
+    detailVo.setEndTime(DateUtil.format(contestDTO.getEndTime(),DateUtil.YMDHMS_));
+    detailVo.setStartTime(DateUtil.format(contestDTO.getStartTime(),DateUtil.YMDHMS_));
     return detailVo;
   }
 
@@ -77,21 +77,18 @@ public class ContestDetailVO {
   @Data
   @NoArgsConstructor
   private static class ContestTableDetail{
-    private Long id;
+    /**
+     * 题号
+     */
+    private String num;
+    /**
+     * 题目id
+     */
+    private Long problemId;
     /**
      * 标题
      */
-    private String title;
-
-    /**
-     * 关键词
-     */
-    private String keyword;
-    /**
-     * 难度等级
-     */
-    private Integer difficulty;
-
+    private String problemTitle;
     /**
      * 拼接用于显示的
      */

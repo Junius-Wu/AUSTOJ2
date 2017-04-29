@@ -5,4 +5,5 @@ import tk.mybatis.mapper.common.Mapper;
 
 public interface ContestMapper extends Mapper<ContestDO> {
 
+
 }

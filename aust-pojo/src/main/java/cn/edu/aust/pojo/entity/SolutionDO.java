@@ -34,7 +34,7 @@ public class SolutionDO {
     private String language;
 
     @Column(name = "contest_id")
-    private Integer contestId;
+    private Long contestId;
 
     private Integer verdict;
 

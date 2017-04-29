@@ -110,4 +110,13 @@ public abstract class DateUtil {
         return getSdf(sdf).parse(str);
     }
 
+    /**
+     * 判断这个时间是否在当前之前
+     * @param date 判断的时间
+     * @return true已过期
+     */
+    public static Boolean isExpire(Date date) {
+        return date.before(new Date());
+    }
+
 }

@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import cn.edu.aust.common.util.DateUtil;
 import cn.edu.aust.dto.ContestDTO;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -37,7 +38,7 @@ public class ContestTableVO {
           .map(ContestTableVO::assemble).collect(Collectors.toList()));
     }
     if (!CollectionUtils.isEmpty(noExprieContestDTOS)) {
-      tableVO.setExprieContest(noExprieContestDTOS.stream()
+      tableVO.setNoExprieContest(noExprieContestDTOS.stream()
           .map(ContestTableVO::assemble).collect(Collectors.toList()));
     }
     return tableVO;
@@ -48,8 +49,8 @@ public class ContestTableVO {
     ContestTableDetail tableDetail = new ContestTableDetail();
     tableDetail.setId(contestDTO.getId());
     tableDetail.setTitle(contestDTO.getTitle());
-    tableDetail.setStartTime(contestDTO.getStartTime());
-    tableDetail.setEndTime(contestDTO.getEndTime());
+    tableDetail.setStartTime(DateUtil.format(contestDTO.getStartTime(),DateUtil.YMDHMS_));
+    tableDetail.setEndTime(DateUtil.format(contestDTO.getEndTime(),DateUtil.YMDHMS_));
     tableDetail.setCreateUser(contestDTO.getCreateUser());
     tableDetail.setTypeName(contestDTO.getTypeName());
     return tableDetail;

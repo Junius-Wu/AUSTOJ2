@@ -21,11 +21,11 @@
     </resultMap>
     <sql id="Base_Column_List">
     id, title, author_id, author_name, keyword, viewcount, likecount, catelog_id, is_top, is_show,
-    createdate,modifydate
+    createdate,modifydate,summary
   </sql>
     <sql id="Detail_Column_List">
         <include refid="Base_Column_List"/>
-        summary, content
+        , html_content
     </sql>
 
 
@@ -35,7 +35,7 @@
   </select>
 
     <!--查询文章页面文章列表-->
-    <select id="queryList" parameterType="cn.edu.aust.query.ArticleQuery" resultMap="BaseResultMap">
+    <select id="queryList" parameterType="cn.edu.aust.entity.ArticleQuery" resultMap="BaseResultMap">
         SELECT
         <include refid="Base_Column_List"/>
         FROM article t1

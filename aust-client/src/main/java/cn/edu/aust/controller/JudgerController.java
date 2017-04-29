@@ -24,8 +24,10 @@ import cn.edu.aust.common.entity.ResultVO;
 import cn.edu.aust.common.util.CgiHelper;
 import cn.edu.aust.common.util.LanguageUtil;
 import cn.edu.aust.dto.BaseProblemDTO;
+import cn.edu.aust.dto.ContestDTO;
 import cn.edu.aust.dto.SolutionDTO;
 import cn.edu.aust.pojo.entity.UserDO;
+import cn.edu.aust.service.ContestProblemService;
 import cn.edu.aust.service.ContestService;
 import cn.edu.aust.service.ProblemService;
 import cn.edu.aust.service.SolutionService;
@@ -48,6 +50,8 @@ public class JudgerController {
   private SolutionService solutionService;
   @Resource
   private ContestService contestService;
+  @Resource
+  private ContestProblemService contestProblemService;
 
   /**
    * 提交判题
@@ -59,13 +63,20 @@ public class JudgerController {
   @PostMapping(value = "/judge/problem/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
   @ResponseBody
   public ResultVO judger(@PathVariable("id") Long id,
-      @RequestParam(value = "value") String sourceCode,
-      @RequestParam(value = "lang") String language) {
+      @RequestParam(value = "code") String sourceCode,
+      @RequestParam(value = "lang") String language,
+      @RequestParam(value = "contest_id",required = false) Long contestId) {
     //登录限制和参数检查
     UserDO loginUser = userService.getCurrent();
     ResultVO resultVO = new ResultVO();
     if (Objects.isNull(loginUser)){
       return resultVO.buildWithMsgAndStatus(PosCode.NO_LOGIN,"用户未登录");
+    }
+    if (StringUtils.isEmpty(sourceCode)){
+      return resultVO.buildWithMsgAndStatus(PosCode.PARAM_ERROR,"源代码不能为空");
+    }
+    if (Objects.isNull(language)) {
+      return resultVO.buildWithMsgAndStatus(PosCode.INTER_ERROR, "所选语言不能为空");
     }
     BaseProblemDTO problemDTO = problemService.findBasicById(id);
     if(Objects.isNull(problemDTO)){
@@ -74,15 +85,15 @@ public class JudgerController {
     //竞赛题验证是否可以判题
     if (problemDTO.getType() == ProblemType.CONTEST.value){
       //判断是否验证过
-//      if (!contestService.isVisited(problemDTO.getContestId(),loginUser.getId())){
-//        return resultVO.buildWithMsgAndStatus(PosCode.PARAM_ERROR,"没权限判题");
-//      }
-    }
-    if (StringUtils.isEmpty(sourceCode)){
-      return resultVO.buildWithMsgAndStatus(PosCode.PARAM_ERROR,"源代码不能为空");
-    }
-    if (Objects.isNull(language)) {
-      return resultVO.buildWithMsgAndStatus(PosCode.INTER_ERROR, "所选语言不能为空");
+      if (contestProblemService.isContainProblem(contestId,problemDTO.getId()) &&
+          !contestService.isVisited(contestId, loginUser.getId())){
+        return resultVO.buildWithMsgAndStatus(PosCode.PARAM_ERROR,"没权限判题");
+      }
+      //比赛是否过期
+      ContestDTO contestDTO = contestService.findDetail(contestId);
+      if (!contestService.canJudger(contestDTO)){
+        return resultVO.buildWithMsgAndStatus(PosCode.PARAM_ERROR,"不在比赛时间");
+      }
     }
     //浏览器端对加号支持有问题
     if (StringUtils.equals("C2", language)) {
@@ -92,7 +103,9 @@ public class JudgerController {
     if (Objects.isNull(lang)){
       return resultVO.buildWithMsgAndStatus(PosCode.PARAM_ERROR,"所选语言不存在");
     }
-    solutionService.startJudger(loginUser.getId(),problemDTO, new String(Base64.getMimeDecoder().decode(sourceCode)),lang);
+    solutionService.startJudger(loginUser.getId(),problemDTO,
+        new String(Base64.getMimeDecoder().decode(sourceCode)),
+        lang,contestId);
     return resultVO.buildOK();
   }
 

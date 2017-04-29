@@ -15,6 +15,7 @@ import org.springframework.util.CollectionUtils;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 import javax.annotation.Resource;
 
@@ -89,13 +90,13 @@ public class SolutionService {
    */
   @Transactional(rollbackFor = Exception.class)
   public void startJudger(Long userId, BaseProblemDTO problemDTO, String source,
-      LanguageUtil.Language language) {
+      LanguageUtil.Language language,Long contestId) {
     ProblemDO problemDO = problemMapper.selectByPrimaryKey(problemDTO.getId());
     SolutionDO solutionDO = new SolutionDO();
     solutionDO.setCreatedate(new Date());
     solutionDO.setModifydate(solutionDO.getCreatedate());
     solutionDO.setCodeLength(source.getBytes().length / 8.0);
-//    solutionDO.setContestId(problemDO.getContestId());
+    solutionDO.setContestId(contestId);
     solutionDO.setLanguage(language.getLanguageName());
     solutionDO.setProblemId(problemDO.getId());
     solutionDO.setProblemTitle(problemDO.getTitle());
@@ -191,5 +192,21 @@ public class SolutionService {
       return Collections.emptyList();
     }
     return problemIds;
+  }
+
+  /**
+   * 判断该用户是否参加过该竞赛
+   * @param contestId 竞赛id
+   * @return true
+   */
+  public Boolean isJudgeContest(Long contestId,Long userId){
+    if (Objects.isNull(contestId)) {
+      return false;
+    }
+    SolutionDO solutionDO = new SolutionDO();
+    solutionDO.setContestId(contestId);
+    solutionDO.setUserId(userId);
+    int count = solutionMapper.selectCount(solutionDO);
+    return count > 0;
   }
 }

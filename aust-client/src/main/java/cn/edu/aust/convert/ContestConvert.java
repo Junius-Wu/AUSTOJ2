@@ -5,7 +5,6 @@ import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.PropertyMap;
 
-import cn.edu.aust.utilconvert.Date2StrConvert;
 import cn.edu.aust.dto.ContestDTO;
 import cn.edu.aust.pojo.entity.ContestDO;
 
@@ -26,8 +25,6 @@ public class ContestConvert {
         return aByte == 1 ?"校内赛":"公开赛";
       }
     };
-    modelMapper.addConverter(Date2StrConvert.date2Str);
-
     modelMapper.addMappings(new PropertyMap<ContestDO, ContestDTO>() {
       @Override
       protected void configure() {

@@ -17,7 +17,7 @@ import cn.edu.aust.pojo.entity.VotelogDO;
  * 点赞关系表
  *
  * @author Niu Li
- * @date 2017/1/30
+ * @since 2017/1/30
  */
 @Service
 public class VotelogService {

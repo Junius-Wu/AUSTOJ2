@@ -6,6 +6,10 @@ package cn.edu.aust.common.constant;
  * @since 2017/4/16
  */
 public class RedisKey {
-
+  /**
+   * 用户排名缓存
+   */
   public static final String RANK_USER = "StartUpListen:ranks2Redis";
+
+
 }

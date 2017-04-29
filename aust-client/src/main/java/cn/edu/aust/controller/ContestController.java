@@ -1,7 +1,5 @@
 package cn.edu.aust.controller;
 
-import com.google.common.collect.Lists;
-
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,9 +20,10 @@ import cn.edu.aust.common.entity.ResultVO;
 import cn.edu.aust.common.util.CgiHelper;
 import cn.edu.aust.dto.ContestDTO;
 import cn.edu.aust.exception.PageException;
+import cn.edu.aust.pojo.entity.ContestProblemDO;
 import cn.edu.aust.pojo.entity.UserDO;
+import cn.edu.aust.service.ContestProblemService;
 import cn.edu.aust.service.ContestService;
-import cn.edu.aust.service.ProblemService;
 import cn.edu.aust.service.UserService;
 import cn.edu.aust.vo.ContestDetailVO;
 import cn.edu.aust.vo.ContestTableVO;
@@ -46,7 +45,7 @@ public class ContestController {
   @Resource
   private UserService userService;
   @Resource
-  private ProblemService problemService;
+  private ContestProblemService contestProblemService;
 
   /**
    * 获取竞赛首页数据
@@ -114,9 +113,7 @@ public class ContestController {
       return resultVO.buildWithMsgAndStatus(PosCode.NO_PRIVILEGE, "用户无权限访问");
     }
     //查找相关题目
-    // todo 查找竞赛题目
-//    List<BaseProblemDTO> problems = problemService.queryContest(id);
-
-    return resultVO.buildOKWithData(ContestDetailVO.assemble(Lists.newArrayList(),contest));
+    List<ContestProblemDO> problemDOS = contestProblemService.queryByContest(id);
+    return resultVO.buildOKWithData(ContestDetailVO.assemble(problemDOS,contest));
   }
 }

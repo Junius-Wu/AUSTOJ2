@@ -7,13 +7,14 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.annotation.Resource;
 
 import cn.edu.aust.common.constant.ContestStatus;
+import cn.edu.aust.common.util.DateUtil;
 import cn.edu.aust.convert.ContestConvert;
 import cn.edu.aust.dto.ContestDTO;
 import cn.edu.aust.mapper.ContestMapper;
@@ -35,6 +36,8 @@ public class ContestService {
   private ContestMapper contestMapper;
   @Resource
   private StringRedisTemplate redisTemplate;
+  @Resource
+  private SolutionService solutionService;
 
   private static final String USER_VISITED = "contest.user:";
   /**
@@ -55,7 +58,13 @@ public class ContestService {
    * @return true访问过
    */
   public Boolean isVisited(Long contestId,Long userId){
-    return redisTemplate.opsForSet().isMember(USER_VISITED+userId,contestId.toString());
+    //先看redis中是否有记录
+    Boolean member = redisTemplate.opsForSet().isMember(USER_VISITED + userId, contestId.toString());
+    if (member) {
+      return true;
+    }
+    //再看判题记录中是否有记录
+    return solutionService.isJudgeContest(contestId, userId);
   }
 
   /**
@@ -74,12 +83,33 @@ public class ContestService {
       checkArgument(StringUtils.equals(contestDO.getPassword(), passwd), "密码错误");
     }
     //时间检查
-    checkArgument(isStart(contestDO),"比赛还未开始,禁止查看");
+    checkArgument(DateUtil.isExpire(contestDO.getStartTime()),"比赛还未开始,禁止查看");
 
     //保存记录到redis
     redisTemplate.opsForSet().add(USER_VISITED+userId,contestid.toString());
     return true;
   }
+
+  /**
+   * 是否可以判题
+   * @param contestDTO 竞赛实体
+   * @return true可以
+   */
+  public boolean canJudger(ContestDTO contestDTO){
+    if (Objects.isNull(contestDTO)) {
+      return false;
+    }
+    //是否开始
+    if (!DateUtil.isExpire(contestDTO.getStartTime())) {
+      return false;
+    }
+    //是否过期
+    if (DateUtil.isExpire(contestDTO.getEndTime())) {
+      return false;
+    }
+    return true;
+  }
+
 
   /**
    * 查询正在进行和已经失效的竞赛
@@ -96,7 +126,7 @@ public class ContestService {
             .forEach(contestDO -> {
               //去除该阶段没必要显示的字段
               contestDO.setDescription(null);
-              if (isExpire(contestDO)) {
+              if (DateUtil.isExpire(contestDO.getEndTime())) {
                 expire.add(ContestConvert.assemble(contestDO));
               } else {
                 noExpire.add(ContestConvert.assemble(contestDO));
@@ -109,32 +139,4 @@ public class ContestService {
     return resultMap;
   }
 
-  /**
-   * 判断一个比赛是否开始
-   *
-   * @param contestDO 该比赛
-   * @return true已经开始
-   */
-  private boolean isStart(ContestDO contestDO) {
-    Date now = new Date();
-    if (contestDO.getStartTime().before(now)){
-      return true;
-    }
-    return false;
-  }
-
-  /**
-   * 判断一个竞赛是否过期
-   *
-   * @param contestDO 该竞赛
-   * @return true过期
-   */
-  private boolean isExpire(ContestDO contestDO) {
-    //时间
-    Date now = new Date();
-    if (contestDO.getEndTime().before(now)) {
-      return true;
-    }
-    return false;
-  }
 }

@@ -1,5 +1,7 @@
 package cn.edu.aust.dto;
 
+import java.util.Date;
+
 import lombok.Data;
 import lombok.ToString;
 
@@ -22,11 +24,11 @@ public class ContestDTO {
   /**
    * 开始时间
    */
-  private String startTime;
+  private Date startTime;
   /**
    * 结束时间
    */
-  private String endTime;
+  private Date endTime;
   /**
    * 1校赛,2公开赛
    */

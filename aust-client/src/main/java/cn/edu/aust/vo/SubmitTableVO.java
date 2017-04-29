@@ -5,6 +5,7 @@ import com.google.common.collect.Lists;
 import org.springframework.util.CollectionUtils;
 
 import java.util.List;
+import java.util.Optional;
 
 import cn.edu.aust.common.util.DateUtil;
 import cn.edu.aust.dto.SolutionDTO;
@@ -48,7 +49,7 @@ public class SubmitTableVO {
     tableVO.setProblemId(solutionDTO.getProblemId());
     tableVO.setProblemTitle(solutionDTO.getProblemTitle());
     tableVO.setUserId(solutionDTO.getUserId());
-    tableVO.setMemory(solutionDTO.getMemory()/1000.0);
+    tableVO.setMemory(Optional.ofNullable(solutionDTO.getMemory()).orElse(0) /1000.0);
     tableVO.setTime(solutionDTO.getTime());
     tableVO.setCodeLength(solutionDTO.getCodeLength());
     tableVO.setLanguage(solutionDTO.getLanguage());
