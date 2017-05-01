@@ -1,11 +1,16 @@
 package cn.edu.aust.service;
 
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
+import java.util.Set;
 
 import javax.annotation.Resource;
 
+import cn.edu.aust.common.constant.vote.VoteType;
 import cn.edu.aust.dto.BaseArticleDTO;
 import cn.edu.aust.dto.VoteStatusDTO;
 import cn.edu.aust.mapper.ArticleMapper;
@@ -38,18 +43,18 @@ public class VotelogService {
     VotelogDO voteLog = new VotelogDO();
     voteLog.setUserId(user_id);
     voteLog.setOtherId(articleDO.getId());
-    voteLog.setType((byte) 2);
+    voteLog.setType(VoteType.ARTICLE.value);
     voteLog = votelogMapper.selectOne(voteLog);
     if (voteLog == null) {
       voteLog = new VotelogDO();
-      voteLog.setType((byte) 2);
-      voteLog.setStatus((byte) 1);
+      voteLog.setType(VoteType.ARTICLE.value);
+      voteLog.setStatus(1);
       voteLog.setOtherId(articleDO.getId());
       voteLog.setUserId(user_id);
       voteLog.setCreatetime(new Date());
       votelogMapper.insert(voteLog);
     } else {
-      voteLog.setStatus((byte) (voteLog.getStatus() ^ 1));
+      voteLog.setStatus((voteLog.getStatus() ^ 1));
       votelogMapper.updateByPrimaryKeySelective(voteLog);
     }
     ArticleDO tempArticleDO = new ArticleDO();
@@ -59,7 +64,20 @@ public class VotelogService {
 
     VoteStatusDTO statusDTO = new VoteStatusDTO();
     statusDTO.setCount(tempArticleDO.getLikeCount());
-    statusDTO.setCount(Integer.valueOf(voteLog.getStatus()));
+    statusDTO.setStatus(voteLog.getStatus());
     return statusDTO;
   }
+
+  /**
+   * 查询该id中用户点过赞的
+   * @param articleIds 一批文章
+   * @return 点赞的文章
+   */
+  public Set<Long> userLikeArticle(Collection<Long> articleIds,Long userId){
+    if (CollectionUtils.isEmpty(articleIds)) {
+      return Collections.emptySet();
+    }
+    return votelogMapper.queryUserLikeArticle(articleIds, userId);
+  }
+
 }

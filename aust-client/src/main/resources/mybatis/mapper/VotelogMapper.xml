@@ -2,9 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="cn.edu.aust.mapper.VotelogMapper" >
   <resultMap id="BaseResultMap" type="cn.edu.aust.pojo.entity.VotelogDO" >
-    <!--
-      WARNING - @mbg.generated
-    -->
     <id column="id" property="id" jdbcType="BIGINT" />
     <result column="user_id" property="userId" jdbcType="BIGINT" />
     <result column="type" property="type" jdbcType="TINYINT" />
@@ -14,9 +11,16 @@
     <result column="modifytime" property="modifytime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
-    <!--
-      WARNING - @mbg.generated
-    -->
     id, user_id, type, other_id, status, createtime, modifytime
   </sql>
+  <!--查询用户点赞过的文章-->
+  <select id="queryUserLikeArticle" parameterType="collection" resultType="Long">
+    SELECT DISTINCT p.other_id
+    FROM aust.votelog p
+    WHERE p.type = 2 AND p.other_id IN
+    <foreach collection="ids" open="(" close=")" separator="," item="id">
+      #{id}
+    </foreach>
+    AND p.user_id = #{userId}
+  </select>
 </mapper>

@@ -13,17 +13,19 @@ import java.util.Objects;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import cn.edu.aust.common.constant.CodeType;
 import cn.edu.aust.common.constant.PosCode;
 import cn.edu.aust.common.entity.ResultVO;
+import cn.edu.aust.common.entity.Setting;
+import cn.edu.aust.common.util.CgiHelper;
 import cn.edu.aust.common.util.WebUtils;
 import cn.edu.aust.dto.UserDTO;
 import cn.edu.aust.exception.PageException;
 import cn.edu.aust.pojo.entity.UserDO;
 import cn.edu.aust.service.MailService;
+import cn.edu.aust.service.SettingService;
 import cn.edu.aust.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 
@@ -47,6 +49,8 @@ public class LoginController {
   private StringRedisTemplate redisTemplate;
   @Resource
   private MailService mailService;
+  @Resource
+  private SettingService settingService;
   /**
    * 验证码前缀
    */
@@ -57,7 +61,7 @@ public class LoginController {
    */
   @PostMapping(value = "/login",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
   public ResultVO<?> login(String email, String password, String codevalidate,
-      HttpSession session, HttpServletRequest request, HttpServletResponse response) throws PageException {
+      HttpSession session, HttpServletRequest request) throws PageException {
     JSONObject result = new JSONObject();
     ResultVO<JSONObject> resultVO = new ResultVO<>();
     if (StringUtils.isEmpty(email) || StringUtils.isEmpty(password)) {
@@ -83,7 +87,13 @@ public class LoginController {
     session.setAttribute(PRINCIPAL_ATTRIBUTE_NAME, userDTO);
     log.info("用户:{}已登录", email);
     //跳转到之前的页面
+    String refer = CgiHelper.getString("refer","/aust/user",request);
+    Setting setting = settingService.getSetting();
+    if (refer.startsWith(setting.getDomain())) {
+      refer = refer.substring(setting.getDomain().length());
+    }
     result.put("id", userDTO.getId());
+    result.put("refer", refer);
     return resultVO.buildOKWithData(result);
   }
 

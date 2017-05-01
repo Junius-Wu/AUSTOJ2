@@ -7,6 +7,7 @@ import java.time.ZoneId;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import cn.edu.aust.pojo.entity.ArticleDO;
@@ -43,7 +44,6 @@ public class ArticleTableVO {
     tableVO.setViewcount(articlePO.getViewCount());
     tableVO.setLikecount(articlePO.getLikeCount());
     tableVO.setIsTop(articlePO.getIsTop());
-//    tableVO.setIsVote(articlePO.getIsVote());
     Date createDate = articlePO.getCreatedate();
     LocalDate date = LocalDate.from(createDate.toInstant().atZone(ZoneId.systemDefault()));
     tableVO.setYear(date.getYear());
@@ -54,11 +54,18 @@ public class ArticleTableVO {
     return tableVO;
   }
 
-  public static List<ArticleTableVO> assembler(List<ArticleDO> articlePOS){
+  public static List<ArticleTableVO> assembler(List<ArticleDO> articlePOS,Set<Long> voteIds){
     if (CollectionUtils.isEmpty(articlePOS)) {
       return Collections.emptyList();
     }
-    return articlePOS.stream().map(ArticleTableVO::assembler).collect(Collectors.toList());
+    return articlePOS.stream().map(ArticleTableVO::assembler)
+        .map(x -> {
+          if (voteIds.contains(x.getId())){
+            x.setIsVote(1);
+          }
+          return x;
+        })
+        .collect(Collectors.toList());
   }
 
 }

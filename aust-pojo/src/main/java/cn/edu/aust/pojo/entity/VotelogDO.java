@@ -33,7 +33,7 @@ public class VotelogDO {
     /**
      * 类型,1:题目留言点赞,2文章点赞,3文章留言点赞
      */
-    private Byte type;
+    private Integer type;
 
     /**
      * 点赞对象的id
@@ -44,7 +44,7 @@ public class VotelogDO {
     /**
      * 0取消,1有效
      */
-    private Byte status;
+    private Integer status;
 
     /**
      * 创建时间

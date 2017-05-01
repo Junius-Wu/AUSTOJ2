@@ -1,5 +1,8 @@
 package cn.edu.aust.mapper;
 
+import org.apache.ibatis.annotations.Param;
+
+import java.util.Collection;
 import java.util.List;
 
 import cn.edu.aust.pojo.entity.UserDO;
@@ -25,4 +28,11 @@ public interface UserMapper extends Mapper<UserDO> {
      * @return 结果集
      */
     List<UserDO> queryForRank();
+
+    /**
+     * 根据id集合查询用户
+     * @param ids id集合
+     * @return 用户
+     */
+    List<UserDO> queryBaseByIds(@Param("ids") Collection<Long> ids);
 }

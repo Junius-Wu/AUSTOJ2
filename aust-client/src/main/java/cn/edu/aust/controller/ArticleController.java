@@ -2,6 +2,7 @@ package cn.edu.aust.controller;
 
 
 import com.github.pagehelper.PageInfo;
+import com.google.common.collect.Sets;
 
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -19,11 +22,13 @@ import cn.edu.aust.common.constant.PosCode;
 import cn.edu.aust.common.entity.ResultVO;
 import cn.edu.aust.common.util.CgiHelper;
 import cn.edu.aust.dto.BaseArticleDTO;
+import cn.edu.aust.dto.VoteStatusDTO;
 import cn.edu.aust.exception.PageException;
 import cn.edu.aust.pojo.entity.ArticleDO;
 import cn.edu.aust.pojo.entity.UserDO;
 import cn.edu.aust.service.ArticleService;
 import cn.edu.aust.service.UserService;
+import cn.edu.aust.service.VotelogService;
 import cn.edu.aust.vo.ArticleDetailVO;
 import cn.edu.aust.vo.ArticleTableVO;
 
@@ -37,6 +42,8 @@ public class ArticleController {
   private ArticleService articleService;
   @Resource
   private UserService userService;
+  @Resource
+  private VotelogService votelogService;
 
   private static final Integer article_aside_limit = 7;
 
@@ -67,14 +74,13 @@ public class ArticleController {
 
   /**
    * 点赞文章
-   * todo 点赞
    * @param id 该文章id
    * @return 对应结果
    * @throws PageException 文章不存在或不显示抛出异常
    */
   @PostMapping(value = "/article/vote/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
   public ResultVO<?> articleVote(@PathVariable("id") Long id) throws PageException {
-    ResultVO resultVO = new ResultVO();
+    ResultVO<VoteStatusDTO> resultVO = new ResultVO<>();
     //登录检查
     UserDO userDO = userService.getCurrent();
     if (userDO == null) {
@@ -82,9 +88,8 @@ public class ArticleController {
     }
     //查询
     BaseArticleDTO article = articleService.findBasicById(id);
-
-//    votelogService.voteArticleComment(result, article.get(), userDO.getId());
-    return resultVO;
+    VoteStatusDTO voteStatusDTO = votelogService.voteArticleComment(article, userDO.getId());
+    return resultVO.buildOKWithData(voteStatusDTO);
   }
 
   /**
@@ -97,13 +102,21 @@ public class ArticleController {
     String search = CgiHelper.getString("search",null,request);
     Integer pageNum = CgiHelper.getPageNum(request);
     Integer pageSize = CgiHelper.getPageSize(request);
-    //查询
+    //查询文章
     PageInfo<ArticleDO> articlePos = articleService.queryList(search,pageNum,pageSize);
+    List<ArticleDO> articlePosList = articlePos.getList();
+    //查询其中用户点赞过的文章
+    UserDO loginUser = userService.getCurrent();
+    Set<Long> userVoteIds = Sets.newHashSet();
+    if (Objects.nonNull(loginUser)) {
+      userVoteIds.addAll(votelogService.userLikeArticle(articlePosList.stream().map(ArticleDO::getId)
+          .collect(Collectors.toList()), loginUser.getId()));
+    }
     //包装返回
     ResultVO.paginationData<ArticleTableVO> tableVos = new ResultVO.paginationData<>(
         articlePos.getTotal(),
         articlePos.getPageSize(),
-        ArticleTableVO.assembler(articlePos.getList()));
+        ArticleTableVO.assembler(articlePosList,userVoteIds));
     return resultVO.buildOKWithData(tableVos);
   }
 

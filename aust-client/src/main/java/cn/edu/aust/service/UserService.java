@@ -1,7 +1,10 @@
 package cn.edu.aust.service;
 
+import com.google.common.collect.Lists;
+
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.apache.commons.lang3.time.DateUtils;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
@@ -16,10 +19,13 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.annotation.Resource;
 
 import cn.edu.aust.common.constant.PosCode;
+import cn.edu.aust.common.constant.RedisKey;
 import cn.edu.aust.common.constant.user.UserStatus;
 import cn.edu.aust.common.constant.user.UserType;
 import cn.edu.aust.common.entity.ResultVO;
@@ -197,12 +203,19 @@ public class UserService {
   }
 
   /**
-   * 查询用户排名
+   * 查询用户排名,先去redis中获取排名id,然后根据id查
    *
    * @return 排名后的用户
    */
   public List<UserDTO> queryForRank() {
-    List<UserDO> userDOS = userMapper.queryForRank();
+    Set<String> userIds = redisTemplate.opsForZSet().reverseRange(RedisKey.RANK_USER,0,10000);
+    List<UserDO> userDOS = Lists.newArrayList();
+    if (!CollectionUtils.isEmpty(userIds)) {
+      userDOS.addAll(userMapper.queryBaseByIds(userIds.stream().map(NumberUtils::toLong)
+          .collect(Collectors.toSet())));
+    }else {
+      userDOS.addAll(userMapper.queryForRank());
+    }
     return modelMapper.map(userDOS, new TypeToken<List<UserDTO>>() {}.getType());
   }
 
