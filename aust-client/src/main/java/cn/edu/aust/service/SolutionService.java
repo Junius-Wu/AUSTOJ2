@@ -80,6 +80,17 @@ public class SolutionService {
     return pageInfo;
   }
 
+  /**
+   * 根据用户id和solutionid查询
+   * @return 查询结果
+   */
+  public SolutionDTO findById(Long solutionId, Long userId) {
+    SolutionDO solutionDO = solutionMapper.selectByPrimaryKey(solutionId);
+    if (Objects.isNull(solutionDO) || !Objects.equals(solutionDO.getUserId(), userId)) {
+      return null;
+    }
+    return SolutionConvert.do2dto(solutionDO);
+  }
 
   /**
    * 保存用户提交记录,并且开启一个判题线程
@@ -89,7 +100,7 @@ public class SolutionService {
    * @param language  所用语言
    */
   @Transactional(rollbackFor = Exception.class)
-  public void startJudger(Long userId, BaseProblemDTO problemDTO, String source,
+  public Long startJudger(Long userId, BaseProblemDTO problemDTO, String source,
       LanguageUtil.Language language,Long contestId) {
     ProblemDO problemDO = problemMapper.selectByPrimaryKey(problemDTO.getId());
     SolutionDO solutionDO = new SolutionDO();
@@ -113,6 +124,7 @@ public class SolutionService {
     //创建判题任务
     log.info("start judge , solutionID:{}",solutionDO.getId());
     judgeExecute(problemDO, source, language.getLanguageName(), solutionDO);
+    return solutionDO.getId();
   }
 
   /**
@@ -173,7 +185,7 @@ public class SolutionService {
     //发布redis事件
     MessageType ms = new MessageType();
     ms.setSubjectId(userId);
-    ms.setSubjectId(problemId);
+    ms.setObjectId(problemId);
     ms.setType(MessageKey.JUDGER_RESULT);
     redisTemplate.convertAndSend("judger", JSON.toJSONString(ms));
   }

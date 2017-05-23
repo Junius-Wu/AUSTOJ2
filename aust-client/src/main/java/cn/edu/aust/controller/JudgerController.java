@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.Base64;
+import java.net.URLDecoder;
 import java.util.List;
 import java.util.Objects;
 
@@ -58,7 +58,7 @@ public class JudgerController {
    * @param id 题目id
    * @param sourceCode 源码
    * @param language 语言
-   * @return 提交结果
+   * @return 判题id
    */
   @PostMapping(value = "/judge/problem/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
   @ResponseBody
@@ -68,7 +68,7 @@ public class JudgerController {
       @RequestParam(value = "contest_id",required = false) Long contestId) {
     //登录限制和参数检查
     UserDO loginUser = userService.getCurrent();
-    ResultVO resultVO = new ResultVO();
+    ResultVO<Long> resultVO = new ResultVO<>();
     if (Objects.isNull(loginUser)){
       return resultVO.buildWithMsgAndStatus(PosCode.NO_LOGIN,"用户未登录");
     }
@@ -103,10 +103,9 @@ public class JudgerController {
     if (Objects.isNull(lang)){
       return resultVO.buildWithMsgAndStatus(PosCode.PARAM_ERROR,"所选语言不存在");
     }
-    solutionService.startJudger(loginUser.getId(),problemDTO,
-        new String(Base64.getMimeDecoder().decode(sourceCode)),
-        lang,contestId);
-    return resultVO.buildOK();
+    Long solutionId = solutionService.startJudger(loginUser.getId(), problemDTO,
+        URLDecoder.decode(sourceCode), lang, contestId);
+    return resultVO.buildOKWithData(solutionId);
   }
 
   /**
@@ -134,6 +133,27 @@ public class JudgerController {
         pageSize, tableVOS));
   }
 
+  /**
+   * 查询单条提交记录
+   * @return 查询结果
+   */
+  @GetMapping(value = "/judge/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+  @ResponseBody
+  public ResultVO judgeOne(@PathVariable("id") Long solutionId){
+    ResultVO<SubmitTableVO> resultVO = new ResultVO<>();
+    //参数校验
+    UserDO loginUser = userService.getCurrent();
+    if (Objects.isNull(loginUser)){
+      return resultVO.buildWithMsgAndStatus(PosCode.NO_LOGIN, "用户未登录");
+    }
+    //查询单条
+    SolutionDTO solutionDTO = solutionService.findById(solutionId, loginUser.getId());
+    if (Objects.isNull(solutionDTO)) {
+      return resultVO.buildWithMsgAndStatus(PosCode.NO_PRIVILEGE, "用户无权限查看");
+    }
+    //构造返回
+    return resultVO.buildOKWithData(SubmitTableVO.assembler(solutionDTO));
+  }
 
 
 }

@@ -29,6 +29,15 @@ public class SolutionConvert {
   }
   /**
    * do转dto
+   * @param solutionDO do
+   * @return dto
+   */
+  public static SolutionDTO do2dto(SolutionDO solutionDO){
+    return modelMapper.map(solutionDO,SolutionDTO.class);
+  }
+
+  /**
+   * do转dto
    * @param solutionDOS do集合
    * @return dto集合
    */

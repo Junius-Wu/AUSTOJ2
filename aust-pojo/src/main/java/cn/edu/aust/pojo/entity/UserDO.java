@@ -1,5 +1,6 @@
 package cn.edu.aust.pojo.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.*;
 
@@ -11,7 +12,7 @@ import lombok.ToString;
 @Data
 @NoArgsConstructor
 @ToString
-public class UserDO {
+public class UserDO implements Serializable{
     /**
      * 主键,自增
      */

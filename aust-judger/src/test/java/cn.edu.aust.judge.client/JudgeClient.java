@@ -21,14 +21,14 @@ public class JudgeClient {
 
     @Before
     public void init(){
-        channel = ManagedChannelBuilder.forAddress("115.159.185.14",50013)
+        channel = ManagedChannelBuilder.forAddress("192.168.99.100",50013)
             .usePlaintext(true).build();
         blockingStub = JudgeServerGrpc.newBlockingStub(channel).withCompression("gzip");
     }
 
     @Test
     public void judgeTest(){
-        JudgeRequest request = JudgeRequest.newBuilder().setLanguage("Java")
+        JudgeRequest request = JudgeRequest.newBuilder().setLanguage("C++")
             .setMemoryLimit(65532)
             .setTimeLimit(2000)
             .setSolutionId(1)
@@ -40,15 +40,15 @@ public class JudgeClient {
     }
 
 
-    private String source = "import java.io.*;\n" +
-        "import java.util.*;\n" +
-        "public class Main\n" +
+    private String source = "#include <iostream>\n" +
+        "\n" +
+        "using namespace std;\n" +
+        "\n" +
+        "int main()\n" +
         "{\n" +
-        "            public static void main(String args[]) throws Exception\n" +
-        "            {\n" +
-        "                    Scanner cin=new Scanner(System.in);\n" +
-        "                    int a=cin.nextInt(),b=cin.nextInt();\n" +
-        "                    System.out.println(a+b);\n" +
-        "            }\n" +
+        "    int a,b;\n" +
+        "    cin >> a >> b;\n" +
+        "    cout << a+b << endl;\n" +
+        "    return 0;\n" +
         "}";
 }

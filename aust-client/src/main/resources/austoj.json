@@ -1,5 +1,5 @@
 {
-  "domain":"http://oj.mrdear.cn",
+  "domain":"http://localhost:8888",
   "isEmailLogin":true,
   "accountLockCount":5,
   "accountLockTime":10,
